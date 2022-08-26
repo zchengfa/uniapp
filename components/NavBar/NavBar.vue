@@ -63,24 +63,24 @@
 }
 /* #ifdef MP-WEIXIN */
 .content{
-	height: 60px;
+	height: 80px;
 }
 .left,.right{
 	position: absolute;
-	top:30px;
-	bottom:6px;
+	top:44px;
+	
 	width: 32px;
 	height: 30px;
 }
 .left{
-	left: 2rpx;
+	left: 2px;
 }
 .right{
-	left: 60rpx;
+	left: 60px;
 }
 .center{
 	position: absolute;
-	top:30px;
+	top:50px;
 	left: 50vw;
 	width: 40vw;
 	transform: translateX(-50%);

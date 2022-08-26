@@ -144,7 +144,7 @@
 	}
 	.control{
 		position: absolute;
-		bottom: 50px;
+		bottom: 5vh;
 		width: 100%;
 		z-index: 1000;
 	}
@@ -168,7 +168,7 @@
 		height: 60px;
 	}
 	.detail-content{
-		height: calc(100vh - 60px);
+		height: calc(100vh - 80px);
 	}
 	.needle{
 		width: 30%;
@@ -180,8 +180,6 @@
 		background-color: #000000;
 		border-radius: 50%;
 	}
-	.control{
-		bottom: 0;
-	}
+	
 	/* #endif */
 </style>

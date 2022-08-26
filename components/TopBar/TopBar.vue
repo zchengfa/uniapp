@@ -54,12 +54,17 @@
 		height: 26px;
 	}
 	.input-box{
-		flex: 1;
+		
 		text-align: center;
 	}
+	/* #ifdef H5 */
+	.input-box{
+		flex: 1;
+	}
+	/* #endif */
 	.input{
 		margin: 0 auto;
-		width: 96%;
+		width: 60%;
 		height: 32px;
 		border: none;
 		background:linear-gradient(to right, #ffe4f1, #f5dbff);
@@ -71,28 +76,29 @@
 	}
 	/* #ifdef MP-WEIXIN */
 	.top-content{
-		height: 60px;
+		justify-content: flex-start;
+		height: 80px;
 	}
-	.list,.audio{
-		position: absolute;
-		bottom:6rpx;
+	
+	.list,.input-box{
+		position: relative;
+		top:14px;
 	}
 	.list{
-		left: 2rpx;
-	}
-	.audio{
-		left: 80rpx;
-	}
-	.input-box{
-		position: absolute;
-		bottom: 6rpx;
+		left: 0;
 	}
 	.input{
-		height: 26px;
+		width: 80%;
 	}
-	.list-image{
-		width: 20px;
-		height: 20px;
+	.input-box{
+		margin-left: 50px;
+		
+	}
+	
+	.audio{
+		position: absolute;
+		left: 50px;
+		bottom:14px;
 	}
 	/* #endif */
 </style>

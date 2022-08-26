@@ -3,7 +3,7 @@
 		<!-- 评论页面的导航栏 -->
 		<view class="nav-place">
 			<view class="nav flex-box">
-				<view class="left">
+				<view class="left nav-left">
 					<text class="iconfont musicleftArrow back" @tap="back"></text>
 					<text class="count">评论({{totalCount}})</text>
 				</view>
@@ -226,17 +226,21 @@
 		justify-content: space-between;
 		align-items: center;
 	}
+	.nav{
+		position: fixed;
+		width: 100%;
+		max-width: 500px;
+		box-shadow: 0 0 1px 1px #C0C0C0;
+	}
+	/* #ifdef H5 */
 	.nav-place{
 		width: 100%;
 		height: 44px;
 	}
 	.nav{
-		position: fixed;
-		width: 100%;
 		height: 44px;
-		max-width: 500px;
-		box-shadow: 0 0 1px 1px #C0C0C0;
 	}
+	/* #endif */
 	.left,.right{
 		display: flex;
 		justify-content: space-around;
@@ -398,4 +402,16 @@
 	.emoji{
 		font-size: 24px;
 	}
+	/* #ifdef MP-WEIXIN */
+	.nav-place,.nav{
+		height: 80px;
+	}
+	.share{
+		display: none;
+	}
+	.nav-left{
+		position: relative;
+		top:20px;
+	}
+	/* #endif */
 </style>

@@ -307,12 +307,12 @@
 	}
 	/* #ifdef MP-WEIXIN */
 	.top-box{
-		height: 60px;
+		height: 80px;
 	}
 	.scroll-v{
 		position: relative;
 	
-		height: calc(100vh - 100px);
+		height: calc(100vh - 120px);
 	}
 	/* #endif */
 </style>
