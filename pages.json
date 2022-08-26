@@ -1,0 +1,100 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationStyle":"custom"
+			}
+		}
+	    ,{
+            "path" : "pages/video/video",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/care/care",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/mine/mine",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/indexMenu/rank/rank",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/songDetail/songDetail",
+            "style" :                                                                                    
+            {
+                "navigationStyle":"custom"
+            }
+            
+        }
+        ,{
+            "path" : "pages/comments/comments",
+            "style" :                                                                                    
+            {
+                "navigationStyle":"custom"
+            }
+            
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	 "tabBar": {
+	 	"color": "#7A7E83",
+	 	"selectedColor": "#d32839",
+	 	"borderStyle": "black",
+	 	"backgroundColor": "#F8F8F8",
+	 	"list": [
+	 		{
+	 		  "pagePath": "pages/index/index",
+	 		  "text": "发现",
+	 		  "iconPath": "/static/images/tabs/dis.png",
+	 		  "selectedIconPath": "/static/images/tabs/dis_selected.png"      
+	 		},
+	 		{
+	 		  "pagePath": "pages/video/video",
+	 		  "text": "视频",
+	 		  "iconPath": "/static/images/tabs/video.png",
+	 		  "selectedIconPath": "/static/images/tabs/video_selected.png"
+	 		},
+			{
+			  "pagePath": "pages/care/care",
+			  "text": "关注",
+			  "iconPath": "/static/images/tabs/care.png",
+			  "selectedIconPath": "/static/images/tabs/care_selected.png"
+			},
+	 		{
+	 		  "pagePath": "pages/mine/mine",
+	 		  "text": "我的",
+	 		  "iconPath": "/static/images/tabs/me.png",
+	 		  "selectedIconPath": "/static/images/tabs/me_selected.png"
+	 		}
+	 	]
+	 }
+}
