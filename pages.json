@@ -10,8 +10,7 @@
             "path" : "pages/video/video",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
+                "navigationStyle":"custom"
             }
             
         }
@@ -28,8 +27,7 @@
             "path" : "pages/mine/mine",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
+                "navigationStyle":"custom"
             }
             
         }
@@ -58,6 +56,22 @@
             }
             
         }
+        ,{
+            "path" : "pages/videoDetail/videoDetail",
+            "style" :                                                                                    
+            {
+                "navigationStyle":"custom"
+            }
+            
+        }
+        ,{
+            "path" : "pages/login/login",
+            "style" :                                                                                    
+            {
+                 "navigationStyle":"custom"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -79,7 +93,7 @@
 	 		},
 	 		{
 	 		  "pagePath": "pages/video/video",
-	 		  "text": "视频",
+	 		  "text": "MV",
 	 		  "iconPath": "/static/images/tabs/video.png",
 	 		  "selectedIconPath": "/static/images/tabs/video_selected.png"
 	 		},

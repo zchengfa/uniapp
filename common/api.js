@@ -15,7 +15,7 @@ function Get(URL){
 
 export function topList  (){
 	return new Promise(resolve=>{
-		Get(`${baseUrl}/toplist/detail`).then(res=>{
+		Get(`/toplist/detail`).then(res=>{
 			 let result = res.list
 			 resolve(result)
 		})
@@ -138,4 +138,45 @@ export function moreCommentsByOtherType(id,sortType,pageSize,pageNo) {
 //获取评论回复数据
 export function commentsReply(songId,commentId){
 	return Get(`/comment/floor?parentCommentId=${commentId}&id=${songId}&type=0`)
+}
+
+//全部.https://www.codeman.ink/api/mv/all?offset=1&limit=50
+export function allMv(offset,limit = 20){
+	return Get (`/mv/all?offset=${offset}&limit=${limit}`)
+}
+
+
+//获取MV详情信息https://www.codeman.ink/api/mv/detail/info?mvid=14559050（点赞数、分享数、评论数、当前用户对该mv是否点过赞{未登录默认为false}）
+export function mvInfo(mvId){
+	return Get(`/mv/detail/info?mvid=${mvId}`)
+}
+
+//mv 名字 , 歌手 , 发布时间 ,https://www.codeman.ink/api/mv/detail?mvid=14559050
+export function mvDetail(mvId){
+	return Get(`/mv/detail?mvid=${mvId}`)
+}
+
+//MV播放地址https://www.codeman.ink/api/mv/url?id=14559050
+export function mvUrl(mvId){
+	return Get(`/mv/url?id=${mvId}`)
+}
+
+//我的页面获取推荐歌单
+export function recommendSongSheet(){
+	return Get(`/personalized?limit=6`)
+}
+
+//获取验证码https://www.codeman.ink/api/captcha/sent?phone=
+export function sendValidate(phone){
+	return Get(`/captcha/sent?phone=${phone}`)
+}
+
+//验证手机验证码https://www.codeman.ink/api/captcha/verify?phone=13058018094&captcha=2544
+export function verifyCode(phone,code){
+	return Get(`/captcha/verify?phone=${phone}&captcha=${code}`)
+}
+
+//验证成功后使用该验证码和手机号进行登录https://www.codeman.ink/api/login/cellphone?phone=13058018094&captcha=8829
+export function loginWithPhone(phone,code){
+	return Get(`/login/cellphone?phone=${phone}&captcha=${code}`)
 }

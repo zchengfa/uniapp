@@ -173,6 +173,18 @@ audioContext.onEnded(()=>{
 
 Vue.prototype.$audio = audioContext
 
+//判断vuex中是否有token，有则表示用户已登录
+function checkLogin(){
+	let token = store.state.user.token
+	if(token){
+		return true
+	}
+	else{
+		return false
+	}
+}
+Vue.prototype.$checkLogin = checkLogin
+
 App.mpType = 'app'
 const app = new Vue({
     ...App,

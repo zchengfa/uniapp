@@ -1,6 +1,6 @@
 <template>
 	<view>
-		关注
+		<text class="care" @tap="login">登录</text>
 		<view class="bottom-control"  v-show="isShowBottomControl">
 			<music-controller></music-controller>
 		</view>
@@ -17,7 +17,9 @@
 			}
 		},
 		methods: {
-			
+			login(){
+				uni.login()
+			}
 		}
 	}
 </script>

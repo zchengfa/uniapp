@@ -64,7 +64,7 @@
 	/* #endif */
 	.input{
 		margin: 0 auto;
-		width: 60%;
+		width: 90%;
 		height: 32px;
 		border: none;
 		background:linear-gradient(to right, #ffe4f1, #f5dbff);

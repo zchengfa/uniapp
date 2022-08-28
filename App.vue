@@ -55,8 +55,13 @@
 	}
 	/*  #endif  */
 	.scroll-v{
-		height: calc(100vh - 150px);
+		height: calc(100vh - 100px);
 	}
+	/* #ifdef MP-WEIXIN */
+	.scroll-v{
+		height: calc(100vh - 130px);
+	}
+	/* #endif */
 	.title{
 		display: inline-block;
 		padding: 20px 0 0;

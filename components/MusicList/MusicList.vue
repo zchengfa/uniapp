@@ -34,6 +34,9 @@
 <script>
 	import { mapGetters } from 'vuex'
 	import { changeLoopMixin } from '@/common/mixins/mixins.js'
+	import '@/common/iconfont.css'
+	import '@/common/controller.css'
+	
 	export default {
 		name:"MusicList",
 		mixins:[changeLoopMixin],

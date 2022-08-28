@@ -84,7 +84,6 @@
 				lookLiveTitle:'',
 				styleSong:[],
 				styleTitle:'',
-				isShowMusicList:false,
 				pageMusicPlay:false,
 				resourceIdList:[]
 			}
@@ -210,18 +209,7 @@
 			this.init()
 
 		},
-		mounted() {
-			
-			//监听music-controller组件列表按钮发出的事件（显示播放列表）
-			uni.$on('showList',()=>{
-				this.isShowMusicList = true
-			})
-			
-			//监听music-list组件关闭播放列表的事件，将己组件中控制列表显示的变量作出改变
-			uni.$on('listCloseOver',()=>{
-				this.isShowMusicList = false
-			})
-		},
+		
 		
 	}
 </script>
@@ -229,6 +217,7 @@
 <style scoped>
 	
 	.top-box{
+		width: 100%;
 		height: 50px;
 	}
 	.scroll-menu,.mgc-song-sheet,.rec-sheet,.live{
