@@ -18,8 +18,7 @@
             "path" : "pages/care/care",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
+                "navigationStyle":"custom"
             }
             
         }
@@ -69,6 +68,22 @@
             "style" :                                                                                    
             {
                  "navigationStyle":"custom"
+            }
+            
+        }
+        ,{
+            "path" : "pages/register/register",
+            "style" :                                                                                    
+            {
+                "navigationStyle":"custom"
+            }
+            
+        }
+        ,{
+            "path" : "pages/search/search",
+            "style" :                                                                                    
+            {
+                "navigationStyle":"custom"
             }
             
         }

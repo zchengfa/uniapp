@@ -1,11 +1,11 @@
 <template>
 	<view class="index-content">
 		<!-- 顶部导航栏 -->
-		<view class="top-box">
-			<top-bar></top-bar>
+		<view class="top-box"  @tap="toSearch">
+			<top-bar :defaultKeyword="keywordD"></top-bar>
 		</view>
 		<!-- 页面主内容 -->
-		<scroll-view scroll-y="true" class="scroll-v" :style="{'height':scrollHeight}">
+		<scroll-view scroll-y="true" class="scroll-v" :style="scrollHeight">
 			<swiper :indicator-dots="true" indicator-color="#fff" indicator-active-color="#ff215c" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
 				<swiper-item v-for="(item,index) in banners" :key="index">
 					<view class="swiper-item">
@@ -61,7 +61,7 @@
 </template>
 
 <script>
-	import { indexScrollMenu , indexSongSheet , banner , homePageData } from '@/common/api.js'
+	import { indexScrollMenu , indexSongSheet , banner , homePageData ,keywordDefault} from '@/common/api.js'
 	import ScrollMenu from '@/components/ScrollMenu/ScrollMenu.vue'
 	import SongSheet from '@/components/SongSheet/SongSheet.vue'
 	import SongSheetAutoScr from '@/components/SongSheetAutoScr/SongSheetAutoScr.vue'
@@ -85,7 +85,8 @@
 				styleSong:[],
 				styleTitle:'',
 				pageMusicPlay:false,
-				resourceIdList:[]
+				resourceIdList:[],
+				keywordD:undefined
 			}
 		},
 		components:{
@@ -153,6 +154,19 @@
 			init(){
 				this.getScrollMenu()
 				this.getHomePageData()
+				this.getKeyword()
+			},
+			getKeyword(){
+				keywordDefault().then(res=>{
+					if(res.code === 200){
+						this.keywordD = res.data.showKeyword
+					}
+				})
+			},
+			toSearch(){
+				uni.navigateTo({
+					url:'../search/search?keyword='+this.keywordD
+				})
 			},
 			//保存播放列表
 			savePlayList(){
@@ -219,6 +233,9 @@
 	.top-box{
 		width: 100%;
 		height: 50px;
+		line-height: 32px;
+		font-size: 14px;
+		color: #fff;
 	}
 	.scroll-menu,.mgc-song-sheet,.rec-sheet,.live{
 		position: relative;
@@ -301,7 +318,7 @@
 	.scroll-v{
 		position: relative;
 	
-		height: calc(100vh - 120px);
+		height: calc(100vh - 70px);
 	}
 	/* #endif */
 </style>

@@ -88,6 +88,11 @@ export function lyric(songId) {
 }
 
 
+//默认搜索关键词https://www.codeman.ink/api/search/default
+export function keywordDefault() {
+	return Get('/search/default')
+}
+
 //  获取歌曲评论(新的评论接口)
 // /comment/new?type=0&id=1407551413&sortType=3&cursor=1602072870260&pageSize=20&pageNo=2
 //id : 资源 id, 如歌曲 id,mv id
@@ -179,4 +184,21 @@ export function verifyCode(phone,code){
 //验证成功后使用该验证码和手机号进行登录https://www.codeman.ink/api/login/cellphone?phone=13058018094&captcha=8829
 export function loginWithPhone(phone,code){
 	return Get(`/login/cellphone?phone=${phone}&captcha=${code}`)
+}
+
+//注册
+export function register(nickname,phone,pwd,code){
+	return Get(`/register/cellphone?phone=${phone}&password=${pwd}&captcha=${code}&nickname=${nickname}`)
+}
+
+//检测手机号是否被注册
+//https://www.codeman.ink/api/cellphone/existence/check?phone=
+export function checkPhone(phone){
+	return Get(`/cellphone/existence/check?phone=${phone}`)
+}
+
+
+//获取关注页面动态消息https://www.codeman.ink/api/event?pagesize=50说明 : 调用此接口 , 可获取各种动态 , 对应网页版网易云，朋友界面里的各种动态消息 ，如分享的视频，音乐，照片等！
+export function event(){
+	return Get(`/event?pagesize=50`)
 }

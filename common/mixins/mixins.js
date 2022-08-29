@@ -10,11 +10,17 @@ const bottomControlMixin = {
 		changeStyle(){
 			this.isShowBottomControl = Boolean(this.$store.state.music.audio)
 			
-			if(this.$store.state.music.audio){
-				this.scrollHeight = 'calc(100vh - 150px)'
+			if(Boolean(this.$store.state.music.audio)){
+				this.scrollHeight = 'height:calc(100vh - 150px);'
+				// #ifdef MP-WEIXIN
+				this.scrollHeight = 'height:calc(100vh - 130px);'
+				// #endif
 				
 			}
 		}
+	},
+	created(){
+		this.changeStyle()
 	},
 	mounted() {
 		

@@ -8,7 +8,9 @@
 		
 		<view class="input-box">
 			<slot name="center">
-				<input class="input" type="text" placeholder="搜索"/>
+				<view class="input">
+					{{defaultKeyword}}
+				</view>
 			</slot>
 		</view>
 		<view class="audio">
@@ -20,8 +22,17 @@
 </template>
 
 <script>
+	
 	export default {
 		name:"TopBar",
+		props:{
+			defaultKeyword:{
+				type:String,
+				default(){
+					return ''
+				}
+			}
+		},
 		data() {
 			return {
 				
@@ -54,10 +65,10 @@
 		height: 26px;
 	}
 	.input-box{
-		
+		width: 50%;
 		text-align: center;
 	}
-	/* #ifdef H5 */
+	/* #ifdef H5*/
 	.input-box{
 		flex: 1;
 	}
@@ -67,7 +78,7 @@
 		width: 90%;
 		height: 32px;
 		border: none;
-		background:linear-gradient(to right, #ffe4f1, #f5dbff);
+		background:linear-gradient(to right, #ffe4f1, #d6d6d6,#f75f7b);
 		border-radius: 18px;
 	}
 	.list,.audio{

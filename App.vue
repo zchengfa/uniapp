@@ -59,7 +59,7 @@
 	}
 	/* #ifdef MP-WEIXIN */
 	.scroll-v{
-		height: calc(100vh - 130px);
+		height: calc(100vh - 70px);
 	}
 	/* #endif */
 	.title{

@@ -1,6 +1,8 @@
 <template>
-	<view>
-		<text class="care" @tap="login">登录</text>
+	<view class="care">
+		<view class="nav">
+			<top-bar></top-bar>
+		</view>
 		<view class="bottom-control"  v-show="isShowBottomControl">
 			<music-controller></music-controller>
 		</view>
@@ -9,6 +11,7 @@
 
 <script>
 	import { bottomControlMixin } from '@/common/mixins/mixins.js'
+	import { event } from '@/common/api.js'
 	export default {
 		mixins:[bottomControlMixin],
 		data() {
@@ -17,9 +20,14 @@
 			}
 		},
 		methods: {
-			login(){
-				uni.login()
+			getEvent(){
+				event().then(res=>{
+					console.log(res)
+				})
 			}
+		},
+		created() {
+			this.getEvent()
 		}
 	}
 </script>

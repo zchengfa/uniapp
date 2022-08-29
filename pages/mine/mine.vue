@@ -5,7 +5,7 @@
 			<top-bar></top-bar>
 		</view>
 		
-		<scroll-view scroll-y="true" :style="{'height':scrollHeight}" class="scroll-v">
+		<scroll-view scroll-y="true" :style="scrollHeight" class="scroll-v">
 			<!-- 用户资料部分 用户未登录，展示引导用户登录模块，已登录则展示用户基本信息-->
 			<view class="user">
 				<view class="guide-login">
@@ -129,6 +129,12 @@
 	width: 100%;
 	height: 50px;
 }
+/* #ifdef MP-WEIXIN */
+.top-box{
+	width: 100%;
+	height: 80px;
+}
+/* #endif */
 .scroll-v{
 	margin: 0 auto;
 	width: 94%;
