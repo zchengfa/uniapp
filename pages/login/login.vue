@@ -5,7 +5,7 @@
 		</view>
 		<view class="form-box">
 			<uni-forms ref="form" :rules="rules" :modelValue="formData">
-				<uni-forms-item ref="input" label="手机号" name="phone">
+				<uni-forms-item ref="input" label="手机号" name="phone" class="form-item">
 					<input v-model="formData.phone" placeholder="请输入手机号" @blur="(e)=>$refs.input.onFieldChange($event.detail.value)" class="form-input" />
 				</uni-forms-item>
 				<!-- <uni-forms-item label="密码" name="pwd">
@@ -203,6 +203,12 @@
 	line-height: 50px;
 	text-align: center;
 }
+/* #ifdef MP-WEIXIN */
+.nav-bar{
+	height: 80px;
+	line-height: 80px;
+}
+/* #endif */
 .form-box{
 	width: 80%;
 }
@@ -215,6 +221,7 @@
 	border-radius: 23px;
 	box-shadow: 0 0 20px 2px #dedede
 }
+
 
 .form-input{
 	position: relative;

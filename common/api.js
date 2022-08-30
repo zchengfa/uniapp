@@ -93,6 +93,21 @@ export function keywordDefault() {
 	return Get('/search/default')
 }
 
+//搜索建议https://www.codeman.ink/api/search/suggest?keywords=海阔天空&type=mobile
+export function searchSuggest(keyword) {
+	return Get(`/search/suggest?keywords=${keyword}&type=mobile`)
+}
+
+//热搜榜https://www.codeman.ink/api/search/hot/detail
+export function hotSearch() {
+	return Get(`/search/hot/detail`)
+}
+
+//综合搜索https://www.codeman.ink/api/search?keywords=海阔天空&type=1018
+export function summarySearch(word,type=1018,offset=1,limit=30) {
+	return Get(`/search?keywords=${word}&type=${type}&offset=${offset}&limit=${limit}`)
+}
+
 //  获取歌曲评论(新的评论接口)
 // /comment/new?type=0&id=1407551413&sortType=3&cursor=1602072870260&pageSize=20&pageNo=2
 //id : 资源 id, 如歌曲 id,mv id
