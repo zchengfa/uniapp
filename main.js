@@ -2,7 +2,7 @@ import App from './App'
 import MusicController from 'components/MusicController/MusicController.vue'
 import TopBar from '@/components/TopBar/TopBar.vue'
 import NavBar from '@/components/NavBar/NavBar.vue'
-import { dealCount , dealAuthor , throttle , level} from '@/utils/utils.js'
+import { dealCount , dealAuthor , throttle , level, timeFormatting ,transTime} from '@/utils/utils.js'
 import { songExceptLyric , lyric} from '@/common/api.js'
 import MusicList from '@/components/MusicList/MusicList.vue'
 import store from './store'
@@ -20,6 +20,8 @@ Vue.prototype.$dealCount = dealCount
 Vue.prototype.$dealAuthor = dealAuthor
 Vue.prototype.$song = songExceptLyric
 Vue.prototype.$level = level
+Vue.prototype.$timeFormate = timeFormatting
+Vue.prototype.$transTime = transTime
 
 function save(res){
 	

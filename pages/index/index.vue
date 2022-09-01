@@ -165,7 +165,7 @@
 			},
 			toSearch(){
 				uni.navigateTo({
-					url:'../search/search?keyword='+this.keywordD
+					url:'../search/search?keyword='+encodeURIComponent(this.keywordD)
 				})
 			},
 			//保存播放列表

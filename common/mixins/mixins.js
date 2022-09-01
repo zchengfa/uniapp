@@ -3,7 +3,9 @@ const bottomControlMixin = {
 		return {
 			isShowBottomControl:true,
 			scrollHeight:undefined,
-			isShowMusicList:false
+			isShowMusicList:false,
+			scrollHeightT:undefined,
+			scrollHeightTh:undefined
 		}
 	},
 	methods:{
@@ -12,8 +14,11 @@ const bottomControlMixin = {
 			
 			if(Boolean(this.$store.state.music.audio)){
 				this.scrollHeight = 'height:calc(100vh - 150px);'
+				this.scrollHeightT = 'height:calc(100vh - 100px);'
+				
 				// #ifdef MP-WEIXIN
 				this.scrollHeight = 'height:calc(100vh - 130px);'
+				
 				// #endif
 				
 			}
@@ -78,8 +83,68 @@ const changeLoopMixin = {
 		},
 	}
 }
+import { summarySearch } from '@/common/api.js'
+const serachScrollMixin = {
+	props:{
+		data:{
+			type:Object,
+			default(){
+				return {}
+			}
+		},
+		type:{
+			type:Number,
+			default(){
+				return 0
+			}
+		},
+		word:{
+			type:String,
+			default(){
+				return ''
+			}
+		},
+		count:{
+			type:Number,
+			default(){
+				return 0
+			}
+		},
+		prop:{
+			type:String,
+			default(){
+				return ''
+			}
+		}
+	},
+	data(){
+		return {
+			pageSize:1
+		}
+	},
+	methods:{
+		loadMore(){
+			
+			if(this.$props.data.hasMore || this.$props.count > this.$props.data[this.$props.prop].length){
+				uni.showLoading({
+					title:'加载更多...'
+				})
+				this.pageSize ++
+				summarySearch(this.$props.word,this.$props.type,this.pageSize).then(res=>{
+					if(res.code === 200){
+						this.$emit('more',{'type':this.$props.type,'data':res.result})
+						uni.hideLoading()
+					}
+					
+				})
+				
+			}
+		}
+	}
+}
 
 module.exports = {
 	bottomControlMixin,
-	changeLoopMixin
+	changeLoopMixin,
+	serachScrollMixin
 }

@@ -7,25 +7,26 @@
 			</view>
 			<view class="input-box">
 				<text class="iconfont musicsearch"></text>
-				<input ref="input" type="text" class="input" @input="suggest" v-model="searchKeyword" :placeholder="keyword"/>
+				<input ref="input" type="text" class="input" @focus="focus" @input="suggest" v-model.trim="searchKeyword" :placeholder="keyword"/>
+				<text v-show="searchKeyword" class="iconfont musicclose" @tap="closeResult"></text>
 			</view>
 			<view class="search-b">
 				<button class="mini-btn search" type="default" size="mini" @tap="search(searchKeyword)">搜索</button>
 			</view>
 		</view>
-		<!-- 搜索建议结果 -->
-		<view class="suggest-result" v-if="suggestResult">
-			<view class="result-item" v-for="(item,index) in suggestResult" :key="index" @tap="search(item.keyword)">
-				<text class="iconfont musicsearch"></text>
-				<view class="keyword-box">
-					<text v-if="item.match" class="match">{{item.match}}</text>
-					<text v-if="item.lastMatch" class="last-match">{{item.lastMatch}}</text>
-					<text v-if="!item.match && !item.lastMatch">{{item.keyword}}</text>
+		<scroll-view scroll-y="true" class="scroll-v"  :style="scrollHeightT">
+			<!-- 搜索历史 -->
+			<view class="search-history" v-if="history.length">
+				<view class="history-top">
+					<text class="title">历史</text>
+					<text class="iconfont musicdelete" @tap="clearAllHistory"></text>
+				</view>
+				<view class="history-bottom">
+					<text @tap="search(item)" class="his-item" v-for="(item,index) in history" :key="index">{{item}}</text>
+					
 				</view>
 			</view>
-		</view>
-		<!-- 热搜榜 -->
-		<scroll-view scroll-y="true" class="scroll-v">
+			<!-- 热搜榜 -->
 			<view class="hot-search">
 				<text class="title">热搜榜</text>
 				<view class="hot-item" v-for="(item,index) in hotSearch" :key="index">
@@ -35,8 +36,19 @@
 				</view>
 			</view>
 		</scroll-view>
+		<!-- 搜索建议结果 -->
+		<view class="suggest-result" v-if="suggestResult.length">
+			<view class="result-item" v-for="(item,index) in suggestResult" :key="index" @tap="search(item.keyword)">
+				<text class="iconfont musicsearch"></text>
+				<view class="keyword-box">
+					<text v-if="item.match" class="match">{{item.match}}</text>
+					<text v-if="item.lastMatch" class="last-match">{{item.lastMatch}}</text>
+					<text v-if="!item.match && !item.lastMatch">{{item.keyword}}</text>
+				</view>
+			</view>
+		</view>
 		<!-- 搜索结果展示 -->
-		<scroll-view scroll-y="true" class="scroll-v search-result">
+		<scroll-view scroll-y="true" class="scroll-v search-result" v-if="isShowResult">
 			<view class="scroll-menu">
 				<scroll-view scroll-x="true" class="scroll-x" scroll-left="0" :scroll-into-view="into" scroll-with-animation="true">
 					<view class="menu-box">
@@ -46,17 +58,39 @@
 						</view>
 					</view>
 				</scroll-view>
-				<scroll-view scroll-x="true" class="scroll-x summary-scroll" scroll-left="0" :scroll-into-view="into" scroll-with-animation="true">
-					<view class="components-box menu-box">
-						<Summary :song="summary.song" 
+				<swiper class="summary-scroll" :style="scrollHeight" :indicator-dots="false" :autoplay="false"  :duration="300" @change="changeItem" :current="currentIndex">
+					<swiper-item>
+						<Summary :song="summary.song"
 						:playList="summary.playList" 
 						:word="searchKeyword" 
 						:artist="summary.artist"
-						class="component-item"></Summary>
-						<single-song class="component-item"></single-song>
-						<Sheet class="component-item"></Sheet>
-					</view>
-				</scroll-view>
+						:sim="summary.sim_query"
+						:album="summary.album"
+						class="component-item"
+						></Summary>
+					</swiper-item>
+					<swiper-item>
+						<single-song :data="single" :type="searchType" @more="more" :word="searchKeyword" :count="single.songCount" prop="songs" class="component-item"></single-song>
+					</swiper-item>
+					<swiper-item>
+						<Sheet :data="songSheet" :type="searchType" @more="more" :word="searchKeyword" :count="songSheet.playlistCount" prop="playlists" class="component-item"></Sheet>
+					</swiper-item>
+					<swiper-item>
+						<Video :data="video" :type="searchType" @more="more" :word="searchKeyword" :count="video.videoCount" prop="videos" class="component-item"></Video>
+					</swiper-item>
+					<swiper-item>
+						<Songer :data="songer" :type="searchType" @more="more" :word="searchKeyword" :count="songer.artistCount" prop="artists" class="component-item"></Songer>
+					</swiper-item>
+					<swiper-item>
+						<Album :data="album" :type="searchType" @more="more" :word="searchKeyword" :count="album.albumCount" prop="albums" class="component-item"></Album>
+					</swiper-item>
+					<swiper-item>
+						<User :data="user" :type="searchType" @more="more" :word="searchKeyword" :count="user.userprofileCount" prop="userprofiles" class="component-item"></User>
+					</swiper-item>
+					<swiper-item>
+						<Lyrics @openOrCloseLy="openOrCloseLy" :key="lyricKey" :data="lyrics" :type="searchType" @more="more" :word="searchKeyword" :count="lyrics.songCount" prop="songs" class="component-item"></Lyrics>
+					</swiper-item>
+				</swiper>
 			</view>
 		</scroll-view>
 		<!-- 底部音乐控制 -->
@@ -76,13 +110,23 @@
 	import Summary from './components/Summary.vue'
 	import SingleSong from './components/SingleSong.vue'
 	import Sheet from './components/Sheet.vue'
+	import Video from './components/Video.vue'
+	import Songer from './components/Songer.vue'
+	import Album from './components/Album.vue'
+	import User from './components/User.vue'
+	import Lyrics from './components/Lyrics.vue'
 	
 	export default {
 		mixins:[bottomControlMixin],
 		components:{
 			Summary,
 			SingleSong,
-			Sheet
+			Sheet,
+			Video,
+			Songer,
+			Album,
+			User,
+			Lyrics
 		},
 		data() {
 			return {
@@ -93,6 +137,18 @@
 				currentIndex:0,
 				into:'t0',
 				summary:{},
+				isShowResult:false,
+				history:[],
+				searchType:1018,
+				single:{},
+				songSheet:{},
+				songer:{},
+				video:{},
+				album:{},
+				user:{},
+				lyrics:{},
+				lyricKey:0,
+				isSelected:false,
 				menu:[
 					{
 					'text':'综合',
@@ -130,34 +186,50 @@
 					'into':'t6'
 					},
 					{
-					'text':'MV',
-					'type':1004,
-					'into':'t7'
-					},
-					{
-					'text':'声音',
-					'type':2000,
-					'into':'t8'
-					},
-					{
-					'text':'电台',
-					'type':1009,
-					'into':'t9'
-					},
-					{
 					'text':'歌词',
 					'type':1006,
-					'into':'t10'
+					'into':'t7'
 					}
 				]
 			}
 		},
 		methods: {
+			changeItem(e){
+				this.into = 't' + e.detail.current
+				this.currentIndex = e.detail.current
+				this.searchType = this.menu[e.detail.current].type
+				if(!this.isSelected){
+					this.search()
+				}
+				else{
+					this.isSelected = false
+				}
+			},
 			back(){
 				uni.navigateBack()
 			},
+			closeResult(){
+				//点×关闭结果页
+				this.isShowResult = false
+				this.searchKeyword = undefined
+				this.suggestResult = []
+			},
+			clearAllHistory(){
+				uni.showModal({
+					title:'提示：',
+					content:'确定清空全部历史记录?',
+					success:async () =>{
+						
+						await	uni.setStorageSync('search_history',[])
+						this.history = []
+					}
+				})
+				 
+			},
 			suggest(){
-				if(this.searchKeyword.length >0){
+				
+				if(this.searchKeyword){
+					
 					searchSuggest(this.searchKeyword).then(res=>{
 						if(res.code === 200){
 							this.suggestResult = res.result.allMatch
@@ -180,19 +252,74 @@
 					this.suggestResult = []
 				}
 			},
-			search(keyword){
-				if(!keyword){
+			search(word){
+				
+				if(!word){
 					this.searchKeyword = this.keyword
 				}
 				else{
-					this.searchKeyword = keyword
+					this.searchKeyword = word
+					this.keyword = this.searchKeyword
 				}
 				this.suggestResult = []
-				summarySearch(this.searchKeyword).then(res=>{
-					if(res.code === 200){
-						this.summary = res.result
-					}
+				uni.showLoading({
+					title:'加载中...'
+				})
+				summarySearch(this.searchKeyword,this.searchType).then(res=>{
 					console.log(res)
+					if(res.code === 200){
+						if(this.searchType === 1018){
+							this.summary = {}
+							this.summary = res.result
+						}
+						else if (this.searchType === 1){
+							this.single = {}
+							this.single = res.result
+						}
+						else if(this.searchType === 1000){
+							this.songSheet = {}
+							this.songSheet = res.result
+						}
+						else if(this.searchType === 1014){
+							this.video = {}
+							this.video = res.result
+						}
+						else if(this.searchType === 100){
+							this.songer = {}
+							this.songer = res.result
+						}
+						else if(this.searchType === 10){
+							this.album = {}
+							this.album = res.result
+						}
+						else if(this.searchType === 1002){
+							this.user = {}
+							this.user = res.result
+						}
+						else if(this.searchType === 1006){
+							this.lyrics = {}
+							this.lyrics = res.result
+							if(this.lyrics){
+								this.lyrics.songs.map(item=>{
+									item.isOpen = false
+								})
+							}
+						}
+						
+						this.isShowResult = true
+						//获取数据后，将搜索词加入到搜索历史中
+						//1.先判断当前的搜索词是否已经在历史中，若存在则先删除，再将它放入历史首位
+						let index = this.history.indexOf(this.searchKeyword.replace(/\s+/g,''))
+						console.log(this.searchKeyword.replace(/\s+/g,''))
+						if(index !== -1){
+							this.history.splice(index,1)	
+						}
+						//console.log(this.searchKeyword.length)
+						this.history.unshift(this.searchKeyword)
+						uni.setStorageSync('search_history',this.history)
+						uni.hideLoading()
+					}
+					
 				})
 			},
 			getHotSearch(){
@@ -207,17 +334,73 @@
 			searchByType(type,index){
 				this.currentIndex = index
 				this.into = 't'+ (index-2)
-				console.log(type,this.searchKeyword)
+				this.searchType = type
+				this.search()
+				this.isSelected = true
+			},
+			//输入框聚焦时
+			focus(){
+				//如果搜索结果正在展示就关闭展示
+				this.isShowResult?this.isShowResult = false:null
+				this.suggest()
+			},
+			//接收子组件发出的加载更多事件
+			more({type,data}){
+				if(type === 1){
+					this.single.hasMore = data.hasMore
+					this.single.songs.push(...data.songs)
+				}
+				else if (type === 1000){
+					this.songSheet.hasMore = data.hasMore
+					this.songSheet.playlists.push(...data.playlists)
+				}
+				else if (type === 1014){
+					this.video.hasMore = data.hasMore
+					this.video.videos.push(...data.videos)
+				}
+				else if (type === 100){
+					this.songer.hasMore = data.hasMore
+					this.songer.artists.push(...data.artists)
+				}
+				else if (type === 10){
+					this.album.hasMore = data.hasMore
+					this.album.albums.push(...data.albums)
+				}
+				else if (type === 1002){
+					this.user.hasMore = data.hasMore
+					this.user.userprofiles.push(...data.userprofiles)
+				}
+				else if (type === 1006){
+					this.lyrics.hasMore = data.hasMore
+					this.lyrics.songs.push(...data.songs)
+				}
+			},
+			//接收子组件发出的展开或收起歌词事件
+			openOrCloseLy(i){
+				
+				this.lyrics.songs.map((item,index)=>{
+					
+					if(index === i){
+						item.isOpen = !item.isOpen
+					}
+				})
+				this.lyricKey ++
+				//console.log(this.lyrics.songs)
 			}
 		},
 		onLoad(options) {
-			this.keyword = options.keyword
+			this.keyword = decodeURIComponent(options.keyword)
 			this.getHotSearch()
+			this.history = uni.getStorageSync('search_history') || []
 		}
 	}
 </script>
 
 <style scoped lang="scss">
+	.search-container{
+		background-color: #f3f3f3;
+	}
+	
 .menu-active{
 	position: relative;
 	top:-16px;
@@ -263,14 +446,21 @@
 			text-align: left;
 			text-indent: 40px;
 		}
-		.musicsearch{
+		.musicsearch,.musicclose{
 			position: absolute;
-			left:10%;
+			
 			display: inline-block;
 			height: 100%;
 			line-height: 30px;
 			color: #B5B5B5;
 			z-index: 999;
+		}
+		.musicsearch{
+			left:10%;
+		}
+		.musicclose{
+			top:0;
+			right:10%;
 		}
 	}
 	.search{
@@ -300,11 +490,53 @@
 .scroll-v{
 	height: calc(100vh - 50px);
 }
+// 搜索历史
+.search-history{
+	padding: 10px;
+	.history-top{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 10px 0;
+		.title{
+			padding: 0;
+		}
+		.musicdelete{
+			color: #bcbcbc;
+		}
+	}
+	.history-bottom{
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		flex-wrap: wrap;
+		.his-item{
+			margin-bottom: 10px;
+			margin-right: 10px;
+			padding: 5px 10px;
+			border-radius: 16px;
+			color: #919191;
+			font-size: 12px;
+			background-color: #fff;
+		}
+		// .arrow{
+		// 	position: relative;
+		// 	top:-5px;
+		// 	padding: 2px;
+		// 	border-radius: 50%;
+		// 	background-color: #fff;
+		// 	transform: rotate(90deg);
+		// }
+	}
+}
+// 热搜榜
 .hot-search{
 	margin: 0 auto;
-	width: 94%;
+	width: 92%;
+	padding: 0 5px;
 	background-color: #fff;
 	font-size: 12px;
+	border-radius: 6px;
 	.title{
 		display: block;
 		padding: 15px 0;
@@ -331,18 +563,25 @@
 		}
 	}
 }
+//搜索建议展示
+.suggest-result{
+	position: absolute;
+	top:50px;
+	width: 100%;
+	height: calc(100% - 50px);
+	z-index: 999;
+	background-color: #fff;
+}
 // 搜索结果展示部分（含有菜单）
 .search-result{
 	position: absolute;
 	top:50px;
-	background-color: #efefef;
+	background-color: #fff;
 	
-	.scroll-menu{
+	
+	.scroll-x{
 		margin: 0 auto;
 		width: 94%;
-	}
-	.scroll-x{
-		width: 100%;
 		white-space: nowrap;
 		.menu-box{
 			display: flex;
@@ -358,7 +597,7 @@
 		}
 	}
 	.summary-scroll{
-		height: calc(100vh - 150px);
+		height: calc(100vh - 90px);
 	}
 }
 

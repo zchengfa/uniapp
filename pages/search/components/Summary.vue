@@ -60,6 +60,13 @@
 					<text class="tag">></text>
 				</view>
 			</view>
+			<!-- 相关搜索 -->
+			<view class="sim-search scroll-item" v-if="sim.sim_querys">
+				<text class="title">相关搜索</text>
+				<view class="sim-box">
+					<text class="sim-text" v-for="(item,index) in sim.sim_querys" :key="index">{{item.keyword}}</text>
+				</view>
+			</view>
 			<!-- 艺人 -->
 			<view class="artist scroll-item">
 				<text class="title">艺人</text>
@@ -80,6 +87,28 @@
 				</view>
 				<view class="bottom-item sheet-bottom" v-if="artist.more">
 					<text>{{artist.moreText}}</text>
+					<text class="tag">></text>
+				</view>
+			</view>
+			<!-- 专辑 -->
+			<view class="album scroll-item">
+				<text class="title">专辑</text>
+				<view class="album-item" v-for="(item,index) in album.albums" :key="index">
+					<view class="image-box">
+						<image class="album-image" :src="item.picUrl" ></image>
+					</view>
+					<view class="info">
+						<text class="song-name">{{item.name}}</text>
+						<view class="name-publish-time">
+							<text class="author">{{item.artist.name}}</text>
+							<text class="publish-time">{{$timeFormate('YYYY.MM.DD',new Date(item.publishTime))}}</text>
+						</view>
+					</view>
+				</view>
+				<view class="bottom-item sheet-bottom" v-if="album.more">
+					<view class="no-match">
+						<text>{{album.moreText}}</text>
+					</view>
 					<text class="tag">></text>
 				</view>
 			</view>
@@ -117,6 +146,18 @@
 				default(){
 					return {}
 				}
+			},
+			sim:{
+				type:Object,
+				default(){
+					return {}
+				}
+			},
+			album:{
+				type:Object,
+				default(){
+					return {}
+				}
 			}
 		},
 		methods:{
@@ -136,6 +177,7 @@
 
 <style lang="scss" scoped >
 	.summary-container{
+		margin: 0 auto;
 		width: 94vw;
 	}
 	.title{
@@ -159,6 +201,7 @@
 		height: calc(100vh - 150px);
 		font-size: 14px;
 		font-size: 12px;
+		
 		.song-item{
 			display: flex;
 			justify-content: space-between;
@@ -189,9 +232,7 @@
 				.self-info{
 					padding-top: 5px;
 				}
-				.author{
-					color: #007AFF;
-				}
+				
 				.alia{
 					display: block;
 					position: relative;
@@ -208,6 +249,9 @@
 					margin: 0 10px;
 				}
 			}
+		}
+		.author{
+			color: #007AFF;
 		}
 		.bottom-item{
 			display: flex;
@@ -267,7 +311,7 @@
 			align-items: center;
 			padding: 10px 0;
 			.care{
-				padding: 4px 8px;
+				padding: 2px 8px;
 				border: 1px solid #f00;
 				border-radius: 16px;
 				color: #f00;
@@ -302,5 +346,53 @@
 				border-radius: 50%;
 			}
 		}
+	}
+	.sim-search{
+		.sim-box{
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			flex-wrap: wrap;
+			padding: 10px 0;
+			.sim-text{
+				padding: 5px 10px;
+				background-color: #dcdcdc;
+				border-radius: 16px;
+				margin-right: 20px;
+				margin-bottom: 10px;
+			}
+		}
+	}
+	.album{
+		.album-item{
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			margin-top: 10px;
+		}
+		.album-image{
+			width: 50px;
+			height: 50px;
+			border-radius: 6px;
+		}
+		.info{
+			margin-left: 10px;
+			.song-name{
+				display: block;
+				max-width: 240px;
+				font-size: 14px;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+			.name-publish-time{
+				margin-top: 6px;
+				.publish-time{
+					margin-left: 6px;
+					color: #bfbfbf;
+				}
+			}
+		}
+		
 	}
 </style>

@@ -49,6 +49,9 @@
 		transform: translateX(-50%);
 		box-shadow: 0 0 2px 2px #C0C0C0;
 	}
+	.scroll-v{
+		margin: 0 auto;
+	}
 	/* #ifdef MP-WEIXIN */
 	.bottom-control{
 		bottom: 0;
@@ -144,5 +147,10 @@
 	}
 	.song-author{
 		color: #B5B5B5;
+	}
+	.empty{
+		position: relative;
+		top:10%;
+		color: #b6b6b6;
 	}
 </style>
