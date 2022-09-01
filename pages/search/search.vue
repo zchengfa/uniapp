@@ -48,7 +48,7 @@
 			</view>
 		</view>
 		<!-- 搜索结果展示 -->
-		<scroll-view scroll-y="true" class="scroll-v search-result" v-if="isShowResult">
+		<scroll-view scroll-y="true" class="scroll-v search-result" v-if="isShowResult"  :style="scrollHeightT">
 			<view class="scroll-menu">
 				<scroll-view scroll-x="true" class="scroll-x" scroll-left="0" :scroll-into-view="into" scroll-with-animation="true">
 					<view class="menu-box">
@@ -58,7 +58,7 @@
 						</view>
 					</view>
 				</scroll-view>
-				<swiper class="summary-scroll" :style="scrollHeight" :indicator-dots="false" :autoplay="false"  :duration="300" @change="changeItem" :current="currentIndex">
+				<swiper class="summary-scroll" :indicator-dots="false" :autoplay="false"  :duration="300" @change="changeItem" :current="currentIndex">
 					<swiper-item>
 						<Summary :song="summary.song"
 						:playList="summary.playList" 
@@ -76,7 +76,7 @@
 						<Sheet :data="songSheet" :type="searchType" @more="more" :word="searchKeyword" :count="songSheet.playlistCount" prop="playlists" class="component-item"></Sheet>
 					</swiper-item>
 					<swiper-item>
-						<Video :data="video" :type="searchType" @more="more" :word="searchKeyword" :count="video.videoCount" prop="videos" class="component-item"></Video>
+						<video-search :data="video" :type="searchType" @more="more" :word="searchKeyword" :count="video.videoCount" prop="videos" class="component-item"></video-search>
 					</swiper-item>
 					<swiper-item>
 						<Songer :data="songer" :type="searchType" @more="more" :word="searchKeyword" :count="songer.artistCount" prop="artists" class="component-item"></Songer>
@@ -107,14 +107,14 @@
 	import '@/common/iconfont.css'
 	import { searchSuggest , hotSearch,summarySearch} from '@/common/api.js'
 	import { bottomControlMixin } from '@/common/mixins/mixins.js'
-	import Summary from './components/Summary.vue'
-	import SingleSong from './components/SingleSong.vue'
-	import Sheet from './components/Sheet.vue'
-	import Video from './components/Video.vue'
-	import Songer from './components/Songer.vue'
-	import Album from './components/Album.vue'
-	import User from './components/User.vue'
-	import Lyrics from './components/Lyrics.vue'
+	import Summary from './components/Summary/Summary.vue'
+	import SingleSong from './components/SingleSong/SingleSong.vue'
+	import Sheet from './components/Sheet/Sheet.vue'
+	import VideoSearch from './components/VideoSearch/VideoSearch.vue'
+	import Songer from './components/Songer/Songer.vue'
+	import Album from './components/Album/Album.vue'
+	import User from './components/User/User.vue'
+	import Lyrics from './components/Lyrics/Lyrics.vue'
 	
 	export default {
 		mixins:[bottomControlMixin],
@@ -122,7 +122,7 @@
 			Summary,
 			SingleSong,
 			Sheet,
-			Video,
+			VideoSearch,
 			Songer,
 			Album,
 			User,
@@ -266,7 +266,7 @@
 					title:'加载中...'
 				})
 				summarySearch(this.searchKeyword,this.searchType).then(res=>{
-					console.log(res)
+					
 					if(res.code === 200){
 						if(this.searchType === 1018){
 							this.summary = {}
@@ -310,7 +310,7 @@
 						//获取数据后，将搜索词加入到搜索历史中
 						//1.先判断当前的搜索词是否已经在历史中，若存在则先删除，再将它放入历史首位
 						let index = this.history.indexOf(this.searchKeyword.replace(/\s+/g,''))
-						console.log(this.searchKeyword.replace(/\s+/g,''))
+					
 						if(index !== -1){
 							this.history.splice(index,1)	
 						}
@@ -462,6 +462,12 @@
 			top:0;
 			right:10%;
 		}
+		// #ifdef MP-WEIXIN
+		.musicclose{
+			top:0;
+			right:15%;
+		}
+		// #endif
 	}
 	.search{
 		padding: 0;
@@ -519,14 +525,7 @@
 			font-size: 12px;
 			background-color: #fff;
 		}
-		// .arrow{
-		// 	position: relative;
-		// 	top:-5px;
-		// 	padding: 2px;
-		// 	border-radius: 50%;
-		// 	background-color: #fff;
-		// 	transform: rotate(90deg);
-		// }
+		
 	}
 }
 // 热搜榜
@@ -589,7 +588,8 @@
 			align-items: center;
 			
 			.menu-item{
-				margin-right: 30px;
+				margin-left: 10px;
+				margin-right: 20px;
 				height: 40px;
 				font-size: 14px;
 				line-height: 40px;
@@ -599,6 +599,11 @@
 	.summary-scroll{
 		height: calc(100vh - 90px);
 	}
+	// #ifdef MP-WEIXIN
+	.summary-scroll{
+		height: calc(100vh - 175px);
+	}
+	// #endif
 }
 
 .bottom-control{

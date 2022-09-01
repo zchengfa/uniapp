@@ -15,10 +15,11 @@ const bottomControlMixin = {
 			if(Boolean(this.$store.state.music.audio)){
 				this.scrollHeight = 'height:calc(100vh - 150px);'
 				this.scrollHeightT = 'height:calc(100vh - 100px);'
-				
+				this.scrollHeightTh = 'height:calc(100vh - 100px);'
 				// #ifdef MP-WEIXIN
 				this.scrollHeight = 'height:calc(100vh - 130px);'
-				
+				this.scrollHeightT = 'height:calc(100vh - 130px);'
+				this.scrollHeightTh = 'height:calc(100vh - 175px);'
 				// #endif
 				
 			}

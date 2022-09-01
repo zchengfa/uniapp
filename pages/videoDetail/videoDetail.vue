@@ -285,6 +285,7 @@
 	.nav-left{
 		position: relative;
 		top:20px;
+		text-align: left;
 	}
 	/* #endif */
 </style>

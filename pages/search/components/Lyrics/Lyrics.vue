@@ -23,6 +23,7 @@
 						<text class="tag">词</text>
 						<view class="lyric-box">
 							<text class="lyric" :class="item.isOpen?'open-active':'close-active'">{{item.lyrics.txt}}</text>
+							<!-- #ifdef H5 -->
 							<view class="open-box" v-show="!item.isOpen" @tap="openOrCloseLy(index)">
 								<text class="open">展开歌词</text>
 								<image class="image" src="~@/static/images/down.png"></image>
@@ -31,6 +32,17 @@
 								<text class="close">收起歌词</text>
 								<image class="image" src="~@/static/images/up.png"></image>
 							</view>
+							<!-- #endif -->
+							<!-- #ifdef MP-WEIXIN -->
+							<view class="open-box" v-if="!item.isOpen" @tap="openOrCloseLy(index)">
+								<text class="open">展开歌词</text>
+								<image class="image" src="~@/static/images/down.png"></image>
+							</view>
+							<view class="close-box" v-else @tap="openOrCloseLy(index)">
+								<text class="close">收起歌词</text>
+								<image class="image" src="~@/static/images/up.png"></image>
+							</view>
+							<!-- #endif -->
 						</view>
 					</view>
 				</view>

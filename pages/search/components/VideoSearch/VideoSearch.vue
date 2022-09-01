@@ -43,13 +43,17 @@
 </script>
 
 <style scoped lang="scss">
-	.scroll-v{
+	.video-container{
 		margin: 0 auto;
-		width: 94%;
+		width: 94vw;
+	}
+	.scroll-v{
 		
+		height: calc(100vh - 100px);
 		background-color: #fff;
 		border-radius: 6px;
 		font-size: 12px;
+		
 	}
 	.sheets-item{
 		display: flex;

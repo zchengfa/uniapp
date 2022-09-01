@@ -1,6 +1,6 @@
 <template>
 	<view class="single-song-container">
-		<scroll-view scroll-y="true" class="scroll-v" @scrolltolower="loadMore" v-if="count">
+		<scroll-view scroll-y="true" class="scroll-v" :style="scrollHeight" @scrolltolower="loadMore" v-if="count">
 			<view class="song-item" v-for="(item,index) in data.songs" :key="index">
 				<view class="left">
 					<text class="song-name">{{item.name}}</text>
@@ -25,10 +25,10 @@
 	
 <script >
 	
-	import { serachScrollMixin } from '@/common/mixins/mixins.js'
+	import { serachScrollMixin,bottomControlMixin } from '@/common/mixins/mixins.js'
 	export default {
 		name:'SingleSong',
-		mixins:[serachScrollMixin]
+		mixins:[serachScrollMixin,bottomControlMixin ]
 		
 	}
 </script>

@@ -202,11 +202,13 @@
 	height: 50px;
 	line-height: 50px;
 	text-align: center;
+	font-size: 24px;
 }
 /* #ifdef MP-WEIXIN */
 .nav-bar{
 	height: 80px;
 	line-height: 80px;
+	
 }
 /* #endif */
 .form-box{
@@ -231,6 +233,7 @@
 	height: 100%;
 	font-size: 12px;
 }
+
 .validate-code,.timer{
 	position: relative;
 	top:-3px;
@@ -277,4 +280,21 @@
 	color: #007AFF;
 	text-decoration: underline;
 }
+
+/* #ifdef MP-WEIXIN */
+
+.form-box{
+	padding: 10px;
+	box-shadow: 0 4px 4px 4px #d5d5d5;
+	border-radius: 6px;
+}
+.form-input{
+	position: relative;
+	top:0;
+	height: 36px;
+}
+.validate-code,.timer{
+	top:-15px;
+}
+/* #endif */
 </style>

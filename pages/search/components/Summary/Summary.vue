@@ -1,6 +1,6 @@
 <template>
 	<view class="summary-container">
-		<scroll-view scroll-y="true" class="scroll-summary">
+		<scroll-view scroll-y="true" class="scroll-summary" :style="scrollHeightTh">
 			<!-- 单曲 -->
 			<view class="single-song scroll-item">
 				<text class="title">单曲</text>
@@ -119,9 +119,11 @@
 <script>
 	import '@/common/iconfont.css'
 	import '@/common/controller.css'
+	import { bottomControlMixin } from '@/common/mixins/mixins.js'
 	
 	export default {
 		name:'Summary',
+		mixins:[bottomControlMixin],
 		props:{
 			song:{
 				type:Object,
@@ -198,7 +200,7 @@
 	}
 	.scroll-summary{
 		width: 94vw;
-		height: calc(100vh - 150px);
+		height: calc(100vh - 100px);
 		font-size: 14px;
 		font-size: 12px;
 		
@@ -395,4 +397,5 @@
 		}
 		
 	}
+
 </style>

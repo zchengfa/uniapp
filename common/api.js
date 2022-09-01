@@ -104,7 +104,7 @@ export function hotSearch() {
 }
 
 //综合搜索https://www.codeman.ink/api/search?keywords=海阔天空&type=1018
-export function summarySearch(word,type=1018,offset=1,limit=30) {
+export function summarySearch(word,type=1018,offset=1,limit=15) {
 	return Get(`/search?keywords=${word}&type=${type}&offset=${offset}&limit=${limit}`)
 }
 

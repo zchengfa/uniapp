@@ -33,12 +33,24 @@
 		methods:{
 			sina(){
 				this.$emit('sina')
+				uni.showModal({
+					title:'提示：',
+					content:'微博登录功能尚未完善，正在努力中...'
+				})
 			},
 			qq(){
 				this.$emit('qq')
+				uni.showModal({
+					title:'提示：',
+					content:'QQ登录功能尚未完善，正在努力中...'
+				})
 			},
 			wechat(){
 				this.$emit('wechat')
+				uni.showModal({
+					title:'提示：',
+					content:'微信登录功能尚未完善，正在努力中...'
+				})
 			}
 		},
 		created() {
