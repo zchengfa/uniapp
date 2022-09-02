@@ -64,6 +64,9 @@
 	.scroll-v{
 		height: calc(100vh - 70px);
 	}
+	.swiper-item-scroll{
+		height: calc(100vh - 125px);
+	}
 	/* #endif */
 	.title{
 		display: inline-block;

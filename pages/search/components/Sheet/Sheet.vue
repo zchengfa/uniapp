@@ -1,6 +1,6 @@
 <template>
 	<view class="sheet-container">
-		<scroll-view scroll-y="true" class="scroll-v" @scrolltolower="loadMore" v-if="count">
+		<scroll-view scroll-y="true" class="scroll-v swiper-item-scroll" :style="scrollHeightSwiper" @scrolltolower="loadMore" v-if="count">
 			<view class="sheets-item" v-for="(item,index) in data.playlists" :key="index">
 				<view class="image-box">
 					<image :src="item.coverImgUrl" class="sheet-image"></image>
@@ -19,10 +19,10 @@
 </template>
 
 <script>
-	import { serachScrollMixin } from '@/common/mixins/mixins.js'
+	import { serachScrollMixin ,bottomControlMixin} from '@/common/mixins/mixins.js'
 	export default {
 		name:'Sheet',
-		mixins:[serachScrollMixin]
+		mixins:[serachScrollMixin,bottomControlMixin]
 		
 	}
 </script>
@@ -69,4 +69,5 @@
 			}
 		}
 	}
+	
 </style>

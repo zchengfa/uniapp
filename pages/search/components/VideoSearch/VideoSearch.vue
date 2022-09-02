@@ -1,6 +1,6 @@
 <template>
 	<view class="video-container">
-		<scroll-view scroll-y="true" class="scroll-v" @scrolltolower="loadMore" v-if="count">
+		<scroll-view scroll-y="true" class="scroll-v swiper-item-scroll" :style="scrollHeightSwiper" @scrolltolower="loadMore" v-if="count">
 			<view class="sheets-item" v-for="(item,index) in data.videos" :key="index" @tap="toVideoDetail(item.vid)">
 				<view class="image-box">
 					<image :src="item.coverUrl" class="sheet-image"></image>
@@ -19,10 +19,11 @@
 </template>
 
 <script>
-	import { serachScrollMixin } from '@/common/mixins/mixins.js'
+	import { serachScrollMixin ,bottomControlMixin} from '@/common/mixins/mixins.js'
 	export default {
-		name:'Sheet',
-		mixins:[serachScrollMixin],
+		name:'VideoSearch',
+		mixins:[serachScrollMixin,bottomControlMixin],
+		
 		methods:{
 			toVideoDetail(mvId){
 				if(Number(mvId)){
@@ -88,4 +89,5 @@
 		top:80px;
 		color: #fff;
 	}
+	
 </style>

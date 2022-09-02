@@ -4,8 +4,9 @@ const bottomControlMixin = {
 			isShowBottomControl:true,
 			scrollHeight:undefined,
 			isShowMusicList:false,
-			scrollHeightT:undefined,
-			scrollHeightTh:undefined
+			scrollHeightNoTop:undefined,
+			scrollHeightSwiper:undefined,
+			scrollHeightNoTab:undefined
 		}
 	},
 	methods:{
@@ -14,12 +15,14 @@ const bottomControlMixin = {
 			
 			if(Boolean(this.$store.state.music.audio)){
 				this.scrollHeight = 'height:calc(100vh - 150px);'
-				this.scrollHeightT = 'height:calc(100vh - 100px);'
-				this.scrollHeightTh = 'height:calc(100vh - 100px);'
+				this.scrollHeightNoTop = 'height:calc(100vh - 50px);'
+				this.scrollHeightNoTab = 'height:calc(100vh - 100px);'
+				this.scrollHeightSwiper = 'height:calc(100vh - 145px);'
 				// #ifdef MP-WEIXIN
 				this.scrollHeight = 'height:calc(100vh - 130px);'
-				this.scrollHeightT = 'height:calc(100vh - 130px);'
-				this.scrollHeightTh = 'height:calc(100vh - 175px);'
+				this.scrollHeightNoTop = 'height:calc(100vh - 50px);'
+				this.scrollHeightSwiper = 'height:calc(100vh - 175px);'
+				this.scrollHeightNoTab = 'height:calc(100vh - 130px);'
 				// #endif
 				
 			}
@@ -144,8 +147,70 @@ const serachScrollMixin = {
 	}
 }
 
+
+const playSongMixin = {
+	data(){
+		return {
+			idList:[]
+		}
+	},
+	methods:{
+		//保存播放列表
+		savePlayList(){
+			
+			this.$store.dispatch('musicList',JSON.stringify(this.getPlayListData()))
+			
+		},
+		//点击歌曲进行播放
+		playSong(id){
+			let listLength = this.$store.state.music.musicList.length
+			let musicList = this.$store.state.music.musicList
+			let index = undefined 
+			
+			this.idList.map((item,listIndex)=>{
+				 
+				if(Number(item.id) === id){
+					index = listIndex
+					this.$store.dispatch('index',index)
+					
+				}
+			})
+			
+			//判断vuex中是否保存过列表数据
+			if(listLength && index){
+				//判断点击的音乐是否存在之前保存过的列表里，不存在说明是新列表，保存新列表
+				
+				if(id !== musicList[index].id){
+					this.savePlayList()
+				}
+			}
+			//未保存过，直接保存
+			else{
+				this.savePlayList()
+			}
+			
+			//先判断播放控件播放的音乐是否是当前点击的歌曲，若不是则换成点击的歌曲播放，若一致直接跳转到详情页进行播放
+			let songId = this.$store.state.music.songId
+			if(id === songId){
+				//一致，跳转至歌曲详情页
+				uni.navigateTo({
+					url:'../songDetail/songDetail'
+				})
+			}
+			else{
+				this.$songSave(id).then(res=>{
+					if(res){
+						this.isShowBottomControl = true
+					}
+				})
+			}
+		}
+	}
+}
+
 module.exports = {
 	bottomControlMixin,
 	changeLoopMixin,
-	serachScrollMixin
+	serachScrollMixin,
+	playSongMixin
 }

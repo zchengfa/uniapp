@@ -99,7 +99,7 @@
 					index = this.musicList.length - 1
 				}
 				
-				this.$songSave(this.musicList[index].resourceExtInfo.song.id).then(res=>{
+				this.$songSave(this.musicList[index].id).then(res=>{
 					if(res){
 						this.$store.dispatch('index',index)
 					}

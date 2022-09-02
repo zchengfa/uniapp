@@ -1,6 +1,6 @@
 <template>
 	<view class="rank-content">
-		<scroll-view scroll-y="true" class="scroll">
+		<scroll-view scroll-y="true" class="scroll" :style="scrollHeightNoTop">
 			<view class="author">
 				<text class="rank-title">官方榜</text>
 				<view class="rank-item" v-for="(item,index) in rankAuthor" :key="item.id">
@@ -65,8 +65,9 @@
 	}
 	.scroll{
 		margin: 0 auto;
+		
 		width: 96%;
-		height: calc(100vh - 94px);
+		height: calc(100vh - 50px);
 	}
 	.bottom-control{
 		bottom:0;
@@ -138,4 +139,9 @@
 		height: 80px;
 		border-radius: 6px;
 	}
+	/* #ifdef MP-WEIXIN */
+	.scroll{
+		height: 100vh;
+	}
+	/* #endif */
 </style>

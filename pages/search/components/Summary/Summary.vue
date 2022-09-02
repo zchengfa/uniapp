@@ -1,6 +1,6 @@
 <template>
 	<view class="summary-container">
-		<scroll-view scroll-y="true" class="scroll-summary" :style="scrollHeightTh">
+		<scroll-view scroll-y="true" class="scroll-summary" :style="scrollHeightSwiper">
 			<!-- 单曲 -->
 			<view class="single-song scroll-item">
 				<text class="title">单曲</text>
@@ -397,5 +397,9 @@
 		}
 		
 	}
-
+// #ifdef MP-WEIXIN
+.scroll-summary{
+	height: calc(100vh - 125px);
+}
+// #endif
 </style>

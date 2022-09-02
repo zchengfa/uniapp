@@ -138,6 +138,7 @@ export default {
 			uni.setStorageSync('startTime',startTimes)
 		},
 		musicList(state,list){
+			
 			state.musicList = JSON.parse(list)
 			uni.setStorageSync('musicList',JSON.parse(list))
 		},

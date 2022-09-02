@@ -13,6 +13,7 @@ function Get(URL){
 	})
 }
 
+//排行榜
 export function topList  (){
 	return new Promise(resolve=>{
 		Get(`/toplist/detail`).then(res=>{
@@ -23,6 +24,7 @@ export function topList  (){
 	})
 }
 
+//榜单详情
 export function listDetail(id){	
 	return Get(`/playlist/track/all?id=${id}`)
 }
@@ -70,6 +72,11 @@ export function indexSongSheet(){
 	return Get(`/personalized`)
 }
 
+
+//获取歌单详情数据
+export function playListDeatil(id){
+	return Get(`/playlist/detail?id=${id}`)
+}
 
 //首页轮播图数据type（0：pc、1：安卓、2：iphone、3：ipad）
 export function banner(type = 1){

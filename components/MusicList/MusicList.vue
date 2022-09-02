@@ -17,10 +17,10 @@
 				</view>
 				<scroll-view scroll-y="true" class="list-scroll">
 					<view v-for="(item,index) in musicList" :key="index" class="list-item">
-						<view class="song-box" @click.native.stop="playSong(item.resourceExtInfo.song.id,index)" :class="{'current-song':songId === item.resourceExtInfo.song.id}">
-							<text class="song-name" :class="{'current-song':songId === item.resourceExtInfo.song.id}">{{item.resourceExtInfo.songData.name}}</text>
-							<text class="charactor" :class="{'current-song':songId === item.resourceExtInfo.song.id}">-</text>
-							<text class="song-author" :class="{'current-song':songId === item.resourceExtInfo.song.id}">{{$dealAuthor(item.resourceExtInfo.artists,'name')}}</text>
+						<view class="song-box" @click.native.stop="playSong(item.id,index)" :class="{'current-song':songId === item.id}">
+							<text class="song-name" :class="{'current-song':songId === item.id}">{{item.name}}</text>
+							<text class="charactor" :class="{'current-song':songId === item.id}">-</text>
+							<text class="song-author" :class="{'current-song':songId === item.id}">{{$dealAuthor(item.ar,'name')}}</text>
 						</view>
 						<text class="delete iconfont musicclose"></text>
 					</view>

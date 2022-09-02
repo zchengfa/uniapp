@@ -1,6 +1,6 @@
 <template>
 	<view class="single-song-container">
-		<scroll-view scroll-y="true" class="scroll-v" :style="scrollHeight" @scrolltolower="loadMore" v-if="count">
+		<scroll-view scroll-y="true" class="scroll-v swiper-item-scroll" :style="scrollHeightSwiper" @scrolltolower="loadMore" v-if="count">
 			<view class="song-item" v-for="(item,index) in data.songs" :key="index">
 				<view class="left">
 					<text class="song-name">{{item.name}}</text>
@@ -95,4 +95,5 @@
 	.al{
 		color: #B9B9B9;
 	}
+	
 </style>

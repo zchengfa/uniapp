@@ -14,7 +14,7 @@
 				<button class="mini-btn search" type="default" size="mini" @tap="search(searchKeyword)">搜索</button>
 			</view>
 		</view>
-		<scroll-view scroll-y="true" class="scroll-v"  :style="scrollHeightT">
+		<scroll-view scroll-y="true" class="scroll-v"  :style="scrollHeight">
 			<!-- 搜索历史 -->
 			<view class="search-history" v-if="history.length">
 				<view class="history-top">
@@ -48,7 +48,7 @@
 			</view>
 		</view>
 		<!-- 搜索结果展示 -->
-		<scroll-view scroll-y="true" class="scroll-v search-result" v-if="isShowResult"  :style="scrollHeightT">
+		<scroll-view scroll-y="true" class="scroll-v search-result" v-if="isShowResult"  :style="scrollHeight">
 			<view class="scroll-menu">
 				<scroll-view scroll-x="true" class="scroll-x" scroll-left="0" :scroll-into-view="into" scroll-with-animation="true">
 					<view class="menu-box">
@@ -58,7 +58,7 @@
 						</view>
 					</view>
 				</scroll-view>
-				<swiper class="summary-scroll" :indicator-dots="false" :autoplay="false"  :duration="300" @change="changeItem" :current="currentIndex">
+				<swiper class="summary-scroll" :style="scrollHeightSwiper" :indicator-dots="false" :autoplay="false"  :duration="300" @change="changeItem" :current="currentIndex">
 					<swiper-item>
 						<Summary :song="summary.song"
 						:playList="summary.playList" 
@@ -79,7 +79,7 @@
 						<video-search :data="video" :type="searchType" @more="more" :word="searchKeyword" :count="video.videoCount" prop="videos" class="component-item"></video-search>
 					</swiper-item>
 					<swiper-item>
-						<Songer :data="songer" :type="searchType" @more="more" :word="searchKeyword" :count="songer.artistCount" prop="artists" class="component-item"></Songer>
+						<Singer :data="singer" :type="searchType" @more="more" :word="searchKeyword" :count="singer.artistCount" prop="artists" class="component-item"></Singer>
 					</swiper-item>
 					<swiper-item>
 						<Album :data="album" :type="searchType" @more="more" :word="searchKeyword" :count="album.albumCount" prop="albums" class="component-item"></Album>
@@ -111,7 +111,7 @@
 	import SingleSong from './components/SingleSong/SingleSong.vue'
 	import Sheet from './components/Sheet/Sheet.vue'
 	import VideoSearch from './components/VideoSearch/VideoSearch.vue'
-	import Songer from './components/Songer/Songer.vue'
+	import Singer from './components/Singer/Singer.vue'
 	import Album from './components/Album/Album.vue'
 	import User from './components/User/User.vue'
 	import Lyrics from './components/Lyrics/Lyrics.vue'
@@ -123,7 +123,7 @@
 			SingleSong,
 			Sheet,
 			VideoSearch,
-			Songer,
+			Singer,
 			Album,
 			User,
 			Lyrics
@@ -142,7 +142,7 @@
 				searchType:1018,
 				single:{},
 				songSheet:{},
-				songer:{},
+				singer:{},
 				video:{},
 				album:{},
 				user:{},
@@ -346,34 +346,34 @@
 			},
 			//接收子组件发出的加载更多事件
 			more({type,data}){
-				if(type === 1){
-					this.single.hasMore = data.hasMore
-					this.single.songs.push(...data.songs)
-				}
-				else if (type === 1000){
-					this.songSheet.hasMore = data.hasMore
-					this.songSheet.playlists.push(...data.playlists)
-				}
-				else if (type === 1014){
-					this.video.hasMore = data.hasMore
-					this.video.videos.push(...data.videos)
-				}
-				else if (type === 100){
-					this.songer.hasMore = data.hasMore
-					this.songer.artists.push(...data.artists)
-				}
-				else if (type === 10){
-					this.album.hasMore = data.hasMore
-					this.album.albums.push(...data.albums)
-				}
-				else if (type === 1002){
-					this.user.hasMore = data.hasMore
-					this.user.userprofiles.push(...data.userprofiles)
-				}
-				else if (type === 1006){
-					this.lyrics.hasMore = data.hasMore
-					this.lyrics.songs.push(...data.songs)
-				}
+				// if(type === 1){
+				// 	this.single.hasMore = data.hasMore
+				// 	this.single.songs.push(...data.songs)
+				// }
+				// else if (type === 1000){
+				// 	this.songSheet.hasMore = data.hasMore
+				// 	this.songSheet.playlists.push(...data.playlists)
+				// }
+				// else if (type === 1014){
+				// 	this.video.hasMore = data.hasMore
+				// 	this.video.videos.push(...data.videos)
+				// }
+				// else if (type === 100){
+				// 	this.songer.hasMore = data.hasMore
+				// 	this.songer.artists.push(...data.artists)
+				// }
+				// else if (type === 10){
+				// 	this.album.hasMore = data.hasMore
+				// 	this.album.albums.push(...data.albums)
+				// }
+				// else if (type === 1002){
+				// 	this.user.hasMore = data.hasMore
+				// 	this.user.userprofiles.push(...data.userprofiles)
+				// }
+				// else if (type === 1006){
+				// 	this.lyrics.hasMore = data.hasMore
+				// 	this.lyrics.songs.push(...data.songs)
+				// }
 			},
 			//接收子组件发出的展开或收起歌词事件
 			openOrCloseLy(i){
@@ -601,7 +601,7 @@
 	}
 	// #ifdef MP-WEIXIN
 	.summary-scroll{
-		height: calc(100vh - 175px);
+		height: calc(100vh - 125px);
 	}
 	// #endif
 }
@@ -621,8 +621,9 @@
 		flex: .6;
 		.input{
 			margin-left: 0;
-			
+			text-align: center;
 			transform: translateX(0);
+			text-indent: 0;
 		}
 	}
 }

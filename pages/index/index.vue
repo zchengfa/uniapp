@@ -6,7 +6,7 @@
 		</view>
 		<!-- 页面主内容 -->
 		<scroll-view scroll-y="true" class="scroll-v" :style="scrollHeight">
-			<swiper :indicator-dots="true" indicator-color="#fff" indicator-active-color="#ff215c" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
+			<swiper :indicator-dots="true" indicator-color="#fff" indicator-active-color="#ff215c" :autoplay="true" :interval="6000" :duration="1000" :circular="true">
 				<swiper-item v-for="(item,index) in banners" :key="index">
 					<view class="swiper-item">
 						<image :src="item.pic" class="banner-image"></image>
@@ -66,9 +66,9 @@
 	import SongSheet from '@/components/SongSheet/SongSheet.vue'
 	import SongSheetAutoScr from '@/components/SongSheetAutoScr/SongSheetAutoScr.vue'
 	import LookLive from '@/components/LookLive/LookLive.vue'
-	import { bottomControlMixin } from '@/common/mixins/mixins.js'
+	import { bottomControlMixin ,playSongMixin} from '@/common/mixins/mixins.js'
 	export default {
-		mixins:[bottomControlMixin],
+		mixins:[bottomControlMixin,playSongMixin],
 		data() {
 			return {
 				scrollMenu:[],
@@ -85,7 +85,6 @@
 				styleSong:[],
 				styleTitle:'',
 				pageMusicPlay:false,
-				resourceIdList:[],
 				keywordD:undefined
 			}
 		},
@@ -124,7 +123,7 @@
 					
 					this.styleSong = blocks[2].creatives
 					this.styleTitle = blocks[2].uiElement.subTitle.title
-					this.resourceIdList = blocks[2].resourceIdList
+					this.idList = blocks[2].resourceIdList
 					//console.log(this.styleSong)
 					
 					this.MGCTitle = blocks[3].uiElement.subTitle.title
@@ -169,54 +168,17 @@
 				})
 			},
 			//保存播放列表
-			savePlayList(){
+			getPlayListData(){
 				let list = []
 				this.styleSong.map(item=>{
 					item.resources.map(res=>{
-						list.push(res)
+						
+						list.push(res.resourceExtInfo.song)
 					})
 				})
-				this.$store.dispatch('musicList',JSON.stringify(list))
-			},
-			//点击歌曲进行播放
-			playSong(id){
-				let listLength = this.$store.state.music.musicList.length
-				let musicList = this.$store.state.music.musicList
-				let index = undefined 
-				 
-				this.resourceIdList.map((item,listIndex)=>{
-					if(Number(item) === id){
-						index = listIndex
-						this.$store.dispatch('index',index)
-					}
-				})
-				//判断vuex中是否保存过列表数据
-				if(listLength){
-					//判断点击的音乐是否存在之前保存过的列表里，不存在说明是新列表，保存新列表
-					if(id !== musicList[index].resourceExtInfo.song.id){
-						this.savePlayList()
-					}
-				}
-				//未保存过，直接保存
-				else{
-					this.savePlayList()
-				}
 				
-				//先判断播放控件播放的音乐是否是当前点击的歌曲，若不是则换成点击的歌曲播放，若一致直接跳转到详情页进行播放
-				let songId = this.$store.state.music.songId
-				if(id === songId){
-					//一致，跳转至歌曲详情页
-					uni.navigateTo({
-						url:'../songDetail/songDetail'
-					})
-				}
-				else{
-					this.$songSave(id).then(res=>{
-						if(res){
-							this.isShowBottomControl = true
-						}
-					})
-				}
+				return list
+				
 			}
 		},
 		created() {

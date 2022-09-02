@@ -1,6 +1,6 @@
 <template>
 	<view class="lyrics-container">
-		<scroll-view scroll-y="true" class="scroll-v" @scrolltolower="loadMore" >
+		<scroll-view scroll-y="true" class="scroll-v swiper-item-scroll" :style="scrollHeightSwiper" @scrolltolower="loadMore" >
 			<view class="lyrics" v-show="count">
 				<view class="lyric-item" v-for="(item,index) in data.songs" :key="index">
 					<view class="top">
@@ -53,10 +53,10 @@
 </template>
 
 <script>
-	import { serachScrollMixin } from '@/common/mixins/mixins.js'
+	import { serachScrollMixin ,bottomControlMixin } from '@/common/mixins/mixins.js'
 	export default {
 		name:'Sheet',
-		mixins:[serachScrollMixin],
+		mixins:[serachScrollMixin ,bottomControlMixin],
 		
 		methods:{
 			openOrCloseLy(index){

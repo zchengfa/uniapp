@@ -6,7 +6,7 @@
 				<view class="sheet-box">
 					<view class="sheet-item">
 						<swiper class="swiper" @change="change($event)" :indicator-dots="false" vertical :autoplay="true" :interval="3000" :duration="1000" :circular="true">
-							<swiper-item  v-for="(auto,autoIndex) in autoSongSheet.resources" :key="auto.resourceId">
+							<swiper-item  v-for="(auto,autoIndex) in autoSongSheet.resources" @tap="toPlayListDetail(auto.resourceId)" :key="auto.resourceId">
 								<view class="swiper-item">
 									<image class="image" :src="auto.uiElement.image.imageUrl" ></image>
 									<view class="auto-mask">
@@ -18,7 +18,7 @@
 						<text v-show="currentText" class="main-title">{{currentText}}</text>
 						<text v-show="!currentText" class="main-title">{{defaultText}}</text>
 					</view>
-					<view class="sheet-item" v-for="(item,index) in songSheet" :key="item.resources[0].resourceExtInfo.resourceId">
+					<view class="sheet-item" @tap="toPlayListDetail(item.resources[0].resourceId)" v-for="(item,index) in songSheet" :key="item.resources[0].resourceId">
 						<image :src="item.uiElement.image.imageUrl" class="image"></image>
 						<view class="mask">
 							<text class="play-count">{{item.resources[0].resourceExtInfo.playCount}}</text>
@@ -69,6 +69,11 @@
 		methods:{
 			change(e){
 				this.currentText = this.autoSongSheet.resources[e.detail.current].uiElement.mainTitle.title
+			},
+			toPlayListDetail(id){
+				uni.navigateTo({
+					url:'../../pages/playListDetail/playListDetail?playListId='+id
+				})
 			}
 		}
 	}

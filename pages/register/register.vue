@@ -229,15 +229,19 @@
 	width: 100%;
 	height: 100vh;
 }
-.nav-bar{
-	position: fixed;
+.nav{
+	position: absolute;
 	top:0;
-	left: 0;
+	width: 100%;
+	
+}
+.nav-bar{
+	display: inline-block;
 	width: 50px;
 	height: 50px;
 	line-height: 50px;
 	text-align: center;
-	font-size: 24px;
+	font-size: 24px; 
 }
 .form-box{
 	width: 80%;
