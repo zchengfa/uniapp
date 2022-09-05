@@ -1,7 +1,9 @@
 <template>
 	<view class="video-container">
 		<view class="top-box">
-			<top-bar></top-bar>
+			<top-bar>
+				<view slot="center"></view>
+			</top-bar>
 		</view>
 		<scroll-view scroll-y="true" class="scroll-v" @scrolltolower="loadMore" lower-threshold="50">
 			<view class="mv-box">

@@ -1,8 +1,8 @@
 <template>
 	<view class="index-content">
 		<!-- 顶部导航栏 -->
-		<view class="top-box"  @tap="toSearch">
-			<top-bar :defaultKeyword="keywordD"></top-bar>
+		<view class="top-box">
+			<top-bar :defaultKeyword="keywordD" @centerTap="toSearch"></top-bar>
 		</view>
 		<!-- 页面主内容 -->
 		<scroll-view scroll-y="true" class="scroll-v" :style="scrollHeight">

@@ -8,7 +8,7 @@
 		
 		<view class="input-box">
 			<slot name="center">
-				<view class="input">
+				<view class="input" @tap="centerTap">
 					{{defaultKeyword}}
 				</view>
 			</slot>
@@ -37,6 +37,11 @@
 			return {
 				
 			};
+		},
+		methods:{
+			centerTap(){
+				this.$emit('centerTap')
+			}
 		}
 	}
 </script>

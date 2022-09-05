@@ -51,6 +51,7 @@ Vue.prototype.$songSave = async function songSave (id){
 function getLyric(id){
 	//获取歌词
 	lyric(id).then(res=>{
+	
 		if(res.lrc.lyric){
 			let result = []
 			let arr = res.lrc.lyric.split('\n')
@@ -166,7 +167,7 @@ audioContext.onEnded(()=>{
 		index = index
 	}
 	
-	songExceptLyric(Number(list[index].resourceId)).then(res=>{
+	songExceptLyric(Number(list[index].id)).then(res=>{
 		save(res)
 		store.dispatch('index',index)
 	})
@@ -178,6 +179,7 @@ Vue.prototype.$audio = audioContext
 //判断vuex中是否有token，有则表示用户已登录
 function checkLogin(){
 	let token = store.state.user.token
+	
 	if(token){
 		return true
 	}

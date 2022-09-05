@@ -244,6 +244,7 @@
 	font-size: 24px; 
 }
 .form-box{
+	margin-top: -60px;
 	width: 80%;
 	
 }

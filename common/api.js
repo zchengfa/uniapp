@@ -6,6 +6,7 @@ function Get(URL){
 		uni.request({
 			url:baseUrl+URL,
 			method:'GET',
+		
 			success:(res)=>{
 				resolve(res.data)
 			}
@@ -45,6 +46,7 @@ export async function songExceptLyric(songId){
 	let data = {}
 	//歌曲基本信息
 	await songDetail(songId).then(res=>{
+
 		data.detail = res.songs[0]
 		
 	})
@@ -204,8 +206,9 @@ export function verifyCode(phone,code){
 }
 
 //验证成功后使用该验证码和手机号进行登录https://www.codeman.ink/api/login/cellphone?phone=13058018094&captcha=8829
+//登录提示网络太拥挤
 export function loginWithPhone(phone,code){
-	return Get(`/login/cellphone?phone=${phone}&captcha=${code}`)
+	return Get(`/login/cellphone?phone=${encodeURIComponent(phone)}&captcha=${code}`)
 }
 
 //注册
@@ -222,5 +225,5 @@ export function checkPhone(phone){
 
 //获取关注页面动态消息https://www.codeman.ink/api/event?pagesize=50说明 : 调用此接口 , 可获取各种动态 , 对应网页版网易云，朋友界面里的各种动态消息 ，如分享的视频，音乐，照片等！
 export function event(){
-	return Get(`/event?pagesize=50`)
+	return Get(`/event?pagesize=20`)
 }

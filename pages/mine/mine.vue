@@ -2,7 +2,9 @@
 	<view class="mine-container">
 		<!-- 导航栏 -->
 		<view class="top-box">
-			<top-bar></top-bar>
+			<top-bar>
+				<view slot="center"></view>
+			</top-bar>
 		</view>
 		
 		<scroll-view scroll-y="true" :style="scrollHeight" class="scroll-v">
