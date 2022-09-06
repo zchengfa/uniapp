@@ -58,13 +58,13 @@
 				<view class="list-top">
 					<view class="play-all">
 						<text class="iconfont musicplayCircleOne"></text>
-						<text class="play-text">播放全部</text>
+						<text class="play-text" @tap="playAll">播放全部</text>
 						<text class="list-count">({{allSongData.length}})</text>
 					</view>
 					<text class="iconfont controller-download"></text>
 				</view>
-				<scroll-view scroll-y="true" class="list-scroll">
-					<view class="list-item" v-for="(item,index) in allSongData" :key="index" >
+				<scroll-view scroll-y="true" class="list-scroll"  @scrolltolower="loadMore">
+					<view class="list-item" v-for="(item,index) in showData" :key="index">
 						<text class="No">{{index+1}}</text>
 						<view class="item-info">
 							<view class="item-left" @tap="playSong(item.id)">
@@ -142,7 +142,10 @@
 				bgImage:'',
 				creator:{},
 				creatorDetail:{},
-				showDescDetail:false
+				showDescDetail:false,
+				sliceBegin:0,
+				sliceEnd:15,
+				showData:[]
 			}
 		},
 		computed:{
@@ -162,7 +165,10 @@
 				
 				return list
 			},
-			
+			//点击播放全部按钮，从列表中的第一首歌开始播放
+			playAll(){
+				this.playSong(this.idList[0].id,0)
+			},
 			back(){
 				uni.navigateBack()
 			},
@@ -191,13 +197,46 @@
 				songDetail(ids).then(res=>{
 					if(res.code === 200){
 						this.allSongData = res.songs
+						this.sliceList()
 					}
 					uni.hideLoading()
 				})
 			},
 			showDetail(){
 				this.showDescDetail = !this.showDescDetail
+			},
+			loadMore(){
+				if(this.showData.length < this.allSongData.length){
+					this.sliceBegin +=15
+					this.sliceEnd += 15
+					this.sliceList()
+				}
+				
+			},
+			sliceList(){
+				this.showData.push(...this.allSongData.slice(this.sliceBegin,this.sliceEnd)) 
 			}
+		},
+		updated() {
+			//性能优化，列表过长影响页面流畅度，判断页面每个元素，元素在可视区域就渲染，不在的不进行渲染、
+			// let els = uni.createSelectorQuery().selectAll('.list-item')
+			// let page = uni.createSelectorQuery().select('.playlist-detail')
+			
+			
+			// page.boundingClientRect().exec((data)=>{
+			// 	let pageH = data[0].height
+			// 	els.boundingClientRect().exec((elsD)=>{
+			// 		if(elsD[0].length){
+			// 			elsD[0].map((item,index)=>{
+			// 				if(item.bottom - (pageH+50) <= 0){
+			// 					this.ShowListItem.push(item.dataset.set)
+			// 				}
+			// 			})
+			// 			console.log(elsD[0])
+			// 		}
+					
+			// 	})
+			// })
 		},
 		onLoad(options) {
 			

@@ -45,7 +45,7 @@
 		mixins:[bottomControlMixin],
 		data() {
 			return {
-				offset:1,
+				offset:0,
 				mv:[],
 				hasMore:undefined
 			}
@@ -63,7 +63,7 @@
 			},
 			loadMore(){
 				if(this.hasMore){
-					this.offset +=1
+					this.offset +=20
 					allMv(this.offset).then(res=>{
 						if(res.code === 200){
 							this.mv.push(...res.data)

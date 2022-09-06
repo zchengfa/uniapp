@@ -162,19 +162,21 @@ const playSongMixin = {
 			
 		},
 		//点击歌曲进行播放
-		playSong(id){
+		playSong(id,index = undefined){
 			let listLength = this.$store.state.music.musicList.length
 			let musicList = this.$store.state.music.musicList
-			let index = undefined 
+			 
 			
-			this.idList.map((item,listIndex)=>{
-				 
-				if(Number(item.id) === id){
-					index = listIndex
-					this.$store.dispatch('index',index)
-					
-				}
-			})
+			if(!index){
+				this.idList.map((item,listIndex)=>{
+					 
+					if(Number(item.id) === id){
+						index = listIndex
+						this.$store.dispatch('index',index)
+						
+					}
+				})
+			}
 			
 			//判断vuex中是否保存过列表数据
 			if(listLength && index){

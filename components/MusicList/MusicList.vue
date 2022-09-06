@@ -15,8 +15,8 @@
 						<text class="iconfont musicdelete other-item"></text>
 					</view>
 				</view>
-				<scroll-view scroll-y="true" class="list-scroll">
-					<view v-for="(item,index) in musicList" :key="index" class="list-item">
+				<scroll-view scroll-y="true" class="list-scroll" @scrolltolower="loadMore">
+					<view v-for="(item,index) in showData" :key="index" class="list-item">
 						<view class="song-box" @click.native.stop="playSong(item.id,index)" :class="{'current-song':songId === item.id}">
 							<text class="song-name" :class="{'current-song':songId === item.id}">{{item.name}}</text>
 							<text class="charactor" :class="{'current-song':songId === item.id}">-</text>
@@ -43,11 +43,16 @@
 		data() {
 			return {
 				isShowList:true,
-				isShowParent:true
+				isShowParent:true,
+				sliceEnd:15
 			};
 		},
 		computed:{
-			...mapGetters(['musicList','songId'])
+			...mapGetters(['musicList','songId']),
+			showData(){
+				//长列表优化，每次只加载15首歌曲
+				return this.musicList.slice(0,this.sliceEnd)
+			}
 		},
 		methods:{
 			playSong(id,index){
@@ -64,6 +69,9 @@
 					//关闭的同时，发出事件，告诉父组件或祖组件我关闭了，可以改变控制的状态了
 					uni.$emit('listCloseOver')
 				},300)
+			},
+			loadMore(){
+				this.sliceEnd += 15
 			}
 		},
 		created() {

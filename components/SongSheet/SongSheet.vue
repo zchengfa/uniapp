@@ -38,7 +38,7 @@
 		},
 		methods:{
 			toPlayListDetail(id){
-				console.log(id)
+				
 				uni.navigateTo({
 					url:'../../pages/playListDetail/playListDetail?playListId='+id
 				})

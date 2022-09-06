@@ -71,7 +71,7 @@
 			<view class="rec">
 				<text class="title">为你推荐</text>
 				<view class="rec-sheet">
-					<view class="rec-sheet-item" v-for="(item,index) in recSheet" :key="index">
+					<view class="rec-sheet-item" v-for="(item,index) in recSheet" :key="index" @tap="toPlayListDetail(item.id)">
 						<image class="sheet-image" :src="item.picUrl" mode="aspectFit"></image>
 						<view class="mask">
 							<text>{{$dealCount(item.playCount)}}</text>
@@ -84,6 +84,9 @@
 		</scroll-view>
 		<view class="bottom-control" v-show="isShowBottomControl">
 			<music-controller></music-controller>
+		</view>
+		<view v-if="isShowMusicList">
+			<music-list></music-list>
 		</view>
 	</view>
 </template>
@@ -112,6 +115,11 @@
 			toLogin(){
 				uni.navigateTo({
 					url:'../login/login'
+				})
+			},
+			toPlayListDetail(id){
+				uni.navigateTo({
+					url:'../../pages/playListDetail/playListDetail?playListId='+id
 				})
 			}
 		},

@@ -9,12 +9,11 @@
 							<swiper-item  v-for="(auto,autoIndex) in autoSongSheet.resources" @tap="toPlayListDetail(auto.resourceId)" :key="auto.resourceId">
 								<view class="swiper-item">
 									<image class="image" :src="auto.uiElement.image.imageUrl" ></image>
-									<view class="auto-mask">
-										<image class="mask-image" src="~@/static/images/infinite.png"></image>
-									</view>
 								</view>
 							</swiper-item>
+							
 						</swiper>
+						<image class="mask-image" src="~@/static/images/infinite.png"></image>
 						<text v-show="currentText" class="main-title">{{currentText}}</text>
 						<text v-show="!currentText" class="main-title">{{defaultText}}</text>
 					</view>
@@ -83,16 +82,10 @@
 	.sheet-item{
 		background-color: #d40000;
 	}
-	.auto-mask{
-		position: absolute;
-		left: 0;
-		top: 0;
-		display: flex;
-		flex-direction: row-reverse;
-		width: 140px;
-		height: 140px;    
-	}
 	.mask-image{
+		position: absolute;
+		left: 75%;
+		top: 0;
 		width: 32px;
 		height: 32px;
 	}
