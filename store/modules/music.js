@@ -39,7 +39,9 @@ export default {
 		//进度条总宽度
 		totalWidth:'',
 		//进度条圆点位置
-		dotLocation:''
+		dotLocation:'',
+		//进度条的值
+		progress:0
 		
 	},
 	getters:{
@@ -90,6 +92,9 @@ export default {
 		},
 		dotLocation(state){
 			return state.dotLocation
+		},
+		progress(state){
+			return state.progress
 		}
 	},
 	mutations:{
@@ -165,6 +170,9 @@ export default {
 		changeProAndDotStyle(state,payload){
 			state.progressWidth = JSON.parse(payload).progress
 			state.dotLocation = JSON.parse(payload).dot
+		},
+		progress(state,payload){
+			state.progress = payload
 		}
 	},
 	actions:{
@@ -223,6 +231,9 @@ export default {
 		},
 		changeProAndDotStyle(context,payload){
 			context.commit('changeProAndDotStyle',payload)
+		},
+		progress(context,payload){
+			context.commit('progress',payload)
 		}
 	}
 	

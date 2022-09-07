@@ -131,6 +131,7 @@ audioContext.onTimeUpdate(()=>{
 		'dot':'left:' + totalWidth*percent +'px'
 	}))
 	
+	store.dispatch('progress',percent*100)
 })
 
 audioContext.onPlay(()=>{

@@ -12,11 +12,14 @@
 		</view>
 		<view class="music-progress">
 			<text class="current-time time">{{cTime}}</text>
-			<view class="progress-box">
+			<!-- <view class="progress-box">
 				<text class="line"></text>
 				<view class="progress" :style="progressWidth">
 					<text class="dot" :style="dotLocation"></text>
 				</view>
+			</view> -->
+			<view class="slider-box">
+				<slider @change="changeProgress" class="music-slider"  max="100" :value="progress" activeColor="#f00" block-size="14"/>
 			</view>
 			<text class="total-time time">{{tTime}}</text>
 		</view>
@@ -46,7 +49,7 @@
 			}
 		},
 		computed:{
-			...mapGetters(['playStatus','songs','currentTime','totalTime','audio','loopStatus','currentSongIndex','musicList','progressWidth','dotLocation','songId']),
+			...mapGetters(['playStatus','songs','currentTime','totalTime','audio','loopStatus','currentSongIndex','musicList','progressWidth','dotLocation','songId','progress']),
 			tTime(){
 				
 				return this.transTime(this.totalTime)
@@ -81,6 +84,11 @@
 			}
 		},
 		methods:{
+			changeProgress(e){
+				this.$store.dispatch('progress',e.detail.value)
+				this.$audio.seek(this.totalTime*this.progress/100)
+				console.log(this.totalTime*this.progress/100)
+			},
 			toComments(){
 				uni.navigateTo({
 					url:`../../pages/comments/comments?songId=${this.songId}&picUrl=${this.songs.picUrl}&name=${encodeURIComponent(this.songs.name)}&author=${encodeURIComponent(this.songs.author)}`
@@ -150,30 +158,30 @@
 		},
 		mounted() {
 			
-			// #ifdef H5
-			//获取进度条总宽度
-			let query = uni.createSelectorQuery().in(this).select('.line')
-			query.boundingClientRect().exec((res)=>{
-				this.$store.dispatch('progressTotalWidth',res[0].width)
+			// // #ifdef H5
+			// //获取进度条总宽度
+			// let query = uni.createSelectorQuery().in(this).select('.line')
+			// query.boundingClientRect().exec((res)=>{
+			// 	this.$store.dispatch('progressTotalWidth',res[0].width)
 				
-			})
+			// })
 			
-			// #endif
+			// // #endif
 			
-			// #ifdef MP-WEIXIN
-			//获取进度条总宽度
-			let query = wx.createSelectorQuery().in(this).select('.line')
-			query.boundingClientRect().exec((res)=>{
-				this.$store.dispatch('progressTotalWidth',res[0].width)
+			// // #ifdef MP-WEIXIN
+			// //获取进度条总宽度
+			// let query = wx.createSelectorQuery().in(this).select('.line')
+			// query.boundingClientRect().exec((res)=>{
+			// 	this.$store.dispatch('progressTotalWidth',res[0].width)
 				
-			})
+			// })
 			
-			// #endif
+			// // #endif
 		}
 	}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 	.music-controller{
 		width: 100%;
 		color: #fff;
@@ -229,4 +237,10 @@
 		
 		transform: translateX(-25%) translateY(-25%);
 	}
+	.music-slider{
+		margin: 0;
+		width: 70vw;
+		
+	}
+	
 </style>
