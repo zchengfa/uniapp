@@ -4,7 +4,7 @@
 			<view class="sheets-item" v-for="(item,index) in data.videos" :key="index" @tap="toVideoDetail(item.vid)">
 				<view class="image-box">
 					<image :src="item.coverUrl" class="sheet-image"></image>
-					<text class="time">{{$transTime(item.playTime/1000)}}</text>
+					<text class="time">{{$transTime(item.durationms/1000)}}</text>
 				</view>
 				<view class="info">
 					<text class="video-title">{{item.title}}</text>
@@ -19,23 +19,26 @@
 </template>
 
 <script>
-	import { serachScrollMixin ,bottomControlMixin} from '@/common/mixins/mixins.js'
+	import { searchScrollMixin ,bottomControlMixin} from '@/common/mixins/mixins.js'
 	export default {
 		name:'VideoSearch',
-		mixins:[serachScrollMixin,bottomControlMixin],
+		mixins:[searchScrollMixin,bottomControlMixin],
 		
 		methods:{
-			toVideoDetail(mvId){
-				if(Number(mvId)){
-					console.log('这是mv')
-				}
-				else{
-					console.log('这是视频')
-				}
+			toVideoDetail(vId){
+				// if(Number(mvId)){
+				// 	console.log('这是mv')
+				// }
+				// else{
+				// 	console.log('这是视频')
+				// }
 				
-				uni.showModal({
-					title:'提示',
-					content:'视频功能尚未完善'
+				// uni.showModal({
+				// 	title:'提示',
+				// 	content:'视频功能尚未完善'
+				// })
+				uni.navigateTo({
+					url:'../videoDetail/videoDetail?vId=' + vId
 				})
 			}
 		}

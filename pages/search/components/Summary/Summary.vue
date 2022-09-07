@@ -3,8 +3,14 @@
 		<scroll-view scroll-y="true" class="scroll-summary" :style="scrollHeightSwiper">
 			<!-- 单曲 -->
 			<view class="single-song scroll-item">
-				<text class="title">单曲</text>
-				<view class="song-item" v-for="(item,index) in song.songs" :key="index">
+				<view class="title-box">
+					<text class="title">单曲</text>
+					<view class="play-btn" @tap="playAll">
+						<text class="iconfont musicplayCircleOne"></text>
+						<text class="play-text">播放全部</text>
+					</view>
+				</view>
+				<view class="song-item" v-for="(item,index) in song.songs" :key="index" @tap="toDetail(item)">
 					<view class="left">
 						<text class="song-name">{{item.name}}</text>
 						<view class="self-info">
@@ -119,11 +125,11 @@
 <script>
 	import '@/common/iconfont.css'
 	import '@/common/controller.css'
-	import { bottomControlMixin } from '@/common/mixins/mixins.js'
+	import { bottomControlMixin , playSongMixin } from '@/common/mixins/mixins.js'
 	
 	export default {
 		name:'Summary',
-		mixins:[bottomControlMixin],
+		mixins:[bottomControlMixin,playSongMixin],
 		props:{
 			song:{
 				type:Object,
@@ -171,6 +177,17 @@
 			},
 			dealStringLast(str,word){
 				return str.substr(str.indexOf(word)+(word.length))
+			},
+			toDetail(item){
+				this.playSongNoCoverPlayList(item)
+			},
+			playAll(){
+				this.playSong(this.$props.song.resourceIds[0],0)
+			},
+			getPlayListData(){
+				let list = []
+				list.push(...this.$props.song.songs)
+				return list
 			}
 		}
 	
@@ -182,12 +199,28 @@
 		margin: 0 auto;
 		width: 94vw;
 	}
-	.title{
+	.title-box{
 		padding: 20px 0 10px;
-		display: block;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		font-size: 16px;
 		font-weight: bold;
 		border-bottom: 1px solid #efefef;
+		.title{
+			padding: 0;
+		}
+		.play-btn{
+			padding:2px 6px;
+			color: #f00;
+			font-size: 12px;
+			border: 1px solid #f00;
+			border-radius: 16px;
+			.musicplayCircleOne{
+				margin-right: 4px;
+				font-size: 12px;
+			}
+		}
 	}
 	.scroll-item{
 		padding: 0 10px;

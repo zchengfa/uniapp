@@ -53,10 +53,10 @@
 </template>
 
 <script>
-	import { serachScrollMixin ,bottomControlMixin } from '@/common/mixins/mixins.js'
+	import { searchScrollMixin ,bottomControlMixin } from '@/common/mixins/mixins.js'
 	export default {
 		name:'Sheet',
-		mixins:[serachScrollMixin ,bottomControlMixin],
+		mixins:[searchScrollMixin ,bottomControlMixin],
 		
 		methods:{
 			openOrCloseLy(index){

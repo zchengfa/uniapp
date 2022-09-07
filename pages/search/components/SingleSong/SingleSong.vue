@@ -1,7 +1,7 @@
 <template>
 	<view class="single-song-container">
 		<scroll-view scroll-y="true" class="scroll-v swiper-item-scroll" :style="scrollHeightSwiper" @scrolltolower="loadMore" v-if="count">
-			<view class="song-item" v-for="(item,index) in data.songs" :key="index">
+			<view class="song-item" v-for="(item,index) in data.songs" :key="index" @tap="toDetail(item.id)">
 				<view class="left">
 					<text class="song-name">{{item.name}}</text>
 					<view class="self-info">
@@ -24,12 +24,21 @@
 </template>
 	
 <script >
-	
-	import { serachScrollMixin,bottomControlMixin } from '@/common/mixins/mixins.js'
+	import { songDetail } from '@/common/api.js'
+	import { searchScrollMixin , bottomControlMixin ,playSongMixin} from '@/common/mixins/mixins.js'
 	export default {
 		name:'SingleSong',
-		mixins:[serachScrollMixin,bottomControlMixin ]
-		
+		mixins:[searchScrollMixin, bottomControlMixin ,playSongMixin ],
+		methods:{
+			toDetail(id){
+				songDetail(id).then(res=>{
+					if(res.code === 200){
+						this.playSongNoCoverPlayList(res.songs[0])
+					}
+				})
+				
+			}
+		}
 	}
 </script>
 

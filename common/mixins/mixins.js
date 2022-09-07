@@ -46,6 +46,13 @@ const bottomControlMixin = {
 		})
 
 	},
+	// #ifdef MP-WEIXIN
+	pageLifeTimes:{
+		show(){
+			this.changeStyle
+		}
+	},
+	// #endif
 	activated() {
 		
 		this.changeStyle()
@@ -88,7 +95,7 @@ const changeLoopMixin = {
 	}
 }
 import { summarySearch } from '@/common/api.js'
-const serachScrollMixin = {
+const searchScrollMixin = {
 	props:{
 		data:{
 			type:Object,
@@ -123,7 +130,7 @@ const serachScrollMixin = {
 	},
 	data(){
 		return {
-			pageSize:1
+			offset:0
 		}
 	},
 	methods:{
@@ -133,8 +140,8 @@ const serachScrollMixin = {
 				uni.showLoading({
 					title:'加载更多...'
 				})
-				this.pageSize ++
-				summarySearch(this.$props.word,this.$props.type,this.pageSize).then(res=>{
+				this.offset +=15
+				summarySearch(this.$props.word,this.$props.type,this.offset).then(res=>{
 					if(res.code === 200){
 						this.$emit('more',{'type':this.$props.type,'data':res.result})
 						uni.hideLoading()
@@ -147,7 +154,7 @@ const serachScrollMixin = {
 	}
 }
 
-
+import { songData } from '@/common/api.js'
 const playSongMixin = {
 	data(){
 		return {
@@ -155,6 +162,48 @@ const playSongMixin = {
 		}
 	},
 	methods:{
+	async	playSongNoCoverPlayList(song){
+			//碰到是歌曲时，获取播放列表播放的歌曲在列表中的位置，将当前点击的歌曲放置其后面
+			let playList = this.$store.state.music.musicList
+			let currentSongIndex = this.$store.state.music.currentSongIndex
+			//获取点击的歌曲信息
+			let songs = {
+				'author':this.$dealAuthor(song.ar,'name'),
+				'name':song.name,
+				'picUrl':song.al.picUrl
+			}
+			let songId = song.id
+			if(playList){
+				//先判断列表中是否含有该首歌，有则无需再加入列表
+				let difCount = 0
+				playList.map(list=>{
+					if(list.id !== songId){
+						difCount ++
+					}	
+				})
+				difCount === playList.length?playList.splice(currentSongIndex+1,0,song):null
+			}
+			else{
+				playList = []
+				playList.push(song)
+			}
+			let url = ''
+			await	songData(song.id).then(res=>{
+				if(res.code === 200){
+					url = res.data[0].url
+					//向vuex分发事件，修改歌曲以及播放列表数据
+					this.$store.dispatch('songs',JSON.stringify(songs))
+					this.$store.dispatch('audio',url)
+					this.$store.dispatch('musicList',JSON.stringify(playList))
+					this.$store.dispatch('id',songId)
+					this.$store.dispatch('index',Number(currentSongIndex) + 1)
+				}
+			})
+							
+			uni.navigateTo({
+				url:'../songDetail/songDetail'
+			})
+		},
 		//保存播放列表
 		savePlayList(){
 			
@@ -196,7 +245,7 @@ const playSongMixin = {
 			if(id === songId){
 				//一致，跳转至歌曲详情页
 				uni.navigateTo({
-					url:'../songDetail/songDetail'
+					url:'../../pages/songDetail/songDetail'
 				})
 			}
 			else{
@@ -213,6 +262,6 @@ const playSongMixin = {
 module.exports = {
 	bottomControlMixin,
 	changeLoopMixin,
-	serachScrollMixin,
+	searchScrollMixin,
 	playSongMixin
 }

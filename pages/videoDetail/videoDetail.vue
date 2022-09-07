@@ -13,16 +13,16 @@
 				<view class="operation">
 					<view class="operation-item">
 						<text class="iconfont controller-good"></text>
-						<text class="item-text" >{{$dealCount(mvInfo.likedCount)}}</text>
+						<text class="item-text" >{{$dealCount(vInfo.likedCount)}}</text>
 					</view>
 					<view class="operation-item">
 						<text class="iconfont controller-comments"></text>
-						<text class="item-text" >{{$dealCount(mvInfo.commentCount)}}</text>
+						<text class="item-text" >{{$dealCount(vInfo.commentCount)}}</text>
 					</view>
 					<view class="operation-item">
 						
 						<text class="iconfont musicshare"></text>
-						<text class="item-text" >{{$dealCount(mvInfo.shareCount)}}</text>
+						<text class="item-text" >{{$dealCount(vInfo.shareCount)}}</text>
 					</view>
 					<view class="operation-item">
 						<text class="iconfont controller-add"></text>
@@ -36,18 +36,23 @@
 				</view>
 				<view class="info">
 					<view class="artist-box info-item">
-						<view class="artist-avatar">
+						<view class="artist-avatar" v-if="Number(vId)">
 							<image class="artist-ava" v-for="(art,artIndex) in detail.artists" :src="art.img1v1Url" :key="artIndex"></image>
 						</view>
-						<text class="artist-name">{{$dealAuthor(detail.artists,'name')}}</text>
+						<view class="artist-avatar" v-else>
+							<image class="artist-ava" :src="detail.avatarUrl"></image>
+						</view>
+						<text class="artist-name" v-if="Number(vId)">{{$dealAuthor(detail.artists,'name')}}</text>
+						<text class="artist-name" v-else>{{nickname}}</text>
 					</view>
 					<view class="mv-name-desc  info-item" @tap="showDesc">
-						<text class="tag">MV</text>
-						<text class="mv-name">{{detail.name}}</text>
-						<text class="top-angle angle" v-show="!isShowDesc && detail.desc"></text>
+						<text class="tag" v-if="Number(vId)">MV</text>
+						<text class="tag" v-else>视频</text>
+						<text class="mv-name">{{detail.name || detail.title}}</text>
+						<text class="top-angle angle" v-if="!isShowDesc && (detail.desc || detail.description)"></text>
 					</view>
-					<view class="desc-box" v-show="isShowDesc">
-						<text @tap="showDesc">{{detail.desc}}</text>
+					<view class="desc-box" v-if="isShowDesc">
+						<text @tap="showDesc">{{detail.desc || detail.description}}</text>
 						<text class="bottom-angle angle"></text>
 					</view>
 				</view>
@@ -62,58 +67,69 @@
 <script>
 	import '@/common/iconfont.css'
 	import '@/common/controller.css'
-	import { mvInfo , mvUrl , mvDetail} from '@/common/api.js'
+	import { vInfo , vUrl , vDetail} from '@/common/api.js'
 	
 	export default {
 		data() {
 			return {
-				mvId:undefined,
-				mvInfo:{},
+				vId:undefined,
+				vInfo:{},
 				url:'',
 				detail:{},
-				isShowDesc:false
+				isShowDesc:false,
+				nickname:''
 			}
 		},
 		methods: {
 			back(){
 				uni.navigateBack()
 			},
-			getMvInfo(id){
-				mvInfo(id).then(res=>{
+			getVInfo(id){
+				vInfo(id).then(res=>{
 					if(res.code === 200){
-						this.mvInfo = res
+						this.vInfo = res
 					}
 				})
 			},
-			getMvUrl(id){
-				mvUrl(id).then(res=>{
-					if(res.code === 200){
-						this.url = res.data.url
-					}
+			getVUrl(id){
+				vUrl(id).then(res=>{
 					console.log(res)
+					if(res.code === 200){
+						if(Number(id)){
+							this.url = res.data.url
+						}
+						else{
+							this.url = res.urls[0].url
+						}
+					}
+					
 				})
 			},
-			getMvDetail(id){
-				mvDetail(id).then(res=>{
+			getVDetail(id){
+				vDetail(id).then(res=>{
 					if(res.code === 200){
 						this.detail = res.data
+						if(!Number(id)){
+							
+							this.nickname = res.data.creator.nickname
+						}
 					}
 					console.log(res)
 				})
 			},
 			init(id){
-				this.getMvUrl(id)
-				this.getMvInfo(id),
-				this.getMvDetail(id)
+				this.getVUrl(id)
+				this.getVInfo(id),
+				this.getVDetail(id)
 			},
 			showDesc(){
 				this.isShowDesc = !this.isShowDesc
 			}
 		},
 		onLoad(options) {
-			this.mvId = options.mvId
+			this.vId = options.vId
 			
-			this.init(this.mvId)
+			this.init(this.vId)
 		}
 	}
 </script>
@@ -247,7 +263,9 @@
 	}
 	.desc-box{
 		max-width: 90%;
+		max-height: 180px;
 		text-align: left;
+		overflow: scroll;
 	}
 	.angle{
 		width: 0;

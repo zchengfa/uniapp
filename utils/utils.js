@@ -37,6 +37,7 @@ export function throttle (func,delay) {
 
 //根据VIP等级返回大写的等级
 export function level(num){
+	
 	switch(num){
 		case 1:
 			return '壹';
@@ -67,7 +68,9 @@ export function level(num){
 			break;
 		case 10:
 			return '拾';
-			break;				
+			break;
+		default:
+			return '零'
 	}
 }
 

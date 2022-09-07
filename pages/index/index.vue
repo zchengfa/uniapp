@@ -8,8 +8,9 @@
 		<scroll-view scroll-y="true" class="scroll-v" :style="scrollHeight">
 			<swiper :indicator-dots="true" indicator-color="#fff" indicator-active-color="#ff215c" :autoplay="true" :interval="6000" :duration="1000" :circular="true">
 				<swiper-item v-for="(item,index) in banners" :key="index">
-					<view class="swiper-item">
+					<view class="swiper-item" @tap="toDetail(item)">
 						<image :src="item.pic" class="banner-image"></image>
+						<text class="type-title">{{item.typeTitle}}</text>
 					</view>
 				</swiper-item>
 			</swiper>
@@ -98,6 +99,23 @@
 			
 		},
 		methods: {
+			
+			//点击歌曲，查看详情
+			toDetail(item){
+				if(item.song){
+					
+				 	this.playSongNoCoverPlayList(item.song)
+				}
+				else if(item.url){
+					uni.navigateTo({
+						url:'../common/common?url='+ item.url
+					})
+				}
+				else if (item.video){
+					console.log('这是视频')
+				}
+				
+			},
 			//获取首页滚动菜单数据
 			getScrollMenu(){
 				indexScrollMenu().then(res=>{
@@ -206,6 +224,7 @@
 		width: 96%;
 	}
 	.swiper-item{
+		position: relative;
 		margin: 0 auto;
 		padding: 10px 0;
 		width: 94%;
@@ -215,6 +234,17 @@
 		width: 100%;
 		height: 140px;
 		border-radius: 8px;
+	}
+	.type-title{
+		position: absolute;
+		right: 5px;
+		bottom:25px;
+		padding:1px 2px;
+		font-size: 12px;
+		background-color: #fff;
+		border-radius: 4px;
+		/* 可以将字体颜色随背景一致 */
+		mix-blend-mode: screen;
 	}
 	.style-list{
 		position: relative;

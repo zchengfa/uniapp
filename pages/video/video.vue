@@ -73,9 +73,9 @@
 					})
 				}
 			},
-			toMvDetail(mvId){
+			toMvDetail(vId){
 				uni.navigateTo({
-					url:'../videoDetail/videoDetail?mvId=' + mvId
+					url:'../videoDetail/videoDetail?vId=' + vId
 				})
 			}
 		},

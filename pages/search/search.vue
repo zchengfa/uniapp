@@ -48,7 +48,7 @@
 			</view>
 		</view>
 		<!-- 搜索结果展示 -->
-		<scroll-view scroll-y="true" class="scroll-v search-result" v-if="isShowResult"  :style="scrollHeight">
+		<scroll-view scroll-y="true" class="scroll-v search-result" v-if="isShowResult"  :style="scrollHeightNoTab">
 			<view class="scroll-menu">
 				<scroll-view scroll-x="true" class="scroll-x" scroll-left="0" :scroll-into-view="into" scroll-with-animation="true">
 					<view class="menu-box">
@@ -70,25 +70,25 @@
 						></Summary>
 					</swiper-item>
 					<swiper-item>
-						<single-song :data="single" :type="searchType" @more="more" :word="searchKeyword" :count="single.songCount" prop="songs" class="component-item"></single-song>
+						<single-song :data="single" :type="searchType" @more="more" :word="searchKeyword" :count="Number(single.songCount)" prop="songs" class="component-item"></single-song>
 					</swiper-item>
 					<swiper-item>
-						<Sheet :data="songSheet" :type="searchType" @more="more" :word="searchKeyword" :count="songSheet.playlistCount" prop="playlists" class="component-item"></Sheet>
+						<Sheet :data="songSheet" :type="searchType" @more="more" :word="searchKeyword" :count="Number(songSheet.playlistCount)" prop="playlists" class="component-item"></Sheet>
 					</swiper-item>
 					<swiper-item>
-						<video-search :data="video" :type="searchType" @more="more" :word="searchKeyword" :count="video.videoCount" prop="videos" class="component-item"></video-search>
+						<video-search :data="video" :type="searchType" @more="more" :word="searchKeyword" :count="Number(video.videoCount)" prop="videos" class="component-item"></video-search>
 					</swiper-item>
 					<swiper-item>
-						<Singer :data="singer" :type="searchType" @more="more" :word="searchKeyword" :count="singer.artistCount" prop="artists" class="component-item"></Singer>
+						<Singer :data="singer" :type="searchType" @more="more" :word="searchKeyword" :count="Number(singer.artistCount)" prop="artists" class="component-item"></Singer>
 					</swiper-item>
 					<swiper-item>
-						<Album :data="album" :type="searchType" @more="more" :word="searchKeyword" :count="album.albumCount" prop="albums" class="component-item"></Album>
+						<Album :data="album" :type="searchType" @more="more" :word="searchKeyword" :count="Number(album.albumCount)" prop="albums" class="component-item"></Album>
 					</swiper-item>
 					<swiper-item>
-						<User :data="user" :type="searchType" @more="more" :word="searchKeyword" :count="user.userprofileCount" prop="userprofiles" class="component-item"></User>
+						<User :data="user" :type="searchType" @more="more" :word="searchKeyword" :count="Number(user.userprofileCount)" prop="userprofiles" class="component-item"></User>
 					</swiper-item>
 					<swiper-item>
-						<Lyrics @openOrCloseLy="openOrCloseLy" :key="lyricKey" :data="lyrics" :type="searchType" @more="more" :word="searchKeyword" :count="lyrics.songCount" prop="songs" class="component-item"></Lyrics>
+						<Lyrics @openOrCloseLy="openOrCloseLy" :key="lyricKey" :data="lyrics" :type="searchType" @more="more" :word="searchKeyword" :count="Number(lyrics.songCount)" prop="songs" class="component-item"></Lyrics>
 					</swiper-item>
 				</swiper>
 			</view>
@@ -346,34 +346,34 @@
 			},
 			//接收子组件发出的加载更多事件
 			more({type,data}){
-				// if(type === 1){
-				// 	this.single.hasMore = data.hasMore
-				// 	this.single.songs.push(...data.songs)
-				// }
-				// else if (type === 1000){
-				// 	this.songSheet.hasMore = data.hasMore
-				// 	this.songSheet.playlists.push(...data.playlists)
-				// }
-				// else if (type === 1014){
-				// 	this.video.hasMore = data.hasMore
-				// 	this.video.videos.push(...data.videos)
-				// }
-				// else if (type === 100){
-				// 	this.songer.hasMore = data.hasMore
-				// 	this.songer.artists.push(...data.artists)
-				// }
-				// else if (type === 10){
-				// 	this.album.hasMore = data.hasMore
-				// 	this.album.albums.push(...data.albums)
-				// }
-				// else if (type === 1002){
-				// 	this.user.hasMore = data.hasMore
-				// 	this.user.userprofiles.push(...data.userprofiles)
-				// }
-				// else if (type === 1006){
-				// 	this.lyrics.hasMore = data.hasMore
-				// 	this.lyrics.songs.push(...data.songs)
-				// }
+				if(type === 1){
+					this.single.hasMore = data.hasMore
+					this.single.songs.push(...data.songs)
+				}
+				else if (type === 1000){
+					this.songSheet.hasMore = data.hasMore
+					this.songSheet.playlists.push(...data.playlists)
+				}
+				else if (type === 1014){
+					this.video.hasMore = data.hasMore
+					this.video.videos.push(...data.videos)
+				}
+				else if (type === 100){
+					this.songer.hasMore = data.hasMore
+					this.songer.artists.push(...data.artists)
+				}
+				else if (type === 10){
+					this.album.hasMore = data.hasMore
+					this.album.albums.push(...data.albums)
+				}
+				else if (type === 1002){
+					this.user.hasMore = data.hasMore
+					this.user.userprofiles.push(...data.userprofiles)
+				}
+				else if (type === 1006){
+					this.lyrics.hasMore = data.hasMore
+					this.lyrics.songs.push(...data.songs)
+				}
 			},
 			//接收子组件发出的展开或收起歌词事件
 			openOrCloseLy(i){

@@ -1,7 +1,7 @@
 <template>
 	<view class="sheet-container">
 		<scroll-view scroll-y="true" class="scroll-v swiper-item-scroll" :style="scrollHeightSwiper" @scrolltolower="loadMore" v-if="count">
-			<view class="sheets-item" v-for="(item,index) in data.playlists" :key="index">
+			<view class="sheets-item" v-for="(item,index) in data.playlists" :key="index" @tap="toPlayListDetail(item.id)">
 				<view class="image-box">
 					<image :src="item.coverImgUrl" class="sheet-image"></image>
 				</view>
@@ -19,10 +19,17 @@
 </template>
 
 <script>
-	import { serachScrollMixin ,bottomControlMixin} from '@/common/mixins/mixins.js'
+	import { searchScrollMixin ,bottomControlMixin} from '@/common/mixins/mixins.js'
 	export default {
 		name:'Sheet',
-		mixins:[serachScrollMixin,bottomControlMixin]
+		mixins:[searchScrollMixin,bottomControlMixin],
+		methods:{
+			toPlayListDetail(id){
+				uni.navigateTo({
+					url:'../../pages/playListDetail/playListDetail?playListId='+id
+				})
+			}
+		}
 		
 	}
 </script>

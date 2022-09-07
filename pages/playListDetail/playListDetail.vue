@@ -67,12 +67,12 @@
 					<view class="list-item" v-for="(item,index) in showData" :key="index">
 						<text class="No">{{index+1}}</text>
 						<view class="item-info">
-							<view class="item-left" @tap="playSong(item.id)">
+							<view class="item-left" @tap="playSong(item.id,index)">
 								<text class="song-name hidden-text">{{item.name}}</text>
 								<view class="song-info">
 									<text class="hi-res tag" v-if="item.hr">Hi-res</text>
 									<text class="sq tag" v-else>SQ</text>
-									<text>{{$dealAuthor(item.ar,'name')}}</text>
+									<text class="author">{{$dealAuthor(item.ar,'name')}}</text>
 									<text class="charactor">-</text>
 									<text class="al hidden-text" >{{item.al.name}}</text>
 								</view>
@@ -246,6 +246,12 @@
 </script>
 
 <style scoped lang="scss">
+	.author{
+		max-width: 100px;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
 	.subscr{
 		background-color: #f00 !important;
 	}

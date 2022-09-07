@@ -95,6 +95,14 @@
             }
             
         }
+        ,{
+            "path" : "pages/common/common",
+            "style" :                                                                                    
+            {
+                "navigationStyle":"custom"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

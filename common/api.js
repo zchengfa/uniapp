@@ -176,18 +176,35 @@ export function allMv(offset,limit = 20){
 
 
 //获取MV详情信息https://www.codeman.ink/api/mv/detail/info?mvid=14559050（点赞数、分享数、评论数、当前用户对该mv是否点过赞{未登录默认为false}）
-export function mvInfo(mvId){
-	return Get(`/mv/detail/info?mvid=${mvId}`)
+export function vInfo(vId){
+	if(Number(vId)){
+		return Get(`/mv/detail/info?mvid=${vId}`)
+	}
+	else{
+		return Get(`/video/detail/info?vid=${vId}`)
+	}
 }
 
 //mv 名字 , 歌手 , 发布时间 ,https://www.codeman.ink/api/mv/detail?mvid=14559050
-export function mvDetail(mvId){
-	return Get(`/mv/detail?mvid=${mvId}`)
+export function vDetail(vId){
+	if(Number(vId)){
+		return Get(`/mv/detail?mvid=${vId}`)
+	}
+	else{
+		return Get(`/video/detail?id=${vId}`)
+	}	
+	
+	
 }
 
 //MV播放地址https://www.codeman.ink/api/mv/url?id=14559050
-export function mvUrl(mvId){
-	return Get(`/mv/url?id=${mvId}`)
+export function vUrl(vId){
+	if(Number(vId)){
+		return Get(`/mv/url?id=${vId}`)
+	}
+	else{
+		return Get(`/video/url?id=${vId}`)
+	}	
 }
 
 //我的页面获取推荐歌单
