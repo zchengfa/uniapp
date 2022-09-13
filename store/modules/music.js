@@ -41,7 +41,9 @@ export default {
 		//进度条圆点位置
 		dotLocation:'',
 		//进度条的值
-		progress:0
+		progress:0,
+		//是否在拖动中
+		isSeeking:false
 		
 	},
 	getters:{
@@ -173,6 +175,9 @@ export default {
 		},
 		progress(state,payload){
 			state.progress = payload
+		},
+		seekStatus(state,payload){
+			state.isSeeking = payload
 		}
 	},
 	actions:{
@@ -234,6 +239,9 @@ export default {
 		},
 		progress(context,payload){
 			context.commit('progress',payload)
+		},
+		seekStatus(context,payload){
+			context.commit('seekStatus',payload)
 		}
 	}
 	

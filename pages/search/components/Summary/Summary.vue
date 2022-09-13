@@ -195,6 +195,9 @@
 </script>
 
 <style lang="scss" scoped >
+	.title{
+		font-size: 18px;
+	}
 	.summary-container{
 		margin: 0 auto;
 		width: 94vw;

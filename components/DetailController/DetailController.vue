@@ -19,7 +19,7 @@
 				</view>
 			</view> -->
 			<view class="slider-box">
-				<slider @change="changeProgress" class="music-slider"  max="100" :value="progress" activeColor="#f00" block-size="14"/>
+				<slider @change="changeProgress" @changing="seeking" class="music-slider"  max="100" :value="progress" activeColor="#f00" block-size="14"/>
 			</view>
 			<text class="total-time time">{{tTime}}</text>
 		</view>
@@ -84,7 +84,13 @@
 			}
 		},
 		methods:{
+			//进度条拖动中
+			seeking(){
+				this.$store.dispatch('seekStatus',true)
+			},
+			//进度条拖动完成
 			changeProgress(e){
+				this.$store.dispatch('seekStatus',false)
 				this.$store.dispatch('progress',e.detail.value)
 				this.$audio.seek(this.totalTime*this.progress/100)
 				console.log(this.totalTime*this.progress/100)
