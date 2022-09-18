@@ -135,20 +135,33 @@
 			getHomePageData(){
 				homePageData().then(res=>{
 					let blocks = res.data.blocks
-					 // console.log(blocks)
-					this.recTitle = blocks[1].uiElement.subTitle.title
-					this.recSongSheet = blocks[1].creatives
-					
-					this.styleSong = blocks[2].creatives
-					this.styleTitle = blocks[2].uiElement.subTitle.title
-					this.idList = blocks[2].resourceIdList
-					//console.log(this.styleSong)
-					
-					this.MGCTitle = blocks[3].uiElement.subTitle.title
-					this.MGCSongSheet = blocks[3].creatives
-					
-					this.banners = blocks[0].extInfo.banners
-					
+					blocks.map(item=>{
+						//轮播图
+						if(item.blockCode === 'HOMEPAGE_BANNER'){
+							this.banners = item.extInfo.banners
+						}
+						//推荐歌单
+						else if(item.blockCode === 'HOMEPAGE_BLOCK_PLAYLIST_RCMD'){
+							this.recTitle = item.uiElement.subTitle.title
+							this.recSongSheet = item.creatives
+						}
+						//直播
+						else if(item.blockCode === 'HOMEPAGE_BLOCK_LISTEN_LIVE'){
+							this.lookLive = item.extInfo
+							this.lookLiveTitle = item.uiElement.subTitle.title
+						}
+						//雷达歌单
+						else if(item.blockCode === 'HOMEPAGE_BLOCK_MGC_PLAYLIST'){
+							this.MGCTitle = item.uiElement.subTitle.title
+							this.MGCSongSheet = item.creatives
+						}
+						//风格推荐
+						else{
+							this.styleSong = item.creatives
+							this.styleTitle = item.uiElement.subTitle.title
+							this.idList = item.resourceIdList
+						}
+					})
 					
 					this.dealData(this.MGCSongSheet)
 					this.dealData(this.recSongSheet)
@@ -163,9 +176,6 @@
 					})
 					
 					this.defaultAutoText = this.recAutoSheet.resources[0].uiElement.mainTitle.title
-					
-					this.lookLive = blocks[4].extInfo
-					this.lookLiveTitle = blocks[4].uiElement.subTitle.title
 				})
 			},
 			init(){
