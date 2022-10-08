@@ -1,0 +1,9 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "song-sheet-auto-scr": "/components/SongSheetAutoScr/SongSheetAutoScr",
+    "song-sheet": "/components/SongSheet/SongSheet",
+    "scroll-menu": "/components/ScrollMenu/ScrollMenu",
+    "look-live": "/components/LookLive/LookLive"
+  }
+}

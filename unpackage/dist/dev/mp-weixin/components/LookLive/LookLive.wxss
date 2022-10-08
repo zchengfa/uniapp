@@ -1,0 +1,25 @@
+
+.sheet-item.data-v-12c28338{
+	height: 180px;
+	background-color: #90747e;
+	text-align: center;
+	color: #fff;
+	border-radius: 6px;
+}
+.mask.data-v-12c28338{
+	flex-direction: row;
+}
+.image.data-v-12c28338{
+	background-size: contain;
+}
+.live-tag.data-v-12c28338{
+	margin-top: 6px;
+	margin-left: 6px;
+	display: inline-block;
+	padding:1px 10px;
+	height: 20px;
+	line-height: 18px;
+	border-radius: 4px;
+	background-color: rgba(0,0,0,.2);
+}
+

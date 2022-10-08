@@ -1,0 +1,6 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "comments-reply": "/components/CommentsReply/CommentsReply"
+  }
+}

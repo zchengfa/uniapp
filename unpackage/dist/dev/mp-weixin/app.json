@@ -1,0 +1,62 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/video/video",
+    "pages/care/care",
+    "pages/mine/mine",
+    "pages/indexMenu/rank/rank",
+    "pages/songDetail/songDetail",
+    "pages/comments/comments",
+    "pages/videoDetail/videoDetail",
+    "pages/login/login",
+    "pages/register/register",
+    "pages/search/search",
+    "pages/playListDetail/playListDetail",
+    "pages/common/common"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#d32839",
+    "borderStyle": "black",
+    "backgroundColor": "#F8F8F8",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "发现",
+        "iconPath": "/static/images/tabs/dis.png",
+        "selectedIconPath": "/static/images/tabs/dis_selected.png"
+      },
+      {
+        "pagePath": "pages/video/video",
+        "text": "MV",
+        "iconPath": "/static/images/tabs/video.png",
+        "selectedIconPath": "/static/images/tabs/video_selected.png"
+      },
+      {
+        "pagePath": "pages/care/care",
+        "text": "关注",
+        "iconPath": "/static/images/tabs/care.png",
+        "selectedIconPath": "/static/images/tabs/care_selected.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "/static/images/tabs/me.png",
+        "selectedIconPath": "/static/images/tabs/me_selected.png"
+      }
+    ]
+  },
+  "usingComponents": {
+    "music-controller": "/components/MusicController/MusicController",
+    "top-bar": "/components/TopBar/TopBar",
+    "music-list": "/components/MusicList/MusicList",
+    "nav-bar": "/components/NavBar/NavBar"
+  }
+}
