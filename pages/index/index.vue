@@ -49,7 +49,7 @@
 			<!-- 雷达歌单 -->
 			<SongSheet :song-sheet="MGCSongSheet" class="mgc-song-sheet" :title="MGCTitle"></SongSheet>
 			<!-- Look直播 -->
-			<look-live :title="lookLiveTitle" :live="lookLive" class="live"></look-live>
+			<look-live :title="lookLiveTitle" :live="lookLive" class="live" v-if="lookLive.length"></look-live>
 		</scroll-view>
 		<!-- 底部音乐控制 -->
 		<view class="bottom-control" v-show="isShowBottomControl" >
@@ -135,6 +135,7 @@
 			getHomePageData(){
 				homePageData().then(res=>{
 					let blocks = res.data.blocks
+					console.log(blocks)
 					blocks.map(item=>{
 						//轮播图
 						if(item.blockCode === 'HOMEPAGE_BANNER'){
