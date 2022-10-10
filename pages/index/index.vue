@@ -135,7 +135,7 @@
 			getHomePageData(){
 				homePageData().then(res=>{
 					let blocks = res.data.blocks
-					console.log(blocks)
+					//console.log(blocks)
 					blocks.map(item=>{
 						//轮播图
 						if(item.blockCode === 'HOMEPAGE_BANNER'){

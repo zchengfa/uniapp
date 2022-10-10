@@ -8,8 +8,13 @@ import MusicList from '@/components/MusicList/MusicList.vue'
 import store from './store'
 // import audio from 'common/audio.js'
 
+import personalModal from '@/components/PersonalModal/modal.js'
+
 // #ifndef VUE3
 import Vue from 'vue'
+
+Vue.use(personalModal)
+
 Vue.config.productionTip = false
 Vue.component('MusicController',MusicController)
 Vue.component('TopBar',TopBar)

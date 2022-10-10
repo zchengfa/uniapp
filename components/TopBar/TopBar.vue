@@ -1,6 +1,6 @@
 <template>
 	<view class="top-content">
-		<view class="list">
+		<view class="list" @tap="openPersonalModal">
 			<slot name="left">
 				<image src="~@/static/images/nav/list.png" class="list-image"></image>
 			</slot>
@@ -41,6 +41,10 @@
 		methods:{
 			centerTap(){
 				this.$emit('centerTap')
+			},
+			//打开个人面板
+			openPersonalModal(){
+				this.$modalIn()
 			}
 		}
 	}
