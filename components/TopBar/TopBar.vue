@@ -44,7 +44,9 @@
 			},
 			//打开个人面板
 			openPersonalModal(){
+				// #ifdef H5
 				this.$modalIn()
+				// #endif
 			}
 		}
 	}

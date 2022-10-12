@@ -92,6 +92,7 @@
 		border-radius: 6px;
 		background-color: #7970fa;
 		text-align: center;
+		
 	}
 	.swiper{
 		width: 140px;

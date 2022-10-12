@@ -35,14 +35,36 @@
 							</view>
 						</view>
 					</view>
+					<!-- 功能列表 -->
+					<view class="list-box" v-for="(item,index) in modalData" :key="index">
+						<view v-if="item.modal_title" class="title-box">
+							<text class="modal-title">{{item["modal_title"]}}</text>
+						</view>
+						<view class="list-item" v-for="(modalItem,modalIndex) in item.content" :key="modalIndex" @click.stop="toListDetail(modalItem.title,modalItem.location)">
+							<view class="list-left">
+								<image v-if="modalItem.icon" class="list-img" :src="modalItem.icon"></image>
+								<text class="list-title">{{modalItem.title}}</text>
+							</view>
+							<view class="list-right">
+								<text v-if="modalItem.tip" class="list-tip">{{modalItem.tip}}</text>
+								<text class="arrow">></text>
+							</view>
+						</view>
+					</view>
+					
+					<!-- 登录/退出登录按钮 -->
+					<view class="login-out-box">
+						<text class="login-out-btn">退出登录/关闭</text>
+					</view>
 				</view>
+				
 			</scroll-view>
 		</view>
 	</view>
 </template>
 
 <script>
-	
+	import modalJson from '@/static/json/personalModal.json'
 	export default {
 		name:"PersonalModal",
 		props:{
@@ -55,123 +77,38 @@
 		},
 		data(){
 			return {
-        modalList:[
-          {
-            "modal_title":null,
-            "content":[
-              {
-                "icon":"",
-                "title":"我的消息",
-                "location":"",
-                "tip":null
-              },
-              {
-                "icon":"",
-                "title":"云贝中心",
-                "location":"",
-                "tip":"签到"
-              },
-              {
-                "icon":"",
-                "title":"创作者中心",
-                "location":"",
-                "tip":null
-              },
-            ]
-          },
-          {
-            "modal_title":"音乐服务",
-            "content":[
-              {
-                "icon":"",
-                "title":"云村有票",
-                "location":"",
-                "tip":null
-              },
-              {
-                "icon":"",
-                "title":"多多西西口袋",
-                "location":"",
-                "tip":"签到"
-              },
-              {
-                "icon":"",
-                "title":"商城",
-                "location":"",
-                "tip":null
-              },
-              {
-                "icon":"",
-                "title":"Beat专区",
-                "location":"",
-                "tip":"投稿Beat，赢万元好礼"
-              },
-              {
-                "icon":"",
-                "title":"口袋彩铃",
-                "location":"",
-                "tip":null
-              },
-              {
-                "icon":"",
-                "title":"游戏专区",
-                "location":"",
-                "tip":null
-              }
-            ]
-          },
-          {
-            "modal_title":"其他",
-            "content":[
-              {
-                "icon":"",
-                "title":"设置",
-                "location":"",
-                "tip":null
-              },
-              {
-                "icon":"",
-                "title":"深色模式",
-                "location":"",
-                "tip":null
-              },
-              {
-                "icon":"",
-                "title":"定时关闭",
-                "location":"",
-                "tip":null
-              },
-            ]
-          },
-          {
-            "modal_title":null,
-            "content":[
-              {
-                "icon":"",
-                "title":"我的消息",
-                "location":"",
-                "tip":null
-              },
-              {
-                "icon":"",
-                "title":"云贝中心",
-                "location":"",
-                "tip":"签到"
-              },
-              {
-                "icon":"",
-                "title":"创作者中心",
-                "location":"",
-                "tip":null
-              },
-            ]
-          }
-        ]
-      }
+				modalData:[]
+			}
+		},
+		created() {
+			this.modalData = modalJson["modalList"]
+			
 		},
 		methods:{
 			closeModal(){
+				// #ifdef H5
 				this.$modalOut()
+				// #endif
+				
+				// #ifdef MP-WEIXIN
+				this.$emit('closeModal')
+				// #endif
+			},
+			toListDetail(title,location){
+				let that = this
+				Boolean(location)?(()=>{
+					uni.navigateTo({
+						url:location
+					})
+				})():((that)=>{
+					// #ifdef H5
+					that.$modalOut()
+					// #endif
+					uni.showModal({
+						title:"操作提示:",
+						content:`${title}详情页还未完善，等待开发者完善中！`
+					})
+				})(that)
 			}
 		}
 	}
@@ -188,12 +125,20 @@
 	background-color: rgba(0, 0, 0, .4);
 	transform: translateX(-100%);
 	transition-duration: .3s;
-	z-index: 1000;
+	z-index: 999;
+	
 	.content{
 		margin-left: 0;
 		width: 84%;
 		height: 100%;
-		background-color: #fff;
+		background-color: #f1f1f1;
+		.scroll-v{
+			height: calc(100vh - 55px);
+		}
+		.scroll-content{
+			position: relative;
+			height: 100%;
+		}
 		.modal{
 			display: flex;
 			justify-content: space-between;
@@ -217,9 +162,13 @@
 			justify-content: space-between;
 			flex-direction: column;
 		}
-		.qr-image{
-			width: 30px;
-			height: 30px;
+		.qrcode{
+			display: flex;
+			align-items: center;
+			.qr-image{
+				width: 30px;
+				height: 30px;
+			}
 		}
 		.vip-box{
 			border-radius: 20px;
@@ -281,6 +230,73 @@
 					border-bottom-left-radius: 2px;
 					border-bottom-right-radius: 2px;
 				}
+			}
+		}
+		.list-box{
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			align-items: center;
+			margin: 0 auto 15px;
+			top:25px;
+			width: 90%;
+			font-size: 15px;
+			border-radius: 10px;
+			background-color: #fff;
+			.title-box{
+				width: 100%;
+				border-bottom: 1px solid #e1e1e1;
+			}
+			.modal-title{
+				display: block;
+				padding: 10px 0;
+				margin: 0 auto;
+				width: 92%;
+				color: #bebebe;
+				font-size: 12px;
+			}
+			.list-img{
+				width: 30px;
+				height: 30px;
+			}
+			.list-item{
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				width: 92%;
+				padding: 10px 0;
+			}
+			.list-tip{
+				
+				margin-right: 10px;
+				color: #c6c6c6;
+				font-size: 12px;
+				
+			}
+			.arrow{
+				display: inline-block;
+				color: #c6c6c6;
+				transform: scale(1,1.8);
+			}
+		}
+		.login-out-box{
+			position: relative;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			top:10px;
+			margin: 0 auto;
+			padding: 15px 0;
+			width: 90%;
+			.login-out-btn{
+				padding: 15px 0;
+				width: 100%;
+				color: #eb4600;
+				font-size: 14px;
+				text-align: center;
+				background-color: #fff;
+				border-radius: 8px;
 			}
 		}
 	}

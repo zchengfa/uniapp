@@ -1,3 +1,4 @@
+// #ifdef H5
 //引入你要挂载的组件
 import modal from './PersonalModal.vue'
 
@@ -16,6 +17,8 @@ export default {
 		//将元素添加到body中
 		document.body.appendChild(instance.vm.$el)
 		
+		console.log(document)
+		
 		const modalEl = document.getElementsByClassName('personal-modal').item(0)
 		
 		
@@ -31,3 +34,5 @@ export default {
 		
 	}
 }
+
+// #endif

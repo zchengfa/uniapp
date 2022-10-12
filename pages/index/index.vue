@@ -6,7 +6,7 @@
 		</view>
 		<!-- 页面主内容 -->
 		<scroll-view scroll-y="true" class="scroll-v" :style="scrollHeight">
-			<swiper :indicator-dots="true" indicator-color="#fff" indicator-active-color="#ff215c" :autoplay="true" :interval="6000" :duration="1000" :circular="true">
+			<swiper :indicator-dots="true" indicator-color="#fff" indicator-active-color="#ff215c" :autoplay="true" :interval="7000" :duration="1000" :circular="true">
 				<swiper-item v-for="(item,index) in banners" :key="index">
 					<view class="swiper-item" @tap="toDetail(item)">
 						<image :src="item.pic" class="banner-image"></image>
