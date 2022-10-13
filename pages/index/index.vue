@@ -2,7 +2,7 @@
 	<view class="index-content">
 		<!-- 顶部导航栏 -->
 		<view class="top-box">
-			<top-bar :defaultKeyword="keywordD" @centerTap="toSearch"></top-bar>
+			<top-bar :defaultKeyword="keywordD" @centerTap="toSearch" @changeModal="changeModal"></top-bar>
 		</view>
 		<!-- 页面主内容 -->
 		<scroll-view scroll-y="true" class="scroll-v" :style="scrollHeight">
@@ -58,6 +58,10 @@
 		<view v-if="isShowMusicList">
 			<music-list></music-list>
 		</view>
+		<!-- 小程序端的个人板块组件 -->
+		<!-- #ifdef MP-WEIXIN -->
+		<personal-modal @changeModal="changeModal" class="wechat-modal" :class="modalStatus?'modal-in':'modal-out'"></personal-modal>
+		<!-- #endif -->
 	</view>
 </template>
 
@@ -68,6 +72,12 @@
 	import SongSheetAutoScr from '@/components/SongSheetAutoScr/SongSheetAutoScr.vue'
 	import LookLive from '@/components/LookLive/LookLive.vue'
 	import { bottomControlMixin ,playSongMixin} from '@/common/mixins/mixins.js'
+	
+	
+	// #ifdef MP-WEIXIN
+	import PersonalModal from '@/components/PersonalModal/PersonalModal.vue'
+	// #endif
+	
 	export default {
 		mixins:[bottomControlMixin,playSongMixin],
 		data() {
@@ -86,20 +96,31 @@
 				styleSong:[],
 				styleTitle:'',
 				pageMusicPlay:false,
-				keywordD:undefined
+				keywordD:undefined,
+				// #ifdef MP-WEIXIN
+				modalStatus:false
+				//#endif
+				
 			}
 		},
 		components:{
 			ScrollMenu,
 			SongSheet,
 			SongSheetAutoScr,
-			LookLive
+			LookLive,
+			//#ifdef MP-WEIXIN
+			PersonalModal
+			//#endif
 		},
 		onLoad() {
 			
 		},
 		methods: {
-			
+			// #ifdef MP-WEIXIN
+			changeModal(){
+				this.modalStatus = !this.modalStatus
+			},
+			//#endif
 			//点击歌曲，查看详情
 			toDetail(item){
 				if(item.song){
@@ -323,5 +344,27 @@
 	
 		height: calc(100vh - 70px);
 	}
+	.wechat-modal{
+		position: absolute;
+		left: 0;
+		top:0;
+		width: 100vw;
+		height: 100vh;
+		background-color: transparent;
+		z-index: 1000;
+	}
+	.wechat-modal{
+		transition-duration: .3s;
+	}
+	.modal-in{
+		left: 50%;
+		transform: translateX(-50%);
+		
+	}
+	.modal-out{
+		left: 0;
+		transform: translateX(-100%);
+	}
+	
 	/* #endif */
 </style>

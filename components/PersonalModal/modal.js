@@ -17,7 +17,7 @@ export default {
 		//将元素添加到body中
 		document.body.appendChild(instance.vm.$el)
 		
-		console.log(document)
+		
 		
 		const modalEl = document.getElementsByClassName('personal-modal').item(0)
 		

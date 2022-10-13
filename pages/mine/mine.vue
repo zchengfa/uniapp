@@ -12,7 +12,7 @@
 			<view class="user">
 				<view class="guide-login">
 					<text class="iconfont mine-taogongzi"  v-if="!$checkLogin()"></text>
-					<image :src="$store.state.user.userInfo.avatarUrl" class="avatar" v-if="$checkLogin()"></image>
+					<image :src="$store.state.user.userInfo.avatarUrl" class="avatar" v-else></image>
 					<text class="nick-name" >{{$store.state.user.userInfo.nickname}}</text>
 					<text class="login-tap" @tap="toLogin"  v-if="!$checkLogin()">立即登录 ></text>
 				</view>
@@ -170,10 +170,13 @@
 	font-weight: bolder;
 }
 .mine-taogongzi.iconfont,.avatar{
-	background-color: #ffbed2;
+	background-color: #e0e7da;
 	border-radius: 50%;
-	font-size: 70px;
+	font-size: 60px;
 	transform: translateY(-50%);
+	mix-blend-mode: difference;
+	color: #ff59b2;
+	overflow: hidden;
 }
 .avatar{
 	width: 60px;

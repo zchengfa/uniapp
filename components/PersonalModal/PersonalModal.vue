@@ -91,7 +91,7 @@
 				// #endif
 				
 				// #ifdef MP-WEIXIN
-				this.$emit('closeModal')
+				this.$emit('changeModal')
 				// #endif
 			},
 			toListDetail(title,location){
@@ -103,6 +103,9 @@
 				})():((that)=>{
 					// #ifdef H5
 					that.$modalOut()
+					// #endif
+					// #ifdef MP-WEIXIN
+					this.$emit('changeModal')
 					// #endif
 					uni.showModal({
 						title:"操作提示:",
@@ -116,6 +119,7 @@
 
 <style scoped lang="scss">
 .personal-modal{
+	/* #ifdef H5 */
 	position: absolute;
 	top:0;
 	left: 0;
@@ -126,15 +130,28 @@
 	transform: translateX(-100%);
 	transition-duration: .3s;
 	z-index: 999;
+	/* #endif */
 	
 	.content{
 		margin-left: 0;
+		/* #ifdef H5 */
 		width: 84%;
+		/* #endif */
+		/* #ifdef MP-WEIXIN */
+		width: 70%;
+		/* #endif */
 		height: 100%;
 		background-color: #f1f1f1;
+		/* #ifdef H5 */
 		.scroll-v{
 			height: calc(100vh - 55px);
 		}
+		/* #endif */
+		/* #ifdef MP-WEIXIN */
+		.scroll-v{
+			height: calc(100vh - 85px);
+		}
+		/* #endif */
 		.scroll-content{
 			position: relative;
 			height: 100%;
@@ -147,7 +164,11 @@
 			width: 88%;
 			padding: 10px 5px;
 		}
-		
+		/* #ifdef MP-WEIXIN */
+		.modal-header{
+			padding-top: 40px;
+		}
+		/* #endif */
 		.user-info{
 			display: flex;
 			justify-content: space-around;
@@ -301,6 +322,7 @@
 		}
 	}
 }
+/* #ifdef H5 */
 .modal-in{
 	left: 50%;
 	transform: translateX(-50%);
@@ -311,4 +333,5 @@
 	transform: translateX(-100%);
 }
 
+/* #endif */
 </style>

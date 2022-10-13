@@ -187,7 +187,7 @@
 						
 						this.getAllSongDetail(ids.substring(0,ids.length - 1))
 					}
-					//console.log(res)
+					
 				})
 			},
 			getAllSongDetail(ids){
@@ -217,27 +217,7 @@
 				this.showData.push(...this.allSongData.slice(this.sliceBegin,this.sliceEnd)) 
 			}
 		},
-		updated() {
-			//性能优化，列表过长影响页面流畅度，判断页面每个元素，元素在可视区域就渲染，不在的不进行渲染、
-			// let els = uni.createSelectorQuery().selectAll('.list-item')
-			// let page = uni.createSelectorQuery().select('.playlist-detail')
-			
-			
-			// page.boundingClientRect().exec((data)=>{
-			// 	let pageH = data[0].height
-			// 	els.boundingClientRect().exec((elsD)=>{
-			// 		if(elsD[0].length){
-			// 			elsD[0].map((item,index)=>{
-			// 				if(item.bottom - (pageH+50) <= 0){
-			// 					this.ShowListItem.push(item.dataset.set)
-			// 				}
-			// 			})
-			// 			console.log(elsD[0])
-			// 		}
-					
-			// 	})
-			// })
-		},
+		
 		onLoad(options) {
 			
 			this.getData(options.playListId)
@@ -269,6 +249,7 @@
 	width: 100%;
 	height: 50px;
 	color: #fff;
+	mix-blend-mode: lighten;
 	z-index: 999;
 	.left{
 		display: flex;
@@ -345,6 +326,7 @@
 		height: 16px;
 		white-space: nowrap;
 		overflow: hidden;
+		mix-blend-mode: lighten;
 	}
 }
 .followed{

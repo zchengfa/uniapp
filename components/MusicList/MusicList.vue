@@ -1,6 +1,6 @@
 <template>
 	<view class="music-list" @tap="closeList" v-show="isShowParent">
-		<view class="list-box" :class="isShowList?'fade-in fade-in-over':'fade-out fade-out-over'">
+		<view class="list-box" :class="isShowList?'fade-in ':'fade-out '">
 			<view class="list-content">
 				<text class="title">当前播放</text>
 				<text class="list-count">({{musicList.length}})</text>
@@ -65,7 +65,7 @@
 			closeList(){
 				this.isShowList = false
 				let timer = setTimeout(()=>{
-					this.isShowParent = false
+					//this.isShowParent = false
 					//关闭的同时，发出事件，告诉父组件或祖组件我关闭了，可以改变控制的状态了
 					uni.$emit('listCloseOver')
 				},300)
@@ -92,11 +92,13 @@
 <style scoped>
 	.list-box{
 		position: relative;
+		top:100%;
 		margin: 0 auto;
 		width: 94%;
 		height: 64%;
 		border-radius: 16px;
 		background-color: #fff;
+		transition-duration: .5s;
 	}
 	.list-content{
 		margin: 0 auto;
@@ -126,17 +128,14 @@
 		font-size: 18px;
 	}
 	.fade-in{
-		animation: .4s drawBox linear 1;
+		
+		transform: translateY(-102%);
 	}
 	.fade-out{
-		animation: .4s fadeBox linear 1;
+		
+		transform: translateY(100%);
 	}
-	.fade-in-over{
-		top:34%;
-	}
-	.fade-out-over{
-		top:100%
-	}
+	
 	.list-scroll{
 		width: 100%;
 		height: 80%;
@@ -177,20 +176,5 @@
 	.current-song{
 		color: #ea0000;
 	}
-	@keyframes drawBox{
-		from{
-			top:100%;
-		}
-		to{
-			top:34%;
-		}
-	}
-	@keyframes fadeBox{
-		from{
-			top:34%;
-		}
-		to{
-			top:100%;
-		}
-	}
+	
 </style>

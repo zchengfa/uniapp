@@ -47,6 +47,10 @@
 				// #ifdef H5
 				this.$modalIn()
 				// #endif
+				
+				// #ifdef MP-WEIXIN
+				this.$emit('changeModal')
+				// #endif
 			}
 		}
 	}
