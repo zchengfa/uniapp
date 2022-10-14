@@ -79,6 +79,9 @@
 </script>
 
 <style scoped>
+	.song-auto-scr{
+		padding: 0 10px;
+	}
 	.sheet-item{
 		background-color: #d40000;
 	}
