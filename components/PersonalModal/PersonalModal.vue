@@ -4,12 +4,14 @@
 			<!-- 板块头部（个人信息、扫码） -->
 			<view class="modal-header modal">
 				<view class="user-info">
-					<image src="../../static/logo.png" class="avatar" ></image>
-					<text class="username header-msg">像鱼</text>
+					<image :src="user.header" v-if="user.header" class="avatar" ></image>
+					<image src="~@/static/images/avatar_de.png" v-else="user.header" class="avatar" ></image>
+					<text class="username header-msg" v-if="user.name">{{user.name}}</text>
+					<text class="login" v-if="!user.name">立即登录</text>
 					<text class="header-msg">></text>
 				</view>
 				<view class="qrcode">
-					<image src="../../static/images/woman.png" class="qr-image"></image>
+					<image src="~@/static/images/qrcode.png" class="qr-image"></image>
 				</view>
 			</view>
 			<!-- 功能项 -->
@@ -42,19 +44,21 @@
 						</view>
 						<view class="list-item" v-for="(modalItem,modalIndex) in item.content" :key="modalIndex" @click.stop="toListDetail(modalItem.title,modalItem.location)">
 							<view class="list-left">
-								<image v-if="modalItem.icon" class="list-img" :src="modalItem.icon"></image>
+								<image  class="list-img" :src="modalItem.icon"></image>
 								<text class="list-title">{{modalItem.title}}</text>
 							</view>
 							<view class="list-right">
 								<text v-if="modalItem.tip" class="list-tip">{{modalItem.tip}}</text>
-								<text class="arrow">></text>
+								<switch v-if="modalItem.isSwitch" style="transform: scale(.7);" @change="switchChange" />
+								<text v-else class="arrow">></text>
 							</view>
 						</view>
 					</view>
 					
 					<!-- 登录/退出登录按钮 -->
 					<view class="login-out-box">
-						<text class="login-out-btn">退出登录/关闭</text>
+						<text class="login-out-btn" v-if="Object.keys(user).length">退出登录/关闭</text>
+						<text class="login-out-btn" v-else>关闭云音乐</text>
 					</view>
 				</view>
 				
@@ -95,6 +99,7 @@
 				// #endif
 			},
 			toListDetail(title,location){
+				
 				let that = this
 				Boolean(location)?(()=>{
 					uni.navigateTo({
@@ -102,16 +107,30 @@
 					})
 				})():((that)=>{
 					// #ifdef H5
-					that.$modalOut()
+					if(location !== undefined){
+						that.$modalOut()
+						showModalTip()
+					}
+					
 					// #endif
 					// #ifdef MP-WEIXIN
-					this.$emit('changeModal')
+					if(location !== undefined){
+						that.$emit('changeModal')
+						showModalTip()
+					}
+					
 					// #endif
-					uni.showModal({
-						title:"操作提示:",
-						content:`${title}详情页还未完善，等待开发者完善中！`
-					})
+					function showModalTip(){
+						uni.showModal({
+							title:"操作提示:",
+							content:`${title}详情页还未完善，等待开发者完善中！`
+						})
+					}
 				})(that)
+			},
+			//深色模式开关
+			switchChange(e){
+				e.detail.value?console.log('深色模式按钮已在开启状态'):console.log('深色模式按钮已在关闭状态')
 			}
 		}
 	}
@@ -177,6 +196,12 @@
 				margin-left: 10px;
 			}
 		}
+		.avatar{
+			margin-right: 10px;
+			width: 30px;
+			height: 30px;
+			border: 1px solid #c181c1;
+		}
 		.modal:not(.modal-header){
 			position: relative;
 			top: 10px;
@@ -187,8 +212,8 @@
 			display: flex;
 			align-items: center;
 			.qr-image{
-				width: 30px;
-				height: 30px;
+				width: 26px;
+				height: 26px;
 			}
 		}
 		.vip-box{
@@ -277,9 +302,16 @@
 				color: #bebebe;
 				font-size: 12px;
 			}
+			.list-left,.list-right{
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			
 			.list-img{
-				width: 30px;
-				height: 30px;
+				margin-right: 10px;
+				width: 18px;
+				height: 18px;
 			}
 			.list-item{
 				display: flex;
@@ -289,11 +321,16 @@
 				padding: 10px 0;
 			}
 			.list-tip{
-				
+				/* #ifdef MP-WEIXIN */
+				max-width: 100px;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				/* #endif */
+				flex:1;
 				margin-right: 10px;
 				color: #c6c6c6;
 				font-size: 12px;
-				
 			}
 			.arrow{
 				display: inline-block;
