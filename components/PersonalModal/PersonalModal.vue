@@ -7,7 +7,7 @@
 					<image :src="user.header" v-if="user.header" class="avatar" ></image>
 					<image src="~@/static/images/avatar_de.png" v-else="user.header" class="avatar" ></image>
 					<text class="username header-msg" v-if="user.name">{{user.name}}</text>
-					<text class="login" v-if="!user.name">立即登录</text>
+					<text class="login" v-if="!user.name" @click.stop="toLogin">立即登录</text>
 					<text class="header-msg">></text>
 				</view>
 				<view class="qrcode">
@@ -97,6 +97,14 @@
 				// #ifdef MP-WEIXIN
 				this.$emit('changeModal')
 				// #endif
+			},
+			async toLogin(){
+				await this.closeModal()
+				await setTimeout(()=>{
+					uni.navigateTo({
+						url:'../../pages/login/login'
+					})
+				},300)
 			},
 			toListDetail(title,location){
 				

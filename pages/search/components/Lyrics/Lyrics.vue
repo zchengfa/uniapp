@@ -7,8 +7,8 @@
 						<view class="left">
 							<text class="song-name">{{item.name}}</text>
 							<view class="self-info">
-								<text v-if="item.copyrightId" class="copyright">原唱</text>
-								<text class="sq" v-if="item.sq">SQ</text>
+								<text v-if="item.copyrightId" class="copyright tag">原唱</text>
+								<text class="sq tag" v-if="item.sq">SQ</text>
 								<text class="author">{{item.artists[0].name}}</text>
 								<text class="charactor" v-if="item.album">-</text>
 								<text class="al" v-if="item.album">{{item.album.name}}</text>
@@ -95,7 +95,7 @@
 			}
 		}
 		.copyright{
-			margin:0 4px;
+			
 			padding: 1px;
 			background-color: #ff0000;
 			color: #fff;
@@ -103,7 +103,7 @@
 			font-size: 12px;
 		}
 		.sq{
-			margin: 0 2px;
+			
 			padding:0 1px;
 			border-radius: 4px;
 			border: 1px solid #f00;

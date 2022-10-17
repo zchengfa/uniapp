@@ -157,4 +157,11 @@
 		top:10%;
 		color: #b6b6b6;
 	}
+	.tag{
+		display: inline-block;
+	}
+	.vip,.tag{
+		transform: scale(.7);
+	}
+	
 </style>

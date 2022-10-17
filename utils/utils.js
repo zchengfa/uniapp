@@ -15,6 +15,7 @@ export function dealCount ( count ) {
 //处理歌曲作者
 export function dealAuthor ( authorArr = [] , arrProperty) {
 	let author = ''
+	let num = 0
 	authorArr.map(item=>{
 		author += item[arrProperty]+'/'
 	})

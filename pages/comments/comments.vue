@@ -352,7 +352,6 @@
 		align-items: center;
 	}
 	.vip{
-		margin-left: 4px;
 		padding: 0 6px;
 		font-size: 12px;
 		color: #fff;

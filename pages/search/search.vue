@@ -14,7 +14,7 @@
 				<button class="mini-btn search" type="default" size="mini" @tap="search(searchKeyword)">搜索</button>
 			</view>
 		</view>
-		<scroll-view scroll-y="true" class="scroll-v"  :style="scrollHeight">
+		<scroll-view scroll-y="true" class="scroll-v"  :style="scrollHeightNoTab">
 			<!-- 搜索历史 -->
 			<view class="search-history" v-if="history.length">
 				<view class="history-top">
@@ -26,15 +26,38 @@
 					
 				</view>
 			</view>
-			<!-- 热搜榜 -->
-			<view class="hot-search">
-				<text class="title">热搜榜</text>
-				<view class="hot-item" v-for="(item,index) in hotSearch" :key="index">
-					<text class="rank" :class="{'rank-active':index === 0 || index === 1 || index === 2 }">{{index + 1}}</text>
-					<text class="hot-keyword" @tap="search(item.searchWord)" :class="{'word-active':index === 0 || index === 1 || index === 2 }">{{item.searchWord}}</text>
-					<image class="icon" :src="item.iconUrl" v-if="item.iconUrl"></image>
-				</view>
-			</view>
+			<swiper :indicator-dots="false" :autoplay="false":duration="30" class="rank-swiper">
+				<swiper-item class="item-box">
+					<view class="swiper-item">
+						<!-- 热搜榜 -->
+						<view class="hot-search">
+							<text class="title">热搜榜</text>
+							<view class="hot-item" v-for="(item,index) in hotSearch" :key="index">
+								<view class="rank-box">
+									<text class="rank" :class="{'rank-active':index === 0 || index === 1 || index === 2 }">{{index + 1}}</text>
+									<text class="hot-keyword" @tap="search(item.searchWord)" :class="{'word-active':index === 0 || index === 1 || index === 2 }">{{item.searchWord}}</text>
+									<image class="icon tag" :src="item.iconUrl" v-if="item.iconUrl"></image>
+								</view>
+							</view>
+						</view>
+					</view>
+				</swiper-item>
+				<swiper-item  class="item-box">
+					<view class="swiper-item">
+						<!-- 热搜榜 -->
+						<view class="hot-search">
+							<text class="title">热搜榜</text>
+							<view class="hot-item" v-for="(item,index) in hotSearch" :key="index">
+								<view class="rank-box">
+									<text class="rank" :class="{'rank-active':index === 0 || index === 1 || index === 2 }">{{index + 1}}</text>
+									<text class="hot-keyword" @tap="search(item.searchWord)" :class="{'word-active':index === 0 || index === 1 || index === 2 }">{{item.searchWord}}</text>
+									<image class="icon tag" :src="item.iconUrl" v-if="item.iconUrl"></image>
+								</view>
+							</view>
+						</view>
+					</view>
+				</swiper-item>
+			</swiper>
 		</scroll-view>
 		<!-- 搜索建议结果 -->
 		<view class="suggest-result" v-if="suggestResult.length">
@@ -218,10 +241,11 @@
 				uni.showModal({
 					title:'提示：',
 					content:'确定清空全部历史记录?',
-					success:async () =>{
-						
-						await	uni.setStorageSync('search_history',[])
-						this.history = []
+					success:async (res) =>{	
+						if(res.confirm){
+							await	uni.setStorageSync('search_history',[])
+							this.history = []
+						}
 					}
 				})
 				 
@@ -385,7 +409,7 @@
 					}
 				})
 				this.lyricKey ++
-				//console.log(this.lyrics.songs)
+				
 			}
 		},
 		onLoad(options) {
@@ -529,30 +553,49 @@
 	}
 }
 // 热搜榜
-.hot-search{
+.rank-swiper{
 	margin: 0 auto;
-	width: 92%;
-	padding: 0 5px;
+	width: 96vw;
+	height: 820px;
+}
+.item-box{
+	width: 60%  !important;
+}
+.swiper-item{
+	width: 100%;
+	height: 100%;
+}
+.item-box:not(:first-child){
+	margin-left: 10px;
+}
+.hot-search{
+	
+	width: 100%;
 	background-color: #fff;
-	font-size: 12px;
-	border-radius: 6px;
+	font-size: 14px;
+	border-radius: 10px;
 	.title{
 		display: block;
-		padding: 15px 0;
-		border-bottom: 1px solid #d0d0d0;
+		padding: 15px;
+		border-bottom: 1px solid #dadada;
 	}
 	.hot-item{
-		margin-top: 20px;
+		padding: 10px 0;
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
 		color: #5d5d5d;
 		text-align: left;
+		.rank-box{
+			display: flex;
+			justify-content: space-around;
+		}
 		.rank{
-			width: 20px;
+			width: 16px;
+			padding: 0 0 0 15px;
 		}
 		.hot-keyword{
-			margin-left: 10px;
+			padding-left: 10px;
 		}
 		.icon{
 			margin-left: 4px;

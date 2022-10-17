@@ -35,9 +35,7 @@
 										</view>
 										<view class="bottom">
 											<text class="sub-title" v-if="child.uiElement.subTitle">{{child.uiElement.subTitle.title}}</text>
-											<view class="author-box">
-												<text class="song-author" v-for="(artist,artIndex) in child.resourceExtInfo.artists" :key="artIndex">{{artist.name}}</text>
-											</view>
+											<text class="song-author">{{$dealAuthor(child.resourceExtInfo.artists,'name')}}</text>
 										</view>
 									</view>
 								</view>
@@ -311,30 +309,28 @@
 	}
 	.bottom{
 		display: flex;
-		margin-top: 4px;
-		height: 20px;
-		overflow: hidden;
+		justify-content: flex-start;
+		align-items: center;
 	}
 	.sub-title{
-		padding: 2px 4px;
-		font-size: 12px;
 		color: #d40000;
 		background-color: #ffe7de;
 		border-radius: 4px;
+		font-size: 12px;
+		transform: scale(.8);
 	}
 	.song-author{
-		margin-left: 4px;
+		
 		color: #9a9a9a;
 	}
-	.author-box{
-		display: inline-block;
+	.sub-title,.song-author{
+		max-width: 140px;
+		white-space: nowrap;
+		word-wrap: break-word;
+		text-overflow: ellipsis;
+		overflow: hidden;
 	}
-	/* 选择除第一个元素之外的其他元素，在它们前面加/ */
-	.song-author:not(:first-child)::before{
-		display: inline-block;
-		content: '/';
-		
-	}
+	
 	/* #ifdef MP-WEIXIN */
 	.top-box{
 		height: 80px;

@@ -211,7 +211,7 @@
 /* #ifdef MP-WEIXIN */
 .nav-bar{
 	height: 80px;
-	line-height: 80px;
+	line-height: 110px;
 	
 }
 /* #endif */
