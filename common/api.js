@@ -1,5 +1,6 @@
-const baseUrl = "https://www.codeman.ink/api"
+//const baseUrl = "https://www.codeman.ink/api"
 //const baseUrl = 'http://192.168.31.130:4000'
+const baseUrl = 'http://192.168.31.110:3000'
 
 function Get(URL){
 	return new Promise((resolve)=>{
@@ -217,12 +218,12 @@ export function sendValidate(phone){
 	return Get(`/captcha/sent?phone=${phone}`)
 }
 
-//验证手机验证码https://www.codeman.ink/api/captcha/verify?phone=13058018094&captcha=2544
+//验证手机验证码https://www.codeman.ink/api/captcha/verify?phone=1111&captcha=1111
 export function verifyCode(phone,code){
 	return Get(`/captcha/verify?phone=${phone}&captcha=${code}`)
 }
 
-//验证成功后使用该验证码和手机号进行登录https://www.codeman.ink/api/login/cellphone?phone=13058018094&captcha=8829
+//验证成功后使用该验证码和手机号进行登录https://www.codeman.ink/api/login/cellphone?phone=111111&captcha=1111
 //登录提示网络太拥挤
 export function loginWithPhone(phone,code){
 	return Get(`/login/cellphone?phone=${encodeURIComponent(phone)}&captcha=${code}`)

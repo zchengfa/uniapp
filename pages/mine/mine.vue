@@ -12,9 +12,19 @@
 			<view class="user">
 				<view class="guide-login">
 					<text class="iconfont mine-taogongzi"  v-if="!$checkLogin()"></text>
-					<image :src="$store.state.user.userInfo.avatarUrl" class="avatar" v-else></image>
-					<text class="nick-name" >{{$store.state.user.userInfo.nickname}}</text>
+					<image :src="userInfo.avatarUrl" class="avatar" v-else></image>
 					<text class="login-tap" @tap="toLogin"  v-if="!$checkLogin()">立即登录 ></text>
+					<view class="info-box" v-else>
+						<view class="top">
+							<text class="nick-name" >{{userInfo.nickname}}</text>
+							<text class="vip-tip" v-if="userInfo.vipType===0">VIP开通 ></text>
+						</view>
+						<view class="bottom">
+							<text class="follow info-bottom-item" >{{userInfo.follows}}关注</text>
+							<text class="fans info-bottom-item">{{userInfo.followeds}}粉丝</text>
+							<text class="level info-bottom-item">Lv.{{userInfo.followeds}}</text>
+						</view>
+					</view>
 				</view>
 			</view>
 			<!-- 用户相关 -->
@@ -95,6 +105,7 @@
 	import '@/common/mine.css'
 	import { bottomControlMixin } from '@/common/mixins/mixins.js'
 	import { recommendSongSheet } from '@/common/api.js'
+	import { mapGetters } from 'vuex'
 	
 	export default {
 		mixins:[bottomControlMixin],
@@ -103,13 +114,16 @@
 				recSheet:[]
 			}
 		},
+		computed:{
+			...mapGetters(['userInfo'])
+		},
 		methods: {
 			getRec(){
 				recommendSongSheet().then(res=>{
 					if(res.code === 200){
 						this.recSheet = res.result
 					}
-					console.log(res)
+					//console.log(res)
 				})
 			},
 			toLogin(){
@@ -129,7 +143,7 @@
 	}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .mine-container{
 	width: 100%;
 	height:calc(100vh - 50px);
@@ -165,8 +179,7 @@
 	align-items: center;
 }
 .login-tap{
-	position: relative;
-	top:-30px;
+	transform: translateY(-50%);
 	font-weight: bolder;
 }
 .mine-taogongzi.iconfont,.avatar{
@@ -174,9 +187,38 @@
 	border-radius: 50%;
 	font-size: 60px;
 	transform: translateY(-50%);
-	mix-blend-mode: difference;
+	
 	color: #ff59b2;
 	overflow: hidden;
+}
+.info-box{
+	transform: translateY(-50%);
+	.top,.bottom{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.bottom{
+		margin-top: 10px;
+		font-size: 13px;
+		color: #bcbcbc;
+		letter-spacing: 2px;
+		.info-bottom-item:not(:first-child)::before{
+			display: inline-block;
+			margin: 0 10px;
+			content: '|';
+			transform: scale(.5,.7);
+			
+		}
+	}
+	.vip-tip{
+		color: #fff;
+		padding: 2px 6px;
+		border-radius: 16px;
+		font-size: 12px;
+		background-color: #ababab;
+		transform: scale(.8);
+	}
 }
 .avatar{
 	width: 60px;
