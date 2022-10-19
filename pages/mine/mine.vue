@@ -66,7 +66,7 @@
 			<view class="love-mode">
 				<view class="love-music">
 					<view class="love-image">
-						<text class="iconfont controller-love"></text>
+						<image class="heart" src="~@/static/images/heart.png"></image>
 					</view>
 					<view class="love-text">
 						<text class="title-love">我喜欢的音乐</text>
@@ -74,7 +74,10 @@
 					</view>
 				</view>
 				<view class="mode">
-					<text>心动模式</text>
+					<view class="mode-box">
+						<image class="heart-love" src="~@/static/images/icon_love.png"></image>
+						<text class="mode-text">心动模式</text>
+					</view>
 				</view>
 			</view>
 			<!-- 为你推荐 -->
@@ -224,6 +227,7 @@
 	width: 60px;
 	height: 60px;
 }
+
 .user-operation{
 	position: relative;
 	top:65px;
@@ -259,7 +263,32 @@
 	padding: 20px;
 	background-color: #fff;
 	border-radius: 6px;
-	
+	font-size: 14px;
+	.mode{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		font-weight: 400;
+		.mode-box{
+			padding-left: 4px;
+			padding-right: 6px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border-radius: 1rem;
+			border: 1px solid #b4b4b4;
+			transform: scale(.8);
+		}
+		.heart-love{
+			width: 30px;
+			height:30px;
+			transform: scale(.7);
+		}
+		.mode-text{
+			
+		}
+	}
 }
 
 .love-music{
@@ -275,6 +304,10 @@
 	height: 60px;
 	background-color: #bcbcbc;
 	border-radius: 6px;
+	.heart{
+		width: 32px;
+		height: 32px;
+	}
 }
 .controller-love{
 	color: #fff;
