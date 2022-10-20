@@ -245,3 +245,10 @@ export function checkPhone(phone){
 export function event(){
 	return Get(`/event?pagesize=20`)
 }
+
+
+//登录成功后调用api可以获取用户喜欢的音乐id列表
+//likelist?uid=2342343244
+export function userLikeMusicList (uid) {
+	return 	Get(`/likelist?uid=${uid}`)
+}

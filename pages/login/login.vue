@@ -34,7 +34,7 @@
 
 <script>
 	import '@/common/iconfont.css'
-	import { sendValidate , verifyCode, loginWithPhone} from '@/common/api.js'
+	import { sendValidate , verifyCode, loginWithPhone ,userLikeMusicList} from '@/common/api.js'
 	import ThirdLogin from '@/components/ThirdLogin/ThirdLogin.vue'
 	
 	export default {
@@ -102,17 +102,24 @@
 							if(res.code === 200 && res.data){
 								//验证成功，进行登录
 								loginWithPhone(this.formData.phone,this.formData.vali).then(data=>{
-									if(data.code === 200){
+									if(data.code === 200){									
 										//登录成功，拿到用户信息和token进行存储
 										this.$store.dispatch('saveUserInfo',JSON.stringify({
-											'token':data.token,
-											'userInfo':data.profile,
-											'cookie':data.cookie
-										})).then(res=>{
-											if(res){
-												uni.navigateBack()
-											}
-										})	
+												'token':data.token,
+												'userInfo':data.profile,
+												'cookie':data.cookie
+												})).then(async res=>{
+													// if(res){
+													// 	//获取用户喜欢音乐列表id并存储
+													// await userLikeMusicList(data.profile.userId).then(idsRes=>{
+													// 	console.log(idsRes)
+													// 	this.$store.dispatch('userLikeMusicIds',idsRes.ids)
+													// 	})
+													// await uni.navigateBack()
+													
+													// }
+													uni.navigateBack()
+												})	
 									}
 									else{
 										uni.showModal({
@@ -120,7 +127,7 @@
 											content:data.message
 										})
 									}
-									console.log(data)
+									//console.log(data)
 								})
 								
 							}

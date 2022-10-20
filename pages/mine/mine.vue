@@ -12,17 +12,17 @@
 			<view class="user">
 				<view class="guide-login">
 					<text class="iconfont mine-taogongzi"  v-if="!$checkLogin()"></text>
-					<image :src="userInfo.avatarUrl" class="avatar" v-else></image>
+					<image :src="user.avatarUrl" class="avatar" v-else></image>
 					<text class="login-tap" @tap="toLogin"  v-if="!$checkLogin()">立即登录 ></text>
 					<view class="info-box" v-else>
 						<view class="top">
-							<text class="nick-name" >{{userInfo.nickname}}</text>
-							<text class="vip-tip" v-if="userInfo.vipType===0">VIP开通 ></text>
+							<text class="nick-name" >{{user.nickname}}</text>
+							<text class="vip-tip" v-if="user.vipType===0">VIP开通 ></text>
 						</view>
 						<view class="bottom">
-							<text class="follow info-bottom-item" >{{userInfo.follows}}关注</text>
-							<text class="fans info-bottom-item">{{userInfo.followeds}}粉丝</text>
-							<text class="level info-bottom-item">Lv.{{userInfo.followeds}}</text>
+							<text class="follow info-bottom-item" >{{user.follows}}关注</text>
+							<text class="fans info-bottom-item">{{user.followeds}}粉丝</text>
+							<text class="level info-bottom-item">Lv.{{user.followeds}}</text>
 						</view>
 					</view>
 				</view>
@@ -107,18 +107,17 @@
 <script>
 	import '@/common/mine.css'
 	import { bottomControlMixin } from '@/common/mixins/mixins.js'
-	import { recommendSongSheet } from '@/common/api.js'
-	import { mapGetters } from 'vuex'
+	import { recommendSongSheet , songDetail ,userLikeMusicList} from '@/common/api.js'
 	
 	export default {
 		mixins:[bottomControlMixin],
 		data() {
 			return {
-				recSheet:[]
+				recSheet:[],
+				user:{},
+				likeIds:[],
+				likeCover:''
 			}
-		},
-		computed:{
-			...mapGetters(['userInfo'])
 		},
 		methods: {
 			getRec(){
@@ -138,10 +137,27 @@
 				uni.navigateTo({
 					url:'../../pages/playListDetail/playListDetail?playListId='+id
 				})
+			},
+			getUserProfile(){
+				if(this.$checkLogin()){
+					this.user = this.$store.state.user.userInfo
+					this.likeIds = this.$store.state.user.likeIds
+					userLikeMusicList(this.user.userId).then(res=>{
+						console.log(res)
+						// songDetail(res.ids[0]).then(song=>{
+						// 	console.log(song)
+						// })
+					})
+					
+				}
 			}
 		},
 		created() {
 			this.getRec()
+			this.getUserProfile()
+		},
+		activated() {
+			this.getUserProfile()
 		}
 	}
 </script>
