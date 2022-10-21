@@ -12,17 +12,17 @@
 			<view class="user">
 				<view class="guide-login">
 					<text class="iconfont mine-taogongzi"  v-if="!$checkLogin()"></text>
-					<image :src="user.avatarUrl" class="avatar" v-else></image>
+					<image :src="userInfo.avatarUrl" class="avatar" v-else></image>
 					<text class="login-tap" @tap="toLogin"  v-if="!$checkLogin()">立即登录 ></text>
 					<view class="info-box" v-else>
 						<view class="top">
-							<text class="nick-name" >{{user.nickname}}</text>
-							<text class="vip-tip" v-if="user.vipType===0">VIP开通 ></text>
+							<text class="nick-name" >{{userInfo.nickname}}</text>
+							<text class="vip-tip" v-if="userInfo.vipType===0">VIP开通 ></text>
 						</view>
 						<view class="bottom">
-							<text class="follow info-bottom-item" >{{user.follows}}关注</text>
-							<text class="fans info-bottom-item">{{user.followeds}}粉丝</text>
-							<text class="level info-bottom-item">Lv.{{user.followeds}}</text>
+							<text class="follow info-bottom-item" >{{userInfo.follows}}关注</text>
+							<text class="fans info-bottom-item">{{userInfo.followeds}}粉丝</text>
+							<text class="level info-bottom-item">Lv.{{userInfo.followeds}}</text>
 						</view>
 					</view>
 				</view>
@@ -65,16 +65,16 @@
 			<!-- 我喜欢的音乐 -->
 			<view class="love-mode">
 				<view class="love-music">
-					<view class="love-image">
+					<view class="love-image"  :style="likeCover">
 						<image class="heart" src="~@/static/images/heart.png"></image>
 					</view>
 					<view class="love-text">
 						<text class="title-love">我喜欢的音乐</text>
-						<text class="count">{{666}}首</text>
+						<text class="count">{{likeIds.length}}首</text>
 					</view>
 				</view>
 				<view class="mode">
-					<view class="mode-box">
+					<view class="mode-box" @tap="beginLoveMode">
 						<image class="heart-love" src="~@/static/images/icon_love.png"></image>
 						<text class="mode-text">心动模式</text>
 					</view>
@@ -108,16 +108,18 @@
 	import '@/common/mine.css'
 	import { bottomControlMixin } from '@/common/mixins/mixins.js'
 	import { recommendSongSheet , songDetail ,userLikeMusicList} from '@/common/api.js'
+	import { mapGetters } from 'vuex'
 	
 	export default {
 		mixins:[bottomControlMixin],
 		data() {
 			return {
 				recSheet:[],
-				user:{},
-				likeIds:[],
 				likeCover:''
 			}
+		},
+		computed:{
+			...mapGetters(['userInfo','likeIds'])
 		},
 		methods: {
 			getRec(){
@@ -125,7 +127,6 @@
 					if(res.code === 200){
 						this.recSheet = res.result
 					}
-					//console.log(res)
 				})
 			},
 			toLogin(){
@@ -140,16 +141,22 @@
 			},
 			getUserProfile(){
 				if(this.$checkLogin()){
-					this.user = this.$store.state.user.userInfo
-					this.likeIds = this.$store.state.user.likeIds
-					userLikeMusicList(this.user.userId).then(res=>{
-						console.log(res)
-						// songDetail(res.ids[0]).then(song=>{
-						// 	console.log(song)
-						// })
+					userLikeMusicList(this.userInfo.userId).then(res=>{
+						this.$store.dispatch('userLikeMusicIds',res.ids)
+						songDetail(this.likeIds[0]).then(song=>{
+							//获取喜欢歌曲列表中的第一首歌图片作封面
+							this.likeCover =`background-image: url(${song.songs[0].al.picUrl});background-size: cover;` 
+						})
 					})
 					
 				}
+			},
+			//开启心动模式
+			beginLoveMode(){
+				//1.在喜欢歌曲列表中随机获取一首歌进行播放 
+				
+				
+				//2.通过该首歌来获取推荐歌曲
 			}
 		},
 		created() {
@@ -167,6 +174,7 @@
 	width: 100%;
 	height:calc(100vh - 50px);
 	background-color: #e7e7e7;
+	
 }
 .top-box{
 	width: 100%;

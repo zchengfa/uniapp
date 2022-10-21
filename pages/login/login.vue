@@ -102,12 +102,12 @@
 							if(res.code === 200 && res.data){
 								//验证成功，进行登录
 								loginWithPhone(this.formData.phone,this.formData.vali).then(data=>{
-									if(data.code === 200){									
+									if(data.code === 200){
+										
 										//登录成功，拿到用户信息和token进行存储
 										this.$store.dispatch('saveUserInfo',JSON.stringify({
 												'token':data.token,
-												'userInfo':data.profile,
-												'cookie':data.cookie
+												'userInfo':data.profile
 												})).then(async res=>{
 													// if(res){
 													// 	//获取用户喜欢音乐列表id并存储
@@ -118,6 +118,7 @@
 													// await uni.navigateBack()
 													
 													// }
+													uni.setStorageSync('cookie',data.cookie)
 													uni.navigateBack()
 												})	
 									}

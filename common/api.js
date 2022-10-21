@@ -7,7 +7,7 @@ function Get(URL){
 		uni.request({
 			url:baseUrl+URL,
 			method:'GET',
-		
+			withCredentials:true,
 			success:(res)=>{
 				resolve(res.data)
 			}
@@ -251,4 +251,14 @@ export function event(){
 //likelist?uid=2342343244
 export function userLikeMusicList (uid) {
 	return 	Get(`/likelist?uid=${uid}`)
+}
+
+//获取用户的歌单（包含喜欢的音乐歌单）/user/playlist?uid=42432423423
+export function userPlayList(uid){
+	return Get(`/user/playlist?uid=${uid}`)
+}
+
+//心动模式/智能播放https://www.codeman.ink/api/playmode/intelligence/list?id=&pid=xxx
+export function loveMode(id,listId){
+	return Get(`/playmode/intelligence/list?id=${id}&pid=${listId}`)
 }
