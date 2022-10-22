@@ -22,7 +22,7 @@
 						<view class="bottom">
 							<text class="follow info-bottom-item" >{{userInfo.follows}}关注</text>
 							<text class="fans info-bottom-item">{{userInfo.followeds}}粉丝</text>
-							<text class="level info-bottom-item">Lv.{{userInfo.followeds}}</text>
+							<text class="level info-bottom-item">Lv.{{levelInfo.level}}</text>
 						</view>
 					</view>
 				</view>
@@ -74,9 +74,28 @@
 					</view>
 				</view>
 				<view class="mode">
-					<view class="mode-box" @tap="beginLoveMode">
+					<view class="mode-box" @tap="beginLoveMode(userPlayList[0].id)">
 						<image class="heart-love" src="~@/static/images/icon_love.png"></image>
 						<text class="mode-text">心动模式</text>
+					</view>
+				</view>
+			</view>
+			<!-- 用户的收藏歌单 -->
+			<view class="user-playlist" v-if="userPlayList.length">
+				<view class="title">
+					<text>收藏歌单({{userPlayList.length-1}})个</text>
+				</view>
+				<view class="playlist-content">
+					<view class="list-item" v-for="(item,index) in userPlayList.slice(1,userPlayList.length)" :key="index">
+						<image class="playlist-img" :src="item.coverImgUrl"></image>
+						<view class="list-info">
+							<text class="list-name">{{item.name}}</text>
+							<view class="list-other">
+								<text class="track-count">{{item.trackCount}}首，</text>
+								<text class="nick-name">by&nbsp{{item.creator.nickname}}</text>
+							</view>
+						</view>
+						<text class="iconfont controller-more_ver"></text>
 					</view>
 				</view>
 			</view>
@@ -106,8 +125,9 @@
 
 <script>
 	import '@/common/mine.css'
+	import '@/common/controller.css'
 	import { bottomControlMixin } from '@/common/mixins/mixins.js'
-	import { recommendSongSheet , songDetail ,userLikeMusicList} from '@/common/api.js'
+	import { recommendSongSheet , songDetail ,userLikeMusicList,  userPlayList ,userLevel, loveMode} from '@/common/api.js'
 	import { mapGetters } from 'vuex'
 	
 	export default {
@@ -115,7 +135,9 @@
 		data() {
 			return {
 				recSheet:[],
-				likeCover:''
+				likeCover:'',
+				userPlayList:[],
+				levelInfo:{}
 			}
 		},
 		computed:{
@@ -148,15 +170,24 @@
 							this.likeCover =`background-image: url(${song.songs[0].al.picUrl});background-size: cover;` 
 						})
 					})
-					
+					//获取用户收藏的歌单
+					userPlayList(this.userInfo.userId).then(result=>{
+						result.code === 200 ? this.userPlayList = result.playlist:null
+						//console.log(result.playlist)
+					})
+					//获取用户等级信息
+					userLevel().then(level=>{
+						level.code === 200? this.levelInfo = level.data:null
+						//console.log(level)
+					})
 				}
 			},
 			//开启心动模式
-			beginLoveMode(){
+			beginLoveMode(listId){
 				//1.在喜欢歌曲列表中随机获取一首歌进行播放 
-				
-				
-				//2.通过该首歌来获取推荐歌曲
+				loveMode(this.likeIds[Math.round(Math.random()*this.likeIds.length)],listId).then(res=>{
+					console.log(res)
+				})
 			}
 		},
 		created() {
@@ -311,6 +342,50 @@
 		}
 		.mode-text{
 			
+		}
+	}
+}
+
+//收藏歌单
+.user-playlist{
+	position: relative;
+	top:95px;
+	padding: 20px;
+	background-color: #fff;
+	border-radius: 6px;
+	.title{
+		padding-top: 0;
+		color: #a3a3a3;
+		font-size: 13px;
+		font-weight: 500;
+	}
+	.playlist-img{
+		width: 50px;
+		height: 50px;
+		border-radius: 10px;
+	}
+	.list-item{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-top: 6px;
+		.list-info{
+			margin-left: 6px;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			font-size: 14px;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			.list-other{
+				margin-top: 2px;
+				color: #a3a3a3;
+				font-size: 12px;
+			}
+			
+		}
+		.iconfont{
+			transform: scale(.8);
 		}
 	}
 }

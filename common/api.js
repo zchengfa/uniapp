@@ -262,3 +262,8 @@ export function userPlayList(uid){
 export function loveMode(id,listId){
 	return Get(`/playmode/intelligence/list?id=${id}&pid=${listId}`)
 }
+
+//获取用户等级信息https://www.codeman.ink/api/user/level
+export function userLevel(){
+	return Get(`/user/level`)
+}
