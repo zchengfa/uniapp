@@ -23,7 +23,7 @@
 									<image class="user-ava" :src="creator.avatarUrl" ></image>
 									<image v-if="creatorDetail" class="identity-image user-img" :src="creatorDetail.identityIconUrl" ></image>
 								</view>
-								<text>{{creator.nickname}}</text>
+								<text class="creator-name">{{creator.nickname}}</text>
 								<image v-if="creator.gender === 1" class="identity-image" src="~@/static/images/man.png" mode=""></image>
 								<image v-else-if="creator.gender === 2" class="identity-image" src="~@/static/images/woman.png" mode=""></image>
 								<view class="followed">
@@ -272,6 +272,9 @@
 			height: 100px;
 			border-radius: 10px;
 		}
+		.creator-name{
+			margin: 0 4px;
+		}
 		.identity-image{
 			width: 12px;
 			height: 12px;
@@ -428,7 +431,7 @@
 	margin-top: 6px;
 	font-size: 12px;
 	.tag{
-		margin-right: 4px;
+		
 		padding: 1px;
 		color: #f00;
 		border: 1px solid #f00;

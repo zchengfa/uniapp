@@ -318,6 +318,7 @@
 		border-radius: 4px;
 		font-size: 12px;
 		transform: scale(.8);
+		transform-origin: 0;
 	}
 	.song-author{
 		

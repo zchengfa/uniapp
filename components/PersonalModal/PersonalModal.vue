@@ -4,10 +4,10 @@
 			<!-- 板块头部（个人信息、扫码） -->
 			<view class="modal-header modal">
 				<view class="user-info">
-					<image :src="user.header" v-if="user.header" class="avatar" ></image>
-					<image src="~@/static/images/avatar_de.png" v-else="user.header" class="avatar" ></image>
-					<text class="username header-msg" v-if="user.name">{{user.name}}</text>
-					<text class="login" v-if="!user.name" @click.stop="toLogin">立即登录</text>
+					<image :src="userInfo.avatarUrl" v-if="userInfo.avatarUrl" class="avatar" ></image>
+					<image src="~@/static/images/avatar_de.png" v-else="userInfo.avatarUrl" class="avatar" ></image>
+					<text class="username header-msg" v-if="userInfo.name">{{userInfo.name}}</text>
+					<text class="login" v-if="!userInfo.name" @click.stop="toLogin">立即登录</text>
 					<text class="header-msg">></text>
 				</view>
 				<view class="qrcode">
@@ -57,7 +57,7 @@
 					
 					<!-- 登录/退出登录按钮 -->
 					<view class="login-out-box">
-						<text class="login-out-btn" v-if="Object.keys(user).length">退出登录/关闭</text>
+						<text class="login-out-btn" v-if="Object.keys(userInfo).length">退出登录/关闭</text>
 						<text class="login-out-btn" v-else>关闭云音乐</text>
 					</view>
 				</view>
@@ -69,10 +69,13 @@
 
 <script>
 	import modalJson from '@/static/json/personalModal.json'
+	//#ifdef MP-WEIXIN
+	import { mapGetters } from 'vuex'
+	//#endif
 	export default {
 		name:"PersonalModal",
 		props:{
-			user:{
+			userInfo:{
 				type:Object,
 				default(){
 					return {}
@@ -88,6 +91,13 @@
 			this.modalData = modalJson["modalList"]
 			
 		},
+		
+		computed:{
+			//#ifdef MP-WEIXIN
+			...mapGetters(['userInfo'])
+			//#endif
+		},
+		
 		methods:{
 			closeModal(){
 				// #ifdef H5

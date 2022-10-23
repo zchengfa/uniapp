@@ -7,7 +7,7 @@
 				<view class="list-controller">
 					<view class="loop" @click.native.stop="changeLoop">
 						<text :class="loop" class="iconfont"></text>
-						<text class="loop-text">随机</text>
+						<text class="loop-text">{{loopWay}}</text>
 					</view>
 					<view class="ohter">
 						<text class="iconfont controller-download other-item"></text>
@@ -21,6 +21,7 @@
 							<text class="song-name" :class="{'current-song':songId === item.id}">{{item.name}}</text>
 							<text class="charactor" :class="{'current-song':songId === item.id}">-</text>
 							<text class="song-author" :class="{'current-song':songId === item.id}">{{$dealAuthor(item.ar,'name')}}</text>
+							<text class="rec-mark" v-if="item.recommended">荐</text>
 						</view>
 						<text class="delete iconfont musicclose"></text>
 					</view>
@@ -48,10 +49,21 @@
 			};
 		},
 		computed:{
-			...mapGetters(['musicList','songId']),
+			...mapGetters(['musicList','songId','loopStatus']),
 			showData(){
 				//长列表优化，每次只加载15首歌曲
 				return this.musicList.slice(0,this.sliceEnd)
+			},
+			loopWay(){
+				if(this.loopStatus === 'll'){
+					return '列表循环'
+				}
+				else if(this.loopStatus === 'sl'){
+					return '单曲循环'
+				}
+				else if(this.loopStatus === 'rl'){
+					return '列表随机'
+				}
 			}
 		},
 		methods:{
@@ -176,5 +188,13 @@
 	.current-song{
 		color: #ea0000;
 	}
-	
+	.rec-mark{
+		margin-left: 4px;
+		padding: 2px 4px;
+		color: #fff;
+		font-size: 13px;
+		border-radius: 2px;
+		background-color: #c7c7c7;
+		transform: scale(.8);
+	}
 </style>

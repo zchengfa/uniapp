@@ -22,7 +22,7 @@
 						<view class="bottom">
 							<text class="follow info-bottom-item" >{{userInfo.follows}}关注</text>
 							<text class="fans info-bottom-item">{{userInfo.followeds}}粉丝</text>
-							<text class="level info-bottom-item">Lv.{{levelInfo.level}}</text>
+							<text class="level info-bottom-item">Lv.{{levelInfo.level || '暂无'}}</text>
 						</view>
 					</view>
 				</view>
@@ -64,7 +64,7 @@
 			</view>
 			<!-- 我喜欢的音乐 -->
 			<view class="love-mode">
-				<view class="love-music">
+				<view class="love-music" @tap="toPlayListDetail(userPlayList.length?userPlayList[0].id:undefined,true)">
 					<view class="love-image"  :style="likeCover">
 						<image class="heart" src="~@/static/images/heart.png"></image>
 					</view>
@@ -74,7 +74,7 @@
 					</view>
 				</view>
 				<view class="mode">
-					<view class="mode-box" @tap="beginLoveMode(userPlayList[0].id)">
+					<view class="mode-box" @tap="beginLoveMode(userPlayList.length?userPlayList[0].id:undefined)">
 						<image class="heart-love" src="~@/static/images/icon_love.png"></image>
 						<text class="mode-text">心动模式</text>
 					</view>
@@ -86,7 +86,7 @@
 					<text>收藏歌单({{userPlayList.length-1}})个</text>
 				</view>
 				<view class="playlist-content">
-					<view class="list-item" v-for="(item,index) in userPlayList.slice(1,userPlayList.length)" :key="index">
+					<view class="list-item" v-for="(item,index) in userPlayList.slice(1,userPlayList.length)" @tap="toPlayListDetail(item.id,true)" :key="index">
 						<image class="playlist-img" :src="item.coverImgUrl"></image>
 						<view class="list-info">
 							<text class="list-name">{{item.name}}</text>
@@ -100,7 +100,7 @@
 				</view>
 			</view>
 			<!-- 为你推荐 -->
-			<view class="rec">
+			<view class="rec" v-if="recSheet.length">
 				<text class="title">为你推荐</text>
 				<view class="rec-sheet">
 					<view class="rec-sheet-item" v-for="(item,index) in recSheet" :key="index" @tap="toPlayListDetail(item.id)">
@@ -127,7 +127,7 @@
 	import '@/common/mine.css'
 	import '@/common/controller.css'
 	import { bottomControlMixin } from '@/common/mixins/mixins.js'
-	import { recommendSongSheet , songDetail ,userLikeMusicList,  userPlayList ,userLevel, loveMode} from '@/common/api.js'
+	import { recommendSongSheet , songDetail ,userLikeMusicList,  userPlayList ,userLevel, loveMode , songExceptLyric} from '@/common/api.js'
 	import { mapGetters } from 'vuex'
 	
 	export default {
@@ -156,10 +156,27 @@
 					url:'../login/login'
 				})
 			},
-			toPlayListDetail(id){
-				uni.navigateTo({
-					url:'../../pages/playListDetail/playListDetail?playListId='+id
-				})
+			toPlayListDetail(id,needLogin = false){
+				if(needLogin){
+					if(this.$checkLogin()){
+						goTo()
+					}
+					else{
+						uni.showModal({
+							title:'操作提示：',
+							content:'您未登录，无法查看您喜欢的音乐歌单！',
+							confirmText:'知道了',
+						})
+					}
+				}
+				else{
+					goTo()
+				}
+				function goTo(){
+					uni.navigateTo({
+						url:'../../pages/playListDetail/playListDetail?playListId='+id
+					})
+				}
 			},
 			getUserProfile(){
 				if(this.$checkLogin()){
@@ -184,10 +201,51 @@
 			},
 			//开启心动模式
 			beginLoveMode(listId){
-				//1.在喜欢歌曲列表中随机获取一首歌进行播放 
-				loveMode(this.likeIds[Math.round(Math.random()*this.likeIds.length)],listId).then(res=>{
-					console.log(res)
-				})
+				if(this.$checkLogin()){
+					//1.在喜欢歌曲列表中随机获取一首歌进行播放
+					let randomSongId = this.likeIds[Math.round(Math.random()*this.likeIds.length)]
+					
+					loveMode(randomSongId,listId).then(res=>{
+						if(res.code === 200){
+							let musicList = []
+							//获取随机选择好的歌曲数据						
+							songExceptLyric(randomSongId).then(result=>{
+								//放至列表首位
+								musicList.push(result.detail)
+								let songs = {
+									'author':this.$dealAuthor(result.detail.ar,'name'),
+									'name':result.detail.name,
+									'picUrl':result.detail.al.picUrl
+								}
+								res.data.map((item)=>{
+									musicList.push({
+										...item.songInfo,
+										"recommended":item.recommended,
+										"id":item.id									
+									})
+									
+								})
+								
+								//向vuex分发事件
+								this.$store.dispatch('songs',JSON.stringify(songs))
+								this.$store.dispatch('audio',result.url)
+								this.$store.dispatch('musicList',JSON.stringify(musicList))
+								this.$store.dispatch('id',randomSongId)
+								this.$store.dispatch('index',0)
+								
+								uni.navigateTo({
+									url:'../songDetail/songDetail'
+								})							
+							})
+						}
+					})
+				}
+				else{
+					uni.showModal({
+							title:'操作提示：',
+							content:'您未登录，无法开启心动模式！',
+						})
+				}
 			}
 		},
 		created() {

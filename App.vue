@@ -159,8 +159,10 @@
 	}
 	.tag{
 		display: inline-block;
+		transform-origin: 0;
 	}
 	.vip,.tag{
+		
 		transform: scale(.7);
 	}
 	
