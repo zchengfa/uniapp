@@ -181,11 +181,14 @@
 			getUserProfile(){
 				if(this.$checkLogin()){
 					userLikeMusicList(this.userInfo.userId).then(res=>{
-						this.$store.dispatch('userLikeMusicIds',res.ids)
-						songDetail(this.likeIds[0]).then(song=>{
-							//获取喜欢歌曲列表中的第一首歌图片作封面
-							this.likeCover =`background-image: url(${song.songs[0].al.picUrl});background-size: cover;` 
-						})
+						if(res.code === 200){
+							this.$store.dispatch('userLikeMusicIds',res.ids)
+							songDetail(this.likeIds[0]).then(song=>{
+								//获取喜欢歌曲列表中的第一首歌图片作封面
+								this.likeCover =`background-image: url(${song.songs[0].al.picUrl});background-size: cover;` 
+							})
+						}
+						
 					})
 					//获取用户收藏的歌单
 					userPlayList(this.userInfo.userId).then(result=>{

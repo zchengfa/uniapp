@@ -4,11 +4,20 @@
 			<!-- 板块头部（个人信息、扫码） -->
 			<view class="modal-header modal">
 				<view class="user-info">
+					<!-- #ifdef H5 -->
+					<view class="avatar user-avatar" ></view>
+					<view class="avatar default-avatar" ></view>
+					<text class="username header-msg"></text>
+					<text class="login header-msg" @click.stop="toLogin">立即登录</text>
+					<text class="header-msg">></text>
+					<!-- #endif -->
+					<!-- #ifdef MP-WEIXIN -->
 					<image :src="userInfo.avatarUrl" v-if="userInfo.avatarUrl" class="avatar" ></image>
 					<image src="~@/static/images/avatar_de.png" v-else="userInfo.avatarUrl" class="avatar" ></image>
 					<text class="username header-msg" v-if="userInfo.name">{{userInfo.name}}</text>
-					<text class="login" v-if="!userInfo.name" @click.stop="toLogin">立即登录</text>
+					<text class="login header-msg" v-if="!userInfo.name" @click.stop="toLogin">立即登录</text>
 					<text class="header-msg">></text>
+					<!-- #endif -->
 				</view>
 				<view class="qrcode">
 					<image src="~@/static/images/qrcode.png" class="qr-image"></image>
@@ -57,11 +66,16 @@
 					
 					<!-- 登录/退出登录按钮 -->
 					<view class="login-out-box">
-						<text class="login-out-btn" v-if="Object.keys(userInfo).length">退出登录/关闭</text>
-						<text class="login-out-btn" v-else>关闭云音乐</text>
+						<!-- #ifdef H5 -->
+						<text class="login-out-btn login-close">退出登录/关闭</text>
+						<text class="login-out-btn music-close">关闭云音乐</text>
+						<!-- #endif -->
+						<!-- #ifdef MP-WEIXIN -->
+						<text class="login-out-btn login-close" v-if="Object.keys(userInfo).length">退出登录/关闭</text>
+						<text class="login-out-btn music-close" v-else>关闭云音乐</text>
+						<!-- #endif -->
 					</view>
 				</view>
-				
 			</scroll-view>
 		</view>
 	</view>
@@ -74,17 +88,10 @@
 	//#endif
 	export default {
 		name:"PersonalModal",
-		props:{
-			userInfo:{
-				type:Object,
-				default(){
-					return {}
-				}
-			}
-		},
 		data(){
 			return {
-				modalData:[]
+				modalData:[],
+				user:{}
 			}
 		},
 		created() {
@@ -150,7 +157,8 @@
 			switchChange(e){
 				e.detail.value?console.log('深色模式按钮已在开启状态'):console.log('深色模式按钮已在关闭状态')
 			}
-		}
+		},
+
 	}
 </script>
 
@@ -215,11 +223,16 @@
 			}
 		}
 		.avatar{
-			margin-right: 10px;
 			width: 30px;
 			height: 30px;
 			border: 1px solid #c181c1;
+			background-size: cover;
 		}
+		// #ifdef H5
+		.default-avatar{
+			background-image: url('../../static/images/avatar_de.png');
+		}
+		// #endif
 		.modal:not(.modal-header){
 			position: relative;
 			top: 10px;
