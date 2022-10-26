@@ -95,6 +95,9 @@
 		border: none;
 		background:linear-gradient(to right, #ffe4f1, #d6d6d6,#f75f7b);
 		border-radius: 18px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
 	}
 	.list,.audio{
 		width: 50px;

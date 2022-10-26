@@ -47,16 +47,17 @@ const bottomControlMixin = {
 
 	},
 	// #ifdef MP-WEIXIN
-	pageLifeTimes:{
-		show(){
-			this.changeStyle
-		}
+	//解决在小程序不触发activated生命周期的问题
+	onShow(){
+		this.changeStyle()
 	},
 	// #endif
+	// #ifdef H5
 	activated() {
 		
 		this.changeStyle()
 	},
+	// #endif
 }
 
 const changeLoopMixin = {
@@ -86,11 +87,11 @@ const changeLoopMixin = {
 					this.way = 'rl'
 					break;
 			}
-			this.$store.dispatch('changeLoopWay',{
+			this.$store.dispatch('changeLoopWay',JSON.stringify({
 				'loop':this.loop,
 				'loopStatus':this.way,
 				'loopCount':this.count
-			})
+			}))
 		},
 	}
 }

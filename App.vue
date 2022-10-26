@@ -10,6 +10,11 @@
 				uni.setStorageSync('loop_status','ll')
 				uni.setStorageSync('loopCount',0)
 				uni.setStorageSync('loop','controller-list_loop')
+				this.$store.dispatch('changeLoopWay',JSON.stringify({
+				'loop':'controller-list_loop',
+				'loopStatus':'ll',
+				'loopCount':0
+			}))
 			}
 			
 			console.log('App Show')

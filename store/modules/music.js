@@ -100,8 +100,8 @@ export default {
 		}
 	},
 	mutations:{
-		loopWay(state,loop){
-			
+		loopWay(state,payload){
+			let loop = JSON.parse(payload)
 			state.loopStatus = loop.loopStatus
 			state.loop = loop.loop
 			state.loopCount = loop.loopCount

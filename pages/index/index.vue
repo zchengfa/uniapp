@@ -232,9 +232,7 @@
 		created() {
 			this.init()
 
-		},
-		
-		
+		}
 	}
 </script>
 
