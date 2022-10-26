@@ -37,10 +37,25 @@
 					})
 				}
 				else{
-					uni.showModal({
-						title:'提示：',
-						content:`${name}详情页暂未开发，敬请期待！`
-					})
+					if(this.$checkLogin()){
+						if(name === '每日推荐'){
+							uni.navigateTo({
+								url:'../../pages/indexMenu/recommenedDay/recommenedDay'
+							})
+						}
+						else{
+							uni.showModal({
+								title:'提示：',
+								content:`${name}详情页暂未开发，敬请期待！`
+							})
+						}
+					}
+					else{
+						uni.showModal({
+							title:'提示：',
+							content:`您还未登录，无法查看${name}详情内容`
+						})
+					}
 				}
 			}
 		}

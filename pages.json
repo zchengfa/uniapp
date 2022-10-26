@@ -103,6 +103,14 @@
             }
             
         }
+        ,{
+            "path" : "pages/indexMenu/recommenedDay/recommenedDay",
+            "style" :                                                                                    
+            {
+                "navigationStyle":"custom"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

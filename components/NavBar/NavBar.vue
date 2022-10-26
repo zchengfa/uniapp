@@ -1,8 +1,7 @@
 <template>
 	<view class="content">
 		<view class="left">
-			<text class="iconfont musicleftArrow nav-text" @tap="backToPrevious"></text>
-			
+			<text class="iconfont musicleftArrow nav-text" @tap="backToPrevious"></text>	
 		</view>
 		<view class="center">
 			<text class="nav-text">{{title}}</text>
@@ -21,7 +20,7 @@
 			title:{
 				type:String,
 				default(){
-					return '标题'
+					return ''
 				}
 			}
 		},
@@ -44,7 +43,7 @@
 	justify-content: flex-start;
 	align-items: center;
 	width: 100%;
-	height: 100%;
+	height: 50px;
 	text-align: center;
 	color: #fff;
 }
@@ -57,6 +56,9 @@
 }
 .center{
 	flex: 1;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
 .nav-text{
 	display: inline-block;
@@ -64,6 +66,7 @@
 /* #ifdef MP-WEIXIN */
 .content{
 	height: 80px;
+	
 }
 .left,.right{
 	position: absolute;

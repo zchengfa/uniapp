@@ -554,6 +554,10 @@
 }
 .nav{
 	height: 80px;
+	.nav-item{
+		position: relative;
+		top:20px;
+	}
 }
 
 // #endif

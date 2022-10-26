@@ -267,3 +267,8 @@ export function loveMode(id,listId){
 export function userLevel(){
 	return Get(`/user/level`)
 }
+
+//获取首页中每日推荐歌曲数据/recommend/songs
+export function recSongs(){
+	return Get(`/recommend/songs`)
+}
