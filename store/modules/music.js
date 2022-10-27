@@ -109,6 +109,7 @@ export default {
 			uni.setStorageSync('loop_status',loop.loopStatus)
 			uni.setStorageSync('loopCount',loop.loopCount)
 			uni.setStorageSync('loop',loop.loop)
+			
 		},
 		playStatus(state,playStatus){
 			let status = Number(playStatus)
@@ -152,6 +153,7 @@ export default {
 		index(state,index){
 			state.currentSongIndex = index
 			uni.setStorageSync('currentIndex',index)
+			
 		},
 		lyric(state,payload){
 			state.lyric = JSON.parse(payload)

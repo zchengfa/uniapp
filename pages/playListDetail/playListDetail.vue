@@ -67,7 +67,7 @@
 					<view class="list-item" v-for="(item,index) in showData" :key="index">
 						<text class="No">{{index+1}}</text>
 						<view class="item-info">
-							<view class="item-left" @tap="playSong(item.id,index)">
+							<view class="item-left" @tap="playSong(item.id,index,'../../pages/songDetail/songDetail')">
 								<text class="song-name hidden-text">{{item.name}}</text>
 								<view class="song-info">
 									<text class="hi-res tag" v-if="item.hr">Hi-res</text>
@@ -194,7 +194,9 @@
 				uni.showLoading({
 					title:'加载中'
 				})
+				//console.log(songDetail(ids))
 				songDetail(ids).then(res=>{
+					console.log(res)
 					if(res.code === 200){
 						this.allSongData = res.songs
 						this.sliceList()

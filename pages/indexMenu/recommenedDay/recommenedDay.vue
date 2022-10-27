@@ -12,7 +12,7 @@
 				</view>
 			</view>
 			<!-- 歌曲列表 -->
-			<view class="list">
+			<view class="list" :style="changeHeight">
 				<view class="list-top">
 					<view class="play-all">
 						<text class="iconfont musicplayCircleOne"></text>
@@ -25,7 +25,7 @@
 					<view class="list-item" v-for="(item,index) in songsData" :key="index">
 						<image class="pic" :src="item.al.picUrl"></image>
 						<view class="item-info">
-							<view class="item-left" @tap="playSong(item.id,index)">
+							<view class="item-left" @tap="playSong(item.id,index,'../../songDetail/songDetail')">
 								<text class="song-name hidden-text">{{item.name}}</text>
 								<view class="song-info">
 									<text class="hi-res tag" v-if="item.hr">Hi-res</text>
@@ -57,16 +57,18 @@
 <script>
 	import '@/common/iconfont.css'
 	import { recSongs } from '@/common/api.js'
-	import { bottomControlMixin,playSongMixin } from '@/common/mixins/mixins.js'
+	import { playSongMixin } from '@/common/mixins/mixins.js'
 	
 	export default {
 		name:'recommendedDay',
-		mixins:[bottomControlMixin,playSongMixin],
+		mixins:[playSongMixin],
 		data() {
 			return {
 				songsData:[],
-				
-				topCover:''
+				changeHeight:'',
+				topCover:'',
+				isShowBottomControl:false,
+				isShowMusicList:false
 			}
 		},
 		created() {
@@ -76,6 +78,18 @@
 					this.topCover = `background-image:url(${this.songsData[0].al.picUrl})`
 					console.log(res)
 				}
+			})
+			this.changeListStyle()
+		},
+		mounted() {
+			//监听music-controller组件列表按钮发出的事件（显示播放列表）
+			uni.$on('showList',()=>{
+				this.isShowMusicList = true
+			})
+			
+			//监听music-list组件关闭播放列表的事件，将己组件中控制列表显示的变量作出改变
+			uni.$on('listCloseOver',()=>{
+				this.isShowMusicList = false
 			})
 		},
 		computed:{
@@ -90,11 +104,31 @@
 			}
 		},
 		methods: {
+			//整理播放列表所需要的数据
+			getPlayListData(){
+				return this.songsData
+			},
 			//点击播放全部按钮，从列表中的第一首歌开始播放
 			playAll(){
-				this.playSong(this.idList[0].id,0)
+				this.playSong(this.songsData[0].id,0)
 			},
-		}
+			changeListStyle(){
+				this.isShowBottomControl = Boolean(this.$store.state.music.audio)
+				if(this.isShowBottomControl){
+					this.changeHeight = 'height:calc(70% - 50px)'
+				}
+			}
+		},
+		// #ifdef H5
+		activated() {
+			this.changeListStyle()
+		},
+		//#endif
+		// #ifdef MP-WEIXIN
+		onShow() {
+			this.changeListStyle()
+		}	
+		// #endif
 	}
 </script>
 
@@ -163,8 +197,7 @@
 		}
 	}
 	.list-scroll{
-		padding-bottom: 30px;
-		height: calc(100% - 62px);
+		height: calc(100% - 62px - 15px);
 		background-color: #fff;
 		.list-item{
 			display: flex;
@@ -174,6 +207,7 @@
 			color: #a8a8a8;
 			
 		}
+		
 		.No{
 			margin-right: 10px;
 			width: 20px;
@@ -223,5 +257,8 @@
 		width: 40px;
 		height: 40px;
 		border-radius: 6px;
+	}
+	.bottom-control{
+		bottom:0;
 	}
 </style>

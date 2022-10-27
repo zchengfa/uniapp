@@ -1,6 +1,6 @@
 //const baseUrl = "https://www.codeman.ink/api"
 //const baseUrl = 'http://192.168.31.130:4000'
-const baseUrl = 'http://192.168.31.110:3000'
+const baseUrl = 'http://192.168.31.111:3000'
 
 function Get(URL){
 	return new Promise((resolve)=>{
@@ -35,6 +35,7 @@ export function listDetail(id){
 export function songDetail(songId){
 	return Get('/song/detail?ids='+songId)
 }
+
 
 //获取歌曲音频
 export function songData (songId){

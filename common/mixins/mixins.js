@@ -212,7 +212,7 @@ const playSongMixin = {
 			
 		},
 		//点击歌曲进行播放
-		playSong(id,index = undefined){
+		playSong(id,index = undefined,detailPath){
 			let listLength = this.$store.state.music.musicList.length
 			let musicList = this.$store.state.music.musicList
 			 
@@ -246,7 +246,7 @@ const playSongMixin = {
 			if(id === songId){
 				//一致，跳转至歌曲详情页
 				uni.navigateTo({
-					url:'../../pages/songDetail/songDetail'
+					url:detailPath
 				})
 			}
 			else{
