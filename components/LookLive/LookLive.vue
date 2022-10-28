@@ -43,6 +43,9 @@
 </script>
 
 <style scoped>
+	.title{
+		margin-left: 10px;
+	}
 	.sheet-item{
 		height: 180px;
 		background-color: #90747e;

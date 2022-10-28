@@ -48,6 +48,8 @@
 			<SongSheet :song-sheet="MGCSongSheet" class="mgc-song-sheet" :title="MGCTitle"></SongSheet>
 			<!-- Look直播 -->
 			<look-live :title="lookLiveTitle" :live="lookLive" class="live" v-if="lookLive.length"></look-live>
+			<!-- 热门话题 -->
+			<hot-topic :title="topicTitle" :topic="hotTopic" v-if="hotTopic.length" class="home-topic"></hot-topic>
 		</scroll-view>
 		<!-- 底部音乐控制 -->
 		<view class="bottom-control" v-show="isShowBottomControl" >
@@ -64,11 +66,12 @@
 </template>
 
 <script>
-	import { indexScrollMenu , indexSongSheet , banner , homePageData ,keywordDefault} from '@/common/api.js'
+	import { indexScrollMenu , indexSongSheet , banner , homePageData ,keywordDefault, topicDetail} from '@/common/api.js'
 	import ScrollMenu from '@/components/ScrollMenu/ScrollMenu.vue'
 	import SongSheet from '@/components/SongSheet/SongSheet.vue'
 	import SongSheetAutoScr from '@/components/SongSheetAutoScr/SongSheetAutoScr.vue'
 	import LookLive from '@/components/LookLive/LookLive.vue'
+	import HotTopic from '@/components/HotTopic/HotTopic.vue'
 	import { bottomControlMixin ,playSongMixin} from '@/common/mixins/mixins.js'
 	
 	
@@ -95,6 +98,8 @@
 				styleTitle:'',
 				pageMusicPlay:false,
 				keywordD:undefined,
+				hotTopic:[],
+				topicTitle:'',
 				// #ifdef MP-WEIXIN
 				modalStatus:false
 				//#endif
@@ -106,6 +111,7 @@
 			SongSheet,
 			SongSheetAutoScr,
 			LookLive,
+			HotTopic,
 			//#ifdef MP-WEIXIN
 			PersonalModal
 			//#endif
@@ -154,7 +160,7 @@
 			getHomePageData(){
 				homePageData().then(res=>{
 					let blocks = res.data.blocks
-					//console.log(blocks)
+					console.log(blocks)
 					blocks.map(item=>{
 						//轮播图
 						if(item.blockCode === 'HOMEPAGE_BANNER'){
@@ -176,10 +182,31 @@
 							this.MGCSongSheet = item.creatives
 						}
 						//风格推荐
-						else{
+						else if(item.blockCode === 'HOMEPAGE_BLOCK_STYLE_RCMD'){
 							this.styleSong = item.creatives
 							this.styleTitle = item.uiElement.subTitle.title
 							this.idList = item.resourceIdList
+						}
+						else if(item.blockCode = 'HOMEPAGE_BLOCK_HOT_TOPIC'){
+							let hotTopic = item.creatives
+							hotTopic.map(item=>{
+								item.resources.map(res=>{
+									this.hotTopic.push(res)
+									//获取话题背景图跟分享图
+									topicDetail(res.resourceId).then(detail=>{
+										if(detail.code === 200){
+											res.sharePicUrl = detail.act.sharePicUrl
+											res.coverMobilePic = `background-image:url(${detail.act.coverMobileUrl})`
+										}
+										
+									})
+								})
+								
+							})
+							this.topicTitle = item.uiElement.subTitle.title
+							
+							
+							
 						}
 					})
 					
@@ -245,7 +272,7 @@
 		font-size: 14px;
 		color: #fff;
 	}
-	.scroll-menu,.mgc-song-sheet,.rec-sheet,.live{
+	.scroll-menu,.mgc-song-sheet,.rec-sheet,.live,.style-list,.home-topic{
 		position: relative;
 		top:20px;
 		margin: 0 auto ;
@@ -274,12 +301,7 @@
 		/* 可以将字体颜色随背景一致 */
 		mix-blend-mode: screen;
 	}
-	.style-list{
-		position: relative;
-		top:20px;
-		margin: 0 auto;
-		width: 96%;
-	}
+	
 	.scroll-style{
 		height: 200px;
 	}

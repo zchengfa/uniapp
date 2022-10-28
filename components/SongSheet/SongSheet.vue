@@ -51,5 +51,7 @@
 	.scroll{
 		white-space: nowrap;
 	}
-	
+	.title{
+		margin-left: 10px;
+	}
 </style>

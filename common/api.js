@@ -273,3 +273,9 @@ export function userLevel(){
 export function recSongs(){
 	return Get(`/recommend/songs`)
 }
+
+
+//获取热门话题详情 /topic/detail?actid=xxxxx
+export function topicDetail(id){
+	return Get(`/topic/detail?actid=${id}`)
+}
