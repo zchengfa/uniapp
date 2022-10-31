@@ -1,5 +1,10 @@
 <template>
 	<view class="rank-content">
+		<view class="rank-nav">
+			<nav-bar class="rank-nav-bar">
+				<text slot="right"></text>
+			</nav-bar>
+		</view>
 		<scroll-view scroll-y="true" class="scroll" :style="scrollHeightNoTop">
 			<view class="author">
 				<text class="rank-title">官方榜</text>
@@ -46,9 +51,10 @@
 						res.map(item=>{
 							if(item.tracks.length){
 								this.rankAuthor.push(item)
-								console.log(this.rankAuthor)
+								//console.log(this.rankAuthor)
 							}
 						})
+						console.log(res)
 					}
 				})
 			}
@@ -61,7 +67,7 @@
 
 <style scoped>
 	.rank-content{
-		background-color: #e1e1e1;
+		background: linear-gradient(to bottom,#c9e2ff,#dbeeff,#d7efff,#f4f9ff);
 	}
 	.scroll{
 		margin: 0 auto;
@@ -72,6 +78,11 @@
 	.bottom-control{
 		bottom:0;
 	}
+	.rank-nav-bar{
+		position: fixed;
+		left: 0;
+		top: 0;
+	}
 	.rank-title{
 		font-weight: bold;
 		
@@ -79,6 +90,7 @@
 	.rank-item{
 		margin: 10px auto;
 		width: 96%;
+		border-radius: 6px;
 		background-color: #ffffff;
 	}
 	.item-top,.item-bottom,.track-item{
@@ -139,9 +151,17 @@
 		height: 80px;
 		border-radius: 6px;
 	}
+	/* #ifdef H5 */
+	.rank-nav{
+		height: 50px;
+	}
+	/* #endif */
 	/* #ifdef MP-WEIXIN */
 	.scroll{
 		height: 100vh;
+	}
+	.rank-nav{
+		height: 80px;
 	}
 	/* #endif */
 </style>

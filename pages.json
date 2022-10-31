@@ -34,8 +34,7 @@
             "path" : "pages/indexMenu/rank/rank",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
+                "navigationStyle": "custom"
             }
             
         }

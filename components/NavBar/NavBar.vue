@@ -1,13 +1,19 @@
 <template>
 	<view class="content">
 		<view class="left">
-			<text class="iconfont musicleftArrow nav-text" @tap="backToPrevious"></text>	
+			<slot name="left">
+				<text class="iconfont musicleftArrow nav-text" @tap="backToPrevious"></text>
+			</slot>
 		</view>
 		<view class="center">
-			<text class="nav-text">{{title}}</text>
+			<slot name="center">
+				<text class="nav-text">{{title}}</text>
+			</slot>
 		</view>
 		<view class="right">
-			<text class="iconfont musicshare nav-text"></text>
+			<slot name="right">
+				<text class="iconfont musicshare nav-text"></text>
+			</slot>
 		</view>
 	</view>
 </template>
@@ -62,6 +68,8 @@
 }
 .nav-text{
 	display: inline-block;
+	mix-blend-mode: difference;
+	font-weight: bold;
 }
 /* #ifdef MP-WEIXIN */
 .content{

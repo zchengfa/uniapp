@@ -191,12 +191,13 @@
 							let hotTopic = item.creatives
 							hotTopic.map(item=>{
 								item.resources.map(res=>{
-									this.hotTopic.push(res)
+									
 									//获取话题背景图跟分享图
 									topicDetail(res.resourceId).then(detail=>{
 										if(detail.code === 200){
 											res.sharePicUrl = detail.act.sharePicUrl
 											res.coverMobilePic = `background-image:url(${detail.act.coverMobileUrl})`
+											this.hotTopic.push(res)
 										}
 										
 									})

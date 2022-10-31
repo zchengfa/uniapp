@@ -89,16 +89,20 @@
 	}
 	/* #endif */
 	.input{
+		display: flex;
+		justify-content: center;
 		margin: 0 auto;
-		width: 90%;
+		padding: 0 20px;
+		width: 75%;
 		height: 32px;
 		border: none;
 		background:linear-gradient(to right, #ffe4f1, #d6d6d6,#f75f7b);
-		border-radius: 18px;
+		border-radius: 16px;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		overflow: hidden;
 	}
+	
 	.list,.audio{
 		width: 50px;
 		text-align: center;
@@ -117,7 +121,7 @@
 		left: 0;
 	}
 	.input{
-		width: 80%;
+		width: 60%;
 	}
 	.input-box{
 		margin-left: 50px;
