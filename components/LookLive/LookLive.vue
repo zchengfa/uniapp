@@ -48,9 +48,9 @@
 	}
 	.sheet-item{
 		height: 180px;
-		background-color: #90747e;
+		
 		text-align: center;
-		color: #fff;
+		
 		border-radius: 6px;
 	}
 	.mask{
@@ -68,5 +68,7 @@
 		line-height: 18px;
 		border-radius: 4px;
 		background-color: rgba(0,0,0,.2);
+		transform: scale(.7);
+		transform-origin: 0;
 	}
 </style>

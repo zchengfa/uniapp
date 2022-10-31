@@ -290,7 +290,7 @@
 					title:'加载中...'
 				})
 				summarySearch(this.searchKeyword,this.searchType).then(res=>{
-					
+					console.log(res)
 					if(res.code === 200){
 						if(this.searchType === 1018){
 							this.summary = {}

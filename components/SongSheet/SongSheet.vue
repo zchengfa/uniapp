@@ -7,10 +7,13 @@
 					<view class="sheet-item"   @tap="toPlayListDetail(item.creativeId)" v-for="(item,index) in songSheet" :key="item.creativeId">
 						<image :src="item.uiElement.image.imageUrl" class="image"></image>
 						<view class="mask">
-							<text class="play-count">{{item.resources[0].resourceExtInfo.playCount}}</text>
+							<text v-if="item.hasOwnProperty('resources')" class="play-count">{{$dealCount(item.resources[0].resourceExtInfo.playCount)}}</text>
 							<text class="play-icon iconfont musicplayCircle"></text>
 						</view>
-						<text class="main-title">{{item.uiElement.mainTitle.title}}</text>
+						<view class="main-title">
+							<text class="label-title" v-if="item.uiElement.hasOwnProperty('labelTexts')">{{(item.uiElement.labelTexts[0]).replace('热门','')}}</text>
+							{{item.uiElement.mainTitle.title}}
+						</view>
 					</view>
 				</view>
 			</scroll-view>
@@ -38,7 +41,7 @@
 		},
 		methods:{
 			toPlayListDetail(id){
-				
+			
 				uni.navigateTo({
 					url:'../../pages/playListDetail/playListDetail?playListId='+id
 				})
@@ -47,11 +50,29 @@
 	}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 	.scroll{
 		white-space: nowrap;
 	}
-	.title{
-		margin-left: 10px;
+	// .title{
+	// 	margin-left: 10px;
+	// }
+	.main-title{
+		.label-title{
+			display: inline-block;
+			padding: 2px 4px;
+			color: #2539a6;
+			font-size: 12px;
+			transform-origin: 0;
+			transform: scale(.8);
+			border: 1px solid #cccccc;
+			border-radius: 6px;
+		}
 	}
+	// #ifdef MP-WEIXIN
+	.song-sheet{
+		margin: 0 auto;
+		width: 96%;
+	}
+	// #endif
 </style>

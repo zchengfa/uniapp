@@ -50,6 +50,8 @@
 			<look-live :title="lookLiveTitle" :live="lookLive" class="live" v-if="lookLive.length"></look-live>
 			<!-- 热门话题 -->
 			<hot-topic :title="topicTitle" :topic="hotTopic" v-if="hotTopic.length" class="home-topic"></hot-topic>
+			<!-- 有声书 -->
+			<SongSheet :song-sheet="voice" class="voice" :title="voiceTitle" v-if="voice.length"></SongSheet>
 		</scroll-view>
 		<!-- 底部音乐控制 -->
 		<view class="bottom-control" v-show="isShowBottomControl" >
@@ -100,6 +102,10 @@
 				keywordD:undefined,
 				hotTopic:[],
 				topicTitle:'',
+				podcastTitle:'',
+				podcast:[],
+				voiceTitle:'',
+				voice:[],
 				// #ifdef MP-WEIXIN
 				modalStatus:false
 				//#endif
@@ -188,23 +194,43 @@
 							this.idList = item.resourceIdList
 						}
 						else if(item.blockCode = 'HOMEPAGE_BLOCK_HOT_TOPIC'){
-							let hotTopic = item.creatives
-							hotTopic.map(item=>{
-								item.resources.map(res=>{
+							let data = item.creatives
+							
+							data.map(topic=>{
+								
+								//热门播客
+								if(topic.creativeType === 'VOICE_LIST_HOMEPAGE'){
+									this.podcastTitle.length?null:this.podcastTitle = topic.uiElement.mainTitle.title
+									this.podcast.push(topic)
+									//console.log(topic)
+								}
+								//有声书
+								else if(topic.creativeType === 'PODCAST_LIST_HOMEPAGE'){
 									
-									//获取话题背景图跟分享图
-									topicDetail(res.resourceId).then(detail=>{
-										if(detail.code === 200){
-											res.sharePicUrl = detail.act.sharePicUrl
-											res.coverMobilePic = `background-image:url(${detail.act.coverMobileUrl})`
-											this.hotTopic.push(res)
-										}
-										
+									this.voiceTitle.length?null:this.voiceTitle = topic.uiElement.mainTitle.title
+									topic.resources.map(v=>{
+										this.voice.push(v)
 									})
-								})
+									
+								}
+								else{
+									topic.resources.map(res=>{
+										//console.log(res)
+										//获取话题背景图跟分享图
+										topicDetail(res.resourceId).then(detail=>{
+											if(detail.code === 200){
+												res.sharePicUrl = detail.act.sharePicUrl
+												res.coverMobilePic = `background-image:url(${detail.act.coverMobileUrl})`
+												this.hotTopic.push(res)
+											}
+											
+										})
+									})
+									this.topicTitle = item.uiElement.subTitle.title
+								}
 								
 							})
-							this.topicTitle = item.uiElement.subTitle.title
+							
 							
 							
 							
@@ -273,7 +299,7 @@
 		font-size: 14px;
 		color: #fff;
 	}
-	.scroll-menu,.mgc-song-sheet,.rec-sheet,.live,.style-list,.home-topic{
+	.scroll-menu,.mgc-song-sheet,.rec-sheet,.live,.style-list,.home-topic,.voice{
 		position: relative;
 		top:20px;
 		margin: 0 auto ;

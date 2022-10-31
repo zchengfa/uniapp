@@ -75,7 +75,7 @@
 	/* #endif */
 	.title{
 		display: inline-block;
-		padding: 20px 0 0;
+		padding: 20px 0 10px;
 		font-weight: bolder;
 	}
 	.sheet-box{
@@ -91,11 +91,11 @@
 		position: relative;
 		margin: 0 5px;
 		width: 140px;
-		height: 180px;
-		font-size: 12px;
-		color: #fff;
+		height: 200px;
+		font-size: 13px;
+		
 		border-radius: 6px;
-		background-color: #7970fa;
+		
 		text-align: center;
 		
 	}
@@ -121,12 +121,18 @@
 		color: #fff;
 	}
 	.main-title{
-		display: block;
-		padding: 10px 0;
+		display: -webkit-box;
+		margin: 10px 0;
 		width: 100%;
-		white-space: nowrap;
+		text-align: left;
+		white-space: pre-wrap;
 		text-overflow: ellipsis;
+		word-wrap: break-word;
+		word-break: break-all;
+		line-clamp: 2;
+		-webkit-line-clamp: 2;
 		overflow: hidden;
+		-webkit-box-orient: vertical;
 	}
 	.play-count::before{
 		display: block;
