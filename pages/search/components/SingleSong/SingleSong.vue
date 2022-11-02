@@ -7,11 +7,11 @@
 					<view class="self-info">
 						<text v-if="item.copyrightId" class="copyright tag">原唱</text>
 						<text class="sq" v-if="item.sq">SQ</text>
-						<text class="author">{{item.artists[0].name}}</text>
+						<text class="author">{{item.ar[0].name}}</text>
 						<text class="charactor" v-if="item.album">-</text>
 						<text class="al" v-if="item.album">{{item.album.name}}</text>
 					</view>
-					<text class="alia" v-if="item.alias">{{item.alias[0]}}</text>
+					<text class="alia" v-if="item.al">{{item.al.name }}</text>
 				</view>
 				<view class="right">
 					<text v-if="item.mvid" class="iconfont musicplayCircle"></text>

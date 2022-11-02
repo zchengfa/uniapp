@@ -101,7 +101,8 @@
 						verifyCode(this.formData.phone,this.formData.vali).then(res=>{
 							if(res.code === 200 && res.data){
 								//验证成功，进行登录
-								loginWithPhone(this.formData.phone,this.formData.vali).then(data=>{
+								loginWithPhone(this.formData.phone,this.formData.vali).then((data)=>{
+									
 									if(data.code === 200){
 										
 										//登录成功，拿到用户信息和token进行存储

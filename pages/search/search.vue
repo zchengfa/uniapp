@@ -286,65 +286,94 @@
 					this.keyword = this.searchKeyword
 				}
 				this.suggestResult = []
+				
 				uni.showLoading({
 					title:'加载中...'
 				})
+				
 				summarySearch(this.searchKeyword,this.searchType).then(res=>{
-					console.log(res)
-					if(res.code === 200){
-						if(this.searchType === 1018){
-							this.summary = {}
-							this.summary = res.result
-						}
-						else if (this.searchType === 1){
-							this.single = {}
-							this.single = res.result
-						}
-						else if(this.searchType === 1000){
-							this.songSheet = {}
-							this.songSheet = res.result
-						}
-						else if(this.searchType === 1014){
-							this.video = {}
-							this.video = res.result
-						}
-						else if(this.searchType === 100){
-							this.songer = {}
-							this.songer = res.result
-						}
-						else if(this.searchType === 10){
-							this.album = {}
-							this.album = res.result
-						}
-						else if(this.searchType === 1002){
-							this.user = {}
-							this.user = res.result
-						}
-						else if(this.searchType === 1006){
-							this.lyrics = {}
-							this.lyrics = res.result
-							if(this.lyrics){
-								this.lyrics.songs.map(item=>{
-									item.isOpen = false
+					//使用本地接口出现返回数据为空时，使用第三方接口进行请求
+					if(Object.keys(res.result).length && this.searchType !== 1006){
+						this.dealSummaryResult(res)
+						
+					}
+					else{
+						function summaryAgain(word,type){
+							return new Promise(resolve=>{
+								uni.request({
+									url:`https://www.codeman.ink/api/search?keywords=${word}&type=${type}`,
+									success(res) {
+										resolve(res.data)
+									}
 								})
-							}
+							})
 						}
 						
-						this.isShowResult = true
-						//获取数据后，将搜索词加入到搜索历史中
-						//1.先判断当前的搜索词是否已经在历史中，若存在则先删除，再将它放入历史首位
-						let index = this.history.indexOf(this.searchKeyword.replace(/\s+/g,''))
-					
-						if(index !== -1){
-							this.history.splice(index,1)	
-						}
-						//console.log(this.searchKeyword.length)
-						this.history.unshift(this.searchKeyword)
-						uni.setStorageSync('search_history',this.history)
-						uni.hideLoading()
+						summaryAgain(this.searchKeyword,this.searchType).then(res=>{
+							this.dealSummaryResult(res)
+							
+						})
+						
 					}
 					
+					
 				})
+				
+				
+			},
+			dealSummaryResult(res){
+				if(res.code === 200){
+					if(this.searchType === 1018){
+						this.summary = {}
+						this.summary = res.result
+					}
+					else if (this.searchType === 1){
+						this.single = {}
+						this.single = res.result
+					}
+					else if(this.searchType === 1000){
+						this.songSheet = {}
+						this.songSheet = res.result
+					}
+					else if(this.searchType === 1014){
+						this.video = {}
+						this.video = res.result
+					}
+					else if(this.searchType === 100){
+						this.songer = {}
+						this.songer = res.result
+					}
+					else if(this.searchType === 10){
+						this.album = {}
+						this.album = res.result
+					}
+					else if(this.searchType === 1002){
+						this.user = {}
+						this.user = res.result
+					}
+					else if(this.searchType === 1006){
+						this.lyrics = {}
+						this.lyrics = res.result
+						if(this.lyrics){
+							this.lyrics.songs.map(item=>{
+								item.isOpen = false
+							})
+						}
+					}
+					
+					this.isShowResult = true
+					//获取数据后，将搜索词加入到搜索历史中
+					//1.先判断当前的搜索词是否已经在历史中，若存在则先删除，再将它放入历史首位
+					let index = this.history.indexOf(this.searchKeyword.replace(/\s+/g,''))
+				
+					if(index !== -1){
+						this.history.splice(index,1)	
+					}
+					//console.log(this.searchKeyword.length)
+					this.history.unshift(this.searchKeyword)
+					uni.setStorageSync('search_history',this.history)
+					uni.hideLoading()
+				}
 			},
 			getHotSearch(){
 				hotSearch().then(res=>{
