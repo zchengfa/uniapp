@@ -68,7 +68,7 @@
 }
 .nav-text{
 	display: inline-block;
-	mix-blend-mode: difference;
+	mix-blend-mode: lighten;
 	font-weight: bold;
 }
 /* #ifdef MP-WEIXIN */

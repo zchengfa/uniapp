@@ -1,6 +1,5 @@
 <template>
-	<view class="song-detail">
-		<view class="filter" :style="{'background-image':`url(${songs.picUrl})`}"></view>
+	<view class="song-detail"> 
 		<nav-bar :title="songs.name" class="nav"></nav-bar>
 		<view class="detail-content">
 			<image v-if="!isShowLyric" src="~@/static/images/song/needle.png" class="needle" :class="{'rotate-needle':playStatus}"></image>
@@ -37,11 +36,14 @@
 			Lyric
 		},
 		computed:{
-			...mapGetters(['songs','playStatus','audio','songId']),
+			...mapGetters(['songs','playStatus','audio','songId','fmStatus']),
 			
 		},
 		created() {
-			
+			//关闭私人FM模式
+			if(this.fmStatus){
+				this.$store.dispatch('fmStatus',false)
+			}
 		},
 		methods:{
 			changePlayStatus(){
@@ -87,17 +89,7 @@
 	.detail-content{
 		height: calc(100vh - 44px);
 	}
-	.filter{
-		position: absolute;
-		left: 0;
-		top: 0;
-		display: block;
-		width: 100%;
-		height: 100vh;
-		filter: blur(50px);
-		background-repeat: no-repeat;
-		
-	}
+	
 	.needle{
 		position: relative;
 		top:30px;
@@ -142,12 +134,7 @@
 	.paused{
 		animation-play-state: paused;	
 	}
-	.control{
-		position: absolute;
-		bottom: 5vh;
-		width: 100%;
-		z-index: 1000;
-	}
+	
 	.lyric{
 		position: relative;
 		width: 100%;

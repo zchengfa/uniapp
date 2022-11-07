@@ -280,3 +280,7 @@ export function recSongs(){
 export function topicDetail(id){
 	return Get(`/topic/detail?actid=${id}`)
 }
+
+export function personalFm(){
+	return Get('/personal_fm')
+}

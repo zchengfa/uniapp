@@ -45,7 +45,7 @@
 				</view>
 			</view>
 			<!-- 雷达歌单 -->
-			<SongSheet :song-sheet="MGCSongSheet" class="mgc-song-sheet" :title="MGCTitle"></SongSheet>
+			<SongSheet :song-sheet="MGCSongSheet" v-if="MGCSongSheet.length" class="mgc-song-sheet" :title="MGCTitle"></SongSheet>
 			<!-- Look直播 -->
 			<look-live :title="lookLiveTitle" :live="lookLive" class="live" v-if="lookLive.length"></look-live>
 			<!-- 热门话题 -->

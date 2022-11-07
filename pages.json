@@ -110,6 +110,14 @@
             }
             
         }
+        ,{
+            "path" : "pages/indexMenu/FM/FM",
+            "style" :                                                                                    
+            {
+                "navigationStyle":"custom"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

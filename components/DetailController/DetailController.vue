@@ -1,6 +1,6 @@
 <template>
 	<view class="music-controller">
-		<view class="music-operation">
+		<view class="music-operation" v-if="!fmStatus">
 			<text class="love iconfont controller-love"></text>
 			<text class="download iconfont controller-download"></text>
 			<text class="sing iconfont controller-sing"></text>
@@ -12,23 +12,23 @@
 		</view>
 		<view class="music-progress">
 			<text class="current-time time">{{cTime}}</text>
-			<!-- <view class="progress-box">
-				<text class="line"></text>
-				<view class="progress" :style="progressWidth">
-					<text class="dot" :style="dotLocation"></text>
-				</view>
-			</view> -->
 			<view class="slider-box">
 				<slider @change="changeProgress" @changing="seeking" class="music-slider"  max="100" :value="progress" activeColor="#f00" block-size="14"/>
 			</view>
 			<text class="total-time time">{{tTime}}</text>
 		</view>
 		<view class="music-play">
-			<text :class="loop" class="iconfont" @tap="changeLoop"></text>
-			<text class="iconfont controller-pre_song" @tap="changeSong('pre')"></text>
+			<text class="dislike iconfont controller-dislike" v-if="fmStatus"></text>
+			<text class="love iconfont controller-love" v-if="fmStatus"></text>
+			<text :class="loop" class="iconfont" @tap="changeLoop" v-if="!fmStatus"></text>
+			<text class="iconfont controller-pre_song" @tap="changeSong('pre')" v-if="!fmStatus"></text>
 			<text class="stop iconfont" @tap="changePlayStatus" :class="playStatus?'musicstop':'musicplayCircleOne'"></text>
 			<text class="iconfont controller-next_song" @tap="changeSong('next')"></text>
-			<text class="iconfont controller-list" @tap="showList"></text>
+			<text class="iconfont controller-list" @tap="showList" v-if="!fmStatus"></text>
+			<view class="comments-box" v-if="fmStatus">
+				<text class="comments iconfont controller-comments" @tap="toComments"></text>
+				<text class="comments-num">{{commentsNum}}</text>
+			</view>
 		</view>
 	</view>
 </template>
@@ -49,7 +49,7 @@
 			}
 		},
 		computed:{
-			...mapGetters(['playStatus','songs','currentTime','totalTime','audio','loopStatus','currentSongIndex','musicList','progressWidth','dotLocation','songId','progress']),
+			...mapGetters(['playStatus','songs','currentTime','totalTime','audio','loopStatus','currentSongIndex','musicList','progressWidth','dotLocation','songId','progress','fmStatus']),
 			tTime(){
 				
 				return this.transTime(this.totalTime)
@@ -161,28 +161,6 @@
 			//获取评论总数
 			this.getComTotalNum(this.songId)
 			
-		},
-		mounted() {
-			
-			// // #ifdef H5
-			// //获取进度条总宽度
-			// let query = uni.createSelectorQuery().in(this).select('.line')
-			// query.boundingClientRect().exec((res)=>{
-			// 	this.$store.dispatch('progressTotalWidth',res[0].width)
-				
-			// })
-			
-			// // #endif
-			
-			// // #ifdef MP-WEIXIN
-			// //获取进度条总宽度
-			// let query = wx.createSelectorQuery().in(this).select('.line')
-			// query.boundingClientRect().exec((res)=>{
-			// 	this.$store.dispatch('progressTotalWidth',res[0].width)
-				
-			// })
-			
-			// // #endif
 		}
 	}
 </script>

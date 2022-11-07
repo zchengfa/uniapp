@@ -57,6 +57,23 @@
 	.scroll-v{
 		margin: 0 auto;
 	}
+	.filter{
+		position: absolute;
+		left: 0;
+		top: 0;
+		display: block;
+		width: 100%;
+		height: 100vh;
+		filter: blur(50px);
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+	.control{
+		position: absolute;
+		bottom: 5vh;
+		width: 100%;
+		z-index: 1000;
+	}
 	/* #ifdef MP-WEIXIN */
 	.bottom-control{
 		bottom: 0;

@@ -43,7 +43,9 @@ export default {
 		//进度条的值
 		progress:0,
 		//是否在拖动中
-		isSeeking:false
+		isSeeking:false,
+		//是否私人FM模式
+		fmStatus:false
 		
 	},
 	getters:{
@@ -97,6 +99,9 @@ export default {
 		},
 		progress(state){
 			return state.progress
+		},
+		fmStatus(state){
+			return state.fmStatus
 		}
 	},
 	mutations:{
@@ -180,6 +185,9 @@ export default {
 		},
 		seekStatus(state,payload){
 			state.isSeeking = payload
+		},
+		fmStatus(state,payload){
+			state.fmStatus = payload
 		}
 	},
 	actions:{
@@ -244,6 +252,9 @@ export default {
 		},
 		seekStatus(context,payload){
 			context.commit('seekStatus',payload)
+		},
+		fmStatus(context,payload){
+			context.commit('fmStatus',payload)
 		}
 	}
 	
