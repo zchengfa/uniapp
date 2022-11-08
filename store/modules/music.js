@@ -45,7 +45,7 @@ export default {
 		//是否在拖动中
 		isSeeking:false,
 		//是否私人FM模式
-		fmStatus:false
+		fmStatus:uni.getStorageSync('FM_status')
 		
 	},
 	getters:{
@@ -188,6 +188,7 @@ export default {
 		},
 		fmStatus(state,payload){
 			state.fmStatus = payload
+			uni.setStorageSync('FM_status',payload)
 		}
 	},
 	actions:{

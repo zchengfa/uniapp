@@ -10,7 +10,7 @@
 			</view>
 			<text class="more iconfont controller-more_ver"></text>
 		</view>
-		<view class="music-progress">
+		<view class="music-progress  maxWidth">
 			<text class="current-time time">{{cTime}}</text>
 			<view class="slider-box">
 				<slider @change="changeProgress" @changing="seeking" class="music-slider"  max="100" :value="progress" activeColor="#f00" block-size="14"/>
@@ -96,28 +96,38 @@
 				console.log(this.totalTime*this.progress/100)
 			},
 			toComments(){
+				let path = '../../pages/comments/comments'
+				if(this.fmStatus){
+					path = '../../comments/comments'
+				}
 				uni.navigateTo({
-					url:`../../pages/comments/comments?songId=${this.songId}&picUrl=${this.songs.picUrl}&name=${encodeURIComponent(this.songs.name)}&author=${encodeURIComponent(this.songs.author)}`
+					url:`${path}?songId=${this.songId}&picUrl=${this.songs.picUrl}&name=${encodeURIComponent(this.songs.name)}&author=${encodeURIComponent(this.songs.author)}`
 				})
 			},
 			showList(){
 				uni.$emit('showList')
 			},
 			changeSong(direction){
-				let index = this.currentSongIndex
-				direction === 'pre'?index -= 1 : index += 1 
-				if(index >= this.musicList.length){
-					index = 0
-				}
-				else if(index < 0){
-					index = this.musicList.length - 1
-				}
-				
-				this.$songSave(this.musicList[index].id).then(res=>{
-					if(res){
-						this.$store.dispatch('index',index)
+				if(!this.fmStatus){
+					let index = this.currentSongIndex
+					direction === 'pre'?index -= 1 : index += 1 
+					if(index >= this.musicList.length){
+						index = 0
 					}
-				})
+					else if(index < 0){
+						index = this.musicList.length - 1
+					}
+					
+					this.$songSave(this.musicList[index].id).then(res=>{
+						if(res){
+							this.$store.dispatch('index',index)
+						}
+					})
+				}
+				//在私人FM模式下点击的切换歌曲按钮，将事件发送给父组件处理
+				else{
+					this.$emit('nextFM')
+				}
 			},
 			changePlayStatus(){
 				
@@ -167,9 +177,14 @@
 
 <style scoped lang="scss">
 	.music-controller{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 		width: 100%;
 		color: #fff;
 		font-size: 12px;
+		
 	}
 	.music-operation,.music-progress,.music-play{
 		display: flex;
@@ -185,6 +200,7 @@
 	}
 	.music-progress{
 		justify-content: space-around;
+		
 	}
 	.progress-box{
 		position: relative;
@@ -221,10 +237,18 @@
 		
 		transform: translateX(-25%) translateY(-25%);
 	}
-	.music-slider{
-		margin: 0;
-		width: 70vw;
-		
+	
+	@media screen and (max-width:504px){
+		.music-slider{
+			margin: 0;
+			width: 70vw;
+		}
+	}
+	@media screen and (min-width:504px){
+		.music-slider{
+			margin: 0;
+			width: 350px;
+		}
 	}
 	
 </style>

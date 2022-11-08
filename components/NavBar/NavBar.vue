@@ -1,5 +1,5 @@
 <template>
-	<view class="content">
+	<view class="content maxWidth">
 		<view class="left">
 			<slot name="left">
 				<text class="iconfont musicleftArrow nav-text" @tap="backToPrevious"></text>

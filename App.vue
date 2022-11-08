@@ -11,10 +11,14 @@
 				uni.setStorageSync('loopCount',0)
 				uni.setStorageSync('loop','controller-list_loop')
 				this.$store.dispatch('changeLoopWay',JSON.stringify({
-				'loop':'controller-list_loop',
-				'loopStatus':'ll',
-				'loopCount':0
-			}))
+					'loop':'controller-list_loop',
+					'loopStatus':'ll',
+					'loopCount':0
+				}))
+			}
+			
+			if(!uni.getStorageSync('FM_status')){
+				uni.setStorageSync('FM_status',false)
 			}
 			
 			console.log('App Show')
@@ -28,10 +32,11 @@
 
 <style>
 	/*每个页面公共css */
-	body{
+	body,.maxWidth{
 		margin: 0 auto;
 		max-width: 500px;
 	}
+	
 	/* #ifdef H5 */
 	uni-scroll-view .uni-scroll-view::-webkit-scrollbar {
 	/* 隐藏滚动条，但依旧具备可以滚动的功能 */

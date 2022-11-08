@@ -47,8 +47,6 @@
 							uni.navigateTo({
 								url:'../../pages/indexMenu/FM/FM'
 							})
-							//向vuex分发事件，开启fm
-							this.$store.dispatch('fmStatus',true)
 						}
 						else{
 							uni.showModal({
