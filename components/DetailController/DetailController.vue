@@ -108,7 +108,12 @@
 				uni.$emit('showList')
 			},
 			changeSong(direction){
-				if(!this.fmStatus){
+				
+				//在私人FM模式下点击的切换歌曲按钮，将事件发送给父组件处理
+				if(this.fmStatus){
+					this.$emit('nextFM')
+				}
+				else{
 					let index = this.currentSongIndex
 					direction === 'pre'?index -= 1 : index += 1 
 					if(index >= this.musicList.length){
@@ -123,10 +128,6 @@
 							this.$store.dispatch('index',index)
 						}
 					})
-				}
-				//在私人FM模式下点击的切换歌曲按钮，将事件发送给父组件处理
-				else{
-					this.$emit('nextFM')
 				}
 			},
 			changePlayStatus(){

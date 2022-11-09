@@ -1,13 +1,14 @@
 <template>
 	<view class="FM">
-		<view class="filter" :style="{'background-image':`url(${bg})`}"></view>
+		<view class="filter" :style="{'background-image':`url(${songs.picUrl})`}"></view>
 		<nav-bar title="私人FM"></nav-bar>
 		<view class="fm-content"  @touchstart="touchS($event)" @touchend="touchE($event)">
-			<view class="song-info">
-				<image :src="bg" mode="aspectFit" class="FM-image"></image>
+			<view class="song-info"  v-if="!isShowLyric" @tap="showLyric">
+				<image :src="songs.picUrl" mode="aspectFit" class="FM-image"></image>
 				<text class="song-name">{{songs.name}}</text>
 				<text class="author">{{songs.author}}</text>
 			</view>
+			<lyric class="lyric" v-if="isShowLyric" @closeLyric="closeLyric"></lyric>
 		</view>
 		<detail-controller @nextFM="nextFM" :key="controllerKey" class="control" @changePlayStatus="changePlayStatus"></detail-controller>
 	</view>
@@ -16,18 +17,20 @@
 <script>
 	import { personalFm } from '@/common/api.js'
 	import DetailController from '@/components/DetailController/DetailController.vue'
+	import Lyric from '@/components/Lyric/Lyric.vue'
 	import { mapGetters } from 'vuex'
 	export default {
 		data() {
 			return {
 				touchStartX:0,
 				touchEndX:0,
-				bg:'',
+				isShowLyric:false,
 				controllerKey:0,
 			}
 		},
 		components:{
-			DetailController
+			DetailController,
+			Lyric
 		},
 		computed:{
 			...mapGetters(['songs','playStatus','musicList','currentSongIndex'])
@@ -44,7 +47,8 @@
 					console.log('用户在向右滑动')
 				}
 				else if(this.touchEndX - this.touchStartX <= -30){
-					console.log('用户在向左滑动')
+					
+					this.nextFM()
 				}
 				
 			},
@@ -53,29 +57,33 @@
 				this.$store.dispatch('changePlayStatus',!this.playStatus)
 			},
 			nextFM(){
-				this.nextSong()
-				 console.log('下一首fm歌曲')
-			},
-			nextSong(){
 				let index = this.currentSongIndex
-				
-				index =+ 1
+				++ index 
 				
 				if(index >= this.musicList.length){
 					this.fm()
+				}
+				else{
 					this.$songSave(this.musicList[index].id).then(res=>{
-						this.$store.dispatch('index',0)
+						if(res){
+							this.$store.dispatch('index',index)
+						}
 					})
 				}
-				
-				this.$songSave(this.musicList[index].id).then()
-			},
 			
+			},
+			showLyric(){
+				this.isShowLyric = true
+			},
+			closeLyric(){
+				this.isShowLyric = false
+			},
 			fm(){
 				personalFm().then(res=>{
+					console.log(res)
 					if(res.code === 200){
 						this.$store.dispatch('musicList',JSON.stringify(res.data))
-						this.bg = this.musicList[this.currentSongIndex].album.blurPicUrl
+						
 						
 						//获取列表第一首歌进行播放
 						this.$songSave(this.musicList[0].id).then(res=>{
@@ -132,6 +140,11 @@
 		width: 300px;
 		height: 300px;
 		border-radius: 6px;
+	}
+	.lyric{
+		position: relative;
+		width: 100%;
+		height:100%;
 	}
 }
 </style>
