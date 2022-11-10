@@ -73,6 +73,9 @@
 		background-repeat: no-repeat;
 		background-size: cover;
 	}
+	.cover{
+		background-color: rgba(0, 0, 0, .3);
+	}
 	.control{
 		position: absolute;
 		bottom: 5vh;

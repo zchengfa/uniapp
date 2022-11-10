@@ -54,6 +54,7 @@ Vue.prototype.$songSave = async function songSave (id){
 }
 
 function getLyric(id){
+	console.log(id)
 	//获取歌词
 	lyric(id).then(res=>{
 	
@@ -108,7 +109,10 @@ audioContext.onCanplay(()=>{
 	store.dispatch('totalTime',audioContext.duration)
 	
 	//音乐在可播放时就获取歌词数据
-	getLyric(store.state.music.songId)
+	if(!store.state.music.lyric.length){
+		getLyric(store.state.music.songId)
+	}
+	
 })
 
 audioContext.onTimeUpdate(()=>{
@@ -126,7 +130,7 @@ audioContext.onTimeUpdate(()=>{
 			//向vuex分发事件（让歌词滚动组件的滚动索引-8）
 			store.dispatch('reduceIntoIndex',8)
 		}
-	}
+	} 
 	
 	let totalWidth = store.state.music.totalWidth
 	let totalTime = audioContext.duration
@@ -139,7 +143,10 @@ audioContext.onTimeUpdate(()=>{
 	
 	//改变进度条的值之前需判断进度条是否还在被拖动状态，若是在拖动状态就不随着音乐进度改变，只有在进度条脱离拖动状态下改变
 	if(!seekStatus){
+		//结束拖动，修改进度条的值
 		store.dispatch('progress',percent*100)
+		  
+		
 	}
 	
 })
@@ -164,7 +171,7 @@ audioContext.onEnded(()=>{
 	audioContext.src = ''
 	//列表循环
 	if(way === 'll'){
-		index +=1
+		index +=1 
 		if(index >= list.length){
 			index = 0
 		}

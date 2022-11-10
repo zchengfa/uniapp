@@ -1,6 +1,7 @@
 <template>
 	<view class="FM">
 		<view class="filter" :style="{'background-image':`url(${songs.picUrl})`}"></view>
+		<view class="filter cover" ></view>
 		<nav-bar title="私人FM"></nav-bar>
 		<view class="fm-content"  @touchstart="touchS($event)" @touchend="touchE($event)">
 			<view class="song-info"  v-if="!isShowLyric" @tap="showLyric">
@@ -8,7 +9,7 @@
 				<text class="song-name">{{songs.name}}</text>
 				<text class="author">{{songs.author}}</text>
 			</view>
-			<lyric class="lyric" v-if="isShowLyric" @closeLyric="closeLyric"></lyric>
+			<lyric class="lyric" v-show="isShowLyric" @closeLyric="closeLyric"></lyric>
 		</view>
 		<detail-controller @nextFM="nextFM" :key="controllerKey" class="control" @changePlayStatus="changePlayStatus"></detail-controller>
 	</view>

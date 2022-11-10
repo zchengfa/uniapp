@@ -1,5 +1,7 @@
 <template>
 	<view class="song-detail"> 
+		<view class="filter" :style="{'background-image':`url(${songs.picUrl})`}"></view>
+		<view class="filter cover" ></view>
 		<nav-bar :title="songs.name" class="nav"></nav-bar>
 		<view class="detail-content">
 			<image v-if="!isShowLyric" src="~@/static/images/song/needle.png" class="needle" :class="{'rotate-needle':playStatus}"></image>
@@ -7,7 +9,7 @@
 				<view class="disc" v-if="!isShowLyric" @tap="showLyric">
 					<image :src="songs.picUrl" class="song-pic" :class="playStatus?'rotate':'rotate paused'"></image>
 				</view>
-				<lyric class="lyric" v-if="isShowLyric" @closeLyric="closeLyric"></lyric>
+				<lyric class="lyric" v-show="isShowLyric" @closeLyric="closeLyric"></lyric>
 				<detail-controller :key="controllerKey" class="control" @changePlayStatus="changePlayStatus"></detail-controller>
 			</view>
 		</view>
@@ -77,7 +79,7 @@
 		position: relative;
 		width: 100%;
 		height:100vh;
-		background-color: rgba(0,0,0,.5);
+		
 		
 	}
 	.nav{

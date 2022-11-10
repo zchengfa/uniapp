@@ -18,7 +18,7 @@
 <script>
 	import { mapGetters } from 'vuex'
 	export default {
-		name:"Lyric",
+		name:"Lyric", 
 		data() {
 			return {
 				
@@ -30,7 +30,7 @@
 		watch:{
 			audio(n,o){
 				//向vuex发送事件，获取新歌曲的歌词，并将索引变为0，表示从头开始
-				this.$lyric(n)
+				this.$lyric(this.songId)
 				this.$store.dispatch('resetLyric')
 				
 			}
