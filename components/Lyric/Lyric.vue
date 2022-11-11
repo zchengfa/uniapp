@@ -39,10 +39,7 @@
 			closeLyric(){
 				this.$emit('closeLyric')
 			}
-		},
-		created() {
-			console.log('ly')
-		},
+		}
 		
 	}
 </script>

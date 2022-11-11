@@ -216,6 +216,8 @@ const playSongMixin = {
 			let listLength = this.$store.state.music.musicList.length
 			let musicList = this.$store.state.music.musicList
 			 
+			//关闭私人FM模式
+			this.$store.dispatch('fmStatus',false)
 			
 			if(!index){
 				this.idList.map((item,listIndex)=>{

@@ -164,7 +164,7 @@ export default {
 			state.lyric = JSON.parse(payload)
 		},
 		addLyricIndex(state,payload){
-			state.lyricIndex += payload
+			state.lyricIndex = payload
 		},
 		reduceIntoIndex(state,payload){
 			state.intoIndex = 't'+ (state.lyricIndex - payload)

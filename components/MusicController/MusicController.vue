@@ -21,13 +21,27 @@
 	import { mapState ,mapGetters} from 'vuex'
 	export default {
 		name:"MusicController",
+		props:{
+			FMPath:{
+				type:String,
+				default(){
+					return ''
+				}
+			},
+			songDetailPath:{
+				type:String,
+				default(){
+					return ''
+				}
+			}
+		},
 		data(){
 			return {
 				
 			}
 		},
 		computed:{
-			...mapGetters(['songs','playStatus','audio']),
+			...mapGetters(['songs','playStatus','audio','fmStatus']),
 			
 		},
 		watch:{
@@ -46,9 +60,18 @@
 				uni.$emit('showList')
 			},
 			toSongDetail(){
-				uni.navigateTo({
-					url:'../../pages/songDetail/songDetail'
-				})
+				if(this.fmStatus){
+					console.log(this.$props.FMPath)
+					uni.navigateTo({
+						url:this.$props.FMPath
+					})
+				}
+				else{
+					console.log(this.$props.songDetailPath)
+					uni.navigateTo({
+						url:this.$props.songDetailPath
+					})
+				}
 			}
 		}
 	}

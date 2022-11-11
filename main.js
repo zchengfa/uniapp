@@ -54,7 +54,7 @@ Vue.prototype.$songSave = async function songSave (id){
 }
 
 function getLyric(id){
-	console.log(id)
+	
 	//获取歌词
 	lyric(id).then(res=>{
 	
@@ -124,9 +124,6 @@ audioContext.onTimeUpdate(()=>{
 	
 	if(lyric[index]){
 		if(time >= lyric[index].time){
-			//向vuex分发事件（歌词索引加一）
-			store.dispatch('addLyricIndex',1)
-			
 			//向vuex分发事件（让歌词滚动组件的滚动索引-8）
 			store.dispatch('reduceIntoIndex',8)
 		}
@@ -145,6 +142,15 @@ audioContext.onTimeUpdate(()=>{
 	if(!seekStatus){
 		//结束拖动，修改进度条的值
 		store.dispatch('progress',percent*100)
+		for (var i = 0; i < lyric.length; i++) {
+			if(i < lyric.length -1){
+				if(time > lyric[i]['time'] && time < lyric[i + 1]['time']){
+					store.dispatch('addLyricIndex', i + 1)
+					
+				}
+				
+			}
+		}
 		  
 		
 	}
