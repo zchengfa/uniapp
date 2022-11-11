@@ -95,10 +95,11 @@
 			}
 		},
 		created() {
-			this.fm()
-			
-			//向vuex分发事件，开启fm
-			this.$store.dispatch('fmStatus',true)
+			if(!this.fmStatus && this.musicList.length >= 4){
+				this.fm()
+				//向vuex分发事件，开启fm
+				this.$store.dispatch('fmStatus',true)
+			}
 		}
 	}
 </script>

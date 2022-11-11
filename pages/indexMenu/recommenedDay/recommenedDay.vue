@@ -46,7 +46,7 @@
 		</view>
 		<!-- 底部音乐控件 -->
 		<view class="bottom-control" v-show="isShowBottomControl">
-			<music-controller></music-controller>
+			<music-controller FMPath="../FM/FM" songDetailPath="../../songDetail/songDetail"></music-controller>
 		</view>
 		<view v-if="isShowMusicList">
 			<music-list></music-list>
