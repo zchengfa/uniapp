@@ -14,8 +14,8 @@
 					<!-- #ifdef MP-WEIXIN -->
 					<image :src="userInfo.avatarUrl" v-if="userInfo.avatarUrl" class="avatar" ></image>
 					<image src="~@/static/images/avatar_de.png" v-else="userInfo.avatarUrl" class="avatar" ></image>
-					<text class="username header-msg" v-if="userInfo.name">{{userInfo.name}}</text>
-					<text class="login header-msg" v-if="!userInfo.name" @click.stop="toLogin">立即登录</text>
+					<text class="username header-msg" v-if="userInfo.nickname">{{userInfo.nickname}}</text>
+					<text class="login header-msg" v-else @click.stop="toLogin">立即登录</text>
 					<text class="header-msg">></text>
 					<!-- #endif -->
 				</view>

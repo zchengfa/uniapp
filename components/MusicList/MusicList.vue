@@ -1,7 +1,7 @@
 <template>
 	<view class="music-list" @tap="closeList" v-show="isShowParent">
 		<view class="list-box" :class="isShowList?'fade-in ':'fade-out '">
-			<view class="list-content">
+			<view class="list-content" v-if="!fmStatus">
 				<text class="title">当前播放</text>
 				<text class="list-count">({{musicList.length}})</text>
 				<view class="list-controller">
@@ -18,6 +18,7 @@
 				<scroll-view scroll-y="true" class="list-scroll" @scrolltolower="loadMore">
 					<view v-for="(item,index) in showData" :key="index" class="list-item">
 						<view class="song-box" @click.native.stop="playSong(item.id,index)" :class="{'current-song':songId === item.id}">
+							<image class="playing" v-if="songId === item.id" src="../../static/images/playing.png" mode="aspectFit"></image>
 							<text class="song-name" :class="{'current-song':songId === item.id}">{{item.name}}</text>
 							<text class="charactor" :class="{'current-song':songId === item.id}">-</text>
 							<text class="song-author" :class="{'current-song':songId === item.id}">{{$dealAuthor(item.ar,'name')}}</text>
@@ -27,7 +28,17 @@
 					</view>
 				</scroll-view>
 			</view>
-			
+			<view class="FM-content list-content" v-else>
+				<text class="fm-title">当前播放：私人FM</text>
+				<view class="song-content">
+					<image src="../../static/images/playing.png" class="playing" mode="aspectFit"></image>
+					<view class="song-box">
+						<text class="song-name  current-song">{{songs.name}}</text>
+						<text class="charactor current-song">-</text>
+						<text class="song-author current-song">{{songs.author}}</text>
+					</view>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -49,7 +60,7 @@
 			};
 		},
 		computed:{
-			...mapGetters(['musicList','songId','loopStatus']),
+			...mapGetters(['musicList','songId','loopStatus','fmStatus','songs']),
 			showData(){
 				//长列表优化，每次只加载15首歌曲
 				return this.musicList.slice(0,this.sliceEnd)
@@ -101,7 +112,13 @@
 	}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+	.playing{
+		width: 20px;
+		height: 20px;
+		transform-origin: 0;
+		transform: scale(.7);
+	}
 	.list-box{
 		position: relative;
 		top:100%;
@@ -114,7 +131,7 @@
 	}
 	.list-content{
 		margin: 0 auto;
-		width: 96%;
+		width: 94%;
 		height: 100%;
 	}
 	.list-controller,.loop,.ohter{
@@ -158,7 +175,7 @@
 		align-items: center;
 		padding: 10px 0;
 	}
-	.song-box{
+	.song-box,.song-content{
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
@@ -197,4 +214,17 @@
 		background-color: #c7c7c7;
 		transform: scale(.8);
 	}
+	.FM-content{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		letter-spacing: 2px;
+		.song-content{
+			margin-top: 10px;
+			width: 100%;
+			justify-content: center;
+		}
+	}
+	
 </style>

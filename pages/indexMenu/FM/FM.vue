@@ -34,7 +34,7 @@
 			Lyric
 		},
 		computed:{
-			...mapGetters(['songs','playStatus','musicList','currentSongIndex'])
+			...mapGetters(['songs','playStatus','musicList','currentSongIndex','playStatus'])
 		},
 		methods: {
 			touchS(e){
@@ -45,7 +45,7 @@
 				this.touchEndX = Math.floor(e.changedTouches[0].pageX)
 				
 				if(this.touchEndX - this.touchStartX >= 30){
-					console.log('用户在向右滑动')
+					this.showLyric()
 				}
 				else if(this.touchEndX - this.touchStartX <= -30){
 					
@@ -81,7 +81,7 @@
 			},
 			fm(){
 				personalFm().then(res=>{
-					console.log(res)
+					
 					if(res.code === 200){
 						this.$store.dispatch('musicList',JSON.stringify(res.data))
 						
@@ -99,6 +99,12 @@
 				this.fm()
 				//向vuex分发事件，开启fm
 				this.$store.dispatch('fmStatus',true)
+			}
+		},
+		mounted() {
+			if(!this.playStatus){
+				this.$store.dispatch('changePlayStatus',true)
+				this.$audio.play()
 			}
 		}
 	}
