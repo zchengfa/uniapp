@@ -181,7 +181,7 @@
 			getUserProfile(){
 				if(this.$checkLogin()){
 					userLikeMusicList(this.userInfo.userId).then(res=>{
-						console.log(res)
+						
 						if(res.code === 200){
 							this.$store.dispatch('userLikeMusicIds',res.ids)
 							songDetail(this.likeIds[0]).then(song=>{

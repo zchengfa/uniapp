@@ -58,7 +58,7 @@
 						this.hasMore = res.hasMore
 						
 					}
-					console.log(res)
+					
 				})
 			},
 			loadMore(){

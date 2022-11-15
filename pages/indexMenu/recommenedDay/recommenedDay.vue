@@ -73,10 +73,11 @@
 		},
 		created() {
 			recSongs().then(res=>{
+				console.log(res)
 				if(res.code === 200){
 					this.songsData = res.data.dailySongs
 					this.topCover = `background-image:url(${this.songsData[0].al.picUrl})`
-					console.log(res)
+					
 				}
 			})
 			this.changeListStyle()

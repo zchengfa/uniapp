@@ -40,6 +40,7 @@ function save(res){
 	store.dispatch('audio',res.url)
 }
 
+
 Vue.prototype.$songSave = async function songSave (id){
 	return new Promise(resolve=>{
 		songExceptLyric(id).then(res=>{
@@ -61,7 +62,9 @@ function getLyric(id){
 		if(res.lrc.lyric){
 			let result = []
 			let arr = res.lrc.lyric.split('\n')
+			
 			arr.forEach((item,index)=>{
+				
 				let time = item.split(']')[0]
 				let value = item.split(']')[1]
 				
@@ -71,7 +74,7 @@ function getLyric(id){
 				let s = Number(newTime.substring(newTime.indexOf(':')+1,newTime.indexOf('.')))
 				let ms = newTime.substring(newTime.indexOf('.'),newTime.length)
 				let realTime = Number(m + s + ms)
-			
+							
 				result.push({
 					'time':realTime,
 					'lyric':value,
@@ -79,7 +82,6 @@ function getLyric(id){
 				})
 				
 				store.dispatch('lyric',JSON.stringify(result))
-				
 			})
 		}
 	})
@@ -167,7 +169,7 @@ audioContext.onPause(()=>{
 })
 
 audioContext.onEnded(()=>{
-	console.log('音乐自然播放到结束')
+	//console.log('音乐自然播放到结束')
 	//判断用户当前选择的歌曲循环方式，通过循环方式来决定是按照列表顺序循环，还是单曲循环，亦或是列表随机播放
 	let way = store.state.music.loopStatus
 	let songId = store.state.music.songId

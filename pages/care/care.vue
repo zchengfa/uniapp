@@ -75,7 +75,7 @@
 				return `
 				<span class="msg">${content.msg}</span>
 				<div class="song" style="position:relative; display:flex; justify-content:flex-start; align-items:center; margin:10px auto; padding:4px; background-color:#eaeaea;border-radius:6px;">
-					<img class="song-image" style="margin-right:4px; width:40px; height:40px; border-radius:6px;" src="${content.song.img80x80}">
+					<img class="song-image" style="margin-right:4px; width:40px; height:40px; border-radius:6px;" src="${content.song.album.picUrl}">
 					<div class="info">
 						<span class="song-name" style="display:block;">${content.song.name}</span>
 						<span class="song-art" style="display:block; color:#bababa; font-size:12px;">${this.$dealAuthor(content.song.artists,'name')}</span>
@@ -91,10 +91,11 @@
 			},
 			getEvent(){
 				event().then(res=>{
-					this.careData = care.event
-					this.more = care.more
-					this.lastTime = care.lasttime
-					this.isShowTip = true
+					console.log(res)
+					this.careData = res.event
+					this.more = res.more
+					this.lastTime = res.lasttime
+					this.isShowTip = false
 				})
 			},
 			check(){

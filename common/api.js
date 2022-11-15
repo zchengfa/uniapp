@@ -1,6 +1,6 @@
-const baseUrl = "https://www.codeman.ink/api"
+//const baseUrl = "https://www.codeman.ink/api"
 //const baseUrl = 'http://192.168.31.130:4000'
-//const baseUrl = 'http://192.168.31.110:3000'
+const baseUrl = 'http://192.168.31.110:3000'
 
 function Get(URL){
 	return new Promise((resolve)=>{
@@ -229,6 +229,11 @@ export function verifyCode(phone,code){
 //登录提示网络太拥挤
 export function loginWithPhone(phone,code){
 	return Get(`/login/cellphone?phone=${encodeURIComponent(phone)}&captcha=${code}`)
+}
+
+//查看登录状态
+export function loginStatus(){
+	return Get('/login/status')
 }
 
 //注册

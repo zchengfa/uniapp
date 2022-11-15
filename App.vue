@@ -1,4 +1,5 @@
 <script>
+	import { loginStatus } from 'common/api.js'
 	export default {
 		onLaunch: function() {
 			
@@ -21,11 +22,16 @@
 				uni.setStorageSync('FM_status',false)
 			}
 			
-			console.log('App Show')
+			//查看用户是否登录，未登录状态时就把之前登录过的信息清除
+			loginStatus().then(res=>{
+				if(!res.data.profile){
+					uni.removeStorageSync('cookie')
+					uni.removeStorageSync('token')
+				}
+			})
 		},
 		onHide: function() {
 		
-			console.log('App Hide')
 		}
 	}
 </script>

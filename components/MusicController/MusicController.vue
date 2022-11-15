@@ -61,13 +61,13 @@
 			},
 			toSongDetail(){
 				if(this.fmStatus){
-					console.log(this.$props.FMPath)
+					
 					uni.navigateTo({
 						url:this.$props.FMPath
 					})
 				}
 				else{
-					console.log(this.$props.songDetailPath)
+					
 					uni.navigateTo({
 						url:this.$props.songDetailPath
 					})

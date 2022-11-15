@@ -93,7 +93,7 @@
 				this.$store.dispatch('seekStatus',false)
 				this.$store.dispatch('progress',e.detail.value)
 				this.$audio.seek(this.totalTime*this.progress/100)
-				console.log(this.totalTime*this.progress/100)
+				//console.log(this.totalTime*this.progress/100)
 			},
 			toComments(){
 				let path = '../../pages/comments/comments'
@@ -237,6 +237,9 @@
 		width: 40px;
 		
 		transform: translateX(-25%) translateY(-25%);
+	}
+	.stop{
+		font-size: 40px;
 	}
 	
 	@media screen and (max-width:504px){
