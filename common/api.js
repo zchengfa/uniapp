@@ -82,6 +82,11 @@ export function playListDeatil(id){
 	return Get(`/playlist/detail?id=${id}`)
 }
 
+//获取歌单前几首歌曲
+export function topSong(id,limit = 3,offset = 0){
+	return Get(`/playlist/track/all?id=${id}&limit=${limit}&offset=${offset}`)
+}
+
 //首页轮播图数据type（0：pc、1：安卓、2：iphone、3：ipad）
 export function banner(type = 1){
 	return Get(`/banner?type=${type}`)

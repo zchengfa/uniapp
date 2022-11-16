@@ -43,11 +43,12 @@
 </script>
 
 <style scoped>
+	
 	.title{
 		margin-left: 10px;
 	}
 	.sheet-item{
-		height: 180px;
+		height: 100%;
 		
 		text-align: center;
 		
