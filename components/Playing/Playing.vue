@@ -26,8 +26,8 @@
 	height: 100%;
 	.step{
 		margin: 0 2px;
-		width: 2px;
-		border-radius: 1px;
+		width: 4px;
+		border-radius: 2px;
 		background-color: rgba(255, 255, 255, .7);
 		animation: jump 1s linear infinite;
 	}

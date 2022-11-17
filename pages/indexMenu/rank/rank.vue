@@ -14,13 +14,13 @@
 						<text class="update-frequency">{{item.updateFrequency}}</text>
 					</view>
 					<view class="item-bottom">
-						<view class="image-box">
-							<!-- <text class="iconfont musicplay"></text> -->
-							<Playing class="playing"></Playing>
-							<image :src="song.picUrl" mode="" v-for="(song,songIndex) in item.tracks" :key="songIndex" class="image"></image>
+						<view class="image-box" @tap="beginPlay(item.id)">
+							<text class="iconfont musicplay" v-show="playingId !== item.id"></text>
+							<Playing class="playing" v-show=" playingId === item.id"></Playing>
+							<image :src="song.picUrl" mode="" v-for="(song,songIndex) in item.tracks" :key="songIndex" class="image" :class="['f-img','s-img','t-img'][songIndex]"></image>
 							<view class="cover"></view>
 						</view>
-						<view class="tracks">
+						<view class="tracks" @tap="toPlaylistDetail(item.id)">
 							<view v-for="(track,trackIndex) in item.tracks" :key="trackIndex" class="track-item">
 								<text class="music-id">{{trackIndex + 1 }}</text>
 								<text class="music-name">{{track.first}}</text>
@@ -35,27 +35,66 @@
 		<view class="bottom-control" v-show="isShowBottomControl">
 			<music-controller FMPath="../FM/FM" songDetailPath="../../songDetail/songDetail"></music-controller>
 		</view>
+		<view v-if="isShowMusicList">
+			<music-list></music-list>
+		</view>
 	</view>
 </template>
 
 <script>
 	import '@/common/iconfont.css'
-	import {topList,topSong} from '@/common/api.js'
-	import { bottomControlMixin } from '@/common/mixins/mixins.js'
+	import {topList,topSong,playListDeatil} from '@/common/api.js'
+	import { bottomControlMixin,playSongMixin } from '@/common/mixins/mixins.js'
 	import Playing from '@/components/Playing/Playing.vue'
 	
 	export default {
-		mixins:[bottomControlMixin],
+		mixins:[bottomControlMixin,playSongMixin],
 		data() {
 			return {
 				rankAuthor:[],
-				rankOther:[]
+				rankOther:[],
+				playingId:undefined,
+				list:[]
 			}
 		},
 		components:{
 			Playing
 		},
 		methods: {
+			beginPlay(id){
+				if(this.playingId === id){
+					this.toPlaylistDetail(id)
+				}
+				else{
+					this.playingId = id
+					playListDeatil(id).then(res=>{
+						
+						if(res.code === 200){
+							
+							this.idList = res.playlist.trackIds
+							this.list = res.playlist.tracks
+							this.playAll()
+						}
+					})
+				}
+				
+			},
+			getPlayListData(){
+				let list = []
+				this.list.map(item=>{
+					list.push(item)
+				})
+				
+				return list
+			},
+			toPlaylistDetail(id){
+				uni.navigateTo({
+					url:'../../playListDetail/playListDetail?playListId='+id
+				})
+			},
+			playAll(){
+				this.playSong(this.idList[0].id,0)
+			},
 			getRankData(){
 				topList().then(res=>{
 					if(res){
@@ -198,13 +237,18 @@
 		.image{
 			position: absolute;
 			top:50%;
+			
+			
+			transform: translateY(-50%);
+			
+		}
+		.f-img{
 			width: 70%;
 			height: 70%;
 			border-radius: 6px;
-			transform: translateY(-50%);
 			z-index: 999;
 		}
-		.image:nth-child(2){
+		.s-img{
 			width: 60%;
 			height: 60%;
 			top:44px;
@@ -213,7 +257,7 @@
 			z-index: 998;
 		}
 		
-		.image:nth-child(3){
+		.t-img{
 			width: 40%;
 			height: 40%;
 			top:52px;
