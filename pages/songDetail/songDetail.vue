@@ -9,6 +9,11 @@
 				<view class="disc" v-if="!isShowLyric" @tap="showLyric">
 					<image :src="songs.picUrl" class="song-pic" :class="playStatus?'rotate':'rotate paused'"></image>
 				</view>
+				<view class="slider-box" v-show="isShowLyric">
+					<image src="~@/static/images/volume.png" class="volume" mode="aspectFit"></image>
+					<slider @changing="seeking" class="volume-slider"  max="100" :value="volume" activeColor="#f00" block-size="14"/>
+					<text class="percent">{{volume}}%</text>
+				</view>
 				<lyric class="lyric" v-show="isShowLyric" @closeLyric="closeLyric"></lyric>
 				<detail-controller :key="controllerKey" class="control" @changePlayStatus="changePlayStatus"></detail-controller>
 			</view>
@@ -38,7 +43,7 @@
 			Lyric
 		},
 		computed:{
-			...mapGetters(['songs','playStatus','audio','songId','fmStatus']),
+			...mapGetters(['songs','playStatus','audio','songId','fmStatus','volume']),
 			
 		},
 		created() {
@@ -48,6 +53,10 @@
 			}
 		},
 		methods:{
+			seeking(e){
+				this.$store.dispatch('changeVolume',e.detail.value)
+				this.$audio.volume = (this.volume)/100
+			},
 			changePlayStatus(){
 				this.playStatus?this.$audio.pause():this.$audio.play()
 				this.$store.dispatch('changePlayStatus',!this.playStatus)
@@ -70,6 +79,7 @@
 				this.isShowMusicList = false
 				this.controllerKey++
 			})
+			
 			
 		}
 	}
@@ -137,11 +147,29 @@
 	.paused{
 		animation-play-state: paused;	
 	}
-	
+	.slider-box{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 0 auto;
+		width: 86%;
+	}
+	.volume-slider{
+		width: 80%;
+	}
+	.volume{
+		width: 20px;
+		height: 20px;
+	}
+	.percent{
+		position: relative;
+		color: #fff;
+		z-index: 999;
+	}
 	.lyric{
 		position: relative;
 		width: 100%;
-		height:63vh;
+		height:62vh;
 	}
 	@keyframes rotateCircle{
 		from{

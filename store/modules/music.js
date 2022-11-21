@@ -45,8 +45,9 @@ export default {
 		//是否在拖动中
 		isSeeking:false,
 		//是否私人FM模式
-		fmStatus:uni.getStorageSync('FM_status')
-		
+		fmStatus:uni.getStorageSync('FM_status'),
+		//音量值
+		volume:uni.getStorageSync('volume')
 	},
 	getters:{
 		songs(state){
@@ -102,6 +103,9 @@ export default {
 		},
 		fmStatus(state){
 			return state.fmStatus
+		},
+		volume(state){
+			return state.volume
 		}
 	},
 	mutations:{
@@ -189,6 +193,10 @@ export default {
 		fmStatus(state,payload){
 			state.fmStatus = payload
 			uni.setStorageSync('FM_status',payload)
+		},
+		changeVolume(state,payload){
+			state.volume = payload
+			uni.setStorageSync('volume',payload)
 		}
 	},
 	actions:{
@@ -256,6 +264,9 @@ export default {
 		},
 		fmStatus(context,payload){
 			context.commit('fmStatus',payload)
+		},
+		changeVolume(context,payload){
+			context.commit('changeVolume',payload)
 		}
 	}
 	

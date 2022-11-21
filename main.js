@@ -96,7 +96,7 @@ let audioContext = uni.createInnerAudioContext() || uni.getBackgroundAudioManage
 
 
 audioContext.autoplay = true
-audioContext.volume = 1
+// audioContext.volume = (store.state.music.volume)/100
 
 if(store.state.music.audio){
 	audioContext.src = store.state.music.audio
