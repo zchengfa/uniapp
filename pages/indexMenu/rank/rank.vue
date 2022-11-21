@@ -31,6 +31,16 @@
 					</view>
 				</view>
 			</view>
+			<view class="other-rank">
+				<text class="rank-title">其他榜单</text>
+				<view class="rank-box">
+					<view class="rank-item" v-for="(other,otherIndex) in rankOther" :key="other.id" @tap="toPlaylistDetail(other.id)">
+						<image :src="other.coverImgUrl" mode="aspectFit" class="other-img"></image>
+						<text class="update-frequency">{{other.updateFrequency}}</text>
+						<text class="iconfont musicplayCircleOne"></text>
+					</view>
+				</view>
+			</view>
 		</scroll-view>
 		<view class="bottom-control" v-show="isShowBottomControl">
 			<music-controller FMPath="../FM/FM" songDetailPath="../../songDetail/songDetail"></music-controller>
@@ -97,6 +107,7 @@
 			},
 			getRankData(){
 				topList().then(res=>{
+					console.log(res)
 					if(res){
 						res.map(item=>{
 							item.tracks.length?this.rankAuthor.push(item):this.rankOther.push(item)
@@ -209,13 +220,15 @@
 	.music-charactor{
 		padding: 0 4px;
 	}
-	.music-author{
+	.music-author,.music-name{
 		max-width: 100px;
 		white-space: nowrap;
-		font-weight: normal;
-		color: #707070;
 		text-overflow: ellipsis;
 		overflow: hidden;
+	}
+	.music-author{
+		color: #707070;
+		font-weight: normal;
 	}
 	.image-box{
 		position: relative;
@@ -237,10 +250,7 @@
 		.image{
 			position: absolute;
 			top:50%;
-			
-			
 			transform: translateY(-50%);
-			
 		}
 		.f-img{
 			width: 70%;
@@ -275,7 +285,44 @@
 			z-index: 998;
 		}
 	}
-	
+	.other-rank{
+		.rank-box{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			flex-wrap: wrap;
+		}
+		.rank-box::after{
+			content: '';
+			width: 33%;
+		}
+		.other-img{
+			width: 100%;
+			height: 100%;
+			border-radius: 10px;
+		}
+		.rank-item{
+			position: relative;
+			margin: 8px auto;
+			width: 120px;		
+			height: 120px;
+			border-radius: 10px;
+				.update-frequency{
+					position: absolute;
+					bottom: 10px;
+					left: 50%;
+					width: 60px;
+					transform: translateX(-50%);
+					color: #dddddd;
+				}
+				.musicplayCircleOne{
+					position: absolute;
+					right: 6px;
+					top:6px;
+					color: #fff;
+				}
+		}
+	}
 	/* #ifdef H5 */
 	.rank-nav{
 		height: 50px;
