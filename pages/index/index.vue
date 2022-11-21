@@ -1,11 +1,11 @@
 <template>
 	<view class="index-content">
 		<!-- 顶部导航栏 -->
-		<view class="top-box">
-			<top-bar :defaultKeyword="keywordD" @centerTap="toSearch" @changeModal="changeModal"></top-bar>
+		<view class="top-box" :class="topBoxClass">
+			<top-bar :defaultKeyword="keywordD" @centerTap="toSearch" @changeModal="changeModal" :bg="topBarBg"></top-bar>
 		</view>
 		<!-- 页面主内容 -->
-		<scroll-view scroll-y="true" class="scroll-v" :style="scrollHeight">
+		<scroll-view scroll-y="true" class="scroll-v" :style="scrollHeight" @scroll="scrollPage($event)">
 			<swiper :indicator-dots="true" indicator-color="#fff" indicator-active-color="#ff215c" :autoplay="true" :interval="7000" :duration="1000" :circular="true">
 				<swiper-item v-for="(item,index) in banners" :key="index">
 					<view class="swiper-item" @tap="toDetail(item)">
@@ -85,6 +85,8 @@
 		mixins:[bottomControlMixin,playSongMixin],
 		data() {
 			return {
+				topBoxClass:'top-box-bg-linear',
+				topBarBg:'background:linear-gradient(to right, #c4cdff, #e0d9ff,#fde7ff);',
 				scrollMenu:[],
 				recTitle:'',
 				recSongSheet:[],
@@ -122,15 +124,24 @@
 			PersonalModal
 			//#endif
 		},
-		onLoad() {
-			
-		},
 		methods: {
 			// #ifdef MP-WEIXIN
 			changeModal(){
 				this.modalStatus = !this.modalStatus
 			},
 			//#endif
+			scrollPage(e){
+				if(e.detail.scrollTop > 10){
+					this.topBoxClass = 'top-box-bg-fff'
+					this.topBarBg = 'background-color:#fff;'
+				}
+				else{
+					this.topBoxClass = 'top-box-bg-linear'
+					this.topBarBg = 'background:linear-gradient(to right, #c4cdff, #e0d9ff,#fde7ff);'
+					
+				}
+				
+			},
 			//点击歌曲，查看详情
 			toDetail(item){
 				if(item.song){
@@ -297,7 +308,13 @@
 		height: 50px;
 		line-height: 32px;
 		font-size: 14px;
-		color: #fff;
+		color: #bfbfbf;
+	}
+	.top-box-bg-linear{
+		background:linear-gradient(to right, #d9dfff, #ebe6ff,#feefff);
+	}
+	.top-box-bg-fff{
+		background-color: #f4f4f4;
 	}
 	.scroll-menu,.mgc-song-sheet,.rec-sheet,.live,.style-list,.home-topic,.voice{
 		position: relative;

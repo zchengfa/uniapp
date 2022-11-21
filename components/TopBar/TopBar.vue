@@ -8,7 +8,7 @@
 		
 		<view class="input-box">
 			<slot name="center">
-				<view class="input" @tap="centerTap">
+				<view class="input" @tap="centerTap" :style="bg">
 					{{defaultKeyword}}
 				</view>
 			</slot>
@@ -27,6 +27,12 @@
 		name:"TopBar",
 		props:{
 			defaultKeyword:{
+				type:String,
+				default(){
+					return ''
+				}
+			},
+			bg:{
 				type:String,
 				default(){
 					return ''
@@ -65,8 +71,8 @@
 		width: 100%;
 		max-width: 500px;
 		height: 50px;
-		box-shadow: 0 0 2px 2px #C0C0C0;
-		background-color: #fff;
+		box-shadow: 0 0 1px 1px #e1e1e1;
+		/* background-color: #fff; */
 		z-index: 999;
 	}
 	
@@ -76,8 +82,8 @@
 		align-items: center;
 	}
 	.list-image{
-		width: 26px;
-		height: 26px;
+		width: 28px;
+		height: 28px;
 	}
 	.input-box{
 		width: 50%;
@@ -92,11 +98,10 @@
 		display: flex;
 		justify-content: center;
 		margin: 0 auto;
-		padding: 0 20px;
-		width: 75%;
+		width: 100%;
 		height: 32px;
 		border: none;
-		background:linear-gradient(to right, #ffe4f1, #d6d6d6,#f75f7b);
+		/* background:linear-gradient(to right, #c4cdff, #e0d9ff,#fde7ff); */
 		border-radius: 16px;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -115,13 +120,13 @@
 	
 	.list,.input-box{
 		position: relative;
-		top:14px;
+		top:16px;
 	}
 	.list{
 		left: 0;
 	}
 	.input{
-		width: 60%;
+		width: 90%;
 	}
 	.input-box{
 		margin-left: 50px;
@@ -131,7 +136,7 @@
 	.audio{
 		position: absolute;
 		left: 50px;
-		bottom:14px;
+		bottom:10px;
 	}
 	/* #endif */
 </style>
