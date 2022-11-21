@@ -70,6 +70,7 @@
 				this.isShowMusicList = false
 				this.controllerKey++
 			})
+			
 		}
 	}
 </script>

@@ -1,7 +1,0 @@
-{
-  "navigationStyle": "custom",
-  "usingComponents": {
-    "detail-controller": "/components/DetailController/DetailController",
-    "lyric": "/components/Lyric/Lyric"
-  }
-}

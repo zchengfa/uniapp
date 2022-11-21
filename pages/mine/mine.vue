@@ -11,7 +11,7 @@
 			<!-- 用户资料部分 用户未登录，展示引导用户登录模块，已登录则展示用户基本信息-->
 			<view class="user">
 				<view class="guide-login">
-					<text class="iconfont mine-taogongzi"  v-if="!$checkLogin()"></text>
+					<image class="user-de avatar" src="../../static/images/avatar_de.png" v-if="!$checkLogin()"></image>
 					<image :src="userInfo.avatarUrl" class="avatar" v-else></image>
 					<text class="login-tap" @tap="toLogin"  v-if="!$checkLogin()">立即登录 ></text>
 					<view class="info-box" v-else>
@@ -303,12 +303,15 @@
 	transform: translateY(-50%);
 	font-weight: bolder;
 }
-.mine-taogongzi.iconfont,.avatar{
-	background-color: #e0e7da;
+.user-de{
+	width: 60px;
+	height: 60px;
+}
+.avatar{
+	background-color: #dadada;
 	border-radius: 50%;
 	font-size: 60px;
 	transform: translateY(-50%);
-	
 	color: #ff59b2;
 	overflow: hidden;
 }
