@@ -107,7 +107,7 @@
 			},
 			getRankData(){
 				topList().then(res=>{
-					console.log(res)
+					//console.log(res)
 					if(res){
 						res.map(item=>{
 							item.tracks.length?this.rankAuthor.push(item):this.rankOther.push(item)

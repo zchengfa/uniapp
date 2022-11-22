@@ -223,12 +223,13 @@ const playSongMixin = {
 				this.idList.map((item,listIndex)=>{
 					 
 					if(Number(item.id) === id){
-						index = listIndex
-						this.$store.dispatch('index',index)
-						
+						index = listIndex	
 					}
 				})
 			}
+			this.$songSave(id).then(res=>{
+				this.$store.dispatch('index',index)
+			})
 			
 			//判断vuex中是否保存过列表数据
 			if(listLength && index){

@@ -46,6 +46,7 @@
 		},
 		watch:{
 			audio(n,o){
+				
 				this.$audio.src = n
 			}
 		},

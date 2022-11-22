@@ -54,6 +54,7 @@ export async function songExceptLyric(songId){
 	})
 	//歌曲音频
 	await songData(songId).then(res=>{
+		
 		data.url = res.data[0].url
 		
 	})

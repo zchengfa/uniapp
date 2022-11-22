@@ -30,9 +30,11 @@
 			
 			//查看用户是否登录，未登录状态时就把之前登录过的信息清除
 			loginStatus().then(res=>{
+				
 				if(!res.data.profile){
 					uni.removeStorageSync('cookie')
 					uni.removeStorageSync('token')
+					uni.removeStorageSync('user')
 				}
 			})
 		},
@@ -135,6 +137,12 @@
 		
 		text-align: center;
 		
+	}
+	.playing{
+		width: 20px;
+		height: 20px;
+		transform-origin: 0;
+		transform: scale(.7);
 	}
 	.current-song{
 		color: #ea0000 !important;

@@ -65,7 +65,8 @@
 				</view>
 				<scroll-view scroll-y="true" class="list-scroll"  @scrolltolower="loadMore">
 					<view class="list-item" v-for="(item,index) in showData" :key="index">
-						<text class="No">{{index+1}}</text>
+						<image src="../../static/images/playing.png" mode="aspectFit" v-if="songId === item.id" class="playing"></image>
+						<text class="No" v-show="songId !== item.id">{{index+1}}</text>
 						<view class="item-info">
 							<view class="item-left" @tap="playSong(item.id,index,'../../pages/songDetail/songDetail')">
 								<text class="song-name hidden-text" :class="{'current-song':songId === item.id}">{{item.name}}</text>
@@ -107,7 +108,7 @@
 					<text class="desc-name">{{playList.name}}</text>
 				</view>
 				<view class="tag-desc">
-					<view class="tag-box" v-if="!!playList.tags.length">
+					<view class="tag-box" v-if="!!tagsLength">
 						<text class="tag-label">标签:</text>
 						<text class="tag-item" v-for="(item,index) in playList.tags" :key="index">{{item}}</text>
 					</view>
@@ -146,7 +147,8 @@
 				showDescDetail:false,
 				sliceBegin:0,
 				sliceEnd:15,
-				showData:[]
+				showData:[],
+				tagsLength:undefined
 			}
 		},
 		computed:{
@@ -178,6 +180,7 @@
 				playListDeatil(id).then(res=>{
 					if(res.code === 200){
 						this.playList = res.playlist
+						this.tagsLength = res.playlist.tags.length
 						this.idList = this.playList.trackIds
 						let ids = ''
 						this.idList.map(item=>{
@@ -198,7 +201,7 @@
 				})
 				//console.log(songDetail(ids))
 				songDetail(ids).then(res=>{
-					console.log(res)
+					//console.log(res)
 					if(res.code === 200){
 						this.allSongData = res.songs
 						this.sliceList()
@@ -400,6 +403,10 @@
 		margin-bottom: 20px;
 		color: #a8a8a8;
 		
+	}
+	.playing{
+		margin-right: 10px;
+		transform-origin: center;
 	}
 	.No{
 		margin-right: 10px;

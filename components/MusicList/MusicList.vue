@@ -113,12 +113,7 @@
 </script>
 
 <style scoped lang="scss">
-	.playing{
-		width: 20px;
-		height: 20px;
-		transform-origin: 0;
-		transform: scale(.7);
-	}
+	
 	.list-box{
 		position: relative;
 		top:100%;

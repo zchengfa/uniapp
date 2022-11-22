@@ -29,24 +29,38 @@ Vue.prototype.$timeFormate = timeFormatting
 Vue.prototype.$transTime = transTime
 
 function save(res){
-	
-	let songs = {
-		'name':res.detail.name,
-		'picUrl':res.detail.al.picUrl,
-		'author':dealAuthor(res.detail.ar,'name')
+	if(res.url){
+		let songs = {
+			'name':res.detail.name,
+			'picUrl':res.detail.al.picUrl,
+			'author':dealAuthor(res.detail.ar,'name')
+		}
+		store.dispatch('songs',JSON.stringify(songs))
+		store.dispatch('id',res.detail.id)
+		store.dispatch('audio',res.url)
+		
+		return true
 	}
-	store.dispatch('songs',JSON.stringify(songs))
-	store.dispatch('id',res.detail.id)
-	store.dispatch('audio',res.url)
+	else{
+		uni.showModal({
+			title:'歌曲提醒：',
+			content:'当前歌曲音频出现错误，无法播放！',
+			confirmText:'好吧',
+			cancelText:'太遗憾了',
+			cancelColor:'red'
+		})
+		
+		return false
+	}
+	
 }
 
 
 Vue.prototype.$songSave = async function songSave (id){
-	return new Promise(resolve=>{
+	return new Promise((resolve,reject)=>{
 		songExceptLyric(id).then(res=>{
 			
-			save(res)
-			resolve(true)
+			save(res)?resolve(true):reject(false)
 			
 		})
 		
@@ -171,6 +185,11 @@ audioContext.onPause(()=>{
 
 audioContext.onEnded(()=>{
 	//console.log('音乐自然播放到结束')
+	nextSong()
+	//audioContext.src = list[index]
+})
+
+function nextSong(){
 	//判断用户当前选择的歌曲循环方式，通过循环方式来决定是按照列表顺序循环，还是单曲循环，亦或是列表随机播放
 	let way = store.state.music.loopStatus
 	let songId = store.state.music.songId
@@ -197,9 +216,11 @@ audioContext.onEnded(()=>{
 	songExceptLyric(Number(list[index].id)).then(res=>{
 		save(res)
 		store.dispatch('index',index)
+		if(!save(res)){
+			nextSong()
+		}
 	})
-	//audioContext.src = list[index]
-})
+}
 
 Vue.prototype.$audio = audioContext
 
