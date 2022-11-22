@@ -1,6 +1,6 @@
 //const baseUrl = "https://www.codeman.ink/api"
-const baseUrl = 'http://192.168.31.130:4000'
-//const baseUrl = 'http://192.168.31.110:3000'
+//const baseUrl = 'http://192.168.31.130:4000'
+const baseUrl = 'http://192.168.31.110:3000'
 
 function Get(URL){
 	return new Promise((resolve)=>{

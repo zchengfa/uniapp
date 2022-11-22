@@ -190,6 +190,7 @@
 		overflow: hidden;
 		line-height: 20px;
 	}
+	
 	.song-name{
 		font-size: 14px;
 	}
@@ -201,9 +202,6 @@
 		margin-right: 5px;
 		color: #B5B5B5;
 		font-size: 14px;
-	}
-	.current-song{
-		color: #ea0000;
 	}
 	.rec-mark{
 		margin-left: 4px;

@@ -207,12 +207,7 @@ Vue.prototype.$audio = audioContext
 function checkLogin(){
 	let token = store.state.user.token
 	
-	if(token){
-		return true
-	}
-	else{
-		return false
-	}
+	return !!token
 }
 Vue.prototype.$checkLogin = checkLogin
 

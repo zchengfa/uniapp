@@ -22,6 +22,12 @@
 				uni.setStorageSync('FM_status',false)
 			}
 			
+			//设置音乐音量
+			if(!uni.getStorageSync('volume')){
+				uni.setStorageSync('volume',100)
+				this.$store.dispatch('changeVolume',100)
+			}
+			
 			//查看用户是否登录，未登录状态时就把之前登录过的信息清除
 			loginStatus().then(res=>{
 				if(!res.data.profile){
@@ -129,6 +135,9 @@
 		
 		text-align: center;
 		
+	}
+	.current-song{
+		color: #ea0000 !important;
 	}
 	.swiper{
 		width: 140px;

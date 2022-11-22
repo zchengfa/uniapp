@@ -68,7 +68,7 @@
 						<text class="No">{{index+1}}</text>
 						<view class="item-info">
 							<view class="item-left" @tap="playSong(item.id,index,'../../pages/songDetail/songDetail')">
-								<text class="song-name hidden-text">{{item.name}}</text>
+								<text class="song-name hidden-text" :class="{'current-song':songId === item.id}">{{item.name}}</text>
 								<view class="song-info">
 									<text class="hi-res tag" v-if="item.hr">Hi-res</text>
 									<text class="sq tag" v-else>SQ</text>
@@ -107,7 +107,7 @@
 					<text class="desc-name">{{playList.name}}</text>
 				</view>
 				<view class="tag-desc">
-					<view class="tag-box">
+					<view class="tag-box" v-if="!!playList.tags.length">
 						<text class="tag-label">标签:</text>
 						<text class="tag-item" v-for="(item,index) in playList.tags" :key="index">{{item}}</text>
 					</view>
@@ -131,6 +131,7 @@
 	import '@/common/controller.css'
 	import { playListDeatil,songDetail } from '@/common/api.js'
 	import { bottomControlMixin,playSongMixin } from '@/common/mixins/mixins.js'
+	import { mapGetters } from 'vuex'
 	
 	export default {
 		name:'playListDetail',
@@ -149,6 +150,7 @@
 			}
 		},
 		computed:{
+			...mapGetters(['songId']),
 			desc(){
 				if(typeof this.playList.description === 'string'){
 					return this.playList.description.replace('\n','')
