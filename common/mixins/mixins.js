@@ -263,9 +263,39 @@ const playSongMixin = {
 	}
 }
 
+//登录和注册页面键盘弹出和收起做出相应操作的混入
+const keyboardMixins = {
+	data(){
+		return {
+			isShowOtherLogin:true,
+			originHeight:undefined,
+		}
+	},
+	methods:{
+		blur(e,target){
+			target.onFieldChange(e.detail.value)
+		},
+		handleResize(){
+			// #ifdef H5
+			let resizeHeight = document.documentElement.clientHeight || document.body.clientHeight
+			//软键盘弹出，隐藏第三方登录组件
+			resizeHeight < this.originHeight ? this.isShowOtherLogin = false : this.isShowOtherLogin = true
+			// #endif
+			
+		}
+	},
+	mounted() {
+		// #ifdef H5
+		this.originHeight = document.documentElement.clientHeight || document.body.clientHeight
+		window.addEventListener('resize',this.handleResize)
+		// #endif
+	}
+}
+
 module.exports = {
 	bottomControlMixin,
 	changeLoopMixin,
 	searchScrollMixin,
-	playSongMixin
+	playSongMixin,
+	keyboardMixins
 }

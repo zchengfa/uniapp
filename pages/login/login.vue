@@ -6,13 +6,13 @@
 		<view class="form-box">
 			<uni-forms ref="form" :rules="rules" :modelValue="formData">
 				<uni-forms-item ref="input" label="手机号" name="phone" class="form-item">
-					<input v-model="formData.phone" placeholder="请输入手机号" @blur="(e)=>$refs.input.onFieldChange($event.detail.value)" class="form-input" />
+					<input v-model="formData.phone" placeholder="请输入手机号" @blur="blur($event,$refs.input)" class="form-input" />
 				</uni-forms-item>
 				<!-- <uni-forms-item label="密码" name="pwd">
 					<input type="password" v-model="formData.pwd" placeholder="请输入密码" class="form-input"/>
 				</uni-forms-item> -->
 				<uni-forms-item ref="inputs" label="验证码" name="vali">
-					<input v-model="formData.vali" placeholder="请输入验证码" @blur="(e)=>$refs.inputs.onFieldChange($event.detail.value)"  class="form-input"/>
+					<input v-model="formData.vali" placeholder="请输入验证码" @blur="blur($event,$refs.inputs)" class="form-input"/>
 					<text v-if="!time" class="validate-code" @tap="getCode">获取验证码</text>
 					<text v-else class="timer">{{time}}s后可发送</text>
 				</uni-forms-item> 
@@ -21,7 +21,7 @@
 					<button type="submit" @click="submit" class="submit">登录</button>
 				</view>
 			</uni-forms>
-			<view class="bottom">
+			<view class="bottom" v-show="isShowOtherLogin">
 				<third-login></third-login>
 				<view class="to-register">
 					<text>还没有账号？</text>
@@ -36,8 +36,10 @@
 	import '@/common/iconfont.css'
 	import { sendValidate , verifyCode, loginWithPhone ,userLikeMusicList} from '@/common/api.js'
 	import ThirdLogin from '@/components/ThirdLogin/ThirdLogin.vue'
+	import { keyboardMixins } from '@/common/mixins/mixins.js'
 	
 	export default {
+		mixins:[keyboardMixins],
 		data() {
 			return {
 				formData:{
@@ -45,7 +47,6 @@
 					pwd:'',
 					vali:undefined
 				},
-				// loginJson:undefined,
 				time:0,
 				rules: {
 					// 对name字段进行必填验证
@@ -72,7 +73,10 @@
 						// name 字段的校验规则
 						rules:[
 							// 校验 name 不能为空
-							
+							{
+								required: true,
+								errorMessage: '请填写验证码',
+							},
 							// 对name字段进行长度验证
 							{
 								minLength: 4,
@@ -183,7 +187,6 @@
 		},
 		onLoad() {
 			this.formData.id = 'testId'
-			// this.loginJson = loginJson
 		}
 	}
 </script>

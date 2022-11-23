@@ -1,21 +1,21 @@
 <template>
-	<view class="login-container">
+	<view class="login-container register-con">
 		<view class="nav">
 			<text class="nav-bar iconfont musicleftArrow" @tap="back"></text>
 		</view>
 		<view class="form-box">
 			<uni-forms ref="form" :rules="rules" :modelValue="formData">
 				<uni-forms-item ref="inputN" label="昵称" name="nickname">
-					<input v-model="formData.nickname" placeholder="昵称" @blur="(e)=>$refs.inputN.onFieldChange($event.detail.value)" class="form-input" />
+					<input v-model="formData.nickname" placeholder="昵称" @blur="blur($event,$refs.inputN)" class="form-input" />
 				</uni-forms-item>
 				<uni-forms-item ref="input" label="手机号" name="phone">
-					<input v-model="formData.phone" placeholder="请输入手机号" @blur="(e)=>$refs.input.onFieldChange($event.detail.value)" class="form-input" />
+					<input v-model="formData.phone" placeholder="请输入手机号" @blur="blur($event,$refs.input)" class="form-input" />
 				</uni-forms-item>
 				<uni-forms-item ref="inputT" label="密码" name="pwd">
-					<input type="password" v-model="formData.pwd" placeholder="请输入密码" @blur="(e)=>$refs.inputT.onFieldChange($event.detail.value)" class="form-input"/>
+					<input type="password" v-model="formData.pwd" placeholder="请输入密码" @blur="blur($event,$refs.inputT)" class="form-input"/>
 				</uni-forms-item>
 				<uni-forms-item ref="inputs" label="验证码" name="vali">
-					<input v-model="formData.vali" placeholder="请输入验证码" @blur="(e)=>$refs.inputs.onFieldChange($event.detail.value)"  class="form-input"/>
+					<input v-model="formData.vali" placeholder="请输入验证码" @blur="blur($event,$refs.inputs)"  class="form-input"/>
 					<text v-if="!time" class="validate-code" @tap="getCode">获取验证码</text>
 					<text v-else class="timer">{{time}}s后可发送</text>
 				</uni-forms-item> 
@@ -23,7 +23,7 @@
 					<button type="submit" @click="submit" class="submit">注册</button>
 				</view>
 			</uni-forms>
-			<view class="bottom">
+			<view class="bottom" v-show="isShowOtherLogin">
 				<third-login></third-login>
 				<view class="to-register">
 					<text>已有账号？</text>
@@ -38,9 +38,10 @@
 	import '@/common/iconfont.css'
 	import { sendValidate , verifyCode, register,checkPhone} from '@/common/api.js'
 	import ThirdLogin from '@/components/ThirdLogin/ThirdLogin.vue'
-	
+	import { keyboardMixins } from '@/common/mixins/mixins.js'
 	
 	export default {
+		mixins:[keyboardMixins],
 		data() {
 			return {
 				formData:{
