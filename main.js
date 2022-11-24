@@ -150,10 +150,10 @@ audioContext.onTimeUpdate(()=>{
 	let totalTime = audioContext.duration
 	let percent = time/totalTime
 	let seekStatus = store.state.music.isSeeking
-	store.dispatch('changeProAndDotStyle',JSON.stringify({
-		'progress':'width:' + totalWidth*percent +'px',
-		'dot':'left:' + totalWidth*percent +'px'
-	}))
+	// store.dispatch('changeProAndDotStyle',JSON.stringify({
+	// 	'progress':'width:' + totalWidth*percent +'px',
+	// 	'dot':'left:' + totalWidth*percent +'px'
+	// }))
 	
 	//改变进度条的值之前需判断进度条是否还在被拖动状态，若是在拖动状态就不随着音乐进度改变，只有在进度条脱离拖动状态下改变
 	if(!seekStatus){

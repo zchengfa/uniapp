@@ -34,12 +34,12 @@ export default {
 		lyric:[],
 		//歌曲当前时间对应的歌词的索引
 		lyricIndex:0,
-		//当前进度条宽度
-		progressWidth:'',
-		//进度条总宽度
-		totalWidth:'',
-		//进度条圆点位置
-		dotLocation:'',
+		// //当前进度条宽度
+		// progressWidth:'',
+		// //进度条总宽度
+		// totalWidth:'',
+		// //进度条圆点位置
+		// dotLocation:'',
 		//进度条的值
 		progress:0,
 		//是否在拖动中
@@ -92,12 +92,12 @@ export default {
 		intoIndex(state){
 			return state.intoIndex
 		},
-		progressWidth(state){
-			return state.progressWidth
-		},
-		dotLocation(state){
-			return state.dotLocation
-		},
+		// progressWidth(state){
+		// 	return state.progressWidth
+		// },
+		// dotLocation(state){
+		// 	return state.dotLocation
+		// },
 		progress(state){
 			return state.progress
 		},
@@ -177,13 +177,13 @@ export default {
 			state.intoIndex = 't-8'
 			state.lyricIndex = 0
 		},
-		progressTotalWidth(state,payload){
-			state.totalWidth = payload
-		},
-		changeProAndDotStyle(state,payload){
-			state.progressWidth = JSON.parse(payload).progress
-			state.dotLocation = JSON.parse(payload).dot
-		},
+		// progressTotalWidth(state,payload){
+		// 	state.totalWidth = payload
+		// },
+		// changeProAndDotStyle(state,payload){
+		// 	state.progressWidth = JSON.parse(payload).progress
+		// 	state.dotLocation = JSON.parse(payload).dot
+		// },
 		progress(state,payload){
 			state.progress = payload
 		},
@@ -250,12 +250,12 @@ export default {
 		resetLyric(context,payload){
 			context.commit('resetLyric',payload)
 		},
-		progressTotalWidth(context,payload){
-			context.commit('progressTotalWidth',payload)
-		},
-		changeProAndDotStyle(context,payload){
-			context.commit('changeProAndDotStyle',payload)
-		},
+		// progressTotalWidth(context,payload){
+		// 	context.commit('progressTotalWidth',payload)
+		// },
+		// changeProAndDotStyle(context,payload){
+		// 	context.commit('changeProAndDotStyle',payload)
+		// },
 		progress(context,payload){
 			context.commit('progress',payload)
 		},

@@ -9,7 +9,7 @@
 				<view class="disc" v-if="!isShowLyric" @tap="showLyric">
 					<image :src="songs.picUrl" class="song-pic" :class="playStatus?'rotate':'rotate paused'"></image>
 				</view>
-				<view class="slider-box" v-show="isShowLyric">
+				<view class="slider-box" v-if="isShowLyric">
 					<image src="~@/static/images/volume.png" class="volume" mode="aspectFit"></image>
 					<slider @changing="seeking" class="volume-slider"  max="100" :value="volume" activeColor="#f00" block-size="14"/>
 					<text class="percent">{{volume}}%</text>
