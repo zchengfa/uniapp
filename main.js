@@ -123,8 +123,19 @@ if(store.state.music.audio){
 }
 
 audioContext.onCanplay(()=>{
-	store.dispatch('totalTime',audioContext.duration)
+	//从对应歌曲数据中获取歌曲总时间，从audio对象中获取可播放时间
+	let songId = store.state.music.songId
+	let musicList = store.state.music.musicList
+	musicList.map(item=>{
+		if(item.id === songId){
+			store.dispatch('totalTime',(item.dt)/1000)
+		}
+	})
+	store.dispatch('duration',audioContext.duration)
 	
+	let totalTime = store.state.music.totalTime
+	let duration = store.state.music.duration
+	totalTime - duration >=10 ? store.dispatch('audition',true) : store.dispatch('audition',false)
 	//音乐在可播放时就获取歌词数据
 	if(!store.state.music.lyric.length){
 		getLyric(store.state.music.songId)
@@ -147,7 +158,7 @@ audioContext.onTimeUpdate(()=>{
 	} 
 	
 	let totalWidth = store.state.music.totalWidth
-	let totalTime = audioContext.duration
+	let totalTime = store.state.music.totalTime
 	let percent = time/totalTime
 	let seekStatus = store.state.music.isSeeking
 	// store.dispatch('changeProAndDotStyle',JSON.stringify({

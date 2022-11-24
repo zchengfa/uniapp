@@ -2,7 +2,7 @@ export default {
 	state:{
 		token:uni.getStorageSync('token'),
 		userInfo:uni.getStorageSync('user'),
-		likeIds:[]
+		likeIds:uni.getStorageSync('likeIds')
 	},
 	getters:{
 		token(state){
@@ -27,6 +27,7 @@ export default {
 		},
 		likeIds(state,ids){
 			state.likeIds = ids
+			uni.setStorageSync('likeIds',ids)
 		}
 	},
 	actions:{

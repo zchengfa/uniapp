@@ -2,12 +2,14 @@ export default {
 	state:{
 		//音频地址
 		audio:uni.getStorageSync('audio'),
-		//音频总时长
-		duration:uni.getStorageSync('totalTime'),
+		//当前音频是否为试听版
+		audition:uni.getStorageSync('audition'),
+		//音频可播放时长
+		duration:uni.getStorageSync('duration'),
 		//音频循环方式
 		loopStatus:uni.getStorageSync('loop_status'),
 		//音频播放状态（true播放中、false暂停中）
-		playStatus:undefined,
+		playStatus:false,
 		//音频开始时间
 		startTime:uni.getStorageSync('startTime'),
 		//音频总时长
@@ -52,6 +54,12 @@ export default {
 	getters:{
 		songs(state){
 			return state.songs
+		},
+		audition(state){
+			return state.audition
+		},
+		duration(state){
+			return state.duration
 		},
 		currentTime(state){
 			return state.currentTime
@@ -142,6 +150,14 @@ export default {
 			state.audio = src
 			uni.setStorageSync('audio',src)
 		},
+		audition(state,payload){
+			state.audition = payload
+			uni.setStorageSync('audition',payload)
+		},
+		duration(state,payload){
+			state.duration = payload
+			uni.setStorageSync('duration',payload)
+		},
 		totalTime(state,totalTimes){
 			state.totalTime = totalTimes
 			uni.setStorageSync('totalTime',totalTimes)
@@ -219,6 +235,12 @@ export default {
 		},
 		audio(context,payload){
 			context.commit('audio',payload)
+		},
+		audition(context,payload){
+			context.commit('audition',payload)
+		},
+		duration(context,payload){
+			context.commit('duration',payload)
 		},
 		totalTime(context,payload){
 			context.commit('totalTime',payload)

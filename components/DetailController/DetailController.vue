@@ -1,7 +1,8 @@
 <template>
 	<view class="music-controller">
 		<view class="music-operation" v-if="!fmStatus">
-			<text class="love iconfont controller-love"></text>
+			<image src="../../static/images/liked.png" mode="aspectFit" class="liked" v-show="isLiked"></image>
+			<text class="love iconfont controller-love" v-show="!isLiked"></text>
 			<text class="download iconfont controller-download"></text>
 			<text class="sing iconfont controller-sing"></text>
 			<view class="comments-box">
@@ -13,7 +14,8 @@
 		<view class="music-progress  maxWidth">
 			<text class="current-time time">{{cTime}}</text>
 			<view class="slider-box">
-				<slider @change="changeProgress" @changing="seeking" class="music-slider"  max="100" :value="progress" activeColor="#f00" block-size="14"/>
+				<slider @change="changeProgress" @changing="seeking" class="music-slider"  max="100" :value="progress" activeColor="#f00" block-size="10"/>
+				<view class="audition-dot" v-if="audition" :style="auditionDot"></view>
 			</view>
 			<text class="total-time time">{{tTime}}</text>
 		</view>
@@ -45,11 +47,13 @@
 		mixins:[changeLoopMixin],
 		data() {
 			return {
-				totalNum:undefined
+				totalNum:undefined,
+				auditionDot:undefined,
+				isLiked:false
 			}
 		},
 		computed:{
-			...mapGetters(['playStatus','songs','currentTime','totalTime','audio','loopStatus','currentSongIndex','musicList','progressWidth','dotLocation','songId','progress','fmStatus']),
+			...mapGetters(['playStatus','songs','currentTime','audition','totalTime','audio','loopStatus','currentSongIndex','musicList','duration','songId','progress','fmStatus','likeIds']),
 			tTime(){
 				
 				return this.transTime(this.totalTime)
@@ -79,8 +83,10 @@
 		},
 		watch:{
 			songId(n,o){
+				this.checkIsLikeSong()
 				//获取评论总数
 				this.getComTotalNum(this.songId)
+				this.changeDuditionDot()
 			}
 		},
 		methods:{
@@ -154,6 +160,20 @@
 						this.totalNum = res.total
 					}
 				})
+			},
+			changeDuditionDot(){
+				if(this.audition){
+					this.auditionDot = 'left:'+ (this.duration / this.totalTime)*100 + '%;'
+				}
+			},
+			checkIsLikeSong(){
+				if(this.likeIds.length){
+					this.isLiked = this.likeIds.indexOf(this.songId) !== -1
+				}
+				else{
+					this.isLiked = false
+				}
+				console.log(this.isLiked)
 			}
 			
 		},
@@ -168,10 +188,10 @@
 			else{
 				this.loop = 'controller-single_loop';
 			}
-			
+			this.checkIsLikeSong()
 			//获取评论总数
 			this.getComTotalNum(this.songId)
-			
+			this.changeDuditionDot()
 		}
 	}
 </script>
@@ -186,6 +206,10 @@
 		color: #fff;
 		font-size: 12px;
 		
+	}
+	.liked{
+		width: 28px;
+		height: 28px;
 	}
 	.music-operation,.music-progress,.music-play{
 		display: flex;
@@ -220,6 +244,18 @@
 		top:0;
 		height: 2px;
 		background-color: red;
+	}
+	.slider-box{
+		position: relative;
+		.audition-dot{
+			position: absolute;
+			top:50%;
+			width: 6px;
+			height: 6px;
+			border-radius: 50%;
+			background-color: #fff;
+			transform: translateY(-50%);
+		}
 	}
 	.dot{
 		position: absolute;

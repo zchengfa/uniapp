@@ -73,10 +73,7 @@
 						// name 字段的校验规则
 						rules:[
 							// 校验 name 不能为空
-							{
-								required: true,
-								errorMessage: '请填写验证码',
-							},
+							
 							// 对name字段进行长度验证
 							{
 								minLength: 4,
