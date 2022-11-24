@@ -1,8 +1,8 @@
 <template>
 	<view class="music-controller">
 		<view class="music-operation" v-if="!fmStatus">
-			<image src="../../static/images/liked.png" mode="aspectFit" class="liked" v-show="isLiked"></image>
-			<text class="love iconfont controller-love" v-show="!isLiked"></text>
+			<image src="../../static/images/liked.png" mode="aspectFit" class="liked" v-show="isLiked" @tap="likeOrDislike(false)"></image>
+			<text class="love iconfont controller-love" v-show="!isLiked" @tap="likeOrDislike(true)"></text>
 			<text class="download iconfont controller-download"></text>
 			<text class="sing iconfont controller-sing"></text>
 			<view class="comments-box">
@@ -40,7 +40,7 @@
 	import '@/common/iconfont.css'
 	import { mapGetters } from 'vuex'
 	import { changeLoopMixin } from '@/common/mixins/mixins.js'
-	import { commentsTotalNum } from '@/common/api.js'
+	import { commentsTotalNum , likeSong } from '@/common/api.js'
 
 	export default {
 		name:"DetailController",
@@ -173,7 +173,19 @@
 				else{
 					this.isLiked = false
 				}
-				console.log(this.isLiked)
+				 
+			},
+			likeOrDislike(like){
+				likeSong(this.songId,like).then(res=>{
+					if(res.code === 200){
+						this.isLiked = like
+						this.$store.dispatch('changeLikeList',JSON.stringify({
+							'like':like,
+							'songId':this.songId
+						}))
+						
+					}
+				})
 			}
 			
 		},
@@ -208,8 +220,8 @@
 		
 	}
 	.liked{
-		width: 28px;
-		height: 28px;
+		width: 26px;
+		height: 26px;
 	}
 	.music-operation,.music-progress,.music-play{
 		display: flex;

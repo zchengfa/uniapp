@@ -28,6 +28,22 @@ export default {
 		likeIds(state,ids){
 			state.likeIds = ids
 			uni.setStorageSync('likeIds',ids)
+		},
+		changeLikeList(state,payload){
+			let data =  JSON.parse(payload)
+			if(data.like){
+				state.likeIds.unshift(data.songId)
+			}
+			else{
+				//false 删除对应歌曲id
+				state.likeIds.map((item,index)=>{
+					if(item === data.songId){
+						state.likeIds.splice(index,1)
+					}
+				})
+				uni.setStorageSync('likeIds',state.likeIds)
+			}
+			console.log(data,state.likeIds)
 		}
 	},
 	actions:{
@@ -39,6 +55,9 @@ export default {
 		},
 		userLikeMusicIds(context,payload){
 			context.commit('likeIds',payload)
+		},
+		changeLikeList(context,payload){
+			context.commit('changeLikeList',payload)
 		}
 	}
 	

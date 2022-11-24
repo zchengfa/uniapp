@@ -66,6 +66,10 @@ export async function songExceptLyric(songId){
 	
 }
 
+//点击爱心按钮喜欢/取消喜欢音乐/like?id=xxx
+export function likeSong(id,like = true){
+	return Get(`/like?id=${id}&like=${like}`)
+}
 
 //首页滚动菜单
 export function indexScrollMenu(){
