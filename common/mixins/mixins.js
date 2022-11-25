@@ -1,3 +1,4 @@
+import { mapGetters } from 'vuex'
 const bottomControlMixin = {
 	data(){
 		return {
@@ -9,11 +10,21 @@ const bottomControlMixin = {
 			scrollHeightNoTab:undefined
 		}
 	},
+	computed:{
+		...mapGetters(['musicList'])
+	},
+	watch:{
+		musicList(n,o){
+			if(n.length === 0){
+				this.isShowBottomControl = false
+			}
+		}
+	},
 	methods:{
 		changeStyle(){
-			this.isShowBottomControl = Boolean(this.$store.state.music.audio)
+			this.isShowBottomControl = Boolean(this.musicList.length)
 			
-			if(Boolean(this.$store.state.music.audio)){
+			if(Boolean(this.musicList.length)){
 				this.scrollHeight = 'height:calc(100vh - 150px);'
 				this.scrollHeightNoTop = 'height:calc(100vh - 50px);'
 				this.scrollHeightNoTab = 'height:calc(100vh - 100px);'
@@ -291,6 +302,7 @@ const keyboardMixins = {
 		// #endif
 	}
 }
+
 
 module.exports = {
 	bottomControlMixin,

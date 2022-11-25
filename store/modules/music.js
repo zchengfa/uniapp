@@ -9,7 +9,7 @@ export default {
 		//音频循环方式
 		loopStatus:uni.getStorageSync('loop_status'),
 		//音频播放状态（true播放中、false暂停中）
-		playStatus:false,
+		playStatus:0,
 		//音频开始时间
 		startTime:uni.getStorageSync('startTime'),
 		//音频总时长

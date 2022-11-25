@@ -100,6 +100,7 @@
 	.bottom-control{
 		bottom: 0;
 	}
+	
 	/*  #endif  */
 	.scroll-v{
 		height: calc(100vh - 100px);

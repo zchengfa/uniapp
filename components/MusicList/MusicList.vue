@@ -24,7 +24,7 @@
 							<text class="song-author" :class="{'current-song':songId === item.id}">{{$dealAuthor(item.ar,'name')}}</text>
 							<text class="rec-mark" v-if="item.recommended">荐</text>
 						</view>
-						<text class="delete iconfont musicclose"></text>
+						<text class="delete iconfont musicclose" @tap.stop="deleteSong(item.id,index,playStatus)"></text>
 					</view>
 				</scroll-view>
 			</view>
@@ -60,7 +60,7 @@
 			};
 		},
 		computed:{
-			...mapGetters(['musicList','songId','loopStatus','fmStatus','songs']),
+			...mapGetters(['musicList','songId','loopStatus','fmStatus','songs','playStatus']),
 			showData(){
 				//长列表优化，每次只加载15首歌曲
 				return this.musicList.slice(0,this.sliceEnd)
@@ -74,6 +74,19 @@
 				}
 				else if(this.loopStatus === 'rl'){
 					return '列表随机'
+				}
+			}
+		},
+		watch:{
+			musicList(n,o){
+				if(n.length === 0){
+					this.closeList()
+					this.$store.dispatch('audio',null)
+					this.$store.dispatch('songs',null)
+					if(this.playStatus){
+						this.$audio.stop()
+						this.$store.dispatch('changePlayStatus',false)
+					}
 				}
 			}
 		},
@@ -95,6 +108,35 @@
 			},
 			loadMore(){
 				this.sliceEnd += 15
+			},
+			deleteSong(id,tapIndex,status){
+				
+				//从播放列表中删除对应的歌曲
+				let list = Object.assign([],this.musicList)
+				
+				list.map((item,index)=>{
+					if(item.id === id){
+						list.splice(index,1)
+						this.$store.dispatch('musicList',JSON.stringify(list))
+					}
+				})
+				
+				
+				tapIndex >= list.length ? tapIndex = 0 :null
+				
+				//查看删除的是否是已经在播放的歌曲，若是就设定新歌曲为播放歌曲
+				if(id === this.songId){
+					if(this.musicList.length){
+						let newId = this.musicList[tapIndex].id
+						this.playSong(newId,tapIndex)
+						this.$audio.onPlay(()=>{
+							if(!status){
+								this.$audio.pause()
+								status = 1
+							}
+						})
+					}
+				}
 			}
 		},
 		created() {

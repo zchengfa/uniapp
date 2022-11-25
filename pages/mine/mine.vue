@@ -120,6 +120,10 @@
 		<view v-if="isShowMusicList">
 			<music-list></music-list>
 		</view>
+		<!-- 小程序端的个人板块组件 -->
+		<!-- #ifdef MP-WEIXIN -->
+		<personal-modal @changeModal="changeModal" class="wechat-modal" :class="modalStatus?'modal-in':'modal-out'"></personal-modal>
+		<!-- #endif -->
 	</view>
 </template>
 

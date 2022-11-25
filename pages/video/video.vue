@@ -33,6 +33,10 @@
 		<view v-if="isShowMusicList">
 			<music-list></music-list>
 		</view>
+		<!-- 小程序端的个人板块组件 -->
+		<!-- #ifdef MP-WEIXIN -->
+		<personal-modal @changeModal="changeModal" class="wechat-modal" :class="modalStatus?'modal-in':'modal-out'"></personal-modal>
+		<!-- #endif -->
 	</view>
 </template>
 
@@ -41,16 +45,35 @@
 	import { allMv } from '@/common/api.js'
 	import '@/common/iconfont.css'
 	
+	
+	// #ifdef MP-WEIXIN
+	import PersonalModal from '@/components/PersonalModal/PersonalModal.vue'
+	// #endif
+	
 	export default {
 		mixins:[bottomControlMixin],
 		data() {
 			return {
 				offset:0,
 				mv:[],
-				hasMore:undefined
+				hasMore:undefined,
+				// #ifdef MP-WEIXIN
+				modalStatus:false
+				//#endif
 			}
 		},
+		components:{
+			//#ifdef MP-WEIXIN
+			PersonalModal
+			//#endif	
+		},
 		methods: {
+			// #ifdef MP-WEIXIN
+			changeModal(){
+				this.modalStatus = !this.modalStatus
+				console.log(this.modalStatus)
+			},
+			//#endif
 			getAllMv(){
 				allMv(this.offset).then(res=>{
 					if(res.code === 200){
@@ -145,5 +168,27 @@
 .top-box{
 	height: 80px;
 }
+.wechat-modal{
+		position: absolute;
+		left: 0;
+		top:0;
+		width: 100vw;
+		height: 100vh;
+		background-color: transparent;
+		z-index: 1000;
+	}
+	.wechat-modal{
+		transition-duration: .3s;
+	}
+	.modal-in{
+		left: 50%;
+		transform: translateX(-50%);
+		
+	}
+	.modal-out{
+		left: 0;
+		transform: translateX(-100%);
+	}
+	
 /* #endif */
 </style>

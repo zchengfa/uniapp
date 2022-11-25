@@ -26,7 +26,7 @@
 						<image class="pic" :src="item.al.picUrl"></image>
 						<view class="item-info">
 							<view class="item-left" @tap="playSong(item.id,index,'../../songDetail/songDetail')">
-								<text class="song-name hidden-text">{{item.name}}</text>
+								<text class="song-name hidden-text" :class="{'current-song':item.id === songId}">{{item.name}}</text>
 								<view class="song-info">
 									<text class="hi-res tag" v-if="item.hr">Hi-res</text>
 									<text class="sq tag" v-else>SQ</text>
@@ -58,6 +58,7 @@
 	import '@/common/iconfont.css'
 	import { recSongs } from '@/common/api.js'
 	import { playSongMixin } from '@/common/mixins/mixins.js'
+	import { mapGetters } from 'vuex'
 	
 	export default {
 		name:'recommendedDay',
@@ -73,7 +74,7 @@
 		},
 		created() {
 			recSongs().then(res=>{
-				console.log(res)
+				
 				if(res.code === 200){
 					this.songsData = res.data.dailySongs
 					this.topCover = `background-image:url(${this.songsData[0].al.picUrl})`
@@ -94,6 +95,7 @@
 			})
 		},
 		computed:{
+			...mapGetters(['songId']),
 			month(){
 				let month = new Date().getMonth()
 				if(month === 0){

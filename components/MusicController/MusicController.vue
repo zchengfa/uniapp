@@ -1,5 +1,5 @@
 <template>
-	<view class="controller">
+	<view class="controller" v-if="songs">
 		<view class="song-image">
 			<image :src="songs.picUrl" :class="playStatus?'rotate':'rotate paused'" class="image"></image>
 		</view>
@@ -47,7 +47,7 @@
 		watch:{
 			audio(n,o){
 				
-				this.$audio.src = n
+				n?this.$audio.src = n:null
 			}
 		},
 		
