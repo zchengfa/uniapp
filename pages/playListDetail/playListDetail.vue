@@ -248,27 +248,7 @@
 	height: 100vh;
 	filter: blur(10vw);
 }
-.nav{
-	position: relative;
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	width: 100%;
-	height: 50px;
-	color: #fff;
-	mix-blend-mode: lighten;
-	z-index: 999;
-	.left{
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		height: 100%;
-		.nav-item{
-			width: 40px;
-			text-align: center;
-		}
-	}
-}
+
 .scroll-v{
 	height: calc(100vh - 50px);
 	.playlist-info{

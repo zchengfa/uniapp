@@ -81,6 +81,15 @@ export function indexSongSheet(){
 	return Get(`/personalized`)
 }
 
+//热门歌单分类
+export function playlistHotCate(){
+	return Get('/playlist/hot')
+}
+
+//歌单分类详情歌单
+export function topPlaylist(cate){
+	return Get(`/top/playlist?cat=${cate}`)
+}
 
 //获取歌单详情数据
 export function playListDeatil(id){

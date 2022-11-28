@@ -1,8 +1,9 @@
 <template>
 	<view class="care">
 		<view class="nav">
-			<top-bar>
-				<view slot="center"></view>
+			<top-bar @changeModal="changeModal">
+				<view slot="center">动态</view>
+				<view slot="right"></view>
 			</top-bar>
 		</view>
 		<scroll-view scroll-y="true" :style="scrollHeight" class="scroll-v">
@@ -62,6 +63,10 @@
 	import '@/common/iconfont.css'
 	import '@/common/controller.css'
 	
+	// #ifdef MP-WEIXIN
+	import PersonalModal from '@/components/PersonalModal/PersonalModal.vue'
+	// #endif
+	
 	export default {
 		mixins:[bottomControlMixin],
 		data() {
@@ -69,11 +74,23 @@
 				careData:[],
 				more:false,
 				lastTime:undefined,
-				isShowTip:false
+				isShowTip:false,
+				// #ifdef MP-WEIXIN
+				modalStatus:false
+				//#endif
 			}
 		},
-	
+		components:{
+			//#ifdef MP-WEIXIN
+			PersonalModal
+			//#endif	
+		},
 		methods: {
+			// #ifdef MP-WEIXIN
+			changeModal(){
+				this.modalStatus = !this.modalStatus
+			},
+			//#endif
 			content(content){
 				//使用html原生标签，uniapp和小程序会将其编译成rich-text富文本，对下面带有标签的字符串进行转换
 				return `

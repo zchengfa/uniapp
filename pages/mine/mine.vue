@@ -2,8 +2,9 @@
 	<view class="mine-container">
 		<!-- 导航栏 -->
 		<view class="top-box">
-			<top-bar>
+			<top-bar @changeModal="changeModal">
 				<view slot="center"></view>
+				<view slot="right"></view>
 			</top-bar>
 		</view>
 		
@@ -130,9 +131,12 @@
 <script>
 	import '@/common/mine.css'
 	import '@/common/controller.css'
-	import { bottomControlMixin } from '@/common/mixins/mixins.js'
+	import { bottomControlMixin} from '@/common/mixins/mixins.js'
 	import { recommendSongSheet , songDetail ,userLikeMusicList,  userPlayList ,userLevel, loveMode , songExceptLyric} from '@/common/api.js'
 	import { mapGetters } from 'vuex'
+	// #ifdef MP-WEIXIN
+	import PersonalModal from '@/components/PersonalModal/PersonalModal.vue'
+	// #endif
 	
 	export default {
 		mixins:[bottomControlMixin],
@@ -141,13 +145,26 @@
 				recSheet:[],
 				likeCover:'',
 				userPlayList:[],
-				levelInfo:{}
+				levelInfo:{},
+				// #ifdef MP-WEIXIN
+				modalStatus:false
+				//#endif
 			}
+		},
+		components:{
+			//#ifdef MP-WEIXIN
+			PersonalModal
+			//#endif	
 		},
 		computed:{
 			...mapGetters(['userInfo','likeIds'])
 		},
 		methods: {
+			// #ifdef MP-WEIXIN
+			changeModal(){
+				this.modalStatus = !this.modalStatus
+			},
+			//#endif
 			getRec(){
 				recommendSongSheet().then(res=>{
 					if(res.code === 200){

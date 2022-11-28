@@ -44,13 +44,43 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
 	/*每个页面公共css */
 	body,.maxWidth{
 		margin: 0 auto;
 		max-width: 500px;
 	}
-	
+	.nav{
+		position: relative;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		width: 100%;
+		height: 50px;
+		color: #fff;
+		mix-blend-mode: lighten;
+		z-index: 999;
+		.left{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			height: 100%;
+			.nav-item{
+				width: 40px;
+				text-align: center;
+			}
+		}
+	}
+	.menu-active{
+		position: relative;
+		top:-16px;
+		display: block;
+		width: 100%;
+		height: 5px;
+		border-radius: 2.5px;
+		background-color: #ff4548;
+		opacity: .5;
+	}
 	/* #ifdef H5 */
 	uni-scroll-view .uni-scroll-view::-webkit-scrollbar {
 	/* 隐藏滚动条，但依旧具备可以滚动的功能 */
@@ -100,7 +130,27 @@
 	.bottom-control{
 		bottom: 0;
 	}
-	
+	.wechat-modal{
+			position: absolute;
+			left: 0;
+			top:0;
+			width: 100vw;
+			height: 100vh;
+			background-color: transparent;
+			z-index: 1000;
+		}
+		.wechat-modal{
+			transition-duration: .3s;
+		}
+		.modal-in{
+			left: 50%;
+			transform: translateX(-50%);
+			
+		}
+		.modal-out{
+			left: 0;
+			transform: translateX(-100%);
+		}
 	/*  #endif  */
 	.scroll-v{
 		height: calc(100vh - 100px);

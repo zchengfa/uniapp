@@ -454,16 +454,6 @@
 		background-color: #f3f3f3;
 	}
 	
-.menu-active{
-	position: relative;
-	top:-16px;
-	display: block;
-	width: 100%;
-	height: 5px;
-	border-radius: 2.5px;
-	background-color: #ff4548;
-	opacity: .5;
-}
 .rank-active{
 	color: #ff4a62;
 	font-weight: bold;

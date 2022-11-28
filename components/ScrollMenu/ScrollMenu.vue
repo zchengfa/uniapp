@@ -48,6 +48,11 @@
 								url:'../../pages/indexMenu/FM/FM'
 							})
 						}
+						else if(name === '歌单'){
+							uni.navigateTo({
+								url:'../../pages/indexMenu/playlistSquare/playlistSquare'
+							})
+						}
 						else{
 							uni.showModal({
 								title:'提示：',

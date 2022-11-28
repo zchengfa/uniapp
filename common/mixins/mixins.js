@@ -309,5 +309,5 @@ module.exports = {
 	changeLoopMixin,
 	searchScrollMixin,
 	playSongMixin,
-	keyboardMixins
+	keyboardMixins,
 }

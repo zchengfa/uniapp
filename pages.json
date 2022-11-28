@@ -118,6 +118,14 @@
             }
             
         }
+        ,{
+            "path" : "pages/indexMenu/playlistSquare/playlistSquare",
+            "style" :                                                                                    
+            {
+                "navigationStyle":"custom"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

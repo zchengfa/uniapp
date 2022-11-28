@@ -401,27 +401,5 @@
 	
 		height: calc(100vh - 70px);
 	}
-	.wechat-modal{
-		position: absolute;
-		left: 0;
-		top:0;
-		width: 100vw;
-		height: 100vh;
-		background-color: transparent;
-		z-index: 1000;
-	}
-	.wechat-modal{
-		transition-duration: .3s;
-	}
-	.modal-in{
-		left: 50%;
-		transform: translateX(-50%);
-		
-	}
-	.modal-out{
-		left: 0;
-		transform: translateX(-100%);
-	}
-	
 	/* #endif */
 </style>
