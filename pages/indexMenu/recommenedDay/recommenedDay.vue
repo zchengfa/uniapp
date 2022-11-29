@@ -57,12 +57,12 @@
 <script>
 	import '@/common/iconfont.css'
 	import { recSongs } from '@/common/api.js'
-	import { playSongMixin } from '@/common/mixins/mixins.js'
+	import { playSongMixin ,bottomControlMixin} from '@/common/mixins/mixins.js'
 	import { mapGetters } from 'vuex'
 	
 	export default {
 		name:'recommendedDay',
-		mixins:[playSongMixin],
+		mixins:[playSongMixin,bottomControlMixin],
 		data() {
 			return {
 				songsData:[],

@@ -8,18 +8,46 @@
 			</view>
 		</view>
 		<!-- 滚动菜单 -->
-		<view class="menu-container">
-			<scroll-view scroll-x="true" class="scroll-x" scroll-left="0" :scroll-into-view="into" scroll-with-animation="true">
-				<view class="menu-box">
-					<view v-for="(item,index) in menu" :key="index" class="menu-item" :id="item.into">
-						<text class="menu-text" @tap="searchByTag(item.type,index)">{{item.name}}</text>
-						<text v-show="currentIndex===index" :class="{'menu-active':currentIndex===index}"></text>
+		
+		<scroll-view scroll-y="true" class="scroll-v "  :style="scrollHeightNoTab">
+			<view class="scroll-menu">
+				<view class="menu-container">
+					<scroll-view scroll-x="true" class="scroll-x" scroll-left="0" :scroll-into-view="into" scroll-with-animation="true">
+						<view class="menu-box">
+							<view v-for="(item,index) in menu" :key="index" class="menu-item" :id="item.into">
+								<text class="menu-text" @tap="searchByTag(item.name,index)">{{item.name}}</text>
+								<text v-show="currentIndex===index" :class="{'menu-active':currentIndex===index}"></text>
+							</view>
+						</view>
+					</scroll-view>
+					<view class="all-tag">
+						<image src="../../../static/images/all_tag.png" class="all-tag-img" mode="aspectFit"></image>
 					</view>
 				</view>
-			</scroll-view>
-			<view class="all-tag">
-				<image src="../../../static/images/all_tag.png" class="all-tag-img" mode="aspectFit"></image>
+				<swiper class="result-scroll" :style="scrollHeight" :indicator-dots="false" :autoplay="false"  :duration="1000" @change="changeItem" :current="currentIndex">
+					<swiper-item v-for="(mItem,mIndex) in menu" :key="mIndex">
+						<scroll-view scroll-y="true" class="scroll-v" :style="scrollHeight">
+							<view class="list-container">
+								<view class="list-item" v-for="(item,index) in list[mItem.name]" :key="index">
+									<image :src="item.coverImgUrl" mode="aspectFit" class="list-img"></image>
+									<text class="list-name main-title">{{item.name}}</text>
+									<view class="count-box">
+										<text class="iconfont musicplayCircleOne"></text>
+										<text class="play-count">{{$dealCount(item.playCount)}}</text>
+									</view>
+								</view>
+							</view>
+						</scroll-view>
+					</swiper-item>
+				</swiper>
 			</view>
+		</scroll-view>
+		<!-- 底部音乐控制 -->
+		<view class="bottom-control" v-show="isShowBottomControl" >
+			<music-controller FMPath="../indexMenu/FM/FM" songDetailPath="../songDetail/songDetail"></music-controller>
+		</view>
+		<view v-if="isShowMusicList">
+			<music-list></music-list>
 		</view>
 	</view>
 </template>
@@ -27,14 +55,19 @@
 <script>
 	import '@/common/iconfont.css'
 	import { playlistHotCate , topPlaylist} from '@/common/api.js'
+	import { bottomControlMixin } from '@/common/mixins/mixins.js'
 	
 	export default {
+		mixins:[bottomControlMixin],
 		data() {
 			return {
 				menu:[],
 				currentIndex:0,
 				into:'t0',
-				tag:'推荐'
+				tag:'推荐',
+				list:{},
+				more:{},
+				offset:{}
 			}
 		},
 		methods: {
@@ -43,8 +76,9 @@
 			},
 			searchByTag(tag,index){
 				this.currentIndex = index
-				this.into = 't'+ (index-2)
+				this.into = 't'+ (index)
 				this.tag = tag
+				this.getCateDetail(tag)
 			},
 			listCate(){
 				playlistHotCate().then(res=>{
@@ -54,17 +88,16 @@
 							'name':'推荐',
 							'into':'t0'
 						})
-						this.menu.push({
-							'id':1,
-							'name':'精品',
-							'into':'t1'
-						})
 						res.tags.map((item,index)=>{
 							this.menu.push({
-								'id':(item.id +2),
+								'id':(item.id +1),
 								'name':item.name,
-								'into':'t'+(index+2)
+								'into':'t'+(index+1)
 							})
+						})
+						
+						this.menu.map(item=>{
+							this.getCateDetail(item.name)
 						})
 					}
 					
@@ -72,7 +105,30 @@
 			},
 			getCateDetail(tag){
 				topPlaylist(tag).then(res=>{
-					console.log(res)
+					if(res.code === 200){
+						this.$set(this.list,tag,res.playlists)
+						
+						this.more[tag] = res.more
+						this.offset[tag] = 0
+					}
+				})
+			},
+			changeItem(e){
+				this.into = 't' + e.detail.current
+				this.currentIndex = e.detail.current
+				this.tag = this.menu[e.detail.current].name
+			},
+			loadMore(){
+				uni.showLoading({
+					title:'加载更多歌单...'
+				})
+				this.offset[this.tag] +=21
+				topPlaylist(this.tag,this.offset[this.tag]).then(res=>{
+					if(res.code === 200){
+						this.list[this.tag].push(...res.playlists)
+						this.more[this.tag] = res.more
+						uni.hideLoading()
+					}
 				})
 			},
 			init(){
@@ -81,7 +137,7 @@
 		},
 		created() {
 			this.init()
-			this.getCateDetail('华语')
+			
 		}
 	}
 </script>
@@ -114,7 +170,15 @@
 			}
 		}
 	}
-	
+.scroll-v{
+	height:calc(100vh - 50px) ;
+}	
+.scroll-menu{
+	height: 100%;
+}
+.result-scroll{
+	height: calc(100% - 40px);
+}
 .all-tag{
 	display: flex;
 	justify-content: center;
@@ -129,5 +193,53 @@
 		width: 20px;
 		height: 20px;
 	}	
+}
+.list-container{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	margin: 0 auto;
+	width: 94%;
+	.list-item{
+		margin-bottom: 15px;
+		position: relative;
+		width: 30vw;
+		.list-img{
+			width: 100%;
+			height: 30vw;
+			border-radius: 10px;
+		}
+		.list-name{
+			margin-top: 0;
+			height: 38px;
+			font-size: 14px;
+		}
+		.count-box{
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			position: absolute;
+			right: 2px;
+			top:6px;
+			padding:2px 6px;
+			font-size: 12px;
+			border-radius: 20px;
+			color: #fff;
+			background-color: #633000;
+			transform: scale(.9);
+			.iconfont{
+				transform: scale(.7);
+			}
+		}
+	}
+}
+.list-container::after{
+	margin-bottom: 20px;
+	content: '';
+	width: 30vw;
+}
+.bottom-control{
+	bottom:0;
 }
 </style>

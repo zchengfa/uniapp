@@ -162,6 +162,13 @@
 	.swiper-item-scroll{
 		height: calc(100vh - 125px);
 	}
+	.nav{
+		height: 80px;
+		.nav-item{
+			position: relative;
+			top:20px;
+		}
+	}
 	/* #endif */
 	.title{
 		display: inline-block;

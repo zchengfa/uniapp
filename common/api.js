@@ -87,8 +87,8 @@ export function playlistHotCate(){
 }
 
 //歌单分类详情歌单
-export function topPlaylist(cate){
-	return Get(`/top/playlist?cat=${cate}`)
+export function topPlaylist(cate,offset=0,limit=21){
+	return Get(`/top/playlist?cat=${cate}&offset=${offset}&limit=${limit}`)
 }
 
 //获取歌单详情数据

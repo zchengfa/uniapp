@@ -2,7 +2,7 @@ import { mapGetters } from 'vuex'
 const bottomControlMixin = {
 	data(){
 		return {
-			isShowBottomControl:true,
+			isShowBottomControl:false,
 			scrollHeight:undefined,
 			isShowMusicList:false,
 			scrollHeightNoTop:undefined,
@@ -15,8 +15,9 @@ const bottomControlMixin = {
 	},
 	watch:{
 		musicList(n,o){
+			this.changeStyle()
 			if(n.length === 0){
-				this.isShowBottomControl = false
+				this,isShowBottomControl = false
 			}
 		}
 	},
@@ -24,8 +25,8 @@ const bottomControlMixin = {
 		changeStyle(){
 			this.isShowBottomControl = Boolean(this.musicList.length)
 			
-			if(Boolean(this.musicList.length)){
-				this.scrollHeight = 'height:calc(100vh - 150px);'
+			if(this.isShowBottomControl){
+				this.scrollHeight = 'height:calc(100vh - 150px) !important;'
 				this.scrollHeightNoTop = 'height:calc(100vh - 50px);'
 				this.scrollHeightNoTab = 'height:calc(100vh - 100px);'
 				this.scrollHeightSwiper = 'height:calc(100vh - 145px);'
@@ -37,6 +38,19 @@ const bottomControlMixin = {
 				// #endif
 				
 			}
+			else{
+				this.scrollHeight = 'height:calc(100vh - 100px) !important;'
+				this.scrollHeightNoTop = 'height:calc(100vh - 0px);'
+				this.scrollHeightNoTab = 'height:calc(100vh - 50px);'
+				this.scrollHeightSwiper = 'height:calc(100vh - 95px);'
+				// #ifdef MP-WEIXIN
+				this.scrollHeight = 'height:calc(100vh - 80px);'
+				this.scrollHeightNoTop = 'height:calc(100vh - 0px);'
+				this.scrollHeightSwiper = 'height:calc(100vh - 125px);'
+				this.scrollHeightNoTab = 'height:calc(100vh - 80px);'
+				// #endif
+			}
+			
 		}
 	},
 	created(){
