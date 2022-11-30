@@ -68,6 +68,7 @@
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
+		top:0;
 		width: 100%;
 		max-width: 500px;
 		height: 50px;
