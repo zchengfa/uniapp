@@ -66,10 +66,7 @@
 		data() {
 			return {
 				songsData:[],
-				changeHeight:'',
-				topCover:'',
-				isShowBottomControl:false,
-				isShowMusicList:false
+				topCover:''
 			}
 		},
 		created() {
@@ -81,7 +78,7 @@
 					
 				}
 			})
-			this.changeListStyle()
+			this.changeStyle()
 		},
 		mounted() {
 			//监听music-controller组件列表按钮发出的事件（显示播放列表）
@@ -114,24 +111,8 @@
 			//点击播放全部按钮，从列表中的第一首歌开始播放
 			playAll(){
 				this.playSong(this.songsData[0].id,0)
-			},
-			changeListStyle(){
-				this.isShowBottomControl = Boolean(this.$store.state.music.audio)
-				if(this.isShowBottomControl){
-					this.changeHeight = 'height:calc(70% - 50px)'
-				}
 			}
-		},
-		// #ifdef H5
-		activated() {
-			this.changeListStyle()
-		},
-		//#endif
-		// #ifdef MP-WEIXIN
-		onShow() {
-			this.changeListStyle()
-		}	
-		// #endif
+		}
 	}
 </script>
 

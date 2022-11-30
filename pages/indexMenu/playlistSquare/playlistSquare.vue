@@ -26,12 +26,12 @@
 				</view>
 				<swiper class="result-scroll" :style="scrollHeight" :indicator-dots="false" :autoplay="false"  :duration="1000" @change="changeItem" :current="currentIndex">
 					<swiper-item v-for="(mItem,mIndex) in menu" :key="mIndex">
-						<scroll-view scroll-y="true" class="scroll-v" :style="scrollHeight">
+						<scroll-view scroll-y="true" class="scroll-v" :style="scrollHeight" @scrolltolower="loadMore">
 							<view class="list-container">
-								<view class="list-item" v-for="(item,index) in list[mItem.name]" :key="index">
+								<view class="list-item" v-for="(item,index) in list[mItem.name]" :key="index"  @tap="toPlayListDetail(item.id)">
 									<image :src="item.coverImgUrl" mode="aspectFit" class="list-img"></image>
 									<text class="list-name main-title">{{item.name}}</text>
-									<view class="count-box">
+									<view class="count-box" :style="{'background-color':['#633000','#415b63','#271200'][Math.floor(Math.random()*3)]}">
 										<text class="iconfont musicplayCircleOne"></text>
 										<text class="play-count">{{$dealCount(item.playCount)}}</text>
 									</view>
@@ -44,7 +44,7 @@
 		</scroll-view>
 		<!-- 底部音乐控制 -->
 		<view class="bottom-control" v-show="isShowBottomControl" >
-			<music-controller FMPath="../indexMenu/FM/FM" songDetailPath="../songDetail/songDetail"></music-controller>
+			<music-controller FMPath="../FM/FM" songDetailPath="../../songDetail/songDetail"></music-controller>
 		</view>
 		<view v-if="isShowMusicList">
 			<music-list></music-list>
@@ -74,11 +74,17 @@
 			back(){
 				uni.navigateBack()
 			},
+			toPlayListDetail(id){
+				uni.navigateTo({
+					url:'../../playListDetail/playListDetail?playListId='+id
+				})
+			},
 			searchByTag(tag,index){
 				this.currentIndex = index
 				this.into = 't'+ (index)
 				this.tag = tag
 				this.getCateDetail(tag)
+				
 			},
 			listCate(){
 				playlistHotCate().then(res=>{
@@ -128,6 +134,12 @@
 						this.list[this.tag].push(...res.playlists)
 						this.more[this.tag] = res.more
 						uni.hideLoading()
+					}
+					else{
+						let timer = setTimeout(()=>{
+							uni.hideLoading()
+							clearTimeout(timer)
+						},5000)
 					}
 				})
 			},
@@ -226,7 +238,6 @@
 			font-size: 12px;
 			border-radius: 20px;
 			color: #fff;
-			background-color: #633000;
 			transform: scale(.9);
 			.iconfont{
 				transform: scale(.7);

@@ -7,7 +7,8 @@ const bottomControlMixin = {
 			isShowMusicList:false,
 			scrollHeightNoTop:undefined,
 			scrollHeightSwiper:undefined,
-			scrollHeightNoTab:undefined
+			scrollHeightNoTab:undefined,
+			changeHeight:'',
 		}
 	},
 	computed:{
@@ -17,7 +18,7 @@ const bottomControlMixin = {
 		musicList(n,o){
 			this.changeStyle()
 			if(n.length === 0){
-				this,isShowBottomControl = false
+				this.isShowBottomControl = false
 			}
 		}
 	},
@@ -30,6 +31,7 @@ const bottomControlMixin = {
 				this.scrollHeightNoTop = 'height:calc(100vh - 50px);'
 				this.scrollHeightNoTab = 'height:calc(100vh - 100px);'
 				this.scrollHeightSwiper = 'height:calc(100vh - 145px);'
+				this.changeHeight = 'height:calc(70% - 50px);'
 				// #ifdef MP-WEIXIN
 				this.scrollHeight = 'height:calc(100vh - 130px);'
 				this.scrollHeightNoTop = 'height:calc(100vh - 50px);'
@@ -43,6 +45,7 @@ const bottomControlMixin = {
 				this.scrollHeightNoTop = 'height:calc(100vh - 0px);'
 				this.scrollHeightNoTab = 'height:calc(100vh - 50px);'
 				this.scrollHeightSwiper = 'height:calc(100vh - 95px);'
+				this.changeHeight = 'height:70%;'
 				// #ifdef MP-WEIXIN
 				this.scrollHeight = 'height:calc(100vh - 80px);'
 				this.scrollHeightNoTop = 'height:calc(100vh - 0px);'

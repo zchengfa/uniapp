@@ -1,7 +1,7 @@
 <template>
 	<view class="search-container">
 		<!-- 导航栏 -->
-		<view class="nav">
+		<view class="nav-search">
 			<view class="back-box">
 				<text class="iconfont musicleftArrow" @tap="back"></text>
 			</view>
@@ -463,12 +463,13 @@
 	font-weight: bold;
 }
 
-.nav{
+.nav-search{
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	height: 50px;
 	text-align: center;
+	color: #b4b4b4;
 	background-color: #fff;
 	.back-box,.search-b,.search{
 		width: 50px;
@@ -491,11 +492,9 @@
 		}
 		.musicsearch,.musicclose{
 			position: absolute;
-			
 			display: inline-block;
 			height: 100%;
 			line-height: 30px;
-			color: #B5B5B5;
 			z-index: 999;
 		}
 		.musicsearch{
@@ -672,13 +671,17 @@
 	bottom:0;
 }
 // #ifdef MP-WEIXIN
-.nav{
+.nav-search{
 	height: 80px;
 	justify-content: flex-start;
 	.back-box,.search{
+		position: relative;
+		top:16px;
 		line-height: 80px;
 	}
 	.input-box{
+		position: relative;
+		top:16px;
 		margin: 0;
 		flex: .6;
 		.input{

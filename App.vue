@@ -35,6 +35,7 @@
 					uni.removeStorageSync('cookie')
 					uni.removeStorageSync('token')
 					uni.removeStorageSync('user')
+					uni.removeStorageSync('likeIds')
 				}
 			})
 		},
@@ -57,7 +58,6 @@
 		align-items: center;
 		width: 100%;
 		height: 50px;
-		color: #fff;
 		mix-blend-mode: lighten;
 		z-index: 999;
 		.left{

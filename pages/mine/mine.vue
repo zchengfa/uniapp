@@ -87,7 +87,7 @@
 					<text>收藏歌单({{userPlayList.length-1}})个</text>
 				</view>
 				<view class="playlist-content">
-					<view class="list-item" v-for="(item,index) in userPlayList.slice(1,userPlayList.length)" @tap="toPlayListDetail(item.id,true)" :key="index">
+					<view class="list-item" v-for="(item,index) in userPlayList.slice(1,userPlayList.length)" @tap="toPlayListDetail(item.id,false)" :key="index">
 						<image class="playlist-img" :src="item.coverImgUrl"></image>
 						<view class="list-info">
 							<text class="list-name">{{item.name}}</text>
@@ -105,12 +105,12 @@
 				<text class="title">为你推荐</text>
 				<view class="rec-sheet">
 					<view class="rec-sheet-item" v-for="(item,index) in recSheet" :key="index" @tap="toPlayListDetail(item.id)">
-						<image class="sheet-image" :src="item.picUrl" mode="aspectFit"></image>
+						<image class="sheet-image" :src="item.picUrl" mode="aspectFill"></image>
 						<view class="mask">
 							<text>{{$dealCount(item.playCount)}}</text>
 							<text class="iconfont musicplayCircle"></text>
 						</view>
-						<text class="rec-name">{{item.name}}</text>
+						<text class="rec-name main-title">{{item.name}}</text>
 					</view>
 				</view>
 			</view>
@@ -131,6 +131,7 @@
 <script>
 	import '@/common/mine.css'
 	import '@/common/controller.css'
+	import '@/common/iconfont.css'
 	import { bottomControlMixin} from '@/common/mixins/mixins.js'
 	import { recommendSongSheet , songDetail ,userLikeMusicList,  userPlayList ,userLevel, loveMode , songExceptLyric} from '@/common/api.js'
 	import { mapGetters } from 'vuex'
@@ -180,7 +181,15 @@
 			toPlayListDetail(id,needLogin = false){
 				if(needLogin){
 					if(this.$checkLogin()){
-						goTo()
+						if(!!this.likeIds.length){
+							goTo()
+						}
+						else{
+							uni.showModal({
+								title:'提示：',
+								content:'暂未获取到您的喜好，无法查看喜欢的音乐列表！'
+							})
+						}
 					}
 					else{
 						uni.showModal({
@@ -206,6 +215,7 @@
 						if(res.code === 200){
 							this.$store.dispatch('userLikeMusicIds',res.ids)
 							songDetail(this.likeIds[0]).then(song=>{
+
 								//获取喜欢歌曲列表中的第一首歌图片作封面
 								this.likeCover =`background-image: url(${song.songs[0].al.picUrl});background-size: cover;` 
 							})
@@ -220,50 +230,57 @@
 					//获取用户等级信息
 					userLevel().then(level=>{
 						level.code === 200? this.levelInfo = level.data:null
-						//console.log(level)
 					})
 				}
 			},
 			//开启心动模式
 			beginLoveMode(listId){
 				if(this.$checkLogin()){
-					//1.在喜欢歌曲列表中随机获取一首歌进行播放
-					let randomSongId = this.likeIds[Math.round(Math.random()*this.likeIds.length)]
-					
-					loveMode(randomSongId,listId).then(res=>{
-						if(res.code === 200){
-							let musicList = []
-							//获取随机选择好的歌曲数据						
-							songExceptLyric(randomSongId).then(result=>{
-								//放至列表首位
-								musicList.push(result.detail)
-								let songs = {
-									'author':this.$dealAuthor(result.detail.ar,'name'),
-									'name':result.detail.name,
-									'picUrl':result.detail.al.picUrl
-								}
-								res.data.map((item)=>{
-									musicList.push({
-										...item.songInfo,
-										"recommended":item.recommended,
-										"id":item.id									
+					if(!!this.likeIds.length){
+						//1.在喜欢歌曲列表中随机获取一首歌进行播放
+						let randomSongId = this.likeIds[Math.round(Math.random()*this.likeIds.length)]
+						
+						loveMode(randomSongId,listId).then(res=>{
+							if(res.code === 200){
+								let musicList = []
+								//获取随机选择好的歌曲数据						
+								songExceptLyric(randomSongId).then(result=>{
+									//放至列表首位
+									musicList.push(result.detail)
+									let songs = {
+										'author':this.$dealAuthor(result.detail.ar,'name'),
+										'name':result.detail.name,
+										'picUrl':result.detail.al.picUrl
+									}
+									res.data.map((item)=>{
+										musicList.push({
+											...item.songInfo,
+											"recommended":item.recommended,
+											"id":item.id									
+										})
+										
 									})
 									
+									//向vuex分发事件
+									this.$store.dispatch('songs',JSON.stringify(songs))
+									this.$store.dispatch('audio',result.url)
+									this.$store.dispatch('musicList',JSON.stringify(musicList))
+									this.$store.dispatch('id',randomSongId)
+									this.$store.dispatch('index',0)
+									
+									uni.navigateTo({
+										url:'../songDetail/songDetail'
+									})							
 								})
-								
-								//向vuex分发事件
-								this.$store.dispatch('songs',JSON.stringify(songs))
-								this.$store.dispatch('audio',result.url)
-								this.$store.dispatch('musicList',JSON.stringify(musicList))
-								this.$store.dispatch('id',randomSongId)
-								this.$store.dispatch('index',0)
-								
-								uni.navigateTo({
-									url:'../songDetail/songDetail'
-								})							
-							})
-						}
-					})
+							}
+						})
+					}
+					else{
+						uni.showModal({
+							title:'提示：',
+							content:'暂未获取到您的喜好，无法开启心动模式！'
+						})
+					}
 				}
 				else{
 					uni.showModal({
@@ -277,9 +294,17 @@
 			this.getRec()
 			this.getUserProfile()
 		},
+		// #ifdef MP-WEIXIN
+		//解决在小程序不触发activated生命周期的问题
+		onShow(){
+			this.getUserProfile()
+		},
+		// #endif
+		// #ifdef H5
 		activated() {
 			this.getUserProfile()
-		}
+		},
+		// #endif
 	}
 </script>
 
@@ -531,24 +556,24 @@
 .sheet-image{
 	width: 100%;
 	height: 100px;
+	border-radius: 6px;
 }
 .mask{
+	display: flex;
 	flex-direction: row;
+	justify-content: flex-end;
+	align-items: center;
+	top:4px;
 	width: 100%;
-	background-color: rgba(0,0,0,.2);
+	height: auto;
+	background-color: transparent;
 	border-radius: 6px;
-	
+	transform: scale(.9);
 }
 .musicplayCircle{
 	font-size: 16px;
 }
 .rec-name{
-	display: block;
-	padding: 10px;
-	
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	
-	overflow: hidden;
+	padding: 2px 0;
 }
 </style>
