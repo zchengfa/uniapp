@@ -51,6 +51,29 @@
 		margin: 0 auto;
 		max-width: 500px;
 	}
+	// 底部弹出的操作菜单
+	.uni-actionsheet{
+		.uni-actionsheet__action{
+			display: none;
+		}
+		.uni-actionsheet__menu{
+			border-radius: 14px;
+		}
+		 .uni-actionsheet__cell, .uni-actionsheet__title{
+			 text-align: left;
+			 font-size: 14px;
+			 text-indent: .5rem;
+			 border-radius: 14px;
+		 }
+		 .uni-actionsheet__title{
+			 color: #B5B5B5;
+			 border-bottom-left-radius: 0;
+			 border-bottom-right-radius: 0;
+		 }
+		.uni-actionsheet__cell::before{
+			display: none;
+		}
+	}
 	.nav{
 		position: relative;
 		display: flex;
@@ -124,7 +147,7 @@
 		position: absolute;
 		bottom: 5vh;
 		width: 100%;
-		z-index: 1000;
+		z-index: 999;
 	}
 	/* #ifdef MP-WEIXIN */
 	.bottom-control{
@@ -254,7 +277,7 @@
 		width: 100%;
 		height: 100%;
 		background-color: rgba(0,0,0,.5);
-		z-index: 1000;
+		z-index: 999;
 	}
 	.charactor{
 		padding-left: 5px;

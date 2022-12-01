@@ -3,7 +3,7 @@
 		<view class="music-operation" v-if="!fmStatus">
 			<image src="../../static/images/liked.png" mode="aspectFit" class="liked" v-show="isLiked" @tap="likeOrDislike(false)"></image>
 			<text class="love iconfont controller-love" v-show="!isLiked" @tap="likeOrDislike(true)"></text>
-			<text class="download iconfont controller-download"></text>
+			<text class="download iconfont controller-download" @tap="download"></text>
 			<text class="sing iconfont controller-sing"></text>
 			<view class="comments-box">
 				<text class="comments iconfont controller-comments" @tap="toComments"></text>
@@ -40,7 +40,7 @@
 	import '@/common/iconfont.css'
 	import { mapGetters } from 'vuex'
 	import { changeLoopMixin } from '@/common/mixins/mixins.js'
-	import { commentsTotalNum , likeSong } from '@/common/api.js'
+	import { commentsTotalNum , likeSong , downloadSong} from '@/common/api.js'
 
 	export default {
 		name:"DetailController",
@@ -49,7 +49,8 @@
 			return {
 				totalNum:undefined,
 				auditionDot:undefined,
-				isLiked:false
+				isLiked:false,
+				couldDownload:undefined
 			}
 		},
 		computed:{
@@ -83,10 +84,7 @@
 		},
 		watch:{
 			songId(n,o){
-				this.checkIsLikeSong()
-				//获取评论总数
-				this.getComTotalNum(this.songId)
-				this.changeDuditionDot()
+				this.init()
 			}
 		},
 		methods:{
@@ -186,6 +184,88 @@
 						
 					}
 				})
+			},
+			//判断歌曲是否可下载
+			checkDownloadStatus(){
+				downloadSong(this.songId).then(res=>{
+					res.data.code === 200 ? this.couldDownload = true :	this.couldDownload = false 
+				})
+			},
+			downloadByBr(br){
+				downloadSong(this.songId,br).then(res=>{
+					// uni.request({
+					// 	url:res.data.url,
+					// 	method:'GET',
+					// 	responseType:'blob',
+					// 	success:(res)=> {
+							
+					// 		let blobUrl = window.URL.createObjectURL(new Blob([].push(res.data)))
+					// 		let link = document.createElement('a')
+					// 		document.body.appendChild(link)
+					// 		link.style.display = 'none'
+					// 		link.href = blobUrl
+					// 		link.download = '音乐.mp3'
+					// 		link.click()
+					// 		document.body.removeChild(link)
+					// 		window.URL.revokeObjectURL(blobUrl)
+							
+					// 	}
+					// })
+					fetch(res.data.url).then(res=>{
+						res.blob()
+					}).then(blob=>{
+						console.log(blob)
+							let blobUrl = window.URL.createObjectURL(blob)
+							let link = document.createElement('a')
+							document.body.appendChild(link)
+							link.style.display = 'none'
+							link.href = blobUrl
+							link.download = '音乐.mp3'
+							link.click()
+							document.body.removeChild(link)
+							window.URL.revokeObjectURL(blobUrl)	
+					})
+				})
+			},
+			download(){
+				if(this.couldDownload){
+					uni.showActionSheet({
+						title:'选择下载音质',
+						itemList:['标准','高清','超清','无损音质'],
+						success:(res)=>{
+							switch (res.tapIndex) {
+								case 0:
+									this.downloadByBr(999)
+									break;
+								case 1:
+									this.downloadByBr(12800)
+									break;
+								case 2:
+									this.downloadByBr(320000)
+									break;
+								case 3:
+									this.downloadByBr(999000)
+									break;			
+							}
+						}
+					})
+				}
+				else{
+					uni.showModal({
+						title:'下载提示:',
+						content:'歌曲暂时无法下载'
+					})
+				}
+			},
+			init(){
+				//是否喜欢过该音乐
+				this.checkIsLikeSong()
+				//获取评论总数
+				this.getComTotalNum(this.songId)
+				//调整试听点的位置
+				this.changeDuditionDot()
+				//该歌曲是否可下载
+				this.checkDownloadStatus()
 			}
 			
 		},
@@ -200,10 +280,7 @@
 			else{
 				this.loop = 'controller-single_loop';
 			}
-			this.checkIsLikeSong()
-			//获取评论总数
-			this.getComTotalNum(this.songId)
-			this.changeDuditionDot()
+			this.init()
 		}
 	}
 </script>

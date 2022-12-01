@@ -12,7 +12,7 @@
 					<view class="ohter">
 						<text class="iconfont controller-download other-item"></text>
 						<text class="iconfont controller-add other-item"></text>
-						<text class="iconfont musicdelete other-item"></text>
+						<text class="iconfont musicdelete other-item" @tap.stop="removeAll"></text>
 					</view>
 				</view>
 				<scroll-view scroll-y="true" class="list-scroll" @scrolltolower="loadMore">
@@ -137,6 +137,16 @@
 						})
 					}
 				}
+			},
+			removeAll(){
+				uni.showModal({
+					content:'确定要清空播放列表？',
+					success:(res)=> {
+						if(res.confirm){
+							this.$store.dispatch('musicList',JSON.stringify([]))
+						}
+					}
+				})
 			}
 		},
 		created() {

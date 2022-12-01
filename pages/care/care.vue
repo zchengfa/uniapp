@@ -112,23 +112,25 @@
 			},
 			getEvent(){
 				event().then(res=>{
-					console.log(res)
-					this.careData = res.event
-					this.more = res.more
-					this.lastTime = res.lasttime
-					this.isShowTip = false
+					//保存动态消息数据
+					if(res.event.length){
+						uni.setStorageSync('careMessages',res)
+						this.changeData(res)
+					}
+					else{
+						let data = uni.getStorageSync('careMessages')	
+						data? this.changeData(data) : this.changeData(care)
+					}
 				})
 			},
 			check(){
-				if(this.$checkLogin()){
-					this.getEvent()
-				}
-				else{
-					this.careData = care.event
-					this.more = care.more
-					this.lastTime = care.lasttime
-					this.isShowTip = true
-				}
+				this.$checkLogin() ? this.getEvent() : this.changeData(care,true)
+			},
+			changeData(target,isShow = false){
+				this.careData =target.event
+				this.more =target.more
+				this.lastTime =target.lasttime
+				this.isShowTip = isShow
 			}
 		},
 		created() {

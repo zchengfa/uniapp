@@ -41,6 +41,11 @@ export function songDetail(songId){
 export function songData (songId){
 	return Get('/song/url?id='+songId)
 }
+
+//下载歌曲
+export function downloadSong (songId,br = 999){
+	return Get('/song/download/url?id='+songId+'&br='+br)
+}
  
 
 //获取用户选择的歌曲所需数据（除歌词外） 
