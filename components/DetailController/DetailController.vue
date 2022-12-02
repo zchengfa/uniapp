@@ -54,7 +54,7 @@
 			}
 		},
 		computed:{
-			...mapGetters(['playStatus','songs','currentTime','audition','totalTime','audio','loopStatus','currentSongIndex','musicList','duration','songId','progress','fmStatus','likeIds']),
+			...mapGetters(['playStatus','songs','currentTime','audition','totalTime','audio','loopStatus','currentSongIndex','musicList','duration','songId','progress','fmStatus','likeIds','downloadPercent']),
 			tTime(){
 				
 				return this.transTime(this.totalTime)
@@ -191,40 +191,68 @@
 					res.data.code === 200 ? this.couldDownload = true :	this.couldDownload = false 
 				})
 			},
-			downloadByBr(br){
-				downloadSong(this.songId,br).then(res=>{
-					// uni.request({
-					// 	url:res.data.url,
-					// 	method:'GET',
-					// 	responseType:'blob',
-					// 	success:(res)=> {
-							
-					// 		let blobUrl = window.URL.createObjectURL(new Blob([].push(res.data)))
-					// 		let link = document.createElement('a')
-					// 		document.body.appendChild(link)
-					// 		link.style.display = 'none'
-					// 		link.href = blobUrl
-					// 		link.download = '音乐.mp3'
-					// 		link.click()
-					// 		document.body.removeChild(link)
-					// 		window.URL.revokeObjectURL(blobUrl)
-							
-					// 	}
-					// })
-					fetch(res.data.url).then(res=>{
-						res.blob()
-					}).then(blob=>{
-						console.log(blob)
-							let blobUrl = window.URL.createObjectURL(blob)
-							let link = document.createElement('a')
-							document.body.appendChild(link)
-							link.style.display = 'none'
-							link.href = blobUrl
-							link.download = '音乐.mp3'
-							link.click()
-							document.body.removeChild(link)
-							window.URL.revokeObjectURL(blobUrl)	
-					})
+			downloadByBr(br,name = this.songs.name){
+				downloadSong(this.songId,br).then(async res=>{
+					//启动fetch，获取一个reader
+					let response = await fetch(res.data.url)
+					let reader = response.body.getReader()
+					//获取音乐总长度
+					let totalSize = response.headers.get('Content-Length')
+					
+					//接受长度
+					let receivedLength = 0
+					//接收到的二进制块数组
+					let chunks = []
+					
+					while(true){
+						const {done,value} = await reader.read()
+						if(done) {
+							break;
+						}
+						
+						chunks.push(value)
+						receivedLength += value.length
+						let percent = Math.floor((receivedLength/totalSize)*100) +'%'
+						
+						if(this.downloadPercent !== percent){
+							console.log(percent)
+							this.$store.dispatch('downloadPercent',percent)
+						}
+						
+					}
+					
+					//整合
+					let chunksAll = new Uint8Array(receivedLength)
+					let position = 0
+					for (let chunk of chunks) {
+						chunksAll.set(chunk,position)
+						position += chunk.length
+					}
+					
+					//let result = JSON.parse(new TextDecoder('utf-8').decode(chunksAll))
+					
+					// fetch(res.data.url).then(res=>{
+					// 	return res.blob()
+						
+					// }).then(blob=>{
+					// 	//文件类型
+					// 	let blobType = blob.type
+					// 	//文件拓展名
+					// 	let fileExtension ='.'+ blobType.substr(6,blobType.length)
+						
+						let bl = new Blob([chunksAll],{type:'audio/mpeg'})
+						
+						let link = document.createElement('a')
+						document.body.appendChild(link)
+						link.style.display = 'none'
+						link.href = window.URL.createObjectURL(bl)
+						
+						link.download = name + '.mpeg'
+						link.click()
+						document.body.removeChild(link)
+						window.URL.revokeObjectURL(link.href)		
+					//})
+					
 				})
 			},
 			download(){

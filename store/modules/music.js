@@ -49,7 +49,9 @@ export default {
 		//是否私人FM模式
 		fmStatus:uni.getStorageSync('FM_status'),
 		//音量值
-		volume:uni.getStorageSync('volume')
+		volume:uni.getStorageSync('volume'),
+		//歌曲下载进度
+		downloadPercent:0
 	},
 	getters:{
 		songs(state){
@@ -114,6 +116,9 @@ export default {
 		},
 		volume(state){
 			return state.volume
+		},
+		downloadPercent(state){
+			return state.downloadPercent
 		}
 	},
 	mutations:{
@@ -213,6 +218,9 @@ export default {
 		changeVolume(state,payload){
 			state.volume = payload
 			uni.setStorageSync('volume',payload)
+		},
+		downloadPercent(state,payload){
+			state.downloadPercent = payload
 		}
 	},
 	actions:{
@@ -289,6 +297,9 @@ export default {
 		},
 		changeVolume(context,payload){
 			context.commit('changeVolume',payload)
+		},
+		downloadPercent(context,payload){
+			context.commit('downloadPercent',payload)
 		}
 	}
 	
