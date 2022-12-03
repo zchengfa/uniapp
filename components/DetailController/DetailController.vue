@@ -193,6 +193,7 @@
 			},
 			downloadByBr(br,name = this.songs.name){
 				downloadSong(this.songId,br).then(async res=>{
+					
 					//启动fetch，获取一个reader
 					let response = await fetch(res.data.url)
 					let reader = response.body.getReader()
@@ -215,7 +216,7 @@
 						let percent = Math.floor((receivedLength/totalSize)*100) +'%'
 						
 						if(this.downloadPercent !== percent){
-							console.log(percent)
+							//console.log(percent)
 							this.$store.dispatch('downloadPercent',percent)
 						}
 						
@@ -229,29 +230,22 @@
 						position += chunk.length
 					}
 					
-					//let result = JSON.parse(new TextDecoder('utf-8').decode(chunksAll))
+					let bl = new Blob([chunksAll],{type:'audio/mpeg'})
 					
-					// fetch(res.data.url).then(res=>{
-					// 	return res.blob()
-						
-					// }).then(blob=>{
-					// 	//文件类型
-					// 	let blobType = blob.type
-					// 	//文件拓展名
-					// 	let fileExtension ='.'+ blobType.substr(6,blobType.length)
-						
-						let bl = new Blob([chunksAll],{type:'audio/mpeg'})
-						
-						let link = document.createElement('a')
-						document.body.appendChild(link)
-						link.style.display = 'none'
-						link.href = window.URL.createObjectURL(bl)
-						
-						link.download = name + '.mpeg'
-						link.click()
-						document.body.removeChild(link)
-						window.URL.revokeObjectURL(link.href)		
-					//})
+					//给body添加a标签，触发a标签的点击实现实现下载
+					let link = document.createElement('a')
+					document.body.appendChild(link)
+					link.style.display = 'none'
+					link.href = window.URL.createObjectURL(bl)
+					
+					//通过下载地址来确定当前音乐的后缀名
+					let url = res.data.url
+					let extensionName = url.substr(url.lastIndexOf('.'),url.length)
+					
+					link.download = name + extensionName
+					link.click()
+					document.body.removeChild(link)
+					window.URL.revokeObjectURL(link.href)		
 					
 				})
 			},
