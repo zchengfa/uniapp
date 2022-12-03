@@ -230,24 +230,21 @@
 						position += chunk.length
 					}
 					
-					let bl = new Blob([chunksAll],{type:'audio/mpeg'})
-					
-					//给body添加a标签，触发a标签的点击实现实现下载
-					let link = document.createElement('a')
-					document.body.appendChild(link)
-					link.style.display = 'none'
-					link.href = window.URL.createObjectURL(bl)
-					
-					//通过下载地址来确定当前音乐的后缀名
-					let url = res.data.url
-					let extensionName = url.substr(url.lastIndexOf('.'),url.length)
-					
-					link.download = name + extensionName
-					link.click()
-					document.body.removeChild(link)
-					window.URL.revokeObjectURL(link.href)		
-					
+					let bl = new Blob([chunksAll],{type:'audio/'+ res.data.type})
+					this.downloading(name,bl,res.data.type)
 				})
+			},
+			downloading(name,bl,extension = 'mp3'){
+				//给body添加a标签，触发a标签的点击实现实现下载
+				let link = document.createElement('a')
+				document.body.appendChild(link)
+				link.style.display = 'none'
+				link.href = window.URL.createObjectURL(bl)
+				
+				link.download = name + '.'+ extension
+				link.click()
+				document.body.removeChild(link)
+				window.URL.revokeObjectURL(link.href)
 			},
 			download(){
 				if(this.couldDownload){
@@ -275,7 +272,7 @@
 				else{
 					uni.showModal({
 						title:'下载提示:',
-						content:'歌曲暂时无法下载'
+						content:'该歌曲需要开通黑胶VIP，暂时无法下载'
 					})
 				}
 			},
