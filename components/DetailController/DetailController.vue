@@ -194,6 +194,7 @@
 			downloadByBr(br,name = this.songs.name){
 				downloadSong(this.songId,br).then(async res=>{
 					
+					// #ifdef H5
 					//启动fetch，获取一个reader
 					let response = await fetch(res.data.url)
 					let reader = response.body.getReader()
@@ -232,6 +233,28 @@
 					
 					let bl = new Blob([chunksAll],{type:'audio/'+ res.data.type})
 					this.downloading(name,bl,res.data.type)
+					// #endif
+					
+					// #ifdef MP-WEIXIN
+					let downloadTask = wx.downloadFile({
+							url:res.data.url,
+							filePath:wx.env.USER_DATA_PATH +'/'+ name + '.'+ res.data.type,
+							success:(res)=>{
+								if(res.statusCode === 200) {
+									wx.showToast({
+										title:'音乐已下载至' + res.filePath,
+										icon:'success'
+									})
+								}
+							},
+							fail:(f)=>{
+								console.log(f)
+							}
+						})
+					downloadTask.onProgressUpdate((res)=>{
+						this.$store.dispatch('downloadPercent',res.progress + '%')
+					})	
+					// #endif
 				})
 			},
 			downloading(name,bl,extension = 'mp3'){

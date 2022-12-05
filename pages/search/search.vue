@@ -698,6 +698,9 @@
 .search-result{
 	top:80px;
 }
+.suggest-result{
+	top:80px
+}
 // #endif
 
 </style>
