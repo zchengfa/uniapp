@@ -64,7 +64,7 @@
 }
 /* #ifdef MP-WEIXIN */
 .scroll{
-	height: 63vh;
+	height: 56vh;
 }
 /* #endif */
 </style>

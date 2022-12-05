@@ -9,7 +9,7 @@
 				<view class="disc" v-if="!isShowLyric" @tap="showLyric">
 					<image :src="songs.picUrl" class="song-pic" :class="playStatus?'rotate':'rotate paused'"></image>
 				</view>
-				<view class="slider-box" v-if="isShowLyric">
+				<view class="slider-box volume-box" v-if="isShowLyric">
 					<image src="~@/static/images/volume.png" class="volume" mode="aspectFit"></image>
 					<slider @changing="seeking" class="volume-slider"  max="100" :value="volume" activeColor="#f00" block-size="14"/>
 					<text class="percent">{{volume}}%</text>
@@ -154,6 +154,9 @@
 		margin: 0 auto;
 		width: 86%;
 	}
+	.volume-box{
+		margin-top: 20px;
+	}
 	.volume-slider{
 		width: 80%;
 	}
@@ -169,7 +172,6 @@
 	.lyric{
 		position: relative;
 		width: 100%;
-		height:62vh;
 	}
 	@keyframes rotateCircle{
 		from{
@@ -183,7 +185,7 @@
 	}
 	/* #ifdef MP-WEIXIN */
 	.nav{
-		height: 60px;
+		height: 80px;
 	}
 	.detail-content{
 		height: calc(100vh - 80px);
