@@ -144,31 +144,6 @@ export function summarySearch(word,type=1018,offset=0,limit=20) {
 	
 }
 
-//  获取歌曲评论(新的评论接口)
-// /comment/new?type=0&id=1407551413&sortType=3&cursor=1602072870260&pageSize=20&pageNo=2
-//id : 资源 id, 如歌曲 id,mv id
-
-// type: 数字 , 资源类型 , 对应歌曲 , mv, 专辑 , 歌单 , 电台, 视频对应以下类型
-
-// 0: 歌曲
-
-// 1: mv
-
-// 2: 歌单
-
-// 3: 专辑
-
-// 4: 电台
-
-// 5: 视频
-
-// 6: 动态
-// 可选参数 :
-// pageNo:分页参数,第 N 页,默认为 1
-
-// pageSize:分页参数,每页多少条数据,默认 20
-
-// sortType: 排序方式, 1:按推荐排序, 2:按热度排序, 3:按时间排序
 
 // cursor: 当sortType为 3 时且页数不是第一页时需传入,值为上一条数据的 time
 export function comments(id,sortType = 3) {

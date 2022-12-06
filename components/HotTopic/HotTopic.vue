@@ -4,7 +4,7 @@
 		<view class="topic-box">
 			<scroll-view scroll-x="true" class="topic-scroll">
 				<view class="item-box">
-					<view class="topic-item" :style="item.coverMobilePic"   @tap="toTopicDetail(item.resourceId)" v-for="(item,index) in topic" :key="item.resourceId">
+					<view class="topic-item" :style="item.coverMobilePic"   @tap="toTopicDetail(item.resourceId)" v-for="(item,index) in topic" :key="index">
 						<view class="left">
 							<view class="topic-main-title">
 								<image :src="item.uiElement.mainTitle.titleImgUrl" class="topic-image"></image>

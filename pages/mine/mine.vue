@@ -34,7 +34,7 @@
 					<text class="iconfont mine-24gf-playCircle"></text>
 					<text class="text">最近播放</text>
 				</view>
-				<view class="local operation-item">
+				<view class="local operation-item" @tap="toLocalDetail">
 					<text class="iconfont mine-bendisucai"></text>
 					<text class="text">本地/下载</text>
 				</view>
@@ -166,6 +166,13 @@
 				this.modalStatus = !this.modalStatus
 			},
 			//#endif
+			toLocalDetail(){
+				// #ifdef MP-WEIXIN
+				uni.navigateTo({
+					url:'../mineMenu/download/download'
+				})
+				// #endif
+			},
 			getRec(){
 				recommendSongSheet().then(res=>{
 					if(res.code === 200){

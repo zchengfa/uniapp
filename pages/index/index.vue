@@ -109,9 +109,10 @@
 				voiceTitle:'',
 				voice:[],
 				// #ifdef MP-WEIXIN
-				modalStatus:false
+				modalStatus:false,
 				//#endif
-				
+				albumHomePage:[],
+				toplist:[]
 			}
 		},
 		components:{
@@ -224,22 +225,30 @@
 									})
 									
 								}
-								else{
+								//新歌新碟\数字专辑
+								else if (topic.creativeType === 'NEW_ALBUM_HOMEPAGE' || topic.creativeType === 'DIGITAL_ALBUM_HOMEPAGE' ){
+									console.log(topic.creativeType)
+								}
+								//热门话题(待定)
+								else if(topic.creativeType === 'TOPIC'){
 									topic.resources.map(res=>{
-										//console.log(res)
+										
 										//获取话题背景图跟分享图
 										topicDetail(res.resourceId).then(detail=>{
+											
 											if(detail.code === 200){
 												res.sharePicUrl = detail.act.sharePicUrl
 												res.coverMobilePic = `background-image:url(${detail.act.coverMobileUrl})`
 												this.hotTopic.push(res)
-											}
-											
+											}	
 										})
 									})
 									this.topicTitle = item.uiElement.subTitle.title
 								}
-								
+								//排行榜
+								else if(topic.creativeType === 'toplist'){
+									
+								}
 							})
 						}
 					})

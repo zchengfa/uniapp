@@ -191,7 +191,7 @@
 					res.data.code === 200 ? this.couldDownload = true :	this.couldDownload = false 
 				})
 			},
-			downloadByBr(br,name = this.songs.name){
+			downloadByBr(br,name = this.songs.name + '-' + this.songs.author){
 				downloadSong(this.songId,br).then(async res=>{
 					
 					// #ifdef H5
@@ -217,7 +217,7 @@
 						let percent = Math.floor((receivedLength/totalSize)*100) +'%'
 						
 						if(this.downloadPercent !== percent){
-							//console.log(percent)
+						
 							this.$store.dispatch('downloadPercent',percent)
 						}
 						
@@ -242,7 +242,7 @@
 							success:(res)=>{
 								if(res.statusCode === 200) {
 									wx.showToast({
-										title:'音乐已下载至' + res.filePath,
+										title:name + '.'+ res.data.type + '下载完成',
 										icon:'success'
 									})
 								}

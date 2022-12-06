@@ -126,6 +126,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/mineMenu/download/download",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
