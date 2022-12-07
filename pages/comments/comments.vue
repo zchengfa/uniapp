@@ -240,6 +240,9 @@
 	.nav{
 		height: 44px;
 	}
+	.back,.share{
+		line-height: 44px;
+	}
 	/* #endif */
 	.left,.right{
 		display: flex;
@@ -251,6 +254,7 @@
 		width: 40px;
 		height: 100%;
 		font-weight: bolder;
+		
 	}
 	.scroll-comment{
 		height: calc(100vh - 90px);
@@ -408,9 +412,12 @@
 	.share{
 		display: none;
 	}
-	.nav-left{
+	
+	.back,.count{
 		position: relative;
 		top:20px;
+		height: 60px;
+		line-height: 60px;
 	}
 	/* #endif */
 </style>

@@ -207,7 +207,7 @@
 						}
 						else if(item.blockCode = 'HOMEPAGE_BLOCK_HOT_TOPIC'){
 							let data = item.creatives
-							
+							console.log(data)
 							data.map(topic=>{
 								
 								//热门播客

@@ -135,6 +135,16 @@
             }
             
         }
+        ,{
+            "path" : "pages/mineMenu/recentlyPlayed/recentlyPlayed",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "最近播放",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#f7f7f7"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

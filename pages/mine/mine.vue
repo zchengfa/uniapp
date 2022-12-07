@@ -30,11 +30,11 @@
 			</view>
 			<!-- 用户相关 -->
 			<view class="user-operation">
-				<view class="history-play operation-item">
+				<view class="history-play operation-item" @tap="toMenuDetail('played')">
 					<text class="iconfont mine-24gf-playCircle"></text>
 					<text class="text">最近播放</text>
 				</view>
-				<view class="local operation-item" @tap="toLocalDetail">
+				<view class="local operation-item" @tap="toMenuDetail('local')">
 					<text class="iconfont mine-bendisucai"></text>
 					<text class="text">本地/下载</text>
 				</view>
@@ -166,12 +166,21 @@
 				this.modalStatus = !this.modalStatus
 			},
 			//#endif
-			toLocalDetail(){
-				// #ifdef MP-WEIXIN
-				uni.navigateTo({
-					url:'../mineMenu/download/download'
-				})
-				// #endif
+			toMenuDetail(type){
+				switch (type){
+					case 'played':
+						uni.navigateTo({
+							url:'../mineMenu/recentlyPlayed/recentlyPlayed'
+						})
+						break;
+					case 'local':
+						uni.navigateTo({
+							url:'../mineMenu/download/download'
+						})
+						break;
+					default:
+						return;
+				}
 			},
 			getRec(){
 				recommendSongSheet().then(res=>{
@@ -319,7 +328,7 @@
 .mine-container{
 	width: 100%;
 	height:calc(100vh - 50px);
-	background-color: #e7e7e7;
+	background-color: #f0f0f0;
 	
 }
 .top-box{

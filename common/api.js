@@ -285,6 +285,12 @@ export function topicDetail(id){
 	return Get(`/topic/detail?actid=${id}`)
 }
 
+//私人FM
 export function personalFm(){
 	return Get('/personal_fm')
+}
+
+//最近播放
+export function recentlyPlayed(type,limit = 300){
+	return Get('/record/recent/'+type + '?limit=' + limit)
 }
