@@ -172,6 +172,7 @@
 	.lyric{
 		position: relative;
 		width: 100%;
+		height: 60vh;
 	}
 	@keyframes rotateCircle{
 		from{
