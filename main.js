@@ -128,7 +128,7 @@ audioContext.onCanplay(()=>{
 	let musicList = store.state.music.musicList
 	musicList.map(item=>{
 		if(item.id === songId){
-			store.dispatch('totalTime',(item.dt)/1000)
+			item.hasOwnProperty('dt') ? store.dispatch('totalTime',(item.dt)/1000) : store.dispatch('totalTime',(item.duration)/1000)
 		}
 	})
 	store.dispatch('duration',audioContext.duration)

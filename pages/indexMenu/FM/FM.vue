@@ -100,7 +100,7 @@
 				//向vuex分发事件，开启fm
 				this.$store.dispatch('fmStatus',true)
 			}
-			if(this.musixList.length === 0 || this.musicList.length >= 4){
+			if(this.musicList.length === 0 || this.musicList.length >= 4){
 				this.fm()
 			}
 		},

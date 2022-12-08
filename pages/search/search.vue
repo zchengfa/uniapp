@@ -489,6 +489,7 @@
 			transform: translateX(-50%);
 			text-align: left;
 			text-indent: 40px;
+			font-size: 14px;
 		}
 		.musicsearch,.musicclose{
 			position: absolute;

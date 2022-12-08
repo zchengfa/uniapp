@@ -54,7 +54,10 @@ export default {
 			})
 		},
 		userLikeMusicIds(context,payload){
-			context.commit('likeIds',payload)
+			return new Promise(resolve =>{
+				context.commit('likeIds',payload)
+				resolve(true)
+			})
 		},
 		changeLikeList(context,payload){
 			context.commit('changeLikeList',payload)

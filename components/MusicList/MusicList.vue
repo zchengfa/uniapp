@@ -215,6 +215,9 @@
 	.list-scroll{
 		width: 100%;
 		height: 80%;
+		.list-item{
+			margin-bottom: 0;
+		}
 	}
 	.list-item{
 		display: flex;

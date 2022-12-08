@@ -167,19 +167,27 @@
 			},
 			//#endif
 			toMenuDetail(type){
-				switch (type){
-					case 'played':
-						uni.navigateTo({
-							url:'../mineMenu/recentlyPlayed/recentlyPlayed'
-						})
-						break;
-					case 'local':
-						uni.navigateTo({
-							url:'../mineMenu/download/download'
-						})
-						break;
-					default:
-						return;
+				if(this.$checkLogin()){
+					switch (type){
+						case 'played':
+							uni.navigateTo({
+								url:'../mineMenu/recentlyPlayed/recentlyPlayed'
+							})
+							break;
+						case 'local':
+							uni.navigateTo({
+								url:'../mineMenu/download/download'
+							})
+							break;
+						default:
+							return;
+					}
+				}
+				else{
+					uni.showModal({
+						title:'提醒：',
+						content:'您未登录，无法进入下一页面！'
+					})
 				}
 			},
 			getRec(){
@@ -229,11 +237,12 @@
 					userLikeMusicList(this.userInfo.userId).then(res=>{
 						
 						if(res.code === 200){
-							this.$store.dispatch('userLikeMusicIds',res.ids)
-							songDetail(this.likeIds[0]).then(song=>{
-
-								//获取喜欢歌曲列表中的第一首歌图片作封面
-								this.likeCover =`background-image: url(${song.songs[0].al.picUrl});background-size: cover;` 
+						    this.$store.dispatch('userLikeMusicIds',res.ids).then(res=>{
+								songDetail(this.likeIds[0]).then(song=>{
+								
+									//获取喜欢歌曲列表中的第一首歌图片作封面
+									this.likeCover =`background-image: url(${song.songs[0].al.picUrl});background-size: cover;` 
+								})
 							})
 						}
 						

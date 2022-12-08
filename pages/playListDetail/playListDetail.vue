@@ -373,39 +373,7 @@
 		font-size: 12px;
 	}
 }
-.list-scroll{
-	height: calc(100% - 62px);
-	background-color: #fff;
-	.list-item{
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		margin-bottom: 20px;
-		color: #a8a8a8;
-		
-	}
-	.playing{
-		margin-right: 10px;
-		transform-origin: center;
-	}
-	.No{
-		margin-right: 10px;
-		width: 20px;
-		text-align: center;
-		font-size: 12px;
-	}
-	.item-info{
-		flex: 1;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		.song-name{
-			font-size: 14px;
-			color: #000;
-			max-width: 200px;
-		}
-	}
-}
+
 .hidden-text{
 	display: block;
 	white-space: nowrap;
@@ -415,23 +383,7 @@
 .al{
 	max-width: 160px;
 }
-.song-info{
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	margin-top: 6px;
-	font-size: 12px;
-	.tag{
-		
-		padding: 1px;
-		color: #f00;
-		border: 1px solid #f00;
-		border-radius: 4px;
-	}
-}
-.mv{
-	margin-right: 20px;
-}
+
 
 // 歌单详细描述
 .desc-detail{
