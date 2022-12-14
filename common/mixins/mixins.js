@@ -241,6 +241,7 @@ const playSongMixin = {
 		},
 		//点击歌曲进行播放
 		playSong(id,index = undefined,detailPath){
+	
 			let listLength = this.$store.state.music.musicList.length
 			let musicList = this.$store.state.music.musicList
 			 
@@ -256,6 +257,7 @@ const playSongMixin = {
 				})
 			}
 			this.$songSave(id).then(res=>{
+				this.$store.dispatch('id',id)
 				this.$store.dispatch('index',index)
 			})
 			
@@ -274,13 +276,18 @@ const playSongMixin = {
 			
 			//先判断播放控件播放的音乐是否是当前点击的歌曲，若不是则换成点击的歌曲播放，若一致直接跳转到详情页进行播放
 			let songId = this.$store.state.music.songId
-			if(id === songId){
+			if(Number(id) === songId){
+				console.log('点击的是正在播放的歌曲')
 				//一致，跳转至歌曲详情页
 				uni.navigateTo({
-					url:detailPath
+					url:detailPath,
+					fail(e) {
+						console.log(e)
+					}
 				})
 			}
 			else{
+				
 				this.$songSave(id).then(res=>{
 					if(res){
 						this.isShowBottomControl = true

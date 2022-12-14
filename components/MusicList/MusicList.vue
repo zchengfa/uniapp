@@ -21,7 +21,7 @@
 							<image class="playing" v-if="songId === item.id" src="../../static/images/playing.png" mode="aspectFit"></image>
 							<text class="song-name" :class="{'current-song':songId === item.id}">{{item.name}}</text>
 							<text class="charactor" :class="{'current-song':songId === item.id}">-</text>
-							<text class="song-author" :class="{'current-song':songId === item.id}">{{$dealAuthor(item.ar,'name')}}</text>
+							<text class="song-author" :class="{'current-song':songId === item.id}">{{item.ar ? $dealAuthor(item.ar,'name') : $dealAuthor(item.artists,'name')}}</text>
 							<text class="rec-mark" v-if="item.recommended">荐</text>
 						</view>
 						<text class="delete iconfont musicclose" @tap.stop="deleteSong(item.id,index,playStatus)"></text>
@@ -243,6 +243,7 @@
 	
 	.song-name{
 		font-size: 14px;
+		color: #000;
 	}
 	.song-author{
 		color: #B5B5B5;

@@ -19,35 +19,13 @@
 			<!-- 推荐歌单 -->
 			<SongSheetAutoScr v-if="recDefSheet.length" :title="recTitle" class="rec-sheet" :songSheet="recDefSheet" :defaultText="defaultAutoText" :autoSongSheet="recAutoSheet"></SongSheetAutoScr>
 			<!-- 风格歌单推荐 -->
-			<view class="style-list">
-				<text class="title">{{styleTitle}}</text>
-				<view class="song-sheet-box">
-					<scroll-view scroll-x="true" class="scroll-style">
-						<swiper class="sheet-box" :interval="3000" :duration="1000">
-							<swiper-item class="style-item" v-for="(style,styleIndex) in styleSong" :key="styleIndex">
-								<view @tap="playSong( child.resourceExtInfo.song.id )" class="item-children" v-for="(child,childIndex) in style.resources" :key="childIndex">
-									<view class="image-box">
-										<image class="style-image" :src="child.uiElement.image.imageUrl"></image>
-									</view>
-									<view class="song">
-										<view class="top">
-											<text class="song-name">{{child.resourceExtInfo.songData.name}}</text>
-										</view>
-										<view class="bottom">
-											<text class="sub-title" v-if="child.uiElement.subTitle">{{child.uiElement.subTitle.title}}</text>
-											<text class="song-author">{{$dealAuthor(child.resourceExtInfo.artists,'name')}}</text>
-										</view>
-									</view>
-								</view>
-							</swiper-item>
-						</swiper>
-					</scroll-view>
-				</view>
-			</view>
+			<StyleSongAlbum :title="styleTitle" :styleData="styleSong"></StyleSongAlbum>
 			<!-- 雷达歌单 -->
 			<SongSheet :song-sheet="MGCSongSheet" v-if="MGCSongSheet.length" class="mgc-song-sheet" :title="MGCTitle"></SongSheet>
 			<!-- Look直播 -->
 			<look-live :title="lookLiveTitle" :live="lookLive" class="live" v-if="lookLive.length"></look-live>
+			<!-- 新歌新碟\数字专辑 -->
+			<StyleSongAlbum title="新歌新碟\\数字专辑" :styleData="albumHomePage" v-if="albumHomePage.length"></StyleSongAlbum>
 			<!-- 热门话题 -->
 			<hot-topic :title="topicTitle" :topic="hotTopic" v-if="hotTopic.length" class="home-topic"></hot-topic>
 			<!-- 有声书 -->
@@ -74,7 +52,8 @@
 	import SongSheetAutoScr from '@/components/SongSheetAutoScr/SongSheetAutoScr.vue'
 	import LookLive from '@/components/LookLive/LookLive.vue'
 	import HotTopic from '@/components/HotTopic/HotTopic.vue'
-	import { bottomControlMixin ,playSongMixin} from '@/common/mixins/mixins.js'
+	import StyleSongAlbum from '@/components/StyleSongAlbum/StyleSongAlbum.vue'
+	import { bottomControlMixin} from '@/common/mixins/mixins.js'
 	
 	
 	// #ifdef MP-WEIXIN
@@ -82,7 +61,7 @@
 	// #endif
 	
 	export default {
-		mixins:[bottomControlMixin,playSongMixin],
+		mixins:[bottomControlMixin],
 		data() {
 			return {
 				topBoxClass:'top-box-bg-linear',
@@ -111,7 +90,9 @@
 				// #ifdef MP-WEIXIN
 				modalStatus:false,
 				//#endif
+				//新歌新碟\数字专辑
 				albumHomePage:[],
+				//排行榜
 				toplist:[]
 			}
 		},
@@ -121,6 +102,7 @@
 			SongSheetAutoScr,
 			LookLive,
 			HotTopic,
+			StyleSongAlbum,
 			//#ifdef MP-WEIXIN
 			PersonalModal
 			//#endif
@@ -207,7 +189,7 @@
 						}
 						else if(item.blockCode = 'HOMEPAGE_BLOCK_HOT_TOPIC'){
 							let data = item.creatives
-							console.log(data)
+							//console.log(data)
 							data.map(topic=>{
 								
 								//热门播客
@@ -226,9 +208,11 @@
 									
 								}
 								//新歌新碟\数字专辑
-								else if (topic.creativeType === 'NEW_ALBUM_HOMEPAGE' || topic.creativeType === 'DIGITAL_ALBUM_HOMEPAGE' ){
+								else if (topic.creativeType === 'NEW_ALBUM_HOMEPAGE' || topic.creativeType === 'NEW_SONG_HOMEPAGE' || topic.creativeType === 'DIGITAL_ALBUM_HOMEPAGE' ){
 									console.log(topic.creativeType)
+									this.albumHomePage.push(topic)
 								}
+								
 								//热门话题(待定)
 								else if(topic.creativeType === 'TOPIC'){
 									topic.resources.map(res=>{
@@ -285,19 +269,7 @@
 					url:'../search/search?keyword='+encodeURIComponent(this.keywordD)
 				})
 			},
-			//保存播放列表
-			getPlayListData(){
-				let list = []
-				this.styleSong.map(item=>{
-					item.resources.map(res=>{
-						
-						list.push(res.resourceExtInfo.song)
-					})
-				})
-				
-				return list
-				
-			}
+			
 		},
 		created() {
 			this.init()
@@ -351,55 +323,7 @@
 		mix-blend-mode: screen;
 	}
 	
-	.scroll-style{
-		height: 200px;
-	}
-	.style-image{
-		width: 50px;
-		height: 50px;
-		border-radius: 6px;
-	}
-	.sheet-box{
-		width: 96vw;
-		font-size: 14px;
-	}
-	.style-item{
-		width: 96% !important;
-	}
-	.item-children{
-		display: flex;
-		justify-content: flex-start;
-		align-items: center;
-		margin: 10px 0;
-	}
-	.song{
-		margin-left: 2vw;
-		width: 78vw;
-	}
-	.bottom{
-		display: flex;
-		justify-content: flex-start;
-		align-items: center;
-	}
-	.sub-title{
-		color: #d40000;
-		background-color: #ffe7de;
-		border-radius: 4px;
-		font-size: 12px;
-		transform: scale(.8);
-		transform-origin: 0;
-	}
-	.song-author{
-		
-		color: #9a9a9a;
-	}
-	.sub-title,.song-author{
-		max-width: 140px;
-		white-space: nowrap;
-		word-wrap: break-word;
-		text-overflow: ellipsis;
-		overflow: hidden;
-	}
+	
 	
 	/* #ifdef MP-WEIXIN */
 	.top-box{
