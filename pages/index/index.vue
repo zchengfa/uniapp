@@ -5,7 +5,7 @@
 			<top-bar :defaultKeyword="keywordD" @centerTap="toSearch" @changeModal="changeModal" :bg="topBarBg"></top-bar>
 		</view>
 		<!-- 页面主内容 -->
-		<scroll-view scroll-y="true" class="scroll-v" :style="scrollHeight" @scroll="scrollPage($event)">
+		<scroll-view scroll-y="true" class="scroll-v index-srcoll-main" :style="scrollHeight" @scroll="scrollPage($event)">
 			<swiper :indicator-dots="true" indicator-color="#fff" indicator-active-color="#ff215c" :autoplay="true" :interval="7000" :duration="1000" :circular="true">
 				<swiper-item v-for="(item,index) in banners" :key="index">
 					<view class="swiper-item" @tap="toDetail(item)">
@@ -19,17 +19,20 @@
 			<!-- 推荐歌单 -->
 			<SongSheetAutoScr v-if="recDefSheet.length" :title="recTitle" class="rec-sheet" :songSheet="recDefSheet" :defaultText="defaultAutoText" :autoSongSheet="recAutoSheet"></SongSheetAutoScr>
 			<!-- 风格歌单推荐 -->
-			<StyleSongAlbum :title="styleTitle" :styleData="styleSong"></StyleSongAlbum>
+			<StyleSongAlbum :title="styleTitle" :styleData="styleSong" class="index-scroll-item"></StyleSongAlbum>
 			<!-- 雷达歌单 -->
 			<SongSheet :song-sheet="MGCSongSheet" v-if="MGCSongSheet.length" class="mgc-song-sheet" :title="MGCTitle"></SongSheet>
 			<!-- Look直播 -->
 			<look-live :title="lookLiveTitle" :live="lookLive" class="live" v-if="lookLive.length"></look-live>
 			<!-- 新歌新碟\数字专辑 -->
-			<StyleSongAlbum title="新歌新碟\\数字专辑" :styleData="albumHomePage" v-if="albumHomePage.length"></StyleSongAlbum>
+			<StyleSongAlbum title="新歌新碟\\数字专辑" :styleData="albumHomePage"  class="index-scroll-item" v-if="albumHomePage.length"></StyleSongAlbum>
+			<!-- 排行榜 -->
+			<StyleSongAlbum title="排行榜" :styleData="toplist" :isToplist="true"  class="index-scroll-item" v-if="toplist.length"></StyleSongAlbum>
 			<!-- 热门话题 -->
 			<hot-topic :title="topicTitle" :topic="hotTopic" v-if="hotTopic.length" class="home-topic"></hot-topic>
 			<!-- 有声书 -->
 			<SongSheet :song-sheet="voice" class="voice" :title="voiceTitle" v-if="voice.length"></SongSheet>
+			<view class="empty-box"></view>
 		</scroll-view>
 		<!-- 底部音乐控制 -->
 		<view class="bottom-control" v-show="isShowBottomControl" >
@@ -232,6 +235,7 @@
 								//排行榜
 								else if(topic.creativeType === 'toplist'){
 									
+									this.toplist.push(topic)
 								}
 							})
 						}
@@ -279,7 +283,15 @@
 </script>
 
 <style scoped>
-	
+	.empty-box{
+		position: relative;
+		top:20px;
+		width: 100%;
+		height: 30px;
+	}
+	.index-content{
+		background-color: #e5edf7 ;
+	}
 	.top-box{
 		width: 100%;
 		height: 50px;
@@ -291,9 +303,9 @@
 		background:linear-gradient(to right, #d9dfff, #ebe6ff,#feefff);
 	}
 	.top-box-bg-fff{
-		background-color: #f4f4f4;
+		background-color: #e5edf7;
 	}
-	.scroll-menu,.mgc-song-sheet,.rec-sheet,.live,.style-list,.home-topic,.voice{
+	.scroll-menu,.mgc-song-sheet,.rec-sheet,.live,.style-list,.home-topic,.voice,.index-scroll-item{
 		position: relative;
 		top:20px;
 		margin: 0 auto ;

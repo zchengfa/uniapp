@@ -75,7 +75,6 @@
 <style scoped>
 	.menu-content{
 		font-size: 14px;
-		background-color: #fff;
 	}
 	.scroll-menu{
 		white-space: nowrap;
