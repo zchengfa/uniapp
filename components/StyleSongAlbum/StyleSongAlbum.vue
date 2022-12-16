@@ -44,6 +44,7 @@
 <script>
 	import { playSongMixin } from '@/common/mixins/mixins.js'
 	import { songDetail } from '@/common/api.js'
+	import { mapGetters } from 'vuex'
 	
 	export default {
 		name:"StyleSongAlbum",
@@ -73,6 +74,9 @@
 				
 			};
 		},
+		computed:{
+			...mapGetters(['musicList'])
+		},
 		methods:{
 			//保存播放列表
 			getPlayListData(){
@@ -101,15 +105,32 @@
 				}
 			},
 			playToplist(data,id,index){
-				// //根据id列表拿到所有歌曲的基本数据，并播放当前点击的歌曲
-				// let ids = data.creativeExtInfoVO.topListSongIds
-				// songDetail(ids).then(res=>{
-				// 	if(res.code === 200) {
-				// 		this.$set()
-				//发送事件，将获得的数据交给父组件修改		
-				// 	}
-				// })
-				// //console.log(data,id)
+				
+				let ids = data.creativeExtInfoVO.topListSongIds
+				let count = 0
+				if(this.musicList.length){
+					this.musicList.map(item=>{
+						item.id === Number(id) ? count++ : null
+					})
+					
+					if(!count){
+						getSongsData(this)
+					}
+				}
+				else{
+					getSongsData(this)
+				}
+				
+				
+				this.playSong(id,index,'../../pages/songDetail/songDetail',false)
+				
+				function getSongsData(that){
+					songDetail(ids).then(res=>{
+						if(res.code === 200) {
+							that.$store.dispatch('musicList',JSON.stringify(res.songs))
+						}
+					})
+				}
 			}
 		}
 	}

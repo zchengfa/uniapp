@@ -135,7 +135,7 @@ audioContext.onCanplay(()=>{
 	
 	let totalTime = store.state.music.totalTime
 	let duration = store.state.music.duration
-	totalTime - duration >=10 ? store.dispatch('audition',true) : store.dispatch('audition',false)
+	totalTime - duration >= 100 && duration !== 0 ? store.dispatch('audition',true) : store.dispatch('audition',false)
 	//音乐在可播放时就获取歌词数据
 	if(!store.state.music.lyric.length){
 		getLyric(store.state.music.songId)

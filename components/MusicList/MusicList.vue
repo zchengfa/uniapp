@@ -160,6 +160,7 @@
 			else{
 				this.loop = 'controller-single_loop';
 			}
+			
 		}
 	}
 </script>

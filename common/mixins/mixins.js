@@ -240,7 +240,7 @@ const playSongMixin = {
 			
 		},
 		//点击歌曲进行播放
-		playSong(id,index = undefined,detailPath){
+		playSong(id,index = undefined,detailPath,neddSave = true){
 	
 			let listLength = this.$store.state.music.musicList.length
 			let musicList = this.$store.state.music.musicList
@@ -261,18 +261,20 @@ const playSongMixin = {
 				this.$store.dispatch('index',index)
 			})
 			
-			//判断vuex中是否保存过列表数据
-			if(listLength && index){
-				//判断点击的音乐是否存在之前保存过的列表里，不存在说明是新列表，保存新列表
-				
-				if(id !== musicList[index].id){
+			if(neddSave){
+				//判断vuex中是否保存过列表数据
+				if(listLength && index !== undefined){
+					//判断点击的音乐是否存在之前保存过的列表里，不存在说明是新列表，保存新列表
+					if(Number(id) !== musicList[index].id){
+						this.savePlayList()
+					}
+				}
+				//未保存过，直接保存
+				else{
 					this.savePlayList()
 				}
 			}
-			//未保存过，直接保存
-			else{
-				this.savePlayList()
-			}
+			
 			
 			//先判断播放控件播放的音乐是否是当前点击的歌曲，若不是则换成点击的歌曲播放，若一致直接跳转到详情页进行播放
 			let songId = this.$store.state.music.songId

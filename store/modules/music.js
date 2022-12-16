@@ -143,8 +143,8 @@ export default {
 			uni.setStorageSync('songIds',ids)
 		},
 		id(state,id){
-			state.songId = id
-			uni.setStorageSync('songId',id)
+			state.songId = Number(id)
+			uni.setStorageSync('songId',Number(id))
 		},
 		songs(state,songsData) {
 			let songData = JSON.parse(songsData)

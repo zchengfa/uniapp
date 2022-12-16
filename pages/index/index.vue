@@ -27,7 +27,7 @@
 			<!-- 新歌新碟\数字专辑 -->
 			<StyleSongAlbum title="新歌新碟\\数字专辑" :styleData="albumHomePage"  class="index-scroll-item" v-if="albumHomePage.length"></StyleSongAlbum>
 			<!-- 排行榜 -->
-			<StyleSongAlbum title="排行榜" :styleData="toplist" :isToplist="true"  class="index-scroll-item" v-if="toplist.length"></StyleSongAlbum>
+			<StyleSongAlbum title="排行榜" :styleData="toplist" :isToplist="true" class="index-scroll-item" v-if="toplist.length"></StyleSongAlbum>
 			<!-- 热门话题 -->
 			<hot-topic :title="topicTitle" :topic="hotTopic" v-if="hotTopic.length" class="home-topic"></hot-topic>
 			<!-- 有声书 -->
@@ -199,7 +199,7 @@
 								if(topic.creativeType === 'VOICE_LIST_HOMEPAGE'){
 									this.podcastTitle.length?null:this.podcastTitle = topic.uiElement.mainTitle.title
 									this.podcast.push(topic)
-									//console.log(topic)
+									
 								}
 								//有声书
 								else if(topic.creativeType === 'PODCAST_LIST_HOMEPAGE'){
@@ -212,7 +212,7 @@
 								}
 								//新歌新碟\数字专辑
 								else if (topic.creativeType === 'NEW_ALBUM_HOMEPAGE' || topic.creativeType === 'NEW_SONG_HOMEPAGE' || topic.creativeType === 'DIGITAL_ALBUM_HOMEPAGE' ){
-									console.log(topic.creativeType)
+									
 									this.albumHomePage.push(topic)
 								}
 								
@@ -273,7 +273,6 @@
 					url:'../search/search?keyword='+encodeURIComponent(this.keywordD)
 				})
 			},
-			
 		},
 		created() {
 			this.init()
