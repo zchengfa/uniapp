@@ -6,7 +6,7 @@
 				<view class="sheet-box">
 					<view class="sheet-item">
 						<swiper class="swiper" @change="change($event)" :indicator-dots="false" vertical :autoplay="true" :interval="4000" :duration="1000" :circular="true">
-							<swiper-item  v-for="(auto,autoIndex) in autoSongSheet.resources" @tap="toPlayListDetail(auto.resourceId)" :key="auto.resourceId">
+							<swiper-item  v-for="(auto,autoIndex) in autoSongSheet.resources" @tap="toPlayListDetail(auto.resourceId)" :key="autoIndex">
 								<view class="swiper-item">
 									<image class="image" :src="auto.uiElement.image.imageUrl" ></image>
 								</view>
@@ -17,7 +17,7 @@
 						<text v-if="currentText" class="main-title">{{currentText}}</text>
 						<text v-else class="main-title">{{defaultText}}</text>
 					</view>
-					<view class="sheet-item" @tap="toPlayListDetail(item.resources[0].resourceId)" v-for="(item,index) in songSheet" :key="item.resources[0].resourceId">
+					<view class="sheet-item" @tap="toPlayListDetail(item.resources[0].resourceId)" v-for="(item,index) in songSheet" :key="index">
 						<image :src="item.uiElement.image.imageUrl" class="image"></image>
 						<view class="mask">
 							<text class="play-count">{{item.resources[0].resourceExtInfo.playCount}}</text>

@@ -260,6 +260,11 @@
 				this.getScrollMenu()
 				this.getHomePageData()
 				this.getKeyword()
+				
+				let timer = setTimeout(()=>{
+					uni.stopPullDownRefresh()
+					clearTimeout(timer)
+				},2000)
 			},
 			getKeyword(){
 				keywordDefault().then(res=>{
@@ -277,6 +282,9 @@
 		created() {
 			this.init()
 
+		},
+		onPullDownRefresh() {
+			this.init()
 		}
 	}
 </script>
