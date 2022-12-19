@@ -111,6 +111,7 @@
 			//#endif
 		},
 		methods: {
+			
 			// #ifdef MP-WEIXIN
 			changeModal(){
 				this.modalStatus = !this.modalStatus
@@ -300,11 +301,13 @@
 		background-color: #e5edf7 ;
 	}
 	.top-box{
+		position: relative;
 		width: 100%;
 		height: 50px;
 		line-height: 32px;
 		font-size: 14px;
 		color: #bfbfbf;
+		z-index: 1000;
 	}
 	.top-box-bg-linear{
 		background:linear-gradient(to right, #d9dfff, #ebe6ff,#feefff);

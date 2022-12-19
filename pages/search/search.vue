@@ -89,6 +89,7 @@
 						:artist="summary.artist"
 						:sim="summary.sim_query"
 						:album="summary.album"
+						@changeInto="changeInto"
 						class="component-item"
 						></Summary>
 					</swiper-item>
@@ -217,6 +218,10 @@
 			}
 		},
 		methods: {
+			changeInto(into){
+				this.into = into
+				this.currentIndex = Number(into.substr(1,1))
+			},
 			changeItem(e){
 				this.into = 't' + e.detail.current
 				this.currentIndex = e.detail.current

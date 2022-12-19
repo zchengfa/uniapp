@@ -240,7 +240,7 @@
 	}
 	.song-name{
 		display: block;
-		max-width: 280px;
+		max-width: 200px;
 	}
 	.sub-title,.song-author,.song-name{
 		

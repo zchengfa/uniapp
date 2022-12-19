@@ -1,6 +1,5 @@
 const baseUrl = "https://www.codeman.ink/api"
 
-
 function Get(URL){
 	return new Promise((resolve)=>{
 		uni.request({

@@ -27,7 +27,7 @@
 						<text class="iconfont controller-more_ver"></text>
 					</view>
 				</view>
-				<view class="bottom-item" v-if="song.more">
+				<view class="bottom-item" v-if="song.more" @tap="changeInto('t1')">
 					<view class="match-box" v-if="song.moreText.indexOf(word) !== -1">
 						<text class="more-title">{{dealStringPre(song.moreText,word)}}</text>
 						<text class="word">{{dealStringWord(song.moreText,word)}}</text>
@@ -42,7 +42,7 @@
 			<!-- 歌单 -->
 			<view class="sheet scroll-item">
 				<text class="title">歌单</text>
-				<view class="sheets-item" v-for="(item,index) in playList.playLists" :key="index">
+				<view class="sheets-item" v-for="(item,index) in playList.playLists" :key="index" @tap="toPlayListDetail(item.id)">
 					<view class="image-box">
 						<image :src="item.coverImgUrl" class="sheet-image"></image>
 					</view>
@@ -54,7 +54,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="bottom-item sheet-bottom" v-if="playList.more">
+				<view class="bottom-item sheet-bottom" v-if="playList.more"  @tap="changeInto('t2')">
 					<view class="match-box" v-if="playList.moreText.indexOf(word) !== -1">
 						<text class="more-title">{{dealStringPre(playList.moreText,word)}}</text>
 						<text class="word">{{dealStringWord(playList.moreText,word)}}</text>
@@ -169,6 +169,10 @@
 			}
 		},
 		methods:{
+			changeInto(into){
+				
+				this.$emit('changeInto',into)
+			},
 			dealStringPre(str,word){
 				return str.substring(0,str.indexOf(word))
 			},
@@ -188,6 +192,11 @@
 				let list = []
 				list.push(...this.$props.song.songs)
 				return list
+			},
+			toPlayListDetail(id){
+				uni.navigateTo({
+					url:'../../pages/playListDetail/playListDetail?playListId='+id
+				})
 			}
 		}
 	
