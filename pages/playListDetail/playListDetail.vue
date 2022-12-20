@@ -5,7 +5,7 @@
 		<view class="nav">
 			<view class="left">
 				<text @tap="back" class="nav-item iconfont musicleftArrow"></text>
-				<text class="nav-item">歌单</text>
+				<text class="nav-item">{{navTitle}}</text>
 			</view>
 		</view>
 		<scroll-view scroll-y="true" :style="scrollHeightNoTab" class="scroll-v">
@@ -19,17 +19,20 @@
 						<view class="info">
 							<text class="name">{{playList.name}}</text>
 							<view class="user">
-								<view class="image-box">
+								<view class="image-box" v-if="creator.avatarUrl">
 									<image class="user-ava" :src="creator.avatarUrl" ></image>
 									<image v-if="creatorDetail" class="identity-image user-img" :src="creatorDetail.identityIconUrl" ></image>
 								</view>
 								<text class="creator-name">{{creator.nickname}}</text>
 								<image v-if="creator.gender === 1" class="identity-image" src="~@/static/images/man.png" mode=""></image>
 								<image v-else-if="creator.gender === 2" class="identity-image" src="~@/static/images/woman.png" mode=""></image>
-								<view class="followed">
+								<view class="followed" v-if="!isAlbum">
 									<text class="care no-care" v-if="!playList.followed">+关注</text>
 									<text class="care had-care" v-else>√已关注</text>
 								</view>
+							</view>
+							<view class="publish-time-box user">
+								<text class="publish-time" v-if="creator.publishTime">发行时间：{{creator.publishTime}}</text>
 							</view>
 						</view>
 					</view>
@@ -91,7 +94,7 @@
 								<image class="sub-img" v-for="(ava,avaIndex) in playList.subscribers" :src="ava.avatarUrl" :key="avaIndex"></image>
 							</view>
 						</view>
-						<view class="sub">
+						<view class="sub" v-if="!isAlbum">
 							<text class="sub-count">{{$dealCount(playList.subscribedCount)}}人收藏</text>
 							<text class="iconfont musicleftArrow sub-rotate"></text>
 						</view>
@@ -102,19 +105,25 @@
 		<!-- 歌单详细描述 -->
 		<view class="desc-detail" v-show="showDescDetail">
 			<text class="iconfont musicclose close" @tap="showDetail"></text>
-			<view class="main-desc">
-				<view class="image-name">
-					<image :src="playList.coverImgUrl" class="desc-image"></image>
-					<text class="desc-name">{{playList.name}}</text>
-				</view>
-				<view class="tag-desc">
-					<view class="tag-box" v-if="!!tagsLength">
-						<text class="tag-label">标签:</text>
-						<text class="tag-item" v-for="(item,index) in playList.tags" :key="index">{{item}}</text>
+			<scroll-view scroll-y="true" class="detail-scroll">
+				<view class="main-desc">
+					<view class="image-name">
+						<image :src="playList.coverImgUrl" class="desc-image"></image>
+						<text class="desc-name">{{playList.name}}</text>
 					</view>
-					<text class="desc-text">{{playList.description}}</text>
+					<view class="tag-desc">
+						<view class="tag-box" v-if="!!tagsLength">
+							<text class="tag-label">标签:</text>
+							<text class="tag-item" v-for="(item,index) in playList.tags" :key="index">{{item}}</text>
+						</view>
+						<view class="com-type" v-if="playList.companyType">
+							<text class="tag-label">发行公司：{{playList.companyType.com}}</text>
+							<text class="tag-label">专辑类型：{{playList.companyType.type}}</text>
+						</view>
+						<text class="desc-text">{{playList.description}}</text>
+					</view>
 				</view>
-			</view>
+			</scroll-view>
 			<text class="save">保存封面</text>
 		</view>
 		<!-- 底部音乐控件 -->
@@ -130,15 +139,18 @@
 <script>
 	import '@/common/iconfont.css'
 	import '@/common/controller.css'
-	import { playListDeatil,songDetail } from '@/common/api.js'
+	import { playListDeatil,songDetail,albumInfo,album } from '@/common/api.js'
 	import { bottomControlMixin,playSongMixin } from '@/common/mixins/mixins.js'
 	import { mapGetters } from 'vuex'
+	import { timeFormatting } from '@/utils/utils.js'
 	
 	export default {
 		name:'playListDetail',
 		mixins:[bottomControlMixin,playSongMixin],
 		data() {
 			return {
+				isAlbum:false,
+				navTitle:'歌单',
 				playList:{},
 				allSongData:[],
 				bgImage:'',
@@ -177,23 +189,51 @@
 				uni.navigateBack()
 			},
 			getData(id){
-				playListDeatil(id).then(res=>{
-					if(res.code === 200){
-						this.playList = res.playlist
-						this.tagsLength = res.playlist.tags.length
-						this.idList = this.playList.trackIds
-						let ids = ''
-						this.idList.map(item=>{
-							ids += item.id + ','
-						})
-						this.bgImage = `background-image:url("${this.playList.coverImgUrl}")`
-						this.creator = res.playlist.creator
-						this.creatorDetail = res.playlist.creator.avatarDetail
+				if(this.isAlbum){
+					album(id).then(res=>{
 						
-						this.getAllSongDetail(ids.substring(0,ids.length - 1))
-					}
-					
-				})
+						if(res.code === 200){
+							this.allSongData = res.songs
+							this.sliceList()
+							this.playList = {
+								name:res.album.name,
+								coverImgUrl:res.album.blurPicUrl,
+								shareCount:res.album.info.shareCount,
+								commentCount:res.album.info.commentCount,
+								subscribedCount:res.album.info.subCount,
+								description:res.album.description,
+								companyType:{
+									com:res.album.company,
+									type:res.album.subType
+								}
+							}
+							this.creator = {
+								nickname:'歌手：' + res.album.artist.name + '>',
+								publishTime:timeFormatting('YYYY.MM.DD',res.album.publishTime)
+							}
+							this.bgImage = `background-image:url("${this.playList.coverImgUrl}")`
+						}
+					})
+				}
+				else{
+					playListDeatil(id).then(res=>{
+						if(res.code === 200){
+							this.playList = res.playlist
+							this.tagsLength = res.playlist.tags.length
+							this.idList = this.playList.trackIds
+							let ids = ''
+							this.idList.map(item=>{
+								ids += item.id + ','
+							})
+							this.bgImage = `background-image:url("${this.playList.coverImgUrl}")`
+							this.creator = res.playlist.creator
+							this.creatorDetail = res.playlist.creator.avatarDetail
+							
+							this.getAllSongDetail(ids.substring(0,ids.length - 1))
+						}
+						
+					})
+				}
 			},
 			getAllSongDetail(ids){
 				uni.showLoading({
@@ -226,8 +266,10 @@
 		},
 		
 		onLoad(options) {
-			
+			options.resourceType ? this.navTitle = options.resourceType :null
+			options.resourceType ? this.isAlbum = true :null
 			this.getData(options.playListId)
+			
 		}
 	}
 </script>
@@ -400,8 +442,12 @@
 		position: relative;
 		top:20px;
 		left: 90%;
+		z-index: 999;
 	}
-	
+	.detail-scroll{
+		width: 100%;
+		height: 86vh;
+	}
 	.main-desc{
 		margin: 40px auto 0;
 		width: 84%;
@@ -434,6 +480,14 @@
 			padding: 4px 10px;
 			border-radius: 16px;
 			background-color: #aba7a7;
+		}
+		.com-type{
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 10px;
+			.tag-label{
+				margin: 5px 0 0;
+			}
 		}
 		.desc-text{
 			line-height: 24px;

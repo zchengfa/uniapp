@@ -167,7 +167,7 @@
 	 		},
 	 		{
 	 		  "pagePath": "pages/video/video",
-	 		  "text": "MV",
+	 		  "text": "视频",
 	 		  "iconPath": "/static/images/tabs/video.png",
 	 		  "selectedIconPath": "/static/images/tabs/video_selected.png"
 	 		},

@@ -1,5 +1,5 @@
-const baseUrl = "https://www.codeman.ink/api"
-
+//const baseUrl = "https://www.codeman.ink/api"
+const baseUrl = "http://192.168.31.110:3000"
 function Get(URL){
 	return new Promise((resolve)=>{
 		uni.request({
@@ -291,4 +291,14 @@ export function personalFm(){
 //最近播放
 export function recentlyPlayed(type,limit = 300){
 	return Get('/record/recent/'+type + '?limit=' + limit)
+}
+
+//专辑信息（评论数，收藏数，分享数）
+export function albumInfo(id){
+	return Get('/album/detail/dynamic?id=' + id)
+}
+
+//专辑内容
+export function album(id){
+	return Get('/album?id=' + id)
 }

@@ -97,6 +97,17 @@
 					
 					this.playSong( child.resourceId,undefined,'../../pages/songDetail/songDetail' )
 				}
+				else if(child.resourceType === "album"){
+					uni.navigateTo({
+						url:'/pages/playListDetail/playListDetail?playListId='+ child.resourceId + '&resourceType=专辑'
+					})
+				}
+				else if(child.resourceType === "digitalAlbum"){
+					uni.showModal({
+						title:'操作提示:',
+						content:'您点击的选项属于数字专辑等待作者完善！'
+					})
+				}
 				else{
 					uni.showModal({
 						title:'操作提示:',
