@@ -191,7 +191,7 @@ const playSongMixin = {
 		}
 	},
 	methods:{
-	async	playSongNoCoverPlayList(song){
+		async playSongNoCoverPlayList(song){
 			//碰到是歌曲时，获取播放列表播放的歌曲在列表中的位置，将当前点击的歌曲放置其后面
 			let playList = this.$store.state.music.musicList
 			let currentSongIndex = this.$store.state.music.currentSongIndex

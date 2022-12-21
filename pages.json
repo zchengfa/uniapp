@@ -146,6 +146,14 @@
             }
             
         }
+        ,{
+            "path" : "pages/digitalAlbum/digitalAlbum",
+            "style" :                                                                                    
+            {
+                 "navigationStyle":"custom"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

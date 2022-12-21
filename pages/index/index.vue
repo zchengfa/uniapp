@@ -56,7 +56,7 @@
 	import LookLive from '@/components/LookLive/LookLive.vue'
 	import HotTopic from '@/components/HotTopic/HotTopic.vue'
 	import StyleSongAlbum from '@/components/StyleSongAlbum/StyleSongAlbum.vue'
-	import { bottomControlMixin} from '@/common/mixins/mixins.js'
+	import { bottomControlMixin,playSongMixin} from '@/common/mixins/mixins.js'
 	
 	
 	// #ifdef MP-WEIXIN
@@ -64,7 +64,7 @@
 	// #endif
 	
 	export default {
-		mixins:[bottomControlMixin],
+		mixins:[bottomControlMixin,playSongMixin],
 		data() {
 			return {
 				topBoxClass:'top-box-bg-linear',
@@ -131,14 +131,24 @@
 			},
 			//点击歌曲，查看详情
 			toDetail(item){
+				
 				if(item.song){
 					
 				 	this.playSongNoCoverPlayList(item.song)
 				}
 				else if(item.url){
-					uni.navigateTo({
-						url:'../common/common?url='+ item.url
-					})
+					if(item.typeTitle === '数字专辑'){
+						let params = item.url.substring(item.url.indexOf('?id=') + 4,item.url.length)
+						
+						uni.navigateTo({
+							url:'../digitalAlbum/digitalAlbum?id='+ params
+						})
+					}
+					else{
+						uni.navigateTo({
+							url:'../common/common?url='+ item.url
+						})
+					}	
 				}
 				else if (item.video){
 					console.log('这是视频')

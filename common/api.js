@@ -1,5 +1,5 @@
-//const baseUrl = "https://www.codeman.ink/api"
-const baseUrl = "http://192.168.31.110:3000"
+const baseUrl = "https://www.codeman.ink/api"
+
 function Get(URL){
 	return new Promise((resolve)=>{
 		uni.request({
@@ -301,4 +301,9 @@ export function albumInfo(id){
 //专辑内容
 export function album(id){
 	return Get('/album?id=' + id)
+}
+
+//数字专辑详情/album/detail?id=xxx
+export function digitalAlbum(id){
+	return Get('/album/detail?id=' + id)
 }
