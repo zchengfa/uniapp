@@ -2,7 +2,12 @@
 	import { loginStatus } from 'common/api.js'
 	export default {
 		onLaunch: function() {
-			
+			//ios端小程序在系统静音模式下仍可以有声音
+			// #ifdef MP-WEIXIN
+			uni.setInnerAudioOption({
+				obeyMuteSwitch:false
+			})
+			// #endif
 		},
 		onShow: function() {
 			//获取浏览器存储的音乐数据，查看有没有设置歌曲循环方式，若没有，则给定默认的列表循环方式
