@@ -172,6 +172,7 @@
 		top:100%;
 		margin: 0 auto;
 		width: 94%;
+		max-width: 460px;
 		height: 64%;
 		border-radius: 16px;
 		background-color: #fff;
