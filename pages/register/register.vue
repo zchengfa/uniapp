@@ -313,7 +313,7 @@
 	color: #007AFF;
 	text-decoration: underline;
 }
-/* #ifdef MP-WEIXIN */
+/* #ifdef MP-WEIXIN || APP */
 .nav-bar{
 	height: 80px;
 	line-height: 80px;

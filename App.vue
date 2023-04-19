@@ -171,6 +171,11 @@
 		z-index: 999;
 	}
 	/* #ifdef MP-WEIXIN */
+	.wechat-modal{
+		background-color: transparent;
+	}
+	/* #endif */
+	/* #ifdef MP-WEIXIN || APP*/
 	.bottom-control{
 		bottom: 0;
 	}
@@ -180,7 +185,7 @@
 			top:0;
 			width: 100vw;
 			height: 100vh;
-			background-color: transparent;
+			
 			z-index: 1000;
 		}
 		.wechat-modal{
@@ -200,6 +205,9 @@
 	.top-box{
 		height: 80px;
 		line-height: 64px;
+	}
+	.wechat-modal{
+		background-color: rgba(0, 0, 0, .4);
 	}
 	/* #endif */
 	.scroll-v{

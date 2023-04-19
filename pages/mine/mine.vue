@@ -122,7 +122,7 @@
 			<music-list></music-list>
 		</view>
 		<!-- 小程序端的个人板块组件 -->
-		<!-- #ifdef MP-WEIXIN -->
+		<!-- #ifdef MP-WEIXIN || APP  -->
 		<personal-modal @changeModal="changeModal" class="wechat-modal" :class="modalStatus?'modal-in':'modal-out'"></personal-modal>
 		<!-- #endif -->
 	</view>
@@ -135,7 +135,7 @@
 	import { bottomControlMixin} from '@/common/mixins/mixins.js'
 	import { recommendSongSheet , songDetail ,userLikeMusicList,  userPlayList ,userLevel, loveMode , songExceptLyric} from '@/common/api.js'
 	import { mapGetters } from 'vuex'
-	// #ifdef MP-WEIXIN
+	// #ifdef MP-WEIXIN || APP 
 	import PersonalModal from '@/components/PersonalModal/PersonalModal.vue'
 	// #endif
 	
@@ -147,13 +147,13 @@
 				likeCover:'',
 				userPlayList:[],
 				levelInfo:{},
-				// #ifdef MP-WEIXIN
+				// #ifdef MP-WEIXIN || APP 
 				modalStatus:false
 				//#endif
 			}
 		},
 		components:{
-			//#ifdef MP-WEIXIN
+			//#ifdef MP-WEIXIN || APP 
 			PersonalModal
 			//#endif	
 		},
@@ -161,7 +161,7 @@
 			...mapGetters(['userInfo','likeIds'])
 		},
 		methods: {
-			// #ifdef MP-WEIXIN
+			// #ifdef MP-WEIXIN || APP 
 			changeModal(){
 				this.modalStatus = !this.modalStatus
 			},

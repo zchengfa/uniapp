@@ -54,7 +54,7 @@
 				this.$modalIn()
 				// #endif
 				
-				// #ifdef MP-WEIXIN
+				// #ifdef MP-WEIXIN || APP
 				this.$emit('changeModal')
 				// #endif
 			}

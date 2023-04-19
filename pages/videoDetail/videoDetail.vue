@@ -7,7 +7,9 @@
 				</view>
 			</view>
 		</view>
-		<video id="mv-video" class="my-video" :src="url" autoplay="true" loop="true" objectFit="fill"></video>
+		<view  id="mv-video" class="my-video" >
+			<video style="width: 100%;" :src="url" autoplay="true" loop="true" objectFit="contain" @ended="videoEnded"></video>
+		</view>
 		<view class="video-info">
 			<view class="info-top">
 				<view class="operation">
@@ -81,6 +83,9 @@
 			}
 		},
 		methods: {
+			videoEnded(){
+				console.log('放完了')
+			},
 			back(){
 				uni.navigateBack()
 			},
@@ -178,10 +183,17 @@
 		
 	}
 	/* #ifdef APP */
-	.my-video{
+	.mv-video{
+		position: absolute;
 		top:40%;
+		left: 0;
+		width: 100%;
+		transform: translateY(-50%);
+		z-index: 999;
+		
 	}
 	/* #endif */
+	
 	.video-info{
 		position: absolute;
 		

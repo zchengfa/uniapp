@@ -1,5 +1,5 @@
 <template>
-	<view class="personal-modal" @click.native="closeModal">
+	<view class="personal-modal" @tap.stop="closeModal">
 		<view class="content">
 			<!-- 板块头部（个人信息、扫码） -->
 			<view class="modal-header modal">
@@ -11,7 +11,7 @@
 					<text class="login header-msg" @click.stop="toLogin">立即登录</text>
 					<text class="header-msg">></text>
 					<!-- #endif -->
-					<!-- #ifdef MP-WEIXIN -->
+					<!-- #ifdef MP-WEIXIN  || APP-->
 					<image :src="userInfo.avatarUrl" v-if="userInfo.avatarUrl" class="avatar" ></image>
 					<image src="~@/static/images/avatar_de.png" v-else="userInfo.avatarUrl" class="avatar" ></image>
 					<text class="username header-msg" v-if="userInfo.nickname">{{userInfo.nickname}}</text>
@@ -70,7 +70,7 @@
 						<text class="login-out-btn login-close">退出登录/关闭</text>
 						<text class="login-out-btn music-close">关闭云音乐</text>
 						<!-- #endif -->
-						<!-- #ifdef MP-WEIXIN -->
+						<!-- #ifdef MP-WEIXIN  || APP-->
 						<text class="login-out-btn login-close" v-if="Object.keys(userInfo).length">退出登录/关闭</text>
 						<text class="login-out-btn music-close" v-else>关闭云音乐</text>
 						<!-- #endif -->
@@ -83,7 +83,7 @@
 
 <script>
 	import modalJson from '@/static/json/personalModal.json'
-	//#ifdef MP-WEIXIN
+	//#ifdef MP-WEIXIN || APP
 	import { mapGetters } from 'vuex'
 	//#endif
 	export default {
@@ -100,7 +100,7 @@
 		},
 		
 		computed:{
-			//#ifdef MP-WEIXIN
+			//#ifdef MP-WEIXIN || APP
 			...mapGetters(['userInfo'])
 			//#endif
 		},
@@ -111,7 +111,7 @@
 				this.$modalOut()
 				// #endif
 				
-				// #ifdef MP-WEIXIN
+				// #ifdef MP-WEIXIN || APP
 				this.$emit('changeModal')
 				// #endif
 			},
@@ -138,7 +138,7 @@
 					}
 					
 					// #endif
-					// #ifdef MP-WEIXIN
+					// #ifdef MP-WEIXIN || APP
 					if(location !== undefined){
 						that.$emit('changeModal')
 						showModalTip()
@@ -164,7 +164,7 @@
 
 <style scoped lang="scss">
 .personal-modal{
-	/* #ifdef H5 */
+	/* #ifdef H5*/
 	position: absolute;
 	top:0;
 	left: 0;
@@ -179,7 +179,7 @@
 	
 	.content{
 		margin-left: 0;
-		/* #ifdef H5 */
+		/* #ifdef H5 || APP */
 		width: 84%;
 		/* #endif */
 		/* #ifdef MP-WEIXIN */
@@ -192,9 +192,9 @@
 			height: calc(100vh - 55px);
 		}
 		/* #endif */
-		/* #ifdef MP-WEIXIN */
+		/* #ifdef MP-WEIXIN || APP*/
 		.scroll-v{
-			height: calc(100vh - 70px);
+			height: calc(100vh - 82px);
 		}
 		/* #endif */
 		.scroll-content{
@@ -209,7 +209,7 @@
 			width: 88%;
 			padding: 10px 5px;
 		}
-		/* #ifdef MP-WEIXIN */
+		/* #ifdef MP-WEIXIN || APP*/
 		.modal-header{
 			padding-top: 40px;
 		}

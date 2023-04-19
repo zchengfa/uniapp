@@ -42,7 +42,7 @@
 			<music-list></music-list>
 		</view>
 		<!-- 小程序端的个人板块组件 -->
-		<!-- #ifdef MP-WEIXIN -->
+		<!-- #ifdef MP-WEIXIN  || APP -->
 		<personal-modal @changeModal="changeModal" class="wechat-modal" :class="modalStatus?'modal-in':'modal-out'"></personal-modal>
 		<!-- #endif -->
 	</view>
@@ -59,7 +59,7 @@
 	import { bottomControlMixin,playSongMixin} from '@/common/mixins/mixins.js'
 	
 	
-	// #ifdef MP-WEIXIN
+	// #ifdef MP-WEIXIN || APP
 	import PersonalModal from '@/components/PersonalModal/PersonalModal.vue'
 	// #endif
 	
@@ -90,7 +90,7 @@
 				podcast:[],
 				voiceTitle:'',
 				voice:[],
-				// #ifdef MP-WEIXIN
+				// #ifdef MP-WEIXIN || APP
 				modalStatus:false,
 				//#endif
 				//新歌新碟\数字专辑
@@ -106,17 +106,20 @@
 			LookLive,
 			HotTopic,
 			StyleSongAlbum,
-			//#ifdef MP-WEIXIN
+			//#ifdef MP-WEIXIN || APP
 			PersonalModal
 			//#endif
 		},
 		methods: {
 			
-			// #ifdef MP-WEIXIN
+			// #ifdef MP-WEIXIN  || APP
 			changeModal(){
 				this.modalStatus = !this.modalStatus
+				
 			},
+			
 			//#endif
+			
 			scrollPage(e){
 				if(e.detail.scrollTop > 10){
 					this.topBoxClass = 'top-box-bg-fff'
