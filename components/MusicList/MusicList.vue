@@ -5,7 +5,7 @@
 				<text class="title">当前播放</text>
 				<text class="list-count">({{musicList.length}})</text>
 				<view class="list-controller">
-					<view class="loop" @click.native.stop="changeLoop">
+					<view class="loop" @tap.stop="changeLoop">
 						<text :class="loop" class="iconfont"></text>
 						<text class="loop-text">{{loopWay}}</text>
 					</view>
@@ -17,7 +17,7 @@
 				</view>
 				<scroll-view scroll-y="true" class="list-scroll" @scrolltolower="loadMore">
 					<view v-for="(item,index) in showData" :key="index" class="list-item">
-						<view class="song-box" @click.native.stop="playSong(item.id,index)" :class="{'current-song':songId === item.id}">
+						<view class="song-box" @tap.stop="playSong(item.id,index)" :class="{'current-song':songId === item.id}">
 							<image class="playing" v-if="songId === item.id" src="../../static/images/playing.png" mode="aspectFit"></image>
 							<text class="song-name" :class="{'current-song':songId === item.id}">{{item.name}}</text>
 							<text class="charactor" :class="{'current-song':songId === item.id}">-</text>

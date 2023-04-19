@@ -508,7 +508,7 @@
 		}
 		.musicclose{
 			top:0;
-			right:10%;
+			right:15%;
 		}
 		// #ifdef MP-WEIXIN
 		.musicclose{
@@ -666,7 +666,7 @@
 	.summary-scroll{
 		height: calc(100vh - 90px);
 	}
-	// #ifdef MP-WEIXIN
+	// #ifdef MP-WEIXIN || APP
 	.summary-scroll{
 		height: calc(100vh - 125px);
 	}
@@ -676,28 +676,42 @@
 .bottom-control{
 	bottom:0;
 }
-// #ifdef MP-WEIXIN
+/* #ifdef APP */
+.nav-search .input-box{
+	flex: 1;
+}
+/* #endif */
+/* #ifdef MP-WEIXIN */
+.nav-search .input-box{
+	flex: .6;
+}
+
+/* #endif */
+// #ifdef MP-WEIXIN || APP
 .nav-search{
 	height: 80px;
 	justify-content: flex-start;
 	.back-box,.search{
-		position: relative;
-		top:16px;
-		line-height: 80px;
-	}
-	.input-box{
-		position: relative;
-		top:16px;
-		margin: 0;
-		flex: .6;
-		.input{
-			margin-left: 0;
-			text-align: center;
-			transform: translateX(0);
-			text-indent: 0;
+			position: relative;
+			top:16px;
+			line-height: 80px;
 		}
-	}
+		.input-box{
+			position: relative;
+			top:16px;
+			margin: 0;
+			
+			.input{
+				margin-left: 0;
+				text-align: center;
+				transform: translateX(0);
+				text-indent: 0;
+			}
+		}
+		
 }
+
+
 .scroll-v{
 	height: calc(100vh - 80px);
 }

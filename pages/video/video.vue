@@ -164,7 +164,7 @@
 .play-count{
 	margin-right: 6px;
 }
-/* #ifdef MP-WEIXIN */
+/* #ifdef MP-WEIXIN || APP */
 .top-box{
 	height: 80px;
 }

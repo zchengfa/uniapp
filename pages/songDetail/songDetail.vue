@@ -128,12 +128,17 @@
 		text-align: center;
 		background-size: contain;
 	}
-	/* #ifdef H5 */
+	/* #ifdef H5 || APP*/
 	.disc{
 		width: 280px;
 		height: 280px;
 		border-radius: 50%;
 		background-color: #000000;
+	}
+	/* #endif */
+	/* #ifdef APP */
+	.needle{
+		top:60px;
 	}
 	/* #endif */
 	.song-pic{

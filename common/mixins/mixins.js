@@ -32,7 +32,7 @@ const bottomControlMixin = {
 				this.scrollHeightNoTab = 'height:calc(100vh - 100px);'
 				this.scrollHeightSwiper = 'height:calc(100vh - 145px);'
 				this.changeHeight = 'height:calc(70% - 50px);'
-				// #ifdef MP-WEIXIN
+				// #ifdef MP-WEIXIN || APP
 				this.scrollHeight = 'height:calc(100vh - 130px);'
 				this.scrollHeightNoTop = 'height:calc(100vh - 50px);'
 				this.scrollHeightSwiper = 'height:calc(100vh - 175px);'
@@ -46,7 +46,7 @@ const bottomControlMixin = {
 				this.scrollHeightNoTab = 'height:calc(100vh - 50px);'
 				this.scrollHeightSwiper = 'height:calc(100vh - 95px);'
 				this.changeHeight = 'height:70%;'
-				// #ifdef MP-WEIXIN
+				// #ifdef MP-WEIXIN || APP
 				this.scrollHeight = 'height:calc(100vh - 80px);'
 				this.scrollHeightNoTop = 'height:calc(100vh - 0px);'
 				this.scrollHeightSwiper = 'height:calc(100vh - 125px);'
@@ -248,7 +248,8 @@ const playSongMixin = {
 			//关闭私人FM模式
 			this.$store.dispatch('fmStatus',false)
 			
-			if(!index){
+			if(!index && this.idList.length){
+				
 				this.idList.map((item,listIndex)=>{
 					 
 					if(Number(item.id) === id){

@@ -345,7 +345,7 @@
 	height: 50px;
 	background-color: #fff;
 }
-/* #ifdef MP-WEIXIN */
+/* #ifdef MP-WEIXIN || APP */
 .top-box{
 	width: 100%;
 	height: 80px;

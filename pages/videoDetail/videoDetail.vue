@@ -7,7 +7,7 @@
 				</view>
 			</view>
 		</view>
-		<video id="mv-video" :src="url" autoplay="true" loop="true" objectFit="fill"></video>
+		<video id="mv-video" class="my-video" :src="url" autoplay="true" loop="true" objectFit="fill"></video>
 		<view class="video-info">
 			<view class="info-top">
 				<view class="operation">
@@ -136,6 +136,7 @@
 
 <style scoped>
 	.video-detail{
+		position: relative;
 		width: 100%;
 		height: 100vh;
 		background-color: #000;
@@ -176,6 +177,11 @@
 		z-index: 999;
 		
 	}
+	/* #ifdef APP */
+	.my-video{
+		top:40%;
+	}
+	/* #endif */
 	.video-info{
 		position: absolute;
 		
@@ -295,7 +301,7 @@
 		text-align: left;
 		font-size: 13px;
 	}
-	/* #ifdef MP-WEIXIN */
+	/* #ifdef MP-WEIXIN || APP */
 	.nav-place,.nav{
 		height: 80px;
 	}

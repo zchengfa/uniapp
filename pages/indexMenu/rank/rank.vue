@@ -328,7 +328,7 @@
 		height: 50px;
 	}
 	/* #endif */
-	/* #ifdef MP-WEIXIN */
+	/* #ifdef MP-WEIXIN || APP*/
 	.scroll{
 		height: 100vh;
 	}

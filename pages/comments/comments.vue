@@ -405,7 +405,7 @@
 	.emoji{
 		font-size: 24px;
 	}
-	/* #ifdef MP-WEIXIN */
+	/* #ifdef MP-WEIXIN || APP*/
 	.nav-place,.nav{
 		height: 80px;
 	}

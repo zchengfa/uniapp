@@ -10,7 +10,7 @@
 								<text class="item-title">{{style.uiElement.mainTitle.title}} > </text>
 								<text class="title-desc">{{style.uiElement.mainTitle.titleDesc}}</text>
 							</view>
-							<view @tap="isToplist ? playToplist(style,child.resourceId,styleIndex)  : playThisSong(child)" class="item-children" v-for="(child,childIndex) in style.resources" :key="childIndex">
+							<view @tap="isToplist ? playToplist(style,child.resourceId,childIndex)  : playThisSong(child , styleIndex * style.resources.length + childIndex)" class="item-children" v-for="(child,childIndex) in style.resources" :key="childIndex">
 								<view class="image-box">
 									<image class="style-image" :src="child.uiElement.image.imageUrl" mode="aspectFill"></image>
 								</view>
@@ -92,10 +92,12 @@
 				return list
 				
 			},
-			playThisSong(child){
+			playThisSong(child,index){
 				if(child.resourceType === 'song'){
 					
-					this.playSong( child.resourceId,undefined,'../../pages/songDetail/songDetail' )
+					
+					this.playSong( child.resourceId,index,'../../pages/songDetail/songDetail' )
+					
 				}
 				else if(child.resourceType === "album"){
 					uni.navigateTo({

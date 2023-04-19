@@ -90,7 +90,7 @@
 		width: 50%;
 		text-align: center;
 	}
-	/* #ifdef H5*/
+	/* #ifdef H5 */
 	.input-box{
 		flex: 1;
 	}
@@ -102,6 +102,7 @@
 		width: 100%;
 		height: 32px;
 		border: none;
+		line-height: 32px;
 		/* background:linear-gradient(to right, #c4cdff, #e0d9ff,#fde7ff); */
 		border-radius: 16px;
 		text-overflow: ellipsis;
@@ -113,16 +114,34 @@
 		width: 50px;
 		text-align: center;
 	}
-	/* #ifdef MP-WEIXIN */
+	/* #ifdef APP || MP-WEIXIN */
 	.top-content{
 		justify-content: flex-start;
 		height: 80px;
 	}
-	
 	.list,.input-box{
 		position: relative;
 		top:16px;
 	}
+	.audio{
+		position: absolute;
+		
+		bottom:10px;
+	}
+	/* #endif */
+	
+	/* #ifdef APP */
+	.input-box{
+		width: 77%;
+		text-align: center;
+	}
+	.audio{
+		right: 0;
+	}
+	/* #endif */
+	
+	/* #ifdef MP-WEIXIN */
+	
 	.list{
 		left: 0;
 	}
@@ -133,11 +152,9 @@
 		margin-left: 50px;
 		
 	}
-	
 	.audio{
-		position: absolute;
 		left: 50px;
-		bottom:10px;
 	}
+	
 	/* #endif */
 </style>

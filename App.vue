@@ -51,6 +51,9 @@
 </script>
 
 <style lang="scss">
+	@import 'common/iconfont.css';
+	@import 'common/mine.css';
+	@import 'common/controller.css';
 	/*每个页面公共css */
 	body,.maxWidth{
 		margin: 0 auto;
@@ -79,6 +82,7 @@
 			display: none;
 		}
 	}
+	
 	.nav{
 		position: relative;
 		display: flex;
@@ -111,19 +115,18 @@
 	}
 	/* #ifdef H5 */
 	uni-scroll-view .uni-scroll-view::-webkit-scrollbar {
-	/* 隐藏滚动条，但依旧具备可以滚动的功能 */
-	display: none;
-	width: 0 !important;
-	height: 0 !important;
-	-webkit-appearance: none;
-	background: transparent;
-	color: transparent;
+		/* 隐藏滚动条，但依旧具备可以滚动的功能 */
+		display: none;
+		width: 0 !important;
+		height: 0 !important;
+		-webkit-appearance: none;
+		background: transparent;
+		color: transparent;
 	}
 	/* #endif */
 	.bottom-control{
 		position: fixed;
 		left: 50%;
-		bottom:50px;
 		width: 100%;
 		height: 50px;
 		max-width: 500px;
@@ -131,6 +134,19 @@
 		transform: translateX(-50%);
 		box-shadow: 0 0 2px 2px #C0C0C0;
 	}
+	/* #ifdef APP */
+	.bottom-control{
+		bottom: 0;
+	}
+	.nav{
+		height: 80px;
+	}
+	/* #endif */
+	/* #ifdef H5 */
+	.bottom-control{
+		bottom: 50px;
+	}
+	/* #endif */
 	.scroll-v{
 		margin: 0 auto;
 	}
@@ -180,10 +196,16 @@
 			transform: translateX(-100%);
 		}
 	/*  #endif  */
+	/* #ifdef APP */
+	.top-box{
+		height: 80px;
+		line-height: 64px;
+	}
+	/* #endif */
 	.scroll-v{
 		height: calc(100vh - 100px);
 	}
-	/* #ifdef MP-WEIXIN */
+	/* #ifdef MP-WEIXIN || APP */
 	.scroll-v{
 		height: calc(100vh - 70px);
 	}

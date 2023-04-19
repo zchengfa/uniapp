@@ -71,7 +71,9 @@
 	mix-blend-mode: lighten;
 	font-weight: bold;
 }
-/* #ifdef MP-WEIXIN */
+
+
+/* #ifdef MP-WEIXIN || APP */
 .content{
 	height: 80px;
 	
@@ -86,15 +88,23 @@
 .left{
 	left: 2px;
 }
-.right{
-	left: 60px;
-}
+
 .center{
 	position: absolute;
 	top:50px;
 	left: 50vw;
 	width: 40vw;
 	transform: translateX(-50%);
+}
+/* #endif */
+/* #ifdef APP */
+.right{
+	right: 2px;
+}
+/* #endif */
+/* #ifdef MP-WEIXIN */
+.right{
+	left: 60px;
 }
 /* #endif */
 </style>
