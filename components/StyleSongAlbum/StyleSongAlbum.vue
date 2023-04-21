@@ -1,22 +1,22 @@
 <template>
 	<view class="style-list">
-		<text class="title">{{title}}</text>
+		<text class="title skeleton-rect">{{title}}</text>
 		<view class="song-sheet-box">
 			<scroll-view scroll-x="true" class="scroll-style" :class="{'toplist-scroll':isToplist}">
 				<swiper class="sheet-box" :interval="3000" :duration="1000">
-					<swiper-item class="style-item" v-for="(style,styleIndex) in styleData" :key="styleIndex">
+					<swiper-item class="style-item skeleton-fillet" v-for="(style,styleIndex) in styleData" :key="styleIndex">
 						<view class="item-container" :class="{'toplist-item-container':isToplist}">
-							<view class="swiper-item-title" v-if="isToplist">
-								<text class="item-title">{{style.uiElement.mainTitle.title}} > </text>
-								<text class="title-desc">{{style.uiElement.mainTitle.titleDesc}}</text>
+							<view class="swiper-item-title skeleton-fillet" v-if="isToplist">
+								<text class="item-title skeleton-rect">{{style.uiElement.mainTitle.title}} > </text>
+								<text class="title-desc skeleton-rect">{{style.uiElement.mainTitle.titleDesc}}</text>
 							</view>
 							<view @tap="isToplist ? playToplist(style,child.resourceId,childIndex)  : playThisSong(child , styleIndex * style.resources.length + childIndex)" class="item-children" v-for="(child,childIndex) in style.resources" :key="childIndex">
 								<view class="image-box">
-									<image class="style-image" :src="child.uiElement.image.imageUrl" mode="aspectFill"></image>
+									<image class="style-image skeleton-fillet" :src="child.uiElement.image.imageUrl" mode="aspectFill"></image>
 								</view>
 								<view class="song" :class="{'toplist-song':isToplist}">
-									<view class="no-box" v-if="isToplist">
-										<text class="No" :class="{'No-two':childIndex+1 === 2}">{{childIndex+1}}</text>
+									<view class="no-box ske" v-if="isToplist">
+										<text class="No skeleton-rect" :class="{'No-two':childIndex+1 === 2}">{{childIndex+1}}</text>
 									</view>
 									<view class="song-item-box">
 										<view class="top">
@@ -24,12 +24,12 @@
 											<text v-else class="song-name">{{child.uiElement.mainTitle.title}}</text>
 										</view>
 										<view class="bottom">
-											<text class="sub-title" v-if="child.uiElement.subTitle">{{child.uiElement.subTitle.title}}</text>
-											<text class="song-author">{{$dealAuthor(child.resourceExtInfo.artists,'name')}}</text>
+											<text class="sub-title skeleton-rect" v-if="child.uiElement.subTitle">{{child.uiElement.subTitle.title}}</text>
+											<text class="song-author skeleton-rect">{{$dealAuthor(child.resourceExtInfo.artists,'name')}}</text>
 										</view>
 									</view>
 									<view class="song-label" v-if="isToplist && child.uiElement.labelText.text !==null">
-										<text class="label-text" :class="child.uiElement.labelText.textColor">{{child.uiElement.labelText.text}}</text>
+										<text class="label-text skeleton-rect" :class="child.uiElement.labelText.textColor">{{child.uiElement.labelText.text}}</text>
 									</view>
 								</view>
 							</view>

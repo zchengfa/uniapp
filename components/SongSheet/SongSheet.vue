@@ -1,17 +1,17 @@
 <template>
 	<view class="song-sheet">
-		<text class="title">{{title}}</text>
+		<text class="title skeleton-rect">{{title}}</text>
 		<view class="song-sheet-box">
 			<scroll-view scroll-x="true" class="scroll">
 				<view class="sheet-box">
 					<view class="sheet-item"   @tap="toPlayListDetail(item.creativeId)" v-for="(item,index) in songSheet" :key="item.creativeId">
 						<image :src="item.uiElement.image.imageUrl" class="image"></image>
-						<view class="mask">
-							<text v-if="item.hasOwnProperty('resources')" class="play-count">{{$dealCount(item.resources[0].resourceExtInfo.playCount)}}</text>
-							<text class="play-icon iconfont musicplayCircle"></text>
+						<view class="mask skeleton-fillet">
+							<text v-if="item.hasOwnProperty('resources')" class="play-count skeleton-circle">{{$dealCount(item.resources[0].resourceExtInfo.playCount)}}</text>
+							<text class="play-icon iconfont musicplayCircle skeleton-rect"></text>
 						</view>
 						<view class="main-title">
-							<text class="label-title" v-if="item.uiElement.hasOwnProperty('labelTexts')">{{(item.uiElement.labelTexts[0]).replace('热门','')}}</text>
+							<text class="label-title skeleton-rect" v-if="item.uiElement.hasOwnProperty('labelTexts')">{{(item.uiElement.labelTexts[0]).replace('热门','')}}</text>
 							{{item.uiElement.mainTitle.title}}
 						</view>
 					</view>

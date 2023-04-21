@@ -12,6 +12,7 @@
 		onShow: function() {
 			//获取浏览器存储的音乐数据，查看有没有设置歌曲循环方式，若没有，则给定默认的列表循环方式
 			
+			
 			if(!uni.getStorageSync('loop_status')){
 				uni.setStorageSync('loop_status','ll')
 				uni.setStorageSync('loopCount',0)
@@ -51,6 +52,8 @@
 </script>
 
 <style lang="scss">
+	@import 'uview-ui/index.scss';
+	
 	@import 'common/iconfont.css';
 	@import 'common/mine.css';
 	@import 'common/controller.css';
@@ -230,7 +233,7 @@
 	/* #endif */
 	.title{
 		display: inline-block;
-		padding: 20px 0 10px;
+		margin: 20px 0 10px;
 		font-weight: bolder;
 	}
 	.sheet-box{

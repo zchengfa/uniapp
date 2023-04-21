@@ -1,39 +1,43 @@
 <template>
-	<view class="index-content">
+	<view class="index-content ">
 		<!-- 顶部导航栏 -->
 		<view class="top-box" :class="topBoxClass">
-			<top-bar :defaultKeyword="keywordD" @centerTap="toSearch" @changeModal="changeModal" :bg="topBarBg"></top-bar>
+			<top-bar :defaultKeyword="keywordD" @centerTap="toSearch" @changeModal="changeModal" :bg="topBarBg" @rightTap="audioTap"></top-bar>
 		</view>
-		<!-- 页面主内容 -->
-		<scroll-view scroll-y="true" class="scroll-v index-srcoll-main" :style="scrollHeight" @scroll="scrollPage($event)">
-			<swiper :indicator-dots="true" indicator-color="#fff" indicator-active-color="#ff215c" :autoplay="true" :interval="7000" :duration="1000" :circular="true">
-				<swiper-item v-for="(item,index) in banners" :key="index">
-					<view class="swiper-item" @tap="toDetail(item)">
-						<image :src="item.pic" class="banner-image"></image>
-						<text class="type-title">{{item.typeTitle}}</text>
-					</view>
-				</swiper-item>
-			</swiper>
-			<!-- 圆形滚动按钮菜单 -->
-			<scroll-menu :scroll-menu="scrollMenu" class="scroll-menu"></scroll-menu>
-			<!-- 推荐歌单 -->
-			<SongSheetAutoScr v-if="recDefSheet.length" :title="recTitle" class="rec-sheet" :songSheet="recDefSheet" :defaultText="defaultAutoText" :autoSongSheet="recAutoSheet"></SongSheetAutoScr>
-			<!-- 风格歌单推荐 -->
-			<StyleSongAlbum :title="styleTitle" :styleData="styleSong" class="index-scroll-item"></StyleSongAlbum>
-			<!-- 雷达歌单 -->
-			<SongSheet :song-sheet="MGCSongSheet" v-if="MGCSongSheet.length" class="mgc-song-sheet" :title="MGCTitle"></SongSheet>
-			<!-- Look直播 -->
-			<look-live :title="lookLiveTitle" :live="lookLive" class="live" v-if="lookLive.length"></look-live>
-			<!-- 新歌新碟\数字专辑 -->
-			<StyleSongAlbum title="新歌新碟\\数字专辑" :styleData="albumHomePage"  class="index-scroll-item" v-if="albumHomePage.length"></StyleSongAlbum>
-			<!-- 排行榜 -->
-			<StyleSongAlbum title="排行榜" :styleData="toplist" :isToplist="true" class="index-scroll-item" v-if="toplist.length"></StyleSongAlbum>
-			<!-- 热门话题 -->
-			<hot-topic :title="topicTitle" :topic="hotTopic" v-if="hotTopic.length" class="home-topic"></hot-topic>
-			<!-- 有声书 -->
-			<SongSheet :song-sheet="voice" class="voice" :title="voiceTitle" v-if="voice.length"></SongSheet>
-			<view class="empty-box"></view>
-		</scroll-view>
+		<view class="u-skeleton">
+			
+			<!-- 页面主内容 -->
+			<scroll-view scroll-y="true" class="scroll-v index-srcoll-main" :style="scrollHeight" @scroll="scrollPage($event)">
+				<swiper :indicator-dots="true" indicator-color="#fff" indicator-active-color="#ff215c" :autoplay="true" :interval="7000" :duration="1000" :circular="true">
+					<swiper-item v-for="(item,index) in banners" :key="index">
+						<view class="swiper-item" @tap="toDetail(item)">
+							<image :src="item.pic" class="banner-image skeleton-fillet" :class="{'skeleton-fillet':index===0}"></image>
+							<text class="type-title skeleton-rect" :class="{'skeleton-rect':index===0}">{{item.typeTitle}}</text>
+						</view>
+					</swiper-item>
+			
+				</swiper>
+				<!-- 圆形滚动按钮菜单 -->
+				<scroll-menu :scroll-menu="scrollMenu" class="scroll-menu" ></scroll-menu>
+				<!-- 推荐歌单 -->
+				<SongSheetAutoScr v-if="recDefSheet.length" :title="recTitle" class="rec-sheet" :songSheet="recDefSheet" :defaultText="defaultAutoText" :autoSongSheet="recAutoSheet"></SongSheetAutoScr>
+				<!-- 风格歌单推荐 -->
+				<StyleSongAlbum :title="styleTitle" :styleData="styleSong" class="index-scroll-item"></StyleSongAlbum>
+				<!-- 雷达歌单 -->
+				<SongSheet :song-sheet="MGCSongSheet" v-if="MGCSongSheet.length" class="mgc-song-sheet" :title="MGCTitle"></SongSheet>
+				<!-- Look直播 -->
+				<look-live :title="lookLiveTitle" :live="lookLive" class="live" v-if="lookLive.length"></look-live>
+				<!-- 新歌新碟\数字专辑 -->
+				<StyleSongAlbum title="新歌新碟\\数字专辑" :styleData="albumHomePage"  class="index-scroll-item" v-if="albumHomePage.length"></StyleSongAlbum>
+				<!-- 排行榜 -->
+				<StyleSongAlbum title="排行榜" :styleData="toplist" :isToplist="true" class="index-scroll-item" v-if="toplist.length"></StyleSongAlbum>
+				<!-- 热门话题 -->
+				<hot-topic :title="topicTitle" :topic="hotTopic" v-if="hotTopic.length" class="home-topic"></hot-topic>
+				<!-- 有声书 -->
+				<SongSheet :song-sheet="voice" class="voice" :title="voiceTitle" v-if="voice.length"></SongSheet>
+				<view class="empty-box"></view>
+			</scroll-view>
+		</view>
 		<!-- 底部音乐控制 -->
 		<view class="bottom-control" v-show="isShowBottomControl" >
 			<music-controller FMPath="../indexMenu/FM/FM" songDetailPath="../songDetail/songDetail"></music-controller>
@@ -45,6 +49,9 @@
 		<!-- #ifdef MP-WEIXIN  || APP -->
 		<personal-modal @changeModal="changeModal" class="wechat-modal" :class="modalStatus?'modal-in':'modal-out'"></personal-modal>
 		<!-- #endif -->
+		<u-no-network tips="YC音乐君开小差了喔!"></u-no-network>
+		 <!-- <Skeleton class="skeleton-com" v-if="show"></Skeleton> -->
+		 <puppeteer v-if="show"></puppeteer>
 	</view>
 </template>
 
@@ -57,7 +64,8 @@
 	import HotTopic from '@/components/HotTopic/HotTopic.vue'
 	import StyleSongAlbum from '@/components/StyleSongAlbum/StyleSongAlbum.vue'
 	import { bottomControlMixin,playSongMixin} from '@/common/mixins/mixins.js'
-	
+	// import Skeleton from '@/skeleton/Skeleton.vue'
+	import puppeteer from '@/puppeteer.vue'
 	
 	// #ifdef MP-WEIXIN || APP
 	import PersonalModal from '@/components/PersonalModal/PersonalModal.vue'
@@ -96,7 +104,8 @@
 				//新歌新碟\数字专辑
 				albumHomePage:[],
 				//排行榜
-				toplist:[]
+				toplist:[],
+				show:true,
 			}
 		},
 		components:{
@@ -107,11 +116,18 @@
 			HotTopic,
 			StyleSongAlbum,
 			//#ifdef MP-WEIXIN || APP
-			PersonalModal
+			PersonalModal,
 			//#endif
+			// Skeleton,
+			puppeteer
 		},
 		methods: {
-			
+			audioTap(){
+				// uni.navigateTo({
+				// 	url:'../audio/audio'
+				// })
+				this.show = true
+			},
 			// #ifdef MP-WEIXIN  || APP
 			changeModal(){
 				this.modalStatus = !this.modalStatus
@@ -299,11 +315,18 @@
 		},
 		onPullDownRefresh() {
 			this.init()
+		},
+		
+		mounted() {
+			setTimeout(()=>{
+				this.show = false
+			},3000)
 		}
 	}
 </script>
 
 <style scoped>
+	
 	.empty-box{
 		position: relative;
 		top:20px;
@@ -335,7 +358,7 @@
 	.top-box-bg-fff{
 		background-color: #e5edf7;
 	}
-	.scroll-menu,.mgc-song-sheet,.rec-sheet,.live,.style-list,.home-topic,.voice,.index-scroll-item{
+	.scroll-menu,.mgc-song-sheet,.rec-sheet,.live,.style-list,.home-topic,.voice,.index-scroll-item,.skeleton-item{
 		position: relative;
 		top:20px;
 		margin: 0 auto ;
@@ -350,6 +373,7 @@
 	}
 	.banner-image{
 		width: 100%;
+		
 		height: 140px;
 		border-radius: 8px;
 	}
@@ -377,4 +401,5 @@
 		height: calc(100vh - 70px);
 	}
 	/* #endif */
+	
 </style>

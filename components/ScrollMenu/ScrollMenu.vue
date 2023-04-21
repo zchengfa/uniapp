@@ -4,12 +4,13 @@
 			<view class="menu-box">
 				<view v-for="(item,index) in scrollMenu" :key="item.id" class="menu-item" @tap="toMenuDetail(item.name)">
 					<view class="image-box">
-						<image :src="item.iconUrl" class="image"></image>
+						<image :src="item.iconUrl" class="image skeleton-circle" data-id="scroll-menu"></image>
 					</view>
-					<text class="menu-name">{{item.name}}</text>
+					<text class="menu-name skeleton-rect">{{item.name}}</text>
 				</view>
 			</view>
 		</scroll-view>
+		
 	</view>
 </template>
 
@@ -20,7 +21,9 @@
 			scrollMenu:{
 				type:Array,
 				default(){
-					return []
+					return [
+						
+					]
 				}
 			}
 		},
@@ -68,7 +71,8 @@
 					}
 				}
 			}
-		}
+		},
+		
 	}
 </script>
 
@@ -77,7 +81,9 @@
 		font-size: 14px;
 	}
 	.scroll-menu{
+		
 		white-space: nowrap;
+		
 	}
 	.scroll::-webkit-scrollbar{
 		display: none !important;
@@ -86,13 +92,14 @@
 		background-color: transparent !important;
 	}
 	.menu-box{
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
+		width: 200%;
 	}
 	.menu-item{
-		padding: 0 18px;
+		display: inline-block;
+		width: 10%;
+		text-align: center;
 	}
+	
 	.image-box{
 		text-align: center;
 	}
@@ -104,6 +111,12 @@
 		color: #ff2041;
 	}
 	.menu-name{
+		margin: 0 auto;
+		display: block;
+		width: 56px;
 		color: #585858;
+		text-align: center;
 	}
+	
+	
 </style>

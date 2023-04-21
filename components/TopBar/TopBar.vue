@@ -2,20 +2,20 @@
 	<view class="top-content">
 		<view class="list" @tap="openPersonalModal">
 			<slot name="left">
-				<image src="~@/static/images/nav/list.png" class="list-image"></image>
+				<image src="~@/static/images/nav/list.png" class="list-image skeleton-rect"></image>
 			</slot>
 		</view>
 		
 		<view class="input-box">
 			<slot name="center">
-				<view class="input" @tap="centerTap" :style="bg">
+				<view class="input  skeleton-rect" @tap="centerTap" :style="bg">
 					{{defaultKeyword}}
 				</view>
 			</slot>
 		</view>
-		<view class="audio">
+		<view class="audio" @tap="rightTap">
 			<slot  name="right">
-				<image src="~@/static/images/nav/audio.png" class="list-image"></image>
+				<image src="~@/static/images/nav/audio.png" class="list-image skeleton-rect"></image>
 			</slot>
 		</view>
 	</view>
@@ -57,6 +57,9 @@
 				// #ifdef MP-WEIXIN || APP
 				this.$emit('changeModal')
 				// #endif
+			},
+			rightTap(){
+				this.$emit('rightTap')
 			}
 		}
 	}

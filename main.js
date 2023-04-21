@@ -13,6 +13,12 @@ import personalModal from '@/components/PersonalModal/modal.js'
 // #ifndef VUE3
 import Vue from 'vue'
 
+
+//引入uview-ui，需在vue之后引入
+import uview from 'uview-ui'
+
+Vue.use(uview)
+
 Vue.use(personalModal)
 
 Vue.config.productionTip = false
