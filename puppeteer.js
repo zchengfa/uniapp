@@ -16,7 +16,7 @@ const fs = require('fs')
 	    headless:false,
 	
 	    //设置网页视口宽高
-	    defaultViewport:{width:500,height:1080},
+	    defaultViewport:{width:390,height:1080},
 	
 	    //设置浏览器执行路径
 	    //executablePath:'D:\\chromium\\win64-856583\\chrome-win\\chrome.exe',

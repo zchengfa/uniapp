@@ -11,34 +11,34 @@
 			overflowY:'scroll',
 			overflowX:'hidden'
 		}">
-			<view class="skeleton-fade" v-for="(item,index) in rectNodes" :key="index + new Date().getTime()" :style="{
+			<view class="skeleton-fade" v-for="(item,index) in rectNodes" :key="item.index" :style="{
 				position:'absolute',
-				top:item.top + 'px',
-				left:item.left + 'px',
-				width: item.width + 'px',
-				height: item.height + 'px',
+				top:item.top+'px',
+				left:item.left,
+				width: item.width,
+				height: item.height+'px',
 				backgroundColor:elColor
 			}">
 				
 			</view>
 			
-			<view class="skeleton-fade" v-for="(item,index) in circleNodes" :key="index + 'circle'" :style="{
+			<view class="skeleton-fade" v-for="(item,index) in circleNodes" :key="item.index" :style="{
 				position:'absolute',
-				top:item.top + 'px',
-				left:item.left + 'px',
-				width: item.width + 'px',
-				height: item.height + 'px',
-				borderRadius:item.width/2 + 'px',
+				top:item.top+'px',
+				left:item.left,
+				width: item.width,
+				height: item.height+'px',
+				borderRadius:'50%',
 				backgroundColor:elColor
 			}">
 			</view>
 			
-			<view class="skeleton-fade" v-for="(item,index) in filletNodes" :key="index" :style="{
+			<view class="skeleton-fade" v-for="(item,index) in filletNodes" :key="item.index" :style="{
 				position:'absolute',
-				top:item.top + 'px',
-				left:item.left + 'px',
-				width: item.width + 'px',
-				height: item.height + 'px',
+				top:item.top+'px',
+				left:item.left,
+				width: item.width,
+				height: item.height+'px',
 				borderRadius:borderRadius + 'px',
 				backgroundColor:elColor
 			}">
@@ -51,6 +51,7 @@
 
 <script>
 	let S = uni.getSystemInfoSync();
+	console.log(S.uniPlatform)
 	export default {
 		name:"Skeleton",
 		props:{
@@ -81,11 +82,9 @@
 				let query = uni.createSelectorQuery().in(this.$parent)
 				let selector = '.skeleton-' + elType
 				
-				query.selectAll(selector).boundingClientRect(res=>{
-					let obj = {
-						name:elType,
-						nodes:res
-					}
+				query.selectAll(selector).boundingClientRect(nodes=>{
+					
+					let res = this.dealNodes(nodes,elType)
 					
 					switch (elType){
 						case 'rect':
@@ -103,11 +102,17 @@
 					
 					
 					
-					console.log({
-						name:elType,
-						nodes:res
-					})
+					
 				}).exec()
+			},
+			dealNodes(nodes,type){
+				nodes.map((item,i)=>{
+					item.left = (item.left / S.windowWidth)*100  + "%"
+					item.width = (item.width / S.windowWidth)*100 +'%'
+					item.index = i+type
+				})
+				return nodes
+				
 			}
 		},
 		mounted() {

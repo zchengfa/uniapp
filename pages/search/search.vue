@@ -369,7 +369,8 @@
 					this.isShowResult = true
 					//获取数据后，将搜索词加入到搜索历史中
 					//1.先判断当前的搜索词是否已经在历史中，若存在则先删除，再将它放入历史首位
-					let index = this.history.indexOf(this.searchKeyword.replace(/\s+/g,''))
+					let index = this.history.indexOf(this.searchKeyword.replace(/(^\s*)|(\s*$)/g, ''))
+					
 				
 					if(index !== -1){
 						this.history.splice(index,1)	

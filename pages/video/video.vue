@@ -34,6 +34,7 @@
 		<view v-if="isShowMusicList">
 			<music-list></music-list>
 		</view>
+		<u-no-network tips="YC音乐君开小差了喔!"></u-no-network>
 		<!-- 小程序端的个人板块组件 -->
 		<!-- #ifdef MP-WEIXIN || APP -->
 		<personal-modal @changeModal="changeModal" class="wechat-modal" :class="modalStatus?'modal-in':'modal-out'"></personal-modal>

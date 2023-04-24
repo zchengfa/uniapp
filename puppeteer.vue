@@ -1,8 +1,9 @@
 <template>
 	<view class="skeleton">
-		<view data-v-6b2cce5e="" class="skeleton-container" :style="{
+		<view data-v-6b2cce5e="" class="skeleton-container"
+			:style="{
 				position:'absolute',
-				top:top,
+				top:0,
 				left:0,
 				width:vw,
 				height:vh,
@@ -12,849 +13,816 @@
 				overflowX:'hidden'
 			}">
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 11px; left: 11px; width: 28px; height: 28px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 11px; left: 2.82051%; width: 7.17949%; height: 28px; background-color: rgb(229, 229, 229);">
 			</view>
-			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 9px; left: 50px; width: 300px; height: 32px; background-color: rgb(229, 229, 229);">
-			</view>
-			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 11px; left: 361px; width: 28px; height: 28px; background-color: rgb(229, 229, 229);">
-			</view>
-			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 157px; left: 331px; width: 52px; height: 18px; background-color: rgb(229, 229, 229);">
-			</view>
-			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 157px; left: 731px; width: 52px; height: 18px; background-color: rgb(229, 229, 229);">
-			</view>
-			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 157px; left: 1131px; width: 52px; height: 18px; background-color: rgb(229, 229, 229);">
-			</view>
-			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 157px; left: 1531px; width: 52px; height: 18px; background-color: rgb(229, 229, 229);">
-			</view>
-			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 157px; left: 1931px; width: 52px; height: 18px; background-color: rgb(229, 229, 229);">
-			</view>
-			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 157px; left: -1269px; width: 52px; height: 18px; background-color: rgb(229, 229, 229);">
-			</view>
-			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 157px; left: -869px; width: 52px; height: 18px; background-color: rgb(229, 229, 229);">
-			</view>
-			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 157px; left: -469px; width: 52px; height: 18px; background-color: rgb(229, 229, 229);">
-			</view>
-			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 173px; left: -21px; width: 4px; height: 2px; background-color: rgb(229, 229, 229);">
+			<view data-v-6b2cce5e="" class="skeleton-fade middle"
+				style="position: absolute; top: 9px; left: 12.8205%; width: 74.359%; height: 32px; background-color: rgb(229, 229, 229);">
 			</view>
-			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 255.333px; left: 18.3958px; width: 56px; height: 18px; background-color: rgb(229, 229, 229);">
-			</view>
-			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 255.333px; left: 95.1875px; width: 56px; height: 18px; background-color: rgb(229, 229, 229);">
+			<view data-v-6b2cce5e="" class="skeleton-fade right"
+				style="position: absolute; top: 11px; left: 90%; width: 7.17949%; height: 28px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 255.333px; left: 171.979px; width: 56px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 157px; left: 82.3825%; width: 13.3333%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 255.333px; left: 248.771px; width: 56px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 255.333px; left: 4.42041%; width: 14.359%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 255.333px; left: 325.562px; width: 56px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 255.333px; left: 23.6191%; width: 14.359%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 255.333px; left: 402.354px; width: 56px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 255.333px; left: 42.8178%; width: 14.359%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 255.333px; left: 479.146px; width: 56px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 255.333px; left: 62.0166%; width: 14.359%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 255.333px; left: 555.938px; width: 56px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 255.333px; left: 81.2153%; width: 14.359%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 255.333px; left: 632.729px; width: 56px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 293.333px; left: 4.56464%; width: 14.359%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 255.333px; left: 709.521px; width: 56px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 321.333px; left: 32.7698%; width: 8.20513%; height: 32px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 293.333px; left: 18px; width: 56px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 471.333px; left: 5.84669%; width: 35.8974%; height: 34.6667px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 321.333px; left: 128px; width: 32px; height: 32px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 321.333px; left: 44.3082%; width: 35.8974%; height: 17.3333px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 471.333px; left: 23px; width: 140px; height: 34.6667px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 440.667px; left: 44.3082%; width: 35.8974%; height: 20.6667px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 321.333px; left: 173px; width: 140px; height: 17.3333px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 474.667px; left: 44.3082%; width: 35.8974%; height: 17.3333px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 440.667px; left: 173px; width: 140px; height: 20.6667px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 321.333px; left: 82.7698%; width: 35.8974%; height: 17.3333px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 474.667px; left: 173px; width: 140px; height: 34.6667px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 440.667px; left: 82.7698%; width: 35.8974%; height: 20.6667px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 321.333px; left: 323px; width: 140px; height: 17.3333px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 474.667px; left: 82.7698%; width: 35.8974%; height: 34.6667px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 440.667px; left: 323px; width: 140px; height: 20.6667px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 321.333px; left: 121.231%; width: 35.8974%; height: 17.3333px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 474.667px; left: 323px; width: 140px; height: 17.3333px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 440.667px; left: 121.231%; width: 35.8974%; height: 20.6667px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 321.333px; left: 473px; width: 140px; height: 17.3333px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 474.667px; left: 121.231%; width: 35.8974%; height: 17.3333px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 440.667px; left: 473px; width: 140px; height: 20.6667px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 321.333px; left: 159.693%; width: 35.8974%; height: 17.3333px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 474.667px; left: 473px; width: 140px; height: 17.3333px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 440.667px; left: 159.693%; width: 35.8974%; height: 20.6667px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 321.333px; left: 623px; width: 140px; height: 17.3333px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 474.667px; left: 159.693%; width: 35.8974%; height: 34.6667px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 440.667px; left: 623px; width: 140px; height: 20.6667px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 321.333px; left: 198.154%; width: 35.8974%; height: 17.3333px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 474.667px; left: 623px; width: 140px; height: 17.3333px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 440.667px; left: 198.154%; width: 35.8974%; height: 20.6667px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 321.333px; left: 773px; width: 140px; height: 17.3333px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 474.667px; left: 198.154%; width: 35.8974%; height: 17.3333px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 440.667px; left: 773px; width: 140px; height: 20.6667px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 541.333px; left: 2.00053%; width: 28.7179%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 474.667px; left: 773px; width: 140px; height: 34.6667px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 608.6px; left: 16.8189%; width: 14.7692%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 541.333px; left: 8px; width: 112px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 606px; left: 35.2804%; width: 9.8531%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 608.6px; left: 66px; width: 57.6px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 671.933px; left: 16.8189%; width: 14.9231%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 606px; left: 138px; width: 28px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 669.333px; left: 35.4728%; width: 19.9653%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 671.933px; left: 66px; width: 57.6px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 735.267px; left: 16.8189%; width: 24.6154%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 669.333px; left: 138px; width: 42px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 732.667px; left: 47.5881%; width: 13.9076%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 735.267px; left: 66px; width: 112px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 608.6px; left: 108.977%; width: 14.7692%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 732.667px; left: 206px; width: 42px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 606px; left: 127.439%; width: 14.5032%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 608.6px; left: 434.635px; width: 38.4px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 671.933px; left: 108.977%; width: 22.5812%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 606px; left: 482.635px; width: 28px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 669.333px; left: 137.204%; width: 27.2062%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 671.933px; left: 434.635px; width: 38.4px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 735.267px; left: 108.977%; width: 28.7179%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 669.333px; left: 482.635px; width: 42px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 732.667px; left: 144.874%; width: 35.8974%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 735.267px; left: 434.635px; width: 112px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 608.6px; left: 201.135%; width: 9.84615%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 732.667px; left: 574.635px; width: 28px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 606px; left: 213.443%; width: 23.3547%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 608.6px; left: 803.271px; width: 38.4px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 671.933px; left: 201.135%; width: 9.84615%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 606px; left: 851.271px; width: 42px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 669.333px; left: 213.443%; width: 23.961%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 671.933px; left: 803.271px; width: 38.4px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 735.267px; left: 201.135%; width: 25.344%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 669.333px; left: 851.271px; width: 50.5521px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 732.667px; left: 232.815%; width: 35.8974%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 735.267px; left: 803.271px; width: 48px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 608.6px; left: 293.293%; width: 14.7692%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 732.667px; left: 863.271px; width: 42px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 606px; left: 311.755%; width: 35.8974%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 608.6px; left: 1171.91px; width: 38.4px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 671.933px; left: 293.293%; width: 28.7179%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 606px; left: 1219.91px; width: 42px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 669.333px; left: 329.191%; width: 29.5085%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 671.933px; left: 1171.91px; width: 57.6px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 735.267px; left: 293.293%; width: 28.7179%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 669.333px; left: 1243.91px; width: 42px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 732.667px; left: 329.191%; width: 22.1661%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 735.267px; left: 1171.91px; width: 112px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 789.333px; left: 2.00053%; width: 21.5385%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 732.667px; left: 1311.91px; width: 61.9896px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 936.667px; left: 3.28259%; width: 35.8974%; height: 20.6667px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 789.333px; left: 8px; width: 84px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 936.667px; left: 41.7441%; width: 35.8974%; height: 20.6667px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 936.667px; left: 13px; width: 140px; height: 20.6667px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 936.667px; left: 80.2057%; width: 35.8974%; height: 20.6667px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 936.667px; left: 163px; width: 140px; height: 20.6667px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 936.667px; left: 118.667%; width: 35.8974%; height: 20.6667px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 936.667px; left: 313px; width: 140px; height: 20.6667px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 936.667px; left: 157.129%; width: 35.8974%; height: 20.6667px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 936.667px; left: 463px; width: 140px; height: 20.6667px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 936.667px; left: 195.59%; width: 35.8974%; height: 20.6667px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 936.667px; left: 613px; width: 140px; height: 20.6667px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1037.33px; left: 2.00053%; width: 32.054%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 936.667px; left: 763px; width: 140px; height: 20.6667px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1104.6px; left: 16.8189%; width: 27.0769%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1037.33px; left: 8px; width: 125.01px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1102px; left: 50.6651%; width: 10.7692%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1104.6px; left: 66px; width: 108.442px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1167.93px; left: 16.8189%; width: 17.2308%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1102px; left: 201.552px; width: 42px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1165.33px; left: 38.3574%; width: 10.7692%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1167.93px; left: 66px; width: 112px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1231.27px; left: 16.8189%; width: 22.1538%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1165.33px; left: 206px; width: 140px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1228.67px; left: 44.5112%; width: 10.7692%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1231.27px; left: 66px; width: 76.8px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1104.6px; left: 108.977%; width: 28.7179%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1228.67px; left: 162px; width: 87.9375px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1102px; left: 144.874%; width: 14.5272%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1104.6px; left: 434.635px; width: 86.4px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1167.93px; left: 108.977%; width: 24.6154%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1102px; left: 542.635px; width: 42px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1165.33px; left: 139.746%; width: 10.7692%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1167.93px; left: 434.635px; width: 76.8px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1231.27px; left: 108.977%; width: 28.7179%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1165.33px; left: 530.635px; width: 82.5208px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1228.67px; left: 144.874%; width: 33.4722%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1231.27px; left: 434.635px; width: 76.8px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1104.6px; left: 201.135%; width: 28.7179%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1228.67px; left: 530.635px; width: 140px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1102px; left: 237.033%; width: 35.8974%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1104.6px; left: 803.271px; width: 112px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1167.93px; left: 201.135%; width: 28.7179%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1102px; left: 943.271px; width: 56px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1165.33px; left: 237.033%; width: 14.8878%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1167.93px; left: 803.271px; width: 112px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1231.27px; left: 201.135%; width: 27.8056%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1165.33px; left: 943.271px; width: 77.1458px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1228.67px; left: 235.892%; width: 26.4717%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1231.27px; left: 803.271px; width: 112px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1104.6px; left: 293.293%; width: 24.6154%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1228.67px; left: 943.271px; width: 48.3646px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1102px; left: 324.062%; width: 35.8974%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1104.6px; left: 1171.91px; width: 86.4px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1167.93px; left: 293.293%; width: 27.0769%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1102px; left: 1279.91px; width: 28px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1165.33px; left: 327.139%; width: 10.7692%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1167.93px; left: 1171.91px; width: 112px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1231.27px; left: 293.293%; width: 27.9295%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1165.33px; left: 1311.91px; width: 42px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1228.67px; left: 328.205%; width: 10.7692%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1231.27px; left: 1171.91px; width: 112px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1104.6px; left: 385.451%; width: 28.7179%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1228.67px; left: 1311.91px; width: 70px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1102px; left: 421.349%; width: 10.7692%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1104.6px; left: 1540.54px; width: 112px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1167.93px; left: 385.451%; width: 28.7179%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1102px; left: 1680.54px; width: 42px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1165.33px; left: 421.349%; width: 10.7692%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1167.93px; left: 1540.54px; width: 112px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1231.27px; left: 385.451%; width: 28.7179%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1165.33px; left: 1680.54px; width: 42px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1228.67px; left: 421.349%; width: 19.1132%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1231.27px; left: 1540.54px; width: 112px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1104.6px; left: 477.61%; width: 28.7179%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1228.67px; left: 1680.54px; width: 74.5417px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1102px; left: 513.507%; width: 20.0881%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1104.6px; left: 1909.18px; width: 112px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1167.93px; left: 477.61%; width: 28.7179%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1102px; left: 2049.18px; width: 78.3438px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1165.33px; left: 513.507%; width: 35.8974%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1167.93px; left: 1909.18px; width: 112px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1231.27px; left: 477.61%; width: 28.7179%; height: 12.8px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1165.33px; left: 2049.18px; width: 140px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1228.67px; left: 513.507%; width: 5.86004%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1231.27px; left: 1909.18px; width: 112px; height: 12.8px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1111px; left: 569.768%; width: 0%; height: 0px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1228.67px; left: 2049.18px; width: 22.8542px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1102px; left: 569.768%; width: 10.7692%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1111px; left: 2277.81px; width: 0px; height: 0px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1174.33px; left: 569.768%; width: 0%; height: 0px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1102px; left: 2277.81px; width: 28px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1165.33px; left: 569.768%; width: 7.17949%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1174.33px; left: 2277.81px; width: 0px; height: 0px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1237.67px; left: 569.768%; width: 0%; height: 0px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1165.33px; left: 2277.81px; width: 42px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1228.67px; left: 569.768%; width: 10.7692%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1237.67px; left: 2277.81px; width: 0px; height: 0px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1111px; left: 661.926%; width: 0%; height: 0px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1228.67px; left: 2277.81px; width: 61.7708px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1102px; left: 661.926%; width: 15.8387%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1111px; left: 2646.45px; width: 0px; height: 0px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1174.33px; left: 661.926%; width: 0%; height: 0px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1102px; left: 2646.45px; width: 42px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1165.33px; left: 661.926%; width: 10.7692%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1174.33px; left: 2646.45px; width: 0px; height: 0px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1237.67px; left: 661.926%; width: 0%; height: 0px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1165.33px; left: 2646.45px; width: 42px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1228.67px; left: 661.926%; width: 10.7692%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1237.67px; left: 2646.45px; width: 0px; height: 0px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1285.33px; left: 2.00053%; width: 10.7692%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1228.67px; left: 2646.45px; width: 61.9896px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1323.33px; left: 4.56464%; width: 21.7521%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1285.33px; left: 8px; width: 42px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1332.33px; left: 84.2201%; width: 0%; height: 0px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1323.33px; left: 18px; width: 84.8333px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1369px; left: 19.3536%; width: 2.21421%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1332.33px; left: 337.135px; width: 0px; height: 0px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1378px; left: 23.539%; width: 21.5385%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1369px; left: 75.6771px; width: 8.63542px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1370px; left: 78.0662%; width: 6.15385%; height: 16px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1378px; left: 92px; width: 84px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1432.33px; left: 19.3536%; width: 2.21421%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1370px; left: 313.135px; width: 24px; height: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1441.33px; left: 23.539%; width: 10.7692%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1432.33px; left: 75.6771px; width: 8.63542px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1433.33px; left: 78.0662%; width: 6.15385%; height: 16px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1441.33px; left: 92px; width: 42px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1495.67px; left: 19.3536%; width: 2.21421%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1433.33px; left: 313.135px; width: 24px; height: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1504.67px; left: 23.539%; width: 35.8974%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1495.67px; left: 75.6771px; width: 8.63542px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1496.67px; left: 78.0662%; width: 6.15385%; height: 16px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1504.67px; left: 92px; width: 140px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1323.33px; left: 96.7228%; width: 14.5727%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1496.67px; left: 313.135px; width: 24px; height: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1324.33px; left: 154.84%; width: 21.5385%; height: 16px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1323.33px; left: 386.635px; width: 56.8333px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1369px; left: 111.512%; width: 2.21421%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1324.33px; left: 621.771px; width: 84px; height: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1378px; left: 115.697%; width: 21.0924%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1369px; left: 444.312px; width: 8.63542px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1370px; left: 170.224%; width: 6.15385%; height: 16px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1378px; left: 460.635px; width: 82.2604px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1432.33px; left: 111.512%; width: 2.21421%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1370px; left: 681.771px; width: 24px; height: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1441.33px; left: 115.697%; width: 7.17949%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1432.33px; left: 444.312px; width: 8.63542px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1433.33px; left: 170.224%; width: 6.15385%; height: 16px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1441.33px; left: 460.635px; width: 28px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1495.67px; left: 111.512%; width: 2.21421%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1433.33px; left: 681.771px; width: 24px; height: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1504.67px; left: 115.697%; width: 10.7692%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1495.67px; left: 444.312px; width: 8.63542px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1496.67px; left: 170.224%; width: 6.15385%; height: 16px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1504.67px; left: 460.635px; width: 42px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1323.33px; left: 188.881%; width: 14.5727%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1496.67px; left: 681.771px; width: 24px; height: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1324.33px; left: 243.921%; width: 24.6154%; height: 16px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1323.33px; left: 755.271px; width: 56.8333px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1369px; left: 203.67%; width: 2.21421%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1324.33px; left: 978.406px; width: 96px; height: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1378px; left: 207.855%; width: 21.5385%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1369px; left: 812.948px; width: 8.63542px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1370px; left: 262.382%; width: 6.15385%; height: 16px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1378px; left: 829.271px; width: 84px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1432.33px; left: 203.67%; width: 2.21421%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1370px; left: 1050.41px; width: 24px; height: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1441.33px; left: 207.855%; width: 22.7003%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1432.33px; left: 812.948px; width: 8.63542px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1433.33px; left: 262.382%; width: 6.15385%; height: 16px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1441.33px; left: 829.271px; width: 88.5312px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1495.67px; left: 203.67%; width: 2.21421%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1433.33px; left: 1050.41px; width: 24px; height: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1504.67px; left: 207.855%; width: 14.359%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1495.67px; left: 812.948px; width: 8.63542px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1496.67px; left: 262.382%; width: 6.15385%; height: 16px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1504.67px; left: 829.271px; width: 56px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1323.33px; left: 281.039%; width: 21.7521%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1496.67px; left: 1050.41px; width: 24px; height: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1324.33px; left: 339.156%; width: 21.5385%; height: 16px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1323.33px; left: 1123.91px; width: 84.8333px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1369px; left: 295.828%; width: 2.21421%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1332.33px; left: 1443.04px; width: 0px; height: 0px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1378px; left: 300.013%; width: 10.7692%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1369px; left: 1181.58px; width: 8.63542px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1370px; left: 354.541%; width: 6.15385%; height: 16px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1378px; left: 1197.91px; width: 84px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1432.33px; left: 295.828%; width: 2.21421%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1370px; left: 1419.04px; width: 24px; height: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1441.33px; left: 300.013%; width: 10.7692%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1432.33px; left: 1181.58px; width: 8.63542px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1433.33px; left: 354.541%; width: 6.15385%; height: 16px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1441.33px; left: 1197.91px; width: 42px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1495.67px; left: 295.828%; width: 2.21421%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1433.33px; left: 1419.04px; width: 24px; height: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1504.67px; left: 300.013%; width: 10.7692%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1495.67px; left: 1181.58px; width: 8.63542px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1323.33px; left: 373.197%; width: 21.7521%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1504.67px; left: 1197.91px; width: 140px; height: 18px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1332.33px; left: 452.853%; width: 0%; height: 0px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1496.67px; left: 1419.04px; width: 24px; height: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1369px; left: 387.986%; width: 2.21421%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 220px; left: 30.3958px; width: 32px; height: 32px; border-radius: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1378px; left: 392.171%; width: 21.5385%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 220px; left: 107.188px; width: 32px; height: 32px; border-radius: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1370px; left: 446.699%; width: 6.15385%; height: 16px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 220px; left: 183.979px; width: 32px; height: 32px; border-radius: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1432.33px; left: 387.986%; width: 2.21421%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 220px; left: 260.771px; width: 32px; height: 32px; border-radius: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1441.33px; left: 392.171%; width: 10.7692%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 220px; left: 337.562px; width: 32px; height: 32px; border-radius: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1433.33px; left: 446.699%; width: 6.15385%; height: 16px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 220px; left: 414.354px; width: 32px; height: 32px; border-radius: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1495.67px; left: 387.986%; width: 2.21421%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 220px; left: 491.146px; width: 32px; height: 32px; border-radius: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1504.67px; left: 392.171%; width: 35.8974%; height: 18px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 220px; left: 567.938px; width: 32px; height: 32px; border-radius: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1496.67px; left: 446.699%; width: 6.15385%; height: 16px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 220px; left: 644.729px; width: 32px; height: 32px; border-radius: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 220px; left: 7.49733%; width: 8.20513%; height: 32px; border-radius: 50%; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 220px; left: 721.521px; width: 32px; height: 32px; border-radius: 16px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 220px; left: 26.696%; width: 8.20513%; height: 32px; border-radius: 50%; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 817.333px; left: 13px; width: 140px; height: 17.3333px; border-radius: 70px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 220px; left: 45.8948%; width: 8.20513%; height: 32px; border-radius: 50%; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 817.333px; left: 163px; width: 140px; height: 17.3333px; border-radius: 70px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 220px; left: 65.0935%; width: 8.20513%; height: 32px; border-radius: 50%; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 817.333px; left: 313px; width: 140px; height: 17.3333px; border-radius: 70px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 220px; left: 84.2922%; width: 8.20513%; height: 32px; border-radius: 50%; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 817.333px; left: 463px; width: 140px; height: 17.3333px; border-radius: 70px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 817.333px; left: 3.28259%; width: 35.8974%; height: 17.3333px; border-radius: 50%; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 817.333px; left: 613px; width: 140px; height: 17.3333px; border-radius: 70px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 817.333px; left: 41.7441%; width: 35.8974%; height: 17.3333px; border-radius: 50%; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 817.333px; left: 763px; width: 140px; height: 17.3333px; border-radius: 70px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 817.333px; left: 80.2057%; width: 35.8974%; height: 17.3333px; border-radius: 50%; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 60px; left: 12px; width: 376px; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 817.333px; left: 118.667%; width: 35.8974%; height: 17.3333px; border-radius: 50%; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 60px; left: 412px; width: 376px; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 817.333px; left: 157.129%; width: 35.8974%; height: 17.3333px; border-radius: 50%; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 60px; left: 812px; width: 376px; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 817.333px; left: 195.59%; width: 35.8974%; height: 17.3333px; border-radius: 50%; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 60px; left: 1212px; width: 376px; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 60px; left: 2.99947%; width: 93.9984%; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 60px; left: 1612px; width: 376px; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 321.333px; left: 5.84669%; width: 35.8974%; height: 143.333px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 60px; left: -1588px; width: 376px; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 321.333px; left: 44.3082%; width: 35.8974%; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 60px; left: -1188px; width: 376px; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 321.333px; left: 82.7698%; width: 35.8974%; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 60px; left: -788px; width: 376px; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 321.333px; left: 121.231%; width: 35.8974%; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 60px; left: -388px; width: 376px; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 321.333px; left: 159.693%; width: 35.8974%; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 321.333px; left: 23px; width: 140px; height: 143.333px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 321.333px; left: 198.154%; width: 35.8974%; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 321.333px; left: 173px; width: 140px; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 569.333px; left: 2.00053%; width: 92.1581%; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 321.333px; left: 323px; width: 140px; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 579.333px; left: 2.00053%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 321.333px; left: 473px; width: 140px; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 642.667px; left: 2.00053%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 321.333px; left: 623px; width: 140px; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 706px; left: 2.00053%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 321.333px; left: 773px; width: 140px; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 569.333px; left: 94.1587%; width: 92.1581%; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 569.333px; left: 8px; width: 368.635px; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 579.333px; left: 94.1587%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 579.333px; left: 8px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 642.667px; left: 94.1587%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 642.667px; left: 8px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 706px; left: 94.1587%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 706px; left: 8px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 569.333px; left: 186.317%; width: 92.1581%; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 569.333px; left: 376.635px; width: 368.635px; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 579.333px; left: 186.317%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 579.333px; left: 376.635px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 642.667px; left: 186.317%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 642.667px; left: 376.635px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 706px; left: 186.317%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 706px; left: 376.635px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 569.333px; left: 278.475%; width: 92.1581%; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 569.333px; left: 745.271px; width: 368.635px; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 579.333px; left: 278.475%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 579.333px; left: 745.271px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 642.667px; left: 278.475%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 642.667px; left: 745.271px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 706px; left: 278.475%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 706px; left: 745.271px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 817.333px; left: 3.28259%; width: 35.8974%; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 569.333px; left: 1113.91px; width: 368.635px; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 817.333px; left: 41.7441%; width: 35.8974%; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 579.333px; left: 1113.91px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 817.333px; left: 80.2057%; width: 35.8974%; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 642.667px; left: 1113.91px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 817.333px; left: 118.667%; width: 35.8974%; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 706px; left: 1113.91px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 817.333px; left: 157.129%; width: 35.8974%; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 817.333px; left: 13px; width: 140px; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 817.333px; left: 195.59%; width: 35.8974%; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 817.333px; left: 163px; width: 140px; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1065.33px; left: 2.00053%; width: 92.1581%; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 817.333px; left: 313px; width: 140px; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1075.33px; left: 2.00053%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 817.333px; left: 463px; width: 140px; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1138.67px; left: 2.00053%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 817.333px; left: 613px; width: 140px; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1202px; left: 2.00053%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 817.333px; left: 763px; width: 140px; height: 140px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1065.33px; left: 94.1587%; width: 92.1581%; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1065.33px; left: 8px; width: 368.635px; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1075.33px; left: 94.1587%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1075.33px; left: 8px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1138.67px; left: 94.1587%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1138.67px; left: 8px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1202px; left: 94.1587%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1202px; left: 8px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1065.33px; left: 186.317%; width: 92.1581%; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1065.33px; left: 376.635px; width: 368.635px; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1075.33px; left: 186.317%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1075.33px; left: 376.635px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1138.67px; left: 186.317%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1138.67px; left: 376.635px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1202px; left: 186.317%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1202px; left: 376.635px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1065.33px; left: 278.475%; width: 92.1581%; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1065.33px; left: 745.271px; width: 368.635px; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1075.33px; left: 278.475%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1075.33px; left: 745.271px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1138.67px; left: 278.475%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1138.67px; left: 745.271px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1202px; left: 278.475%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1202px; left: 745.271px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1065.33px; left: 370.633%; width: 92.1581%; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1065.33px; left: 1113.91px; width: 368.635px; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1075.33px; left: 370.633%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1075.33px; left: 1113.91px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1138.67px; left: 370.633%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1138.67px; left: 1113.91px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1202px; left: 370.633%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1202px; left: 1113.91px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1065.33px; left: 462.791%; width: 92.1581%; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1065.33px; left: 1482.54px; width: 368.635px; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1075.33px; left: 462.791%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1075.33px; left: 1482.54px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1138.67px; left: 462.791%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1138.67px; left: 1482.54px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1202px; left: 462.791%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1202px; left: 1482.54px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1065.33px; left: 554.949%; width: 92.1581%; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1065.33px; left: 1851.18px; width: 368.635px; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1075.33px; left: 554.949%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1075.33px; left: 1851.18px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1138.67px; left: 554.949%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1138.67px; left: 1851.18px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1202px; left: 554.949%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1202px; left: 1851.18px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1065.33px; left: 647.107%; width: 92.1581%; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1065.33px; left: 2219.81px; width: 368.635px; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1075.33px; left: 647.107%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1075.33px; left: 2219.81px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1138.67px; left: 647.107%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1138.67px; left: 2219.81px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1202px; left: 647.107%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1202px; left: 2219.81px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1313.33px; left: 2.00053%; width: 92.1581%; height: 240px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1065.33px; left: 2588.45px; width: 368.635px; height: 200px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1323.33px; left: 4.56464%; width: 79.6554%; height: 18px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1075.33px; left: 2588.45px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1351.33px; left: 4.56464%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1138.67px; left: 2588.45px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1414.67px; left: 4.56464%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1202px; left: 2588.45px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1478px; left: 4.56464%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1313.33px; left: 8px; width: 368.635px; height: 240px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1313.33px; left: 94.1587%; width: 92.1581%; height: 240px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1323.33px; left: 18px; width: 319.135px; height: 18px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1323.33px; left: 96.7228%; width: 79.6554%; height: 18px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1351.33px; left: 18px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1351.33px; left: 96.7228%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1414.67px; left: 18px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1414.67px; left: 96.7228%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1478px; left: 18px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1478px; left: 96.7228%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1313.33px; left: 376.635px; width: 368.635px; height: 240px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1313.33px; left: 186.317%; width: 92.1581%; height: 240px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1323.33px; left: 386.635px; width: 319.135px; height: 18px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1323.33px; left: 188.881%; width: 79.6554%; height: 18px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1351.33px; left: 386.635px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1351.33px; left: 188.881%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1414.67px; left: 386.635px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1414.67px; left: 188.881%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1478px; left: 386.635px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1478px; left: 188.881%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1313.33px; left: 745.271px; width: 368.635px; height: 240px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1313.33px; left: 278.475%; width: 92.1581%; height: 240px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1323.33px; left: 755.271px; width: 319.135px; height: 18px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1323.33px; left: 281.039%; width: 79.6554%; height: 18px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1351.33px; left: 755.271px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1351.33px; left: 281.039%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1414.67px; left: 755.271px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1414.67px; left: 281.039%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1478px; left: 755.271px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1478px; left: 281.039%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1313.33px; left: 1113.91px; width: 368.635px; height: 240px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1313.33px; left: 370.633%; width: 92.1581%; height: 240px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1323.33px; left: 1123.91px; width: 319.135px; height: 18px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1323.33px; left: 373.197%; width: 79.6554%; height: 18px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1351.33px; left: 1123.91px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1351.33px; left: 373.197%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1414.67px; left: 1123.91px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1414.67px; left: 373.197%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 			<view data-v-6b2cce5e="" class="skeleton-fade"
-				style="position: absolute; top: 1478px; left: 1123.91px; width: 50px; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
+				style="position: absolute; top: 1478px; left: 373.197%; width: 12.8205%; height: 50px; border-radius: 10px; background-color: rgb(229, 229, 229);">
 			</view>
 		</view>
 	</view>
 </template>
 <script>
-	let S = uni.getSystemInfoSync();
+	let S = uni.getSystemInfoSync()
 	export default {
-		name: "Skeleton",
-		props: {
-			show: {
-				type: Boolean,
-				default () {
-					return true
-				}
+		name:"puppeteer",
+		data(){
+			return{
+				vw:S.windowWidth + 'px',
+				vh:S.windowHeight + 'px'
 			}
-		},
-		data() {
-			return {
-				vw: S.windowWidth + 'px',
-				vh: S.windowHeight + 'px',
-
-				// #ifdef APP || MP-WEIXIN
-				top: '40px',
-				// #endif
-				// #ifdef H5
-				top: 0,
-				// #endif
-			};
-		},
+		}
 	}
 </script>
 <style lang="scss">
+	
+	.skeleton-container{
+		/* #ifdef APP || MP-WEIXIN */
+		top:40px !important ;
+		/* #endif */
+		/* #ifdef MP-WEIXIN */
+		.middle{
+			width: 170px !important ;
+			left: 100px !important ;
+		}
+		.right{
+			left: 50px !important ;
+		}
+		/* #endif */
+	}
 	.skeleton-fade {
 		width: 100%;
 		height: 100%;

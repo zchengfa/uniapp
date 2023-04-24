@@ -6,7 +6,7 @@
 			</nav-bar>
 		</view>
 		<scroll-view scroll-y="true" class="scroll" :style="scrollHeightNoTab">
-			<view class="author">
+			<view class="author" v-if="rankAuthor.length">
 				<text class="rank-title">官方榜</text>
 				<view class="rank-item" v-for="(item,index) in rankAuthor" :key="item.id">
 					<view class="item-top">
@@ -31,7 +31,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="other-rank">
+			<view class="other-rank" v-if="rankOther.length">
 				<text class="rank-title">其他榜单</text>
 				<view class="rank-box">
 					<view class="rank-item" v-for="(other,otherIndex) in rankOther" :key="other.id" @tap="toPlaylistDetail(other.id)">
@@ -48,6 +48,7 @@
 		<view v-if="isShowMusicList">
 			<music-list></music-list>
 		</view>
+		<u-no-network tips="YC音乐君开小差了喔!"></u-no-network>
 	</view>
 </template>
 
@@ -106,6 +107,9 @@
 				this.playSong(this.idList[0].id,0)
 			},
 			getRankData(){
+				uni.showLoading({
+					title:'加载中...'
+				})
 				topList().then(res=>{
 					//console.log(res)
 					if(res){
@@ -115,7 +119,7 @@
 						this.rankAuthor.map(rank=>{
 							this.getTopThree(rank.id)
 						})
-						
+						uni.hideLoading()
 					}
 				})
 			},

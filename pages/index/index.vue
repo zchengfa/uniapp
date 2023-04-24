@@ -64,7 +64,7 @@
 	import HotTopic from '@/components/HotTopic/HotTopic.vue'
 	import StyleSongAlbum from '@/components/StyleSongAlbum/StyleSongAlbum.vue'
 	import { bottomControlMixin,playSongMixin} from '@/common/mixins/mixins.js'
-	// import Skeleton from '@/skeleton/Skeleton.vue'
+	 // import Skeleton from '@/skeleton/Skeleton.vue'
 	import puppeteer from '@/puppeteer.vue'
 	
 	// #ifdef MP-WEIXIN || APP
@@ -118,7 +118,7 @@
 			//#ifdef MP-WEIXIN || APP
 			PersonalModal,
 			//#endif
-			// Skeleton,
+			 //Skeleton,
 			puppeteer
 		},
 		methods: {
@@ -126,7 +126,7 @@
 				// uni.navigateTo({
 				// 	url:'../audio/audio'
 				// })
-				this.show = true
+				
 			},
 			// #ifdef MP-WEIXIN  || APP
 			changeModal(){

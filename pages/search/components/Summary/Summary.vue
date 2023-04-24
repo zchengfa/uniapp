@@ -91,7 +91,7 @@
 						<text class="care had-care" v-else>√已关注</text>
 					</view>
 				</view>
-				<view class="bottom-item sheet-bottom" v-if="artist.more">
+				<view class="bottom-item sheet-bottom" v-if="artist.more" @tap="changeInto('t4')">
 					<text>{{artist.moreText}}</text>
 					<text class="tag">></text>
 				</view>
@@ -111,7 +111,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="bottom-item sheet-bottom" v-if="album.more">
+				<view class="bottom-item sheet-bottom" v-if="album.more" @tap="changeInto('t5')">
 					<view class="no-match">
 						<text>{{album.moreText}}</text>
 					</view>
