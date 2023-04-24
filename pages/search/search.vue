@@ -447,9 +447,12 @@
 			}
 		},
 		onLoad(options) {
+			
 			this.keyword = decodeURIComponent(options.keyword)
 			this.getHotSearch()
 			this.history = uni.getStorageSync('search_history') || []
+			
+			
 		}
 	}
 </script>
@@ -580,7 +583,7 @@
 .rank-swiper{
 	margin: 0 auto;
 	width: 96vw;
-	height: 820px;
+	height: 880px;
 }
 .item-box{
 	width: 60%  !important;
@@ -605,21 +608,22 @@
 	}
 	.hot-item{
 		padding: 10px 0;
-		display: flex;
-		justify-content: flex-start;
-		align-items: center;
 		color: #5d5d5d;
 		text-align: left;
 		.rank-box{
 			display: flex;
 			justify-content: space-around;
+			width: 96%;
+			margin:  0 auto;
+			
 		}
 		.rank{
-			width: 16px;
-			padding: 0 0 0 15px;
+			width: 20px;
+			text-align: right;
 		}
 		.hot-keyword{
-			padding-left: 10px;
+			margin-left: 5px;
+			flex: 1;
 		}
 		.icon{
 			margin-left: 4px;
