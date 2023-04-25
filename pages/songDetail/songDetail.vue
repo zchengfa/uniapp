@@ -146,12 +146,7 @@
 		height: 70%;
 		border-radius: 50%;
 	}
-	.rotate{
-		animation: 10s rotateCircle linear infinite;
-	}
-	.paused{
-		animation-play-state: paused;	
-	}
+	
 	.slider-box{
 		display: flex;
 		justify-content: center;
@@ -179,16 +174,7 @@
 		width: 100%;
 		height: 60vh;
 	}
-	@keyframes rotateCircle{
-		from{
-			
-			transform: rotate(0deg);
-		}
-		to{
-			
-			transform: rotate(360deg);
-		}
-	}
+	
 	/* #ifdef MP-WEIXIN */
 	.nav{
 		height: 80px;

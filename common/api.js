@@ -207,6 +207,18 @@ export function vUrl(vId){
 	}	
 }
 
+//获取相关mv或video
+export function relatedMV(vId){
+	if(Number(vId))
+	{
+		return Get(`/simi/mv?mvid=${vId}`)
+	}
+	else{
+		return Get(`/related/allvideo?id=${vId}`)
+	}
+	
+}
+
 //我的页面获取推荐歌单
 export function recommendSongSheet(){
 	return Get(`/personalized?limit=6`)

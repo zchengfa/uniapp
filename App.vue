@@ -395,4 +395,22 @@
 	.mv{
 		margin-right: 20px;
 	}
+	
+	//磁盘旋转效果
+	.rotate{
+		animation: 10s rotateCircle linear infinite;
+	}
+	.paused{
+		animation-play-state: paused;	
+	}
+	@keyframes rotateCircle{
+		from{
+			
+			transform: rotate(0deg);
+		}
+		to{
+			
+			transform: rotate(360deg);
+		}
+	}
 </style>
