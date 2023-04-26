@@ -66,6 +66,7 @@
 </template>
 
 <script>
+	import '@/common/iconfont.css'
 	export default {
 		name:"CommentsReply",
 		props:{
@@ -96,6 +97,7 @@
 		methods:{
 			back(){
 				this.$emit('closeReply')
+				uni.$emit('closeReply')
 			}
 		}
 	}
@@ -127,6 +129,7 @@
 	justify-content: flex-start;
 	align-items: center;
 	padding: 20px 0;
+	color: #000;
 }
 .comments-item{
 	position: relative;
@@ -168,6 +171,10 @@
 	align-items: center;
 }
 .bottom{
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+	justify-content: flex-start;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	font-size: 14px;
@@ -192,6 +199,10 @@
 }
 .nick-name{
 	font-size: 14px;
+	font-weight: bold;
+}
+.nick-name,.comments-content{
+	color: #000;
 }
 .time,.like-count{
 	font-size: 12px;
@@ -199,6 +210,9 @@
 }
 .like-count{
 	margin-right: 2px;
+}
+.liked{
+	color: #000;
 }
 .bottom-comment{
 	position: fixed;

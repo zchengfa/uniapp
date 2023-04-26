@@ -82,12 +82,14 @@
 	export default {
 		data() {
 			return {
+				//0:音乐 1:MV 5:视频
+				dataType:0,
 				//排序方式
 				sortType:3,
 				//是否还有更多
 				hasMore:undefined,
 				//评论总数
-				totalCount:undefined,
+				totalCount:0,
 				//评论
 				comments:[],
 				//上一页最后一条评论的时间（根据时间排序时获取更多评论需要用到）
@@ -95,7 +97,7 @@
 				songs:{},
 				pageNo:1,
 				isShowReply:false,
-				reply:[],
+				reply:{},
 				songId:undefined,
 				sortTypeList:[],
 				user:{},
@@ -111,7 +113,7 @@
 					this.hasMore = res.data.hasMore
 					this.totalCount = res.data.totalCount
 					this.lastCursor = Number(res.data.cursor)
-					this.sortType = res.data.sortType
+					res.data.sortType === 99 ? this.sortType = 1 : this.sortType = res.data.sortType
 					this.comments.push(...res.data.comments)
 					this.sortTypeList = res.data.sortTypeList
 					
@@ -129,25 +131,26 @@
 					})
 				}
 			},
-			getComments(id,type){
-				comments(id,type).then(res=>{
+			getComments(id,sortType,dataType){
+				comments(id,sortType,dataType).then(res=>{
 					this.getParams(res)
 					
 				})
 			},
-			getMoreCommentsByTime(id,sortType,cursor,pageSize,pageNo){
-				moreCommentsByTime(id,sortType,cursor,pageSize,pageNo).then(res=>{
+			getMoreCommentsByTime(id,sortType,cursor,pageSize,pageNo,dataType){
+				moreCommentsByTime(id,sortType,cursor,pageSize,pageNo,dataType).then(res=>{
 					this.getParams(res)
 				})
 			},
-			getMoreCommentsByOtherType(id,sortType,pageSize,pageNo){
-				moreCommentsByOtherType(id,sortType,pageSize,pageNo).then(res=>{
+			getMoreCommentsByOtherType(id,sortType,pageSize,pageNo,dataType){
+				moreCommentsByOtherType(id,sortType,pageSize,pageNo,dataType).then(res=>{
 					this.getParams(res)
 					
 				})
 			},
-			getCommentsReply(sId,cId){
-				commentsReply(sId,cId).then(res=>{
+			getCommentsReply(sId,cId,dataType){
+				commentsReply(sId,cId,dataType).then(res=>{
+				
 					if(res.code === 200){
 						this.reply = res.data
 						this.user = res.data.ownerComment.user
@@ -164,10 +167,10 @@
 				if(this.hasMore){
 					this.pageNo +=1
 					if(this.sortType === 3){
-						this.getMoreCommentsByTime(this.songId,this.sortType,this.lastCursor,20,this.pageNo)
+						this.getMoreCommentsByTime(this.songId,this.sortType,this.lastCursor,20,this.pageNo,this.dataType)
 					}
 					else{
-						this.getMoreCommentsByOtherType(this.songId,this.sortType,20,this.pageNo)
+						this.getMoreCommentsByOtherType(this.songId,this.sortType,20,this.pageNo,this.dataType)
 						console.log(this.pageNo,666)
 					}
 				}
@@ -183,7 +186,7 @@
 				
 				this.isShowReply = true
 				this.reply = {}
-				this.getCommentsReply(this.songId,cId)
+				this.getCommentsReply(this.songId,cId,this.dataType)
 				
 			},
 			closeReply(){
@@ -194,7 +197,7 @@
 					this.sortType = type
 					this.comments = []
 					this.pageNo = 0
-					this.getComments(this.songId,this.sortType)
+					this.getComments(this.songId,this.sortType,this.dataType)
 				}
 			}
 		},
@@ -206,7 +209,7 @@
 			}
 			
 			this.songId = options.songId
-			this.getComments(this.songId,this.sortType)
+			this.getComments(this.songId,this.sortType,this.dataType)
 			
 		}
 	}

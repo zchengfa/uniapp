@@ -144,8 +144,8 @@ export function summarySearch(word,type=1018,offset=0,limit=20) {
 
 
 // cursor: 当sortType为 3 时且页数不是第一页时需传入,值为上一条数据的 time
-export function comments(id,sortType = 3) {
-	return Get(`/comment/new?type=0&id=${id}&sortType=${sortType}`)
+export function comments(id,sortType = 3,type = 0) {
+	return Get(`/comment/new?type=${type}&id=${id}&sortType=${sortType}`)
 	
 }
 
@@ -156,17 +156,17 @@ export function commentsTotalNum (id){
 }
 
 //获取更多评论
-export function moreCommentsByTime(id,sortType,cursor,pageSize,pageNo) {
-	return Get(`/comment/new?type=0&id=${id}&sortType=${sortType}&cursor=${cursor}&pageSize=${pageSize}&pageNo=${pageNo}`)
+export function moreCommentsByTime(id,sortType,cursor,pageSize,pageNo,type = 0) {
+	return Get(`/comment/new?type=${type}&id=${id}&sortType=${sortType}&cursor=${cursor}&pageSize=${pageSize}&pageNo=${pageNo}`)
 }
 
 
-export function moreCommentsByOtherType(id,sortType,pageSize,pageNo) {
-	return Get(`/comment/new?type=0&id=${id}&sortType=${sortType}&pageSize=${pageSize}&pageNo=${pageNo}`)
+export function moreCommentsByOtherType(id,sortType,pageSize,pageNo,type = 0) {
+	return Get(`/comment/new?type=${type}&id=${id}&sortType=${sortType}&pageSize=${pageSize}&pageNo=${pageNo}`)
 }
 //获取评论回复数据
-export function commentsReply(songId,commentId){
-	return Get(`/comment/floor?parentCommentId=${commentId}&id=${songId}&type=0`)
+export function commentsReply(songId,commentId,type = 0){
+	return Get(`/comment/floor?parentCommentId=${commentId}&id=${songId}&type=${type}`)
 }
 
 //全部.https://www.codeman.ink/api/mv/all?offset=1&limit=50
@@ -218,6 +218,17 @@ export function relatedMV(vId){
 	}
 	
 }
+
+//获取MV或video评论
+// export function commentsMV(vId){
+// 	if(Number(vId))
+// 	{
+// 		return Get(`/comment/mv?id=${vId}`)
+// 	}
+// 	else{
+// 		return Get(`/comment/video?id=${vId}`)
+// 	}
+// }
 
 //我的页面获取推荐歌单
 export function recommendSongSheet(){
