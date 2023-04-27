@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="comments-container" :style="isShowComments ? height : null" :class="isShowComments ? '.comments-trans-con' : ''">
 		<view class="comments-title flex-box">
 			<view class="left">
 				<text v-if="isShowCount">评论({{count}})</text>
@@ -38,14 +38,23 @@
 					</view>
 				</view>
 			</view>
+			<u-loadmore :status="loading ? 'loading' : 'nomore' " iconType="flower"></u-loadmore>
 		</scroll-view>
 		<view class="bottom-comment">
 			<input class="input" type="text" placeholder="千头万绪,落笔汇成评论一句" />
 			<text class="emoji iconfont controller-face"></text>
 			<text class="send">发送</text>
 		</view>
+		<!-- #ifdef APP || H5 -->
 		
-		<comments-reply :reply="reply" :user="user" :ownerComment="ownerComment" v-if="isShowReply"></comments-reply>
+		<comments-reply :class="isShowReply ? 'reply-com' : 'comments-reply'" :reply="reply" :user="user" :ownerComment="ownerComment" :is-show-reply="isShowReply" :equal="equal"></comments-reply>
+			
+		<!-- #endif -->
+		<!-- #ifdef MP-WEIXIN -->
+		
+		<comments-reply :class="isShowReply ? 'reply-com' : 'comments-reply'" :reply="reply" :user="user" :ownerComment="ownerComment" v-if="isShowReply" :equal="equal"></comments-reply>
+			
+		<!-- #endif -->
 	</view>
 </template>
 
@@ -109,7 +118,31 @@
 				default(){
 					return false
 				}
-			}
+			},
+			loading:{
+				type:Boolean,
+				default(){
+					return false
+				}
+			},
+			equal:{
+				type:Boolean,
+				default(){
+					return false
+				}
+			},
+			height:{
+				type:String,
+				default(){
+					return 'height: 100%;'
+				}
+			},
+			isShowComments:{
+				type:Boolean,
+				default(){
+					return false
+				}
+			},
 		},
 		data() {
 			return {
@@ -126,6 +159,9 @@
 			},
 			replyDetail(cId){
 				this.$emit('replyDetail',cId)
+			},
+			scrollToLower(){
+				this.$emit('scrollToLower')
 			}
 		},
 		
@@ -133,6 +169,17 @@
 </script>
 
 <style scoped>
+	
+	.comments-container{
+		position: relative;
+		z-index: 999;
+		transition: height .5s ease-in-out;
+	}
+	.comments-trans-con{
+		position: relative;
+		z-index: 999;
+		transition: height .5s ease-in-out;
+	}
 .active{
 		color: #000000;
 		font-weight: bold;
@@ -153,6 +200,9 @@
 		box-shadow: 0 0 1px 1px #C0C0C0;
 	}
 	/* #ifdef H5 */
+	.scroll-comment{
+		height: calc(100% - 84px);
+	}
 	.nav-place{
 		width: 100%;
 		height: 44px;
@@ -178,9 +228,10 @@
 		
 	}
 	.scroll-comment{
-		height: calc(100% - 90px);
-		background-color: #e6e6e6;
+		
+		background-color: #fff;
 	}
+	
 	
 	.song{
 		display: flex;
@@ -218,12 +269,12 @@
 		border-radius: 50%;
 	}
 	.comments-title{
-		margin-top: 10px;
+		
 		padding: 10px ;
 	}
 	.bottom-comment{
-		position: fixed;
-		bottom: 0;
+		/* position: fixed;
+		bottom: 0; */
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -324,6 +375,7 @@
 		height: 30px;
 		text-indent: 20px;
 		font-size: 12px;
+		text-align: left;
 	}
 	.send{
 		margin-right: 10px;
@@ -331,11 +383,19 @@
 	.emoji,.send{
 		width: 40px;
 		text-align: center;
+		color: #000;
 	}
 	.emoji{
 		font-size: 24px;
+		
 	}
 	/* #ifdef MP-WEIXIN || APP*/
+	/* .comments-container{
+		height: calc(100vh - 148px);
+	} */
+	.scroll-comment{
+		height: calc(100% - 84px);
+	}
 	.nav-place,.nav{
 		height: 80px;
 	}
@@ -348,6 +408,13 @@
 		top:20px;
 		height: 60px;
 		line-height: 60px;
+	}
+	.comments-reply{
+		height: 0;
+		
+	}
+	.reply-com{
+		height: 100%;
 	}
 	/* #endif */
 </style>

@@ -11,7 +11,7 @@
 			<swiper-item v-for="(item,index) in MVData" :key="index">
 				<view class="scroll-content swiper-item">
 					<view class="scroll-item">
-						<view class="my-video">
+						<view class="my-video" :class="{'video-trans':isShowComments}" @tap="closeComments">
 
 							<video style="width: 100%;" :id="'myVideo' + index" :src="item.url"
 								:autoplay="item.autoplay" :poster="item.detail.cover ||item.detail.coverUrl" loop="true"
@@ -26,7 +26,7 @@
 										<text class="iconfont controller-good"></text>
 										<text class="item-text">{{$dealCount(item.vInfo.likedCount)}}</text>
 									</view>
-									<view class="operation-item">
+									<view class="operation-item" @tap="showComments">
 										<text class="iconfont controller-comments"></text>
 										<text class="item-text">{{$dealCount(item.vInfo.commentCount)}}</text>
 									</view>
@@ -86,21 +86,17 @@
 		<view class="info-bottom">
 			<input class="input" type="text" placeholder="发条评论支持一下吧~" />
 		</view>
-		<Comments class="comments" :comments="comments" :reply="reply" :sortTypeList="sortTypeList"
-			:isShowReply="isShowReply" :user="user" :ownerComment="ownerComment" :sortType="sortType" :count="totalCount" :isShowCount="true"
-			@tapSortType="tapSortType" @replyDetail="replyDetail"
+		<Comments :isShowComments="isShowComments" class="comments" :class="{'comments-trans':isShowComments}" :comments="comments" :reply="reply" :sortTypeList="sortTypeList" :equal="true" height="height:calc(100vh - 264px);"
+			:isShowReply="isShowReply" :user="user" :ownerComment="ownerComment" :sortType="sortType" :count="totalCount" :isShowCount="true" :loading="loading"
+			@tapSortType="tapSortType" @replyDetail="replyDetail" @scrollToLower="scrollToLower"
 			></Comments>
 	</view>
 </template>
 
 <script>
-	import {
-		comments,
-		moreCommentsByTime,
-		commentsReply,
-		moreCommentsByOtherType
-	} from '@/common/api.js'
+	
 	import Comments from '@/components/Comments/Comments.vue'
+	import { commentsMixins } from '@/common/mixins/mixins.js'
 	import '@/common/iconfont.css'
 	import '@/common/controller.css'
 	import {
@@ -115,9 +111,9 @@
 
 
 	export default {
+		mixins:[commentsMixins],
 		data() {
 			return {
-				dataType: 0,
 				MVData: [{
 					url: '',
 					detail: {},
@@ -127,102 +123,16 @@
 					autoplay: true,
 					playing: true
 				}],
-				//排序方式
-				sortType: 3,
-				//是否还有更多
-				hasMore: undefined,
-				//评论总数
-				totalCount: 0,
-				//评论
-				comments: [],
-				//上一页最后一条评论的时间（根据时间排序时获取更多评论需要用到）
-				lastCursor: undefined,
-				songs: {},
-				pageNo: 1,
-				isShowReply: false,
-				reply: {},
-				songId: undefined,
-				sortTypeList: [],
-				user: {},
-				ownerComment: {}
-
 			}
 		},
 		components: {
 			Comments
 		},
 		methods: {
-			//点击查看更多回复
-			replyDetail(cId) {
-
-				this.isShowReply = true
-				this.reply = {}
-				this.getCommentsReply(this.vId, cId, this.dataType)
-
-			},
-			closeReply() {
-				this.isShowReply = false
-			},
-			tapSortType(type) {
-				
-				if (this.sortType !== type) {
-					this.sortType = type
-					this.comments = []
-					this.pageNo = 0
-					this.getComments(this.vId, this.sortType, this.dataType)
-				}
-			},
-			getComments(id, sortType, dataType) {
-				comments(id, sortType, dataType).then(res => {
-					this.getParams(res)
-
-				})
-			},
-			getMoreCommentsByTime(id, sortType, cursor, pageSize, pageNo, dataType) {
-				moreCommentsByTime(id, sortType, cursor, pageSize, pageNo, dataType).then(res => {
-					this.getParams(res)
-				})
-			},
-			getMoreCommentsByOtherType(id, sortType, pageSize, pageNo, dataType) {
-				moreCommentsByOtherType(id, sortType, pageSize, pageNo, dataType).then(res => {
-					this.getParams(res)
-
-				})
-			},
-			getCommentsReply(sId, cId, dataType) {
-				commentsReply(sId, cId, dataType).then(res => {
-					
-					if (res.code === 200) {
-						this.reply = res.data
-						this.user = res.data.ownerComment.user
-						this.ownerComment = res.data.ownerComment
-					}
-				})
-			},
-			getParams(res) {
-				if (res.code === 200) {
-					this.hasMore = res.data.hasMore
-					this.totalCount = res.data.totalCount
-					this.lastCursor = Number(res.data.cursor)
-					res.data.sortType === 99 ? this.sortType = 1 : this.sortType = res.data.sortType
-					this.comments.push(...res.data.comments)
-					this.sortTypeList = res.data.sortTypeList
-
-					this.sortTypeList.map(item => {
-						if (item.sortType === 1 || item.sortType === 99) {
-							item.sortTypeName = '推荐'
-							item.sortType = 1
-						} else if (item.sortType === 2) {
-							item.sortTypeName = '最热'
-						} else if (item.sortType === 3) {
-							item.sortTypeName = '最新'
-						}
-
-					})
-				}
-			},
+			
 			change(e) {
 				let index = e.detail.current
+				this.vId = this.MVData[index].detail.id
 				this.MVData.map((item, i) => {
 					if (index === i) {
 						item.autoplay = true
@@ -234,6 +144,9 @@
 						uni.createVideoContext('myVideo' + i, this).pause()
 					}
 				})
+				//先清空上一条视频的评论数据
+				this.comments = []
+				this.getComments(this.vId, this.sortType, this.dataType)
 			},
 			play(index) {
 				this.MVData[index].playing = true
@@ -326,9 +239,7 @@
 			this.getRelMV(options.vId)
 			this.getComments(this.vId, this.sortType, this.dataType)
 			
-			uni.$on('closeReply',()=>{
-				this.isShowReply = false
-			})
+			
 		}
 	}
 </script>
@@ -338,9 +249,15 @@
 		position: absolute;
 		bottom: 0;
 		left: 0;
-		height: 75%;
+		height: 0;
+		transition: height .5s ease-in-out;
+		z-index: 999;
 	}
-
+	
+	.comments-trans{
+		height: 68%;
+		transition: height .5s ease-in-out;
+	}
 	.video-detail {
 		position: relative;
 		width: 100%;
@@ -490,7 +407,7 @@
 		justify-content: flex-start;
 		align-items: center;
 	}
-
+	
 	.artist-ava {
 		display: inline-block;
 		width: 30px;
@@ -498,7 +415,7 @@
 
 		border-radius: 50%;
 	}
-
+	
 	.artist-name {
 		margin-left: 4px;
 		font-weight: bold;
@@ -578,8 +495,12 @@
 
 	.my-video {
 		padding-top: 45%;
+		transition: padding-top .5s ease-in-out;
 	}
-
+	.video-trans{
+		padding-top: 0;
+		transition: padding-top .5s ease-in-out;
+	}
 	.comments{
 		width: 100%;
 		

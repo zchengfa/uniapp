@@ -1,10 +1,20 @@
 <template>
-	<view class="comments-reply" >
-		<view class="reply-box">
+	<view class="reply-container">
+		<view class="reply-box" :style="equal ? 'height:100%;':'height:90%;'">
+			<!-- #ifdef APP || H5 -->
+			<view class="title-box" :style="isShowReply ? 'display:flex;' : 'display:none;'">
+				<text class="iconfont musicleftArrow" @tap="back"></text>
+				<text class="title-count">回复({{reply.totalCount}})</text>
+			</view>
+			<!-- #endif -->
+			
+			<!-- #ifdef MP-WEIXIN -->
 			<view class="title-box">
 				<text class="iconfont musicleftArrow" @tap="back"></text>
 				<text class="title-count">回复({{reply.totalCount}})</text>
 			</view>
+			<!-- #endif -->
+			
 			<scroll-view scroll-y="true" class="scroll-reply">
 				<view class="owner-comments comments-item">
 					<view class="user">
@@ -30,7 +40,8 @@
 					</view>	
 				</view>
 				<view class="all-reply-title">
-					<text class="reply-title">全部恢复</text>
+					全部回复
+					<text class="reply-title">{{reply.totalCount}}</text>
 				</view>
 				<view class="comments-item" v-for="(item,index) in reply.comments" :key="item.commentId">
 					<view class="user">
@@ -57,11 +68,21 @@
 				</view>
 			</scroll-view>
 		</view>
+		<!-- #ifdef APP || H5 -->
+		<view class="bottom-comment" :style="isShowReply ? 'display:flex;' : 'display:none;'">
+			<input class="input" type="text" placeholder="千头万绪,落笔汇成评论一句" />
+			<text class="emoji iconfont controller-face"></text>
+			<text class="send">发送</text>
+		</view>
+		<!-- #endif -->
+		
+		<!-- #ifdef MP-WEIXIN -->
 		<view class="bottom-comment">
 			<input class="input" type="text" placeholder="千头万绪,落笔汇成评论一句" />
 			<text class="emoji iconfont controller-face"></text>
 			<text class="send">发送</text>
 		</view>
+		<!-- #endif -->
 	</view>
 </template>
 
@@ -87,6 +108,18 @@
 				default(){
 					return {}
 				}
+			},
+			equal:{
+				type:Boolean,
+				default(){
+					return false
+				}
+			},
+			isShowReply:{
+				type:Boolean,
+				default(){
+					return false
+				}
 			}
 		},
 		data() {
@@ -103,23 +136,31 @@
 	}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .comments-reply{
+	height: 0;
+	
+}
+.reply-com{
+	height: 100%;
+}
+.comments-reply,.reply-com{
 	position: absolute;
-	top:0;
+	bottom:0;
 	width: 100%;
-	height: 100vh;
-	background-color: rgba(0,0,0,.3);
+	background-color: rgba(0,0,0,.1);
 	z-index: 999;
+	transition: height .5s ease-in-out;
 }
 .reply-box{
 	position: absolute;
 	bottom: 0;
 	width: 100%;
-	height: 90%;
-	background-color: #d6d6d6;
+	background-color: #ffffff;
 	z-index: 1000;
 }
+
+/* #endif */
 .musicleftArrow{
 	margin: 0 10px;
 	font-size: 20px;
@@ -142,14 +183,22 @@
 	background-color: #fff;
 }
 .owner-comments{
-	border-bottom: 10px solid rgba(0,0,0,.3);
+	border-bottom: 10px solid rgba(0,0,0,.1);
 }
 .all-reply-title{
 	position: relative;
 	padding: 10px 15px;
 	font-size: 14px;
 	font-weight: bold;
-}
+	color: #000;
+	text-align: left;
+	.reply-title{
+		padding-left: 4px;
+		font-weight: normal;
+		font-size: 12px;
+		color: #C8C7CC;
+	}
+}	
 .scroll-reply{
 	
 	width: 100%;
@@ -178,6 +227,7 @@
 	padding-top: 10px;
 	padding-bottom: 10px;
 	font-size: 14px;
+	border-bottom: 1px solid #eae9ef;
 }
 .name-vip{
 	display: flex;
@@ -212,10 +262,10 @@
 	margin-right: 2px;
 }
 .liked{
-	color: #000;
+	color: #C8C7CC;
 }
 .bottom-comment{
-	position: fixed;
+	position: absolute;
 	bottom: 0;
 	display: flex;
 	justify-content: space-between;
@@ -232,6 +282,7 @@
 		height: 30px;
 		text-indent: 20px;
 		font-size: 12px;
+		text-align: left;
 }
 .send{
 	margin-right: 10px;
@@ -239,8 +290,10 @@
 .emoji,.send{
 	width: 40px;
 	text-align: center;
+	color:#000;
 }
 .emoji{
 	font-size: 24px;
+	
 }
 </style>

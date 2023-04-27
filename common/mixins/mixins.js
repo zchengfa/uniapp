@@ -331,10 +331,149 @@ const keyboardMixins = {
 }
 
 
+//评论混入
+import { comments , moreCommentsByTime , commentsReply , moreCommentsByOtherType} from '@/common/api.js'
+const commentsMixins = {
+	data(){
+		return {
+			loading:false,
+			isShowComments:false,
+			dataType: 0,
+			//排序方式
+			sortType: 3,
+			//是否还有更多
+			hasMore: undefined,
+			//评论总数
+			totalCount: 0,
+			//评论
+			comments: [],
+			//上一页最后一条评论的时间（根据时间排序时获取更多评论需要用到）
+			lastCursor: undefined,
+			
+			pageNo: 1,
+			isShowReply: false,
+			reply: {},
+			vId: undefined,
+			sortTypeList: [],
+			user: {},
+			ownerComment: {}
+		}
+	},
+	
+	methods:{
+		//上拉加载更多
+		scrollToLower(){
+			
+			if(this.hasMore){
+				this.loading = true
+				this.pageNo +=1
+				if(this.sortType === 3){
+					this.getMoreCommentsByTime(this.vId,this.sortType,this.lastCursor,20,this.pageNo,this.dataType)
+				}
+				else{
+					this.getMoreCommentsByOtherType(this.vId,this.sortType,20,this.pageNo,this.dataType)
+					
+				}
+			}
+			else{
+				uni.showModal({
+					title:'提示：',
+					content:'已经到底了哦！'
+				})
+			}
+		},
+		//点击查看更多回复
+		replyDetail(cId) {
+		
+			this.isShowReply = true
+			this.reply = {}
+			this.getCommentsReply(this.vId, cId, this.dataType)
+		
+		},
+		closeReply() {
+			this.isShowReply = false
+		},
+		tapSortType(type) {
+			
+			if (this.sortType !== type) {
+				this.sortType = type
+				this.comments = []
+				this.pageNo = 0
+				this.getComments(this.vId, this.sortType, this.dataType)
+			}
+		},
+		getComments(id, sortType, dataType) {
+			comments(id, sortType, dataType).then(res => {
+				this.getParams(res)
+		
+			})
+		},
+		getMoreCommentsByTime(id, sortType, cursor, pageSize, pageNo, dataType) {
+			moreCommentsByTime(id, sortType, cursor, pageSize, pageNo, dataType).then(res => {
+				this.getParams(res)
+			})
+		},
+		getMoreCommentsByOtherType(id, sortType, pageSize, pageNo, dataType) {
+			moreCommentsByOtherType(id, sortType, pageSize, pageNo, dataType).then(res => {
+				this.getParams(res)
+		
+			})
+		},
+		getCommentsReply(sId, cId, dataType) {
+			commentsReply(sId, cId, dataType).then(res => {
+				
+				if (res.code === 200) {
+					this.reply = res.data
+					this.user = res.data.ownerComment.user
+					this.ownerComment = res.data.ownerComment
+				}
+			})
+		},
+		getParams(res) {
+			if (res.code === 200) {
+				this.hasMore = res.data.hasMore
+				this.totalCount = res.data.totalCount
+				this.lastCursor = Number(res.data.cursor)
+				res.data.sortType === 99 ? this.sortType = 1 : this.sortType = res.data.sortType
+				this.comments.push(...res.data.comments)
+				this.sortTypeList = res.data.sortTypeList
+				
+				//关闭加载状态
+				this.loading = false
+		
+				this.sortTypeList.map(item => {
+					if (item.sortType === 1 || item.sortType === 99) {
+						item.sortTypeName = '推荐'
+						item.sortType = 1
+					} else if (item.sortType === 2) {
+						item.sortTypeName = '最热'
+					} else if (item.sortType === 3) {
+						item.sortTypeName = '最新'
+					}
+		
+				})
+			}
+		},
+		showComments(){
+			this.isShowComments = true
+			
+		},
+		closeComments(){
+			this.isShowComments = false
+		},
+	},
+	onLoad(){
+		uni.$on('closeReply',()=>{
+			this.isShowReply = false
+		})
+	}
+}
+
 module.exports = {
 	bottomControlMixin,
 	changeLoopMixin,
 	searchScrollMixin,
 	playSongMixin,
 	keyboardMixins,
+	commentsMixins
 }
