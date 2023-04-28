@@ -1,18 +1,23 @@
 <template>
 	<view class="comment-container">
     <!-- 评论页面的导航栏 -->
-    <view class="nav-place">
-      <view class="nav flex-box">
-        <view class="left nav-left">
-          <text class="iconfont musicleftArrow back" @tap="back"></text>
-          <text class="count">评论({{totalCount}})</text>
-        </view>
-        <view class="right">
-          <text class="iconfont musicshare share"></text>
-        </view>
-      </view>
-    </view>
-
+		<!-- #ifdef H5 -->
+		<nav-bar :title="'评论(' + totalCount + ')'" class="nav" centerToLeft="text-align:left;left:50px;"></nav-bar>
+		<!-- #endif -->
+		
+		<!-- #ifdef  MP-WEIXIN -->
+		<nav-bar :title="'评论(' + totalCount + ')'" class="nav"></nav-bar>
+		<!-- #endif -->
+		
+		<!-- #ifdef APP -->
+		<view class="app-nav">
+			<view class="app-left-box">
+				<text class="app-back iconfont musicleftArrow app-text" @tap="back"></text>
+				<text class="app-comments">评论({{totalCount}})</text>
+			</view>
+			<text class="app-share iconfont musicshare app-text"></text>
+		</view>
+		<!-- #endif -->
     <!-- 评论 -->
 		<scroll-view scroll-y="true" class="scroll-comment-box" @scrolltolower="scrollToLower" lower-threshold="50">
 			<!-- 当前评论所属的歌曲信息 -->
@@ -31,10 +36,19 @@
 				</view>
 			</view>
 			
+			<!-- #ifdef MP-WEIXIN -->
 			<Comments :isShowComments="true" class="comments" :class="{'comments-trans':isShowComments}" :comments="comments" :reply="reply" :sortTypeList="sortTypeList" :equal="true" height="height:calc(100vh - 148px);"
 				:isShowReply="isShowReply" :user="user" :ownerComment="ownerComment" :sortType="sortType" :count="totalCount" :isShowCount="true" :loading="loading"
 				@tapSortType="tapSortType" @replyDetail="replyDetail" @scrollToLower="scrollToLower"
 				></Comments>
+			<!-- #endif -->
+			
+			<!-- #ifdef H5 || APP -->
+			<Comments :isShowComments="true" class="comments" :class="{'comments-trans':isShowComments}" :comments="comments" :reply="reply" :sortTypeList="sortTypeList" :equal="true" height="height:calc(100% - 68px);"
+				:isShowReply="isShowReply" :user="user" :ownerComment="ownerComment" :sortType="sortType" :count="totalCount" :isShowCount="true" :loading="loading"
+				@tapSortType="tapSortType" @replyDetail="replyDetail" @scrollToLower="scrollToLower"
+				></Comments>
+			<!-- #endif -->
 		</scroll-view>
 		
 	</view>
@@ -77,7 +91,31 @@
 	}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+	/* #ifdef APP */
+	.app-nav{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+		height: 80px;
+		.app-back,.app-comments{
+			display: inline-block;
+			text-align: center;
+		}
+		.app-comments{
+			height: 80px;
+			line-height: 100px;
+			
+		}
+		.app-text{
+			width:40px;
+			height: 80px;
+			line-height: 100px;
+			text-align: center;
+		}
+	}
+	/* #endif */
 	.comment-container{
 		height: 100vh;
 	}
@@ -95,43 +133,30 @@
 		justify-content: space-between;
 		align-items: center;
 	}
-	.nav{
+	/* .nav{
 		position: fixed;
 		width: 100%;
 		max-width: 500px;
 		box-shadow: 0 0 1px 1px #C0C0C0;
 		color: #000;
+	} */
+	.nav{
+		position: relative;
+		width: 100vw;
+		height: 44px;
+		z-index: 1000;
 	}
 	/* #ifdef H5 */
 	.comments{
 		height: calc(100% - 68px);
 	}
-	.nav-place{
-		width: 100%;
-		height: 44px;
-	}
-	.nav{
-		height: 44px;
-	}
-	.back,.share{
-		line-height: 44px;
-	}
+	
 	.scroll-comment-box{
 		height: calc(100vh - 44px);
 	}
 	/* #endif */
-	.left,.right{
-		display: flex;
-		justify-content: space-around;
-		align-items: center;
-		text-align: center;
-	}
-	.back,.share{
-		width: 40px;
-		height: 100%;
-		font-weight: bolder;
-		
-	}
+	
+	
 	.scroll-comment-box{
 		
 		background-color: #e6e6e6;
@@ -212,9 +237,7 @@
 		height: 100%;
 		text-align: center;
 	}
-	.content{
-		width: 88%;
-	}
+	
 	.top{
 		display: flex;
 		justify-content: space-between;
@@ -281,25 +304,18 @@
 	.emoji{
 		font-size: 24px;
 	}
-	/* #ifdef MP-WEIXIN || APP*/
+	/* #ifdef MP-WEIXIN || APP */
 	.comments{
 		height: calc(100% - 148px);
 	}
-	.nav-place,.nav{
+	.nav{
 		height: 80px;
 	}
-	.share{
-		display: none;
-	}
+	
 	.scroll-comment-box{
 		height: calc(100% - 80px);
 	}
-	.back,.count{
-		position: relative;
-		top:20px;
-		height: 60px;
-		line-height: 60px;
-	}
 	
 	/* #endif */
+	
 </style>

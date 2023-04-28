@@ -2,7 +2,13 @@
 	<view class="song-detail"> 
 		<view class="filter" :style="{'background-image':`url(${songs.picUrl})`}"></view>
 		<view class="filter cover" ></view>
-		<nav-bar :title="songs.name" class="nav"></nav-bar>
+		<!-- #ifdef H5 || MP-WEIXIN -->
+		<nav-bar :title="songs.name" class="nav" color="#fff"></nav-bar>
+		<!-- #endif -->
+		
+		<!-- #ifdef APP -->
+		<nav-bar :title="songs.name" class="nav" color="#fff" centerToLeft="text-align:center;left:50vw; transform:translateX(-50%);"></nav-bar>
+		<!-- #endif -->
 		<view class="detail-content">
 			<image v-if="!isShowLyric" src="~@/static/images/song/needle.png" class="needle" :class="{'rotate-needle':playStatus}"></image>
 			<view class="music">

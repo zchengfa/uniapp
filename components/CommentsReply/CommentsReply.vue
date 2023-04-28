@@ -68,6 +68,7 @@
 				</view>
 			</scroll-view>
 		</view>
+		
 		<!-- #ifdef APP || H5 -->
 		<view class="bottom-comment" :style="isShowReply ? 'display:flex;' : 'display:none;'">
 			<input class="input" type="text" placeholder="千头万绪,落笔汇成评论一句" />

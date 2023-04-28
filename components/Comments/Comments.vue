@@ -45,15 +45,13 @@
 			<text class="emoji iconfont controller-face"></text>
 			<text class="send">发送</text>
 		</view>
+		
 		<!-- #ifdef APP || H5 -->
-		
-		<comments-reply :class="isShowReply ? 'reply-com' : 'comments-reply'" :reply="reply" :user="user" :ownerComment="ownerComment" :is-show-reply="isShowReply" :equal="equal"></comments-reply>
-			
+		<comments-reply :class="isShowReply ? 'reply-com' : 'comments-reply'" :reply="reply" :user="user" :ownerComment="ownerComment" :is-show-reply="isShowReply" :equal="equal"></comments-reply>	
 		<!-- #endif -->
-		<!-- #ifdef MP-WEIXIN -->
 		
-		<comments-reply :class="isShowReply ? 'reply-com' : 'comments-reply'" :reply="reply" :user="user" :ownerComment="ownerComment" v-if="isShowReply" :equal="equal"></comments-reply>
-			
+		<!-- #ifdef MP-WEIXIN -->
+		<comments-reply :class="isShowReply ? 'reply-com' : 'comments-reply'" :reply="reply" :user="user" :ownerComment="ownerComment" v-if="isShowReply" :equal="equal"></comments-reply>	
 		<!-- #endif -->
 	</view>
 </template>
