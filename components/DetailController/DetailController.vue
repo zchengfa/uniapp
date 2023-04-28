@@ -400,10 +400,16 @@
 	}
 	.comments-num{
 		position: absolute;
+		left: 40%;
+		top:-40%;
 		display: inline-block;
-		width: 40px;
-		
-		transform: translateX(-25%) translateY(-25%);
+		width: 30px;
+		height: 30px;
+		line-height: 30px;
+		border-radius: 50%;
+		transform: scale(.8);
+		text-align: center;
+		background-color: rgba(0, 0, 0, .1);
 	}
 	.stop{
 		font-size: 40px;
