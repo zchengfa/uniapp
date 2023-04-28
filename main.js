@@ -147,6 +147,8 @@ audioContext.onCanplay(()=>{
 		getLyric(store.state.music.songId)
 	}
 	
+	
+	
 })
 
 audioContext.onTimeUpdate(()=>{
@@ -193,6 +195,19 @@ audioContext.onTimeUpdate(()=>{
 
 audioContext.onPlay(()=>{
 	store.dispatch('changePlayStatus',true)
+	
+})
+
+audioContext.onError(()=>{
+	
+	uni.showToast({
+		title:'YC音乐君提醒您：播放的音乐出错了！',
+		icon:'error',
+		duration:2000,
+		position:'center'
+	})
+	
+	nextSong()
 	
 })
 

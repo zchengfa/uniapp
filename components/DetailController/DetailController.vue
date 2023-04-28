@@ -27,8 +27,8 @@
 			<text class="stop iconfont" @tap="changePlayStatus" :class="playStatus?'musicstop':'musicplayCircleOne'"></text>
 			<text class="iconfont controller-next_song" @tap="changeSong('next')"></text>
 			<text class="iconfont controller-list" @tap="showList" v-if="!fmStatus"></text>
-			<view class="comments-box" v-if="fmStatus">
-				<text class="comments iconfont controller-comments" @tap="toComments"></text>
+			<view class="comments-box" v-if="fmStatus" @tap="toComments">
+				<text class="comments iconfont controller-comments" ></text>
 				<text class="comments-num">{{commentsNum}}</text>
 			</view>
 		</view>

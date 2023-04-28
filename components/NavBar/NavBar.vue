@@ -7,7 +7,7 @@
 		</view>
 		<view class="center" :style="centerToLeft">
 			<slot name="center">
-				<text class="nav-text" :style="{'color':color}">{{title}}</text>
+				<text class="nav-text" :style="{'color':color}" :class="{'horse-race-lamp':horseRaceLamp}">{{title}}</text>
 			</slot>
 		</view>
 		<view class="right">
@@ -40,6 +40,12 @@
 				default(){
 					return 'text-align:center'
 				}
+			},
+			horseRaceLamp:{
+				type:Boolean,
+				default(){
+					return true
+				}
 			}
 		},
 		data() {
@@ -56,6 +62,19 @@
 </script>
 
 <style scoped>
+	.horse-race-lamp{
+		margin-left: 100%;
+		width: 100%;
+		animation: horseLamp 10s linear 3s infinite ;
+	}
+	@keyframes horseLamp {
+		0%{
+			transform: translateX(0);
+		}
+		100%{
+			transform: translateX(-300%);
+		}
+	}
 .content{
 	display: flex;
 	justify-content: flex-start;

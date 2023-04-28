@@ -135,7 +135,7 @@
 		max-width: 500px;
 		background-color: #ffffff;
 		transform: translateX(-50%);
-		box-shadow: 0 0 2px 2px #C0C0C0;
+		box-shadow: 0 0 2px 2px #f4f4f4;
 	}
 	/* #ifdef APP */
 	.bottom-control{

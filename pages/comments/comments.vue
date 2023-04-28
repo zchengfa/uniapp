@@ -163,39 +163,65 @@
 	}
 	
 	.song{
-		display: flex;
-		justify-content: flex-start;
-		align-items: center;
+		position: relative;
 		padding: 14px;
 		font-size: 12px;
 	}
 	.info{
+		position: absolute;
+		top:50%;
+		left: 55px;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
 		margin-left: 10px;
+		max-width: 200px;
+		transform: translateY(-50%);
+	
+		.charactor{
+			
+			height: 20px;
+			width: 20px;
+			line-height: 20px;
+		}
+		.song-name,.song-author{
+			max-width: 90px;
+			height: 20px;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			line-height: 20px;
+			font-size: 14px;
+		}
 	}
 	.controller-circle{
 		margin-right: 4px;
 	}
 	.TA-circle{
 		position: absolute;
-		right: 30px;
+		top:20px;
+		right: 20px;
 		padding: 4px;
 		color: #007AFF;
 		border-radius: 16px;
 		background-color: #dde2fa;
 	}
 	.pic-box{
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		display: inline-block;
 		width: 40px;
 		height: 40px;
 		border-radius: 50%;
 		background-color: #000;
+		text-align: center;
+		
 	}
 	.pic{
+		position: relative;
+		top:50%;
 		width: 80%;
 		height: 80%;
 		border-radius: 50%;
+		transform: translateY(-50%);
 	}
 	.comments-title{
 		margin-top: 10px;
