@@ -1,5 +1,5 @@
 <script>
-	import { loginStatus } from 'common/api.js'
+	import { loginStatus , songData} from 'common/api.js'
 	export default {
 		onLaunch: function() {
 			//ios端小程序在系统静音模式下仍可以有声音
@@ -8,10 +8,31 @@
 				obeyMuteSwitch:false
 			})
 			// #endif
+			
+			//查看之前是否保存过音乐地址，保存了并且时间与当前启动应用时相隔了一段时间就先删除音乐地址，再重新发送请求一次音乐地址
+			const music = uni.getStorageSync('audio')
+			if(music){
+				const timestamp = music.time
+				const now = new Date().getTime()
+				const maxTime = 12*60*60*1000
+				
+				
+				//相隔了12小时
+				if(!(now - timestamp < maxTime )){
+					//删除音乐地址数据
+					uni.removeStorageSync('audio')
+					this.$store.dispatch('audio',undefined)
+					let songId = uni.getStorageSync('songId')
+					songData(songId).then(res=>{
+						
+						this.$store.dispatch('audio',res.data[0].url)
+					})
+					
+				}
+			}
 		},
 		onShow: function() {
 			//获取浏览器存储的音乐数据，查看有没有设置歌曲循环方式，若没有，则给定默认的列表循环方式
-			
 			
 			if(!uni.getStorageSync('loop_status')){
 				uni.setStorageSync('loop_status','ll')
@@ -46,7 +67,7 @@
 			})
 		},
 		onHide: function() {
-		
+			
 		}
 	}
 </script>

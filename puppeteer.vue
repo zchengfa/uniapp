@@ -6,6 +6,7 @@
 				top:0,
 				left:0,
 				width:vw,
+				maxWidth:'500px',
 				height:vh,
 				zIndex:9999,
 				backgroundColor:'#fff',

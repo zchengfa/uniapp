@@ -120,7 +120,7 @@ export function timeFormatting (fm,time){
 }
 
 
-//事件转换成分钟
+//时间转换成分钟
 export function transTime(target){
 	let minutes = target/60
 	let m = dealTime(Math.floor(minutes))

@@ -1,0 +1,258 @@
+<template>
+	<div class="video-detail">
+		<div class="left nav-left">
+			<img src="../../static/images/down.png" class="back" alt="back" />
+		</div>
+		<list>
+			<cell v-for="(item,index) in MVData" :key="item.detail.id" class="cell">
+				
+					<video class="video" width="320" height="240" :src="item.url" controls :autoplay="item.autoplay"></video>
+					<div class="video-info">
+						<div>
+							<div>
+								<text class="text">{{item.vInfo.likedCount}}</text>
+							</div>
+							<div>
+								<text class="text">{{item.vInfo.commentCount}}</text>
+							</div>
+							<div>
+								<text class="text">{{item.vInfo.shareCount}}</text>
+							</div>
+							<view class="operation-item song">
+								<view class="pic-box" :class="item.playing ? 'rotate' : 'rotate paused'">
+									<image :src="item.detail.cover ||item.detail.coverUrl" class="cover"
+										mode="aspectFill"></image>
+								</view>
+							</view>
+						</div>
+						<div>
+							<view class="artist-box info-item">
+								<view class="artist-avatar" v-if="Number(vId)">
+									<image class="artist-ava" v-for="(art,artIndex) in item.detail.artists"
+										:src="art.img1v1Url" :key="artIndex"></image>
+								</view>
+								<view class="artist-avatar" v-else>
+									<image class="artist-ava" :src="item.detail.avatarUrl"></image>
+								</view>
+								<text class="artist-name"
+									v-if="Number(vId)">{{item.detail.artists}}</text>
+								<text class="artist-name" v-else>{{item.nickname}}</text>
+							</view>
+							<view class="mv-name-desc  info-item" @tap="showDesc(index)">
+								<text class="tag" v-if="Number(vId)">MV</text>
+								<text class="tag" v-else>视频</text>
+								<text class="mv-name">{{item.detail.name || item.detail.title}}</text>
+								<text class="top-angle angle"
+									v-if="!item.isShowDesc && (item.detail.desc || item.detail.description)"></text>
+							</view>
+							<scroll-view scroll-y="true" class="desc-scroll" v-if="item.isShowDesc">
+								<view class="desc-box">
+									<text
+										@tap="showDesc(index)">{{item.detail.desc || item.detail.description}}</text>
+									<text class="bottom-angle angle"></text>
+								</view>
+							</scroll-view>
+						</div>
+					</div>	
+					<div class="info-bottom">
+						<input class="input" type="text" placeholder="发条评论支持一下吧~" />
+					</div>
+				
+			</cell>
+		</list>
+		
+
+		
+		<!-- <Comments :isShowComments="isShowComments" class="comments" :class="{'comments-trans':isShowComments}" :comments="comments" :reply="reply" :sortTypeList="sortTypeList" :equal="true" height="height:calc(100vh - 264px);"
+			:isShowReply="isShowReply" :user="user" :ownerComment="ownerComment" :sortType="sortType" :count="totalCount" :isShowCount="true" :loading="loading"
+			@tapSortType="tapSortType" @replyDetail="replyDetail" @scrollToLower="scrollToLower"
+			></Comments> -->
+	</div>
+</template>
+
+<script>
+	import { commentsMixins } from '@/common/mixins/mixins.js'
+	
+	import {
+		timeFormatting
+	} from '@/utils/utils.js'
+	import {
+		vInfo,
+		vUrl,
+		vDetail,
+		relatedMV
+	} from '@/common/api.js'
+	export default {
+		
+		data() {
+			return {
+				MVData: [{
+					url: '',
+					detail: {},
+					vInfo: {},
+					isShowDesc: false,
+					nickname: '',
+					autoplay: true,
+					playing: true
+				}],
+				
+			}
+		},
+		
+		methods: {
+			change(e) {
+				let index = e.detail.current
+				this.vId = this.MVData[index].detail.id
+				this.MVData.map((item, i) => {
+					if (index === i) {
+						item.autoplay = true
+			
+						uni.createVideoContext('myVideo' + i, this).play()
+					} else {
+						item.autoplay = false
+			
+						uni.createVideoContext('myVideo' + i, this).pause()
+					}
+				})
+				//先清空上一条视频的评论数据
+				this.comments = []
+				this.getComments(this.vId, this.sortType, this.dataType)
+			},
+			play(index) {
+				this.MVData[index].playing = true
+			},
+			pause(index) {
+				this.MVData[index].playing = false
+			},
+			videoEnded() {
+				console.log('放完了')
+			},
+			back() {
+				uni.navigateBack()
+			},
+			getVInfo(id, index) {
+				vInfo(id).then(res => {
+					if (res.code === 200) {
+						//this.vInfo = res
+						this.MVData[index].vInfo = res
+					}
+				})
+			},
+			getVUrl(id, index) {
+				vUrl(id).then(res => {
+					//console.log(res)
+					if (res.code === 200) {
+						if (Number(id)) {
+							this.MVData[index].url = res.data.url
+						} else {
+							this.MVData[index].url = res.urls[0].url
+						}
+					}
+			
+				})
+			},
+			getVDetail(id, index) {
+				vDetail(id).then(res => {
+					if (res.code === 200) {
+						this.MVData[index].detail = res.data
+			
+						//处理时间
+						this.MVData[index].detail && Number(this.MVData[index].detail.publishTime) ? this.MVData[
+							index].detail.publishTime = timeFormatting('YYYY-MM-DD', this.MVData[index].detail
+							.publishTime) : null
+			
+						if (!Number(id)) {
+			
+							this.MVData[index].nickname = res.data.creator.nickname
+						}
+					}
+					//console.log(res)
+				})
+			},
+			init(id, index) {
+				this.getVUrl(id, index)
+				this.getVInfo(id, index),
+					this.getVDetail(id, index)
+			
+			},
+			showDesc(index) {
+				this.MVData[index].isShowDesc = !this.MVData[index].isShowDesc
+			},
+			getRelMV(vId) {
+				relatedMV(vId).then(res => {
+					let data = Number(vId) ? data = res.mvs : data = res.data
+					//console.log((data))
+			
+					data.map((item, index) => {
+						this.MVData.push({
+							url: '',
+							detail: {},
+							vInfo: {},
+							isShowDesc: false,
+							nickname: '',
+							autoplay: false,
+							playing: false
+						})
+						Number(vId) ? this.init(item.id, index + 1) : this.init(item.vid, index + 1)
+			
+					})
+			
+				})
+			}
+			
+		},
+		onLoad(options) {
+			this.vId = options.vId
+			Number(options.vId) ? this.dataType = 1 : this.dataType = 5;
+
+			this.init(this.vId, 0)
+
+			this.getRelMV(options.vId)
+			this.getComments(this.vId, this.sortType, this.dataType)
+			
+			
+		}
+	}
+</script>
+
+<style scoped>
+	.video-detail{
+		width: 750rpx;
+		flex: 1;
+		background-color: #000;
+	}
+	.nav-place{
+		width: 750rpx;
+		height: 80px;
+		
+	}
+	.back{
+		color: #000;
+		width: 50px;
+		height: 80px;
+		background-color: #fff;
+	}
+	.cell{
+		width: 750rpx;
+		height: 760px;
+		background-color: #000;
+	}
+	.video{
+		margin-top: 150px;
+	}
+	.info-bottom{
+		background-color: #fff;
+		color: aquamarine;
+	}
+	.url{
+		color: red;
+	}
+	.text{
+		color: #fff;
+	}
+	.cover{
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+	}
+</style>

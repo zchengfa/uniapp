@@ -1,7 +1,7 @@
 export default {
 	state:{
 		//音频地址
-		audio:uni.getStorageSync('audio'),
+		audio:uni.getStorageSync('audio').url,
 		//当前音频是否为试听版
 		audition:uni.getStorageSync('audition'),
 		//音频可播放时长
@@ -153,7 +153,10 @@ export default {
 		},
 		audio(state,src){
 			state.audio = src
-			uni.setStorageSync('audio',src)
+			uni.setStorageSync('audio',{
+				url:src,
+				time:new Date().getTime()
+			})
 		},
 		audition(state,payload){
 			state.audition = payload
