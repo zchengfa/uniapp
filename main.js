@@ -119,7 +119,7 @@ audioContext.autoplay = true
 // audioContext.volume = (store.state.music.volume)/100
 
 if(store.state.music.audio){
-	console.log('src')
+	
 	audioContext.src = store.state.music.audio
 	if(store.state.music.palyStatus){
 		audioContext.play()

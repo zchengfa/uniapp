@@ -101,6 +101,7 @@
 				uni.navigateTo({
 					url:'../videoDetail/videoDetail?vId=' + vId
 				})
+				this.$audio.pause()
 			}
 		},
 		created() {

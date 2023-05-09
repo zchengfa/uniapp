@@ -62,7 +62,10 @@
             "path" : "pages/videoDetail/videoDetail",
             "style" :                                                                                    
             {
-                "navigationStyle":"custom"
+                "navigationStyle":"custom",
+				"app-plus": {
+					"softinputmode": "adjustResize"
+				}
             }
             
         }

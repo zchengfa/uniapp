@@ -1,68 +1,77 @@
 <template>
 	<div class="video-detail">
 		<div class="left nav-left">
-			<img src="../../static/images/down.png" class="back" alt="back" />
+			<img src="../../static/images/down.png" class="back" alt="back" @click="back" />
 		</div>
-		<list>
-			<cell v-for="(item,index) in MVData" :key="item.detail.id" class="cell">
-				
-					<video class="video" width="320" height="240" :src="item.url" controls :autoplay="item.autoplay"></video>
-					<div class="video-info">
-						<div>
-							<div>
-								<text class="text">{{item.vInfo.likedCount}}</text>
-							</div>
-							<div>
-								<text class="text">{{item.vInfo.commentCount}}</text>
-							</div>
-							<div>
-								<text class="text">{{item.vInfo.shareCount}}</text>
-							</div>
-							<view class="operation-item song">
-								<view class="pic-box" :class="item.playing ? 'rotate' : 'rotate paused'">
-									<image :src="item.detail.cover ||item.detail.coverUrl" class="cover"
-										mode="aspectFill"></image>
-								</view>
-							</view>
-						</div>
-						<div>
-							<view class="artist-box info-item">
-								<view class="artist-avatar" v-if="Number(vId)">
-									<image class="artist-ava" v-for="(art,artIndex) in item.detail.artists"
-										:src="art.img1v1Url" :key="artIndex"></image>
-								</view>
-								<view class="artist-avatar" v-else>
-									<image class="artist-ava" :src="item.detail.avatarUrl"></image>
-								</view>
-								<text class="artist-name"
-									v-if="Number(vId)">{{item.detail.artists}}</text>
-								<text class="artist-name" v-else>{{item.nickname}}</text>
-							</view>
-							<view class="mv-name-desc  info-item" @tap="showDesc(index)">
-								<text class="tag" v-if="Number(vId)">MV</text>
-								<text class="tag" v-else>视频</text>
-								<text class="mv-name">{{item.detail.name || item.detail.title}}</text>
-								<text class="top-angle angle"
-									v-if="!item.isShowDesc && (item.detail.desc || item.detail.description)"></text>
-							</view>
-							<scroll-view scroll-y="true" class="desc-scroll" v-if="item.isShowDesc">
-								<view class="desc-box">
-									<text
-										@tap="showDesc(index)">{{item.detail.desc || item.detail.description}}</text>
-									<text class="bottom-angle angle"></text>
-								</view>
-							</scroll-view>
-						</div>
-					</div>	
-					<div class="info-bottom">
-						<input class="input" type="text" placeholder="发条评论支持一下吧~" />
-					</div>
-				
-			</cell>
-		</list>
-		
+		<swiper vertical="true" class="scroll-video" @change="change">
+			<swiper-item v-for="(item,index) in MVData" :key="index">
 
-		
+				<!-- <video class="video" width="320" height="240" :id="'myVideo' + index" :src="item.url" controls
+					:autoplay="item.autoplay" loop></video> -->
+					<video width="320" height="240" class="video" :id="'myVideo' + index" :src="item.url"
+						:autoplay="item.autoplay" :poster="item.detail.cover ||item.detail.coverUrl" loop="true"
+						objectFit="contain" @play="play(index)" @pause="pause(index)"
+						@ended="videoEnded"></video>
+				<div class="video-info">
+					<div class="info-box">
+						<div class="info-item">
+							<img class="video-info-img" src="../../static/images/like.png" alt="like">
+							<text class="text">{{item.vInfo.likedCount}}</text>
+						</div>
+						<div class="info-item">
+							<img class="video-info-img" src="../../static/images/comments.png" alt="like">
+							<text class="text">{{item.vInfo.commentCount}}</text>
+						</div>
+						<div class="info-item">
+							<img class="video-info-img" src="../../static/images/share.png" alt="like">
+							<text class="text">{{item.vInfo.shareCount}}</text>
+						</div>
+						<view class="operation-item song">
+							<view class="pic-box" :class="item.playing ? 'rotate' : 'rotate paused'">
+								<image :src="item.detail.cover ||item.detail.coverUrl" class="cover" mode="aspectFill">
+								</image>
+							</view>
+						</view>
+					</div>
+					<div class="info">
+						<div class="ava-container">
+							<div class="artist-box">
+								<div class="artist-avatar" v-if="Number(vId)">
+									<img class="avatar" v-for="(art,artIndex) in item.detail.artists"
+										:src="art.img1v1Url" :key="artIndex" />
+								</div>
+								<div class="artist-avatar" v-else>
+									<img class="avatar" :src="item.detail.avatarUrl" />
+								</div>
+								<text class="artist-name" v-if="Number(vId)">{{item.detail.artists[0].name}}</text>
+								<text class="artist-name" v-else>{{item.nickname}}</text>
+							</div>
+						</div>
+						<div class="mv-name-desc" @tap="showDesc(index)">
+							<text class="tag" v-if="Number(vId)">MV</text>
+							<text class="tag" v-else>视频</text>
+							<text class="mv-name">{{item.detail.name || item.detail.title}}</text>
+							<img class="top-angle angle" src="../../static/images/angle.png" v-if="!item.isShowDesc && (item.detail.desc || item.detail.description)" />
+						</div>
+
+						
+						<div class="desc-box" v-if="item.isShowDesc">
+							<text class="desc" @tap="showDesc(index)">{{item.detail.desc || item.detail.description}}</text>
+							<img class="bottom-angle angle" src="../../static/images/angle.png" />
+						</div>
+						<text class="publish-time">{{item.detail.publishTime}}</text>
+					</div>
+				</div>
+
+				<div class="info-bottom">
+					<input class="input" type="text" placeholder="发条评论支持一下吧~" />
+				</div>
+			</swiper-item>
+
+		</swiper>
+
+
+
 		<!-- <Comments :isShowComments="isShowComments" class="comments" :class="{'comments-trans':isShowComments}" :comments="comments" :reply="reply" :sortTypeList="sortTypeList" :equal="true" height="height:calc(100vh - 264px);"
 			:isShowReply="isShowReply" :user="user" :ownerComment="ownerComment" :sortType="sortType" :count="totalCount" :isShowCount="true" :loading="loading"
 			@tapSortType="tapSortType" @replyDetail="replyDetail" @scrollToLower="scrollToLower"
@@ -71,8 +80,10 @@
 </template>
 
 <script>
-	import { commentsMixins } from '@/common/mixins/mixins.js'
-	
+	import {
+		commentsMixins
+	} from '@/common/mixins/mixins.js'
+
 	import {
 		timeFormatting
 	} from '@/utils/utils.js'
@@ -83,7 +94,7 @@
 		relatedMV
 	} from '@/common/api.js'
 	export default {
-		
+		mixins: [commentsMixins],
 		data() {
 			return {
 				MVData: [{
@@ -98,7 +109,7 @@
 				
 			}
 		},
-		
+
 		methods: {
 			change(e) {
 				let index = e.detail.current
@@ -106,11 +117,11 @@
 				this.MVData.map((item, i) => {
 					if (index === i) {
 						item.autoplay = true
-			
+
 						uni.createVideoContext('myVideo' + i, this).play()
 					} else {
 						item.autoplay = false
-			
+
 						uni.createVideoContext('myVideo' + i, this).pause()
 					}
 				})
@@ -148,21 +159,21 @@
 							this.MVData[index].url = res.urls[0].url
 						}
 					}
-			
+
 				})
 			},
 			getVDetail(id, index) {
 				vDetail(id).then(res => {
 					if (res.code === 200) {
 						this.MVData[index].detail = res.data
-			
+
 						//处理时间
 						this.MVData[index].detail && Number(this.MVData[index].detail.publishTime) ? this.MVData[
 							index].detail.publishTime = timeFormatting('YYYY-MM-DD', this.MVData[index].detail
 							.publishTime) : null
-			
+
 						if (!Number(id)) {
-			
+
 							this.MVData[index].nickname = res.data.creator.nickname
 						}
 					}
@@ -173,7 +184,7 @@
 				this.getVUrl(id, index)
 				this.getVInfo(id, index),
 					this.getVDetail(id, index)
-			
+
 			},
 			showDesc(index) {
 				this.MVData[index].isShowDesc = !this.MVData[index].isShowDesc
@@ -182,7 +193,7 @@
 				relatedMV(vId).then(res => {
 					let data = Number(vId) ? data = res.mvs : data = res.data
 					//console.log((data))
-			
+
 					data.map((item, index) => {
 						this.MVData.push({
 							url: '',
@@ -194,12 +205,12 @@
 							playing: false
 						})
 						Number(vId) ? this.init(item.id, index + 1) : this.init(item.vid, index + 1)
-			
+
 					})
-			
+
 				})
 			}
-			
+
 		},
 		onLoad(options) {
 			this.vId = options.vId
@@ -209,50 +220,244 @@
 
 			this.getRelMV(options.vId)
 			this.getComments(this.vId, this.sortType, this.dataType)
-			
-			
+
+
 		}
 	}
 </script>
 
 <style scoped>
-	.video-detail{
+	.video-detail {
 		width: 750rpx;
 		flex: 1;
 		background-color: #000;
 	}
-	.nav-place{
+
+	.nav-left {
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
 		width: 750rpx;
 		height: 80px;
+
+	}
+
+	.back {
+		color: #000;
+		width: 32px;
+		height: 32px;
+		
+		transform: rotate(90deg);
+	}
+	.scroll-video,
+	.scroll-item {
+		flex: 1;
+		overflow: hidden;
+	}
+	
+
+	.video {
+		margin-top: 200px;
+	}
+
+	.info-bottom {
+		height: 44px;
+		background-color: #fff;
 		
 	}
-	.back{
-		color: #000;
-		width: 50px;
-		height: 80px;
-		background-color: #fff;
+	.input{
+		height: 44px;
+		color: #cecece;
+		text-indent: 10px;
 	}
-	.cell{
-		width: 750rpx;
-		height: 760px;
-		background-color: #000;
-	}
-	.video{
-		margin-top: 150px;
-	}
-	.info-bottom{
-		background-color: #fff;
-		color: aquamarine;
-	}
-	.url{
+	.url {
 		color: red;
 	}
-	.text{
+
+	.text {
+		margin-top: 4px;
+		font-size: 14px;
 		color: #fff;
 	}
-	.cover{
+
+	.song {
+		margin-top: 10px;
+	}
+
+	.pic-box {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		background: url('../../static/images/song/disc.png');
+		border: 1px solid #f00;
+	}
+
+	.cover {
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+	}
+
+	.avatar {
 		width: 40px;
 		height: 40px;
 		border-radius: 50%;
 	}
+
+	.video-info {
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.info-box {
+
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		width: 70px;
+		height: 340px;
+		
+	}
+
+	.info-item {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		
+		font-size: 14px;
+	}
+
+	.info {
+		display: flex;
+		justify-content: flex-end;
+		align-items: flex-start;
+		padding: 10px;
+		flex: 1;
+		height: 374px;
+		
+	}
+
+	.ava-container {
+		flex: 1;
+		display: flex;
+		align-items: flex-start;
+		justify-content: flex-end;
+	}
+
+	.info-item {
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding-top: 10px;
+		padding-bottom: 5px;
+		font-size: 14px;
+	}
+
+	.artist-box {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		align-items: center;
+	}
+
+	.artist-name {
+		margin-left: 8px;
+		color: #fff;
+		font-size: 15px;
+	}
+
+	.video-info-img {
+		display: inline-block;
+		width: 32px;
+		height: 32px;
+		background-color: #000;
+	}
+
+	.mv-name-desc {
+		margin-top: 10px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+	}
+
+	.mv-name {
+		
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		text-align: left;
+		overflow: hidden;
+		color: #fff;
+		font-size: 14px;
+	}
+
+	.tag {
+		margin-right: 4px;
+		padding: 0 2px;
+		
+		font-size: 12px;
+		background-color: #999999;
+		border-radius: 2px;
+		color: #ff0000;
+	}
+	.angle{
+		display: inline-block;
+	}
+	.top-angle{
+		width: 16px;
+		height:16px;
+		
+	}
+	.bottom-angle{
+		width: 16px;
+		height:16px;
+		transform: rotate(180deg);
+	}
+	.desc-box {
+		
+		text-align: left;
+	}
+
+	.desc {
+		width: 280px;
+		margin: 4px 0;
+		color: #fff;
+		
+		font-size: 14px;
+		text-align: left;
+	}
+
+	
+	.publish-time {
+		margin-top: 10px;
+		color: #999999;
+		font-size: 13px;
+		
+	}
+	.input{
+		text-indent: 20px;
+		font-size: 14px;
+	}
+	/* .rotate{
+		animation: 10s rotateCircle linear infinite;
+	}
+	.paused{
+		animation-play-state: paused;	
+	}
+	@keyframes rotateCircle{
+		from{
+			
+			transform: rotate(0deg);
+		}
+		to{
+			
+			transform: rotate(360deg);
+		}
+	} */
 </style>
