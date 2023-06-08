@@ -150,6 +150,7 @@ export function comments(id,sortType = 3,type = 0) {
 }
 
 
+
 //歌曲评论（旧的评论接口）（用于在歌曲详情页获取评论总数）
 export function commentsTotalNum (id){
 	return Get(`/comment/music?id=${id}&limit=1&offset=1`)

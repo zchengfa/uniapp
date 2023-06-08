@@ -12,7 +12,7 @@
 		</view>
 		<view class="right">
 			<slot name="right">
-				<text class="iconfont musicshare nav-text" :style="{'color':color}"></text>
+				<text class="iconfont musicshare nav-text" :style="{'color':color}" @tap="share"></text>
 			</slot>
 		</view>
 	</view>
@@ -56,6 +56,15 @@
 		methods:{
 			backToPrevious(){
 				uni.navigateBack()
+			},
+			share(){
+				uni.getProvider({
+					service: 'share',
+					success: function (res) {
+						console.log(res.provider)
+						
+					}
+				});
 			}
 		}
 	}

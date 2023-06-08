@@ -68,8 +68,7 @@
 									</view>
 									<scroll-view scroll-y="true" class="desc-scroll" v-if="item.isShowDesc">
 										<view class="desc-box">
-											<text
-												@tap="showDesc(index)">{{item.detail.desc || item.detail.description}}</text>
+											<text @tap="showDesc(index)">{{item.detail.desc || item.detail.description}}</text>
 											<text class="bottom-angle angle"></text>
 										</view>
 									</scroll-view>
