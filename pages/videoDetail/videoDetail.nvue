@@ -45,8 +45,8 @@
 								</div>
 								<div class="info">
 									<div class="artist-box info-item">
-										<div class="artist-avatar" v-if="Number(vId)">
-											<img class="artist-ava" v-for="(art,artIndex) in item.detail.artists"
+										<div class="artist-avatar avatars" v-if="Number(vId)">
+											<img class="artist-ava" :class="{'artist-ava-multi':artIndex !== 0}" v-for="(art,artIndex) in item.detail.artists"
 												:src="art.img1v1Url" :key="artIndex" />
 										</div>
 										<div class="artist-avatar" v-else>
@@ -78,8 +78,51 @@
 					</div>
 				</div>
 			</swiper-item>
-		
 		</swiper>
+		<div class="info-bottom">
+			<input class="input" type="text" placeholder="发条评论支持一下吧~" />
+		</div>
+		<div class="comments" :class="{'comments-trans':isShowComments}">
+		<!-- <div class="comments-test"> -->
+			<div class="comments-container">
+				<div class="container-header">
+					<div class="left comment-header">
+						<text class="header-title">评论({{totalCount}})</text>
+					</div>
+					<div class="right sort-box">
+						<text class="rec title-item header-title" v-for="(title,tIndex) in sortTypeList" :class="{'active':title.sortType === sortType,'none-margin-right':tIndex === 2}" :key="tIndex" @tap="tapSortType(title.sortType)">{{title.sortTypeName}}</text>
+					</div>
+				</div>
+				<scroll-view class="comments-box" scroll-y="true" v-if="comments.length">
+					<div class="comments-item" v-for="(item,cIndex) in comments" :key="cIndex">
+						<div class="user">
+							<img :src="item.user.avatarUrl" class="avatar user-avatar" />
+						</div>
+						<div class="content-box">
+							<div class="content-top">
+								<div class="name-time">
+									<div class="name-vip">
+										<text class="nick-name">{{item.user.nickname}}</text>
+										<text v-if="item.user.vipRights" class="vip">VIP.{{level(item.user.vipRights.redVipLevel)}}</text>
+									</div>
+									<text class="time">{{item.timeStr}}</text>
+								</div>
+								<div class="liked">
+									<text v-if="item.likedCount" class="like-count">{{item.likedCount}}</text>
+									<img class="good" src="../../static/images/good.png" alt="like_img">
+								</div>
+							</div>
+							<div class="content-bottom">
+								<text class="comments-content">{{item.content}}</text>
+								<div class="reply-box" v-if="item.replyCount">
+									<text class="reply"  @tap="replyDetail(item.commentId)">{{item.replyCount}}条回复 > </text>
+								</div>
+							</div>
+						</div>
+					</div>
+				</scroll-view>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -111,7 +154,7 @@
 				isShowComments: false,
 				dataType: 1,
 				//排序方式
-				sortType: 3,
+				sortType: 1,
 				//是否还有更多
 				hasMore: undefined,
 				//评论总数
@@ -125,7 +168,7 @@
 				isShowReply: false,
 				reply: {},
 				vId: undefined,
-				sortTypeList: [],
+				sortTypeList: [{sortTypeName:'推荐'},{sortTypeName:'最热'},{sortTypeName:'最新'}],
 				user: {},
 				ownerComment: {}
 			}
@@ -144,7 +187,44 @@
 				}
 			},
 			
-			
+			//根据VIP等级返回大写的等级
+		    level(num){
+				
+				switch(num){
+					case 1:
+						return '壹';
+						break;
+					case 2:
+						return '贰';
+						break;
+					case 3:
+						return '叁';
+						break;
+					case 4:
+						return '肆';
+						break;
+					case 5:
+						return '伍';
+						break;
+					case 6:
+						return '陆';
+						break;
+					case 7:
+						return '柒';
+						break;
+					case 8:
+						return '捌';
+						break;
+					case 9:
+						return '玖';
+						break;
+					case 10:
+						return '拾';
+						break;
+					default:
+						return '零'
+				}
+			},
 			//处理歌曲作者
 			dealAuthor ( authorArr = [] , arrProperty) {
 				let author = ''
@@ -236,7 +316,56 @@
 					})
 			
 				})
-			}
+			},
+			tapSortType(type) {
+				
+				if (this.sortType !== type) {
+					this.sortType = type
+					this.comments = []
+					this.pageNo = 0
+					this.getComments(this.vId, this.sortType, this.dataType)
+				}
+			},
+			getComments(id, sortType, dataType) {
+				comments(id, sortType, dataType).then(res => {
+					this.getParams(res)
+					
+				})
+			},
+			getParams(res) {
+				if (res.code === 200) {
+					this.hasMore = res.data.hasMore
+					this.totalCount = res.data.totalCount
+					this.lastCursor = Number(res.data.cursor)
+					res.data.sortType === 99 ? this.sortType = 1 : this.sortType = res.data.sortType
+					this.comments.push(...res.data.comments)
+					this.sortTypeList = res.data.sortTypeList
+					
+					//关闭加载状态
+					this.loading = false
+			
+					this.sortTypeList.map(item => {
+						if (item.sortType === 1 || item.sortType === 99) {
+							item.sortTypeName = '推荐'
+							item.sortType = 1
+						} else if (item.sortType === 2) {
+							item.sortTypeName = '最热'
+						} else if (item.sortType === 3) {
+							item.sortTypeName = '最新'
+						}
+			
+					})
+					this.isShowComments = true
+				}
+			},
+			//点击查看更多回复
+			replyDetail(cId) {
+			
+				this.isShowReply = true
+				this.reply = {}
+				//this.getCommentsReply(this.vId, cId, this.dataType)
+			
+			},
 		},
 		onLoad(options) {
 			this.vId = options.vId
@@ -245,13 +374,18 @@
 			
 			this.init(this.vId,0)
 			this.getRelMV(options.vId)
-			
+			this.getComments(this.vId, this.sortType, this.dataType)
 		}
 	}
 </script>
 
 <style scoped>
+	.active{
+		color: #000000 !important;
+		font-weight: bold;
+	}
 	.video-detail {
+		display: flex;
 		position: relative;
 		width: 750rpx;
 		flex: 1;
@@ -275,31 +409,22 @@
 		height:40px;
 		
 	}
-	.comments {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 750rpx;
-		height: 0;
-		transition: height .5s ease-in-out;
-		background-color: #fff;
-
-	}
-
-	.comments-trans {
-		height: 600px;
-		transition: height .5s ease-in-out;
-	}
+	
 
 	.scroll-video,
 	.scroll-item {
 		flex: 1;
 		
 	}
-
+	.scroll-item{
+		display: flex;
+	}
 
 	.video {
-		margin-top: 200px;
+		margin-top: 150px;
+		flex: 1;
+		width: 750rpx;
+		
 		transition: margin-top .5s ease-in-out;
 	}
 
@@ -309,6 +434,10 @@
 	}
 
 	.info-bottom {
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		width: 750rpx;
 		height: 44px;
 		background-color: #fff;
 
@@ -356,12 +485,18 @@
 		height: 40px;
 		border-radius: 50%;
 	}
-
+	.avatars{
+		display: flex;
+		flex-direction: row;
+	}
 	.video-info {
+		width: 750rpx;
+		flex: 1;
 		display: flex;
 		flex-direction: row-reverse;
 		justify-content: space-between;
 		align-items: center;
+		
 	}
 
 	.info-box {
@@ -370,7 +505,7 @@
 		justify-content: space-around;
 		align-items: center;
 		width: 70px;
-		height: 340px;
+		/* height: 340px; */
 
 	}
 
@@ -425,7 +560,7 @@
 	}
 
 	.video-info-img {
-		display: inline-block;
+		display: flex;
 		width: 32px;
 		height: 32px;
 		background-color: #000;
@@ -496,9 +631,11 @@
 	}
 
 	.input {
-		text-indent: 20px;
+		margin-left: 20px;
+		margin-right: 20px;
 		font-size: 14px;
 	}
+	
 	.info-top{
 		display: flex;
 		flex-direction: row-reverse;
@@ -523,30 +660,156 @@
 		display: flex;
 		width: 32px;
 		height: 32px;
-		background-color: red;
+		
 	}
 	.artist-ava{
 		display: flex;
 		width: 40px;
 		height: 40px;
 		border-radius: 50%;
-		background-color: red;
+		
+	}
+	/* 多个头像有距离的层叠 */
+	.artist-ava-multi{
+		position: relative;
+		margin-left: -25px;
 	}
 	/* 评论 */
-	.comments-container {
-		position: relative;
-		width: 750rpx;
-		height: 600px;
-
-	}
-	
-	.bottom-comment {
+	.comments {
 		position: absolute;
-		left: 0;
 		bottom: 0;
+		left: 0;
 		width: 750rpx;
-		height: 50px;
+		height: 0;
+		transition: height .5s ease-in-out;
 		background-color: #fff;
 	}
-
+	
+	.comments-trans {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 750rpx;
+		transition: height .5s ease-in-out;
+		background-color: #fff;
+		height: 600px;
+		transition: height .5s ease-in-out;
+	}
+	.comments-test{
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 750rpx;
+		height: 600px;
+		transition: height .5s ease-in-out;
+		background-color: #fff;
+	}
+	.comments-container{
+		padding: 10px;
+		flex: 1;
+	}
+	.container-header{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		padding: 10px 0;
+	}
+	.header-title{
+		
+		font-size: 14px;
+	}
+	.rec{
+		color: #C8C7CC;
+	}
+	.sort-box{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+		align-items: center;
+		
+	}
+	.title-item{
+		margin: 0 8px;
+	}
+	.none-margin-right{
+		margin-right: 0;
+	}
+	.comments-box{
+		flex: 1;
+		
+	}
+	.comments-item{
+		position: relative;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.user{
+		position: absolute;
+		top: 10px;
+		left: 0;
+	}
+	
+	.content-box{
+		margin-left: 40px;
+		flex: 1;
+		padding: 10px;
+		border-bottom: 1px solid #cecece;
+		background-color: red;
+	}
+	.content-top{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		
+	}
+	
+	.comments-content{
+		font-size: 14px;
+	}
+	.nick-name{
+		font-size: 14px;
+		font-weight: bold;
+	}
+	.vip{
+		padding: 0 6px;
+		font-size: 12px;
+		color: #fff;
+		border-radius: 4px;
+		background-color: #4a0000;
+	}
+	.name-vip{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+	.liked{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+	}
+	.like-count,.time{
+		font-size: 13px;
+		color: #C8C7CC;
+	}
+	.time{
+		margin: 4px 0;
+	}
+	.good{
+		margin-left: 4px;
+		width: 20px;
+		height: 20px;
+	}
+	.reply-box{
+		 margin-top: 10px;
+	 }
+	.reply{
+		color: #007AFF;
+		font-size: 12px;
+	}
+	
 </style>

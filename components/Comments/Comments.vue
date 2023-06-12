@@ -178,7 +178,7 @@
 		z-index: 999;
 		transition: height .5s ease-in-out;
 	}
-.active{
+	.active{
 		color: #000000;
 		font-weight: bold;
 	}
