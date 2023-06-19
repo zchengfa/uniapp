@@ -9,9 +9,9 @@
 			<swiper-item v-for="(item,index) in MVData" :key="index">
 				<div class="scroll-content swiper-item">
 					<div class="scroll-item">
-						<div class="video" :class="{'video-trans':isShowComments}" @tap="closeComments">
+						<div class="video" :class="{'video-trans':isShowComments}">
 		
-							<video style="width: 750rpx;" :id="'myVideo' + index" :src="item.url"
+							<video style="width: 750rpx;" :id="'myVideo' + index" :src="item.url"  @tap.stop="closeComments"
 								:autoplay="item.autoplay" :poster="item.detail.cover ||item.detail.coverUrl" loop="true"
 								objectFit="contain" @play="play(index)" @pause="pause(index)"
 								@ended="videoEnded"></video>
@@ -82,8 +82,8 @@
 		<div class="info-bottom">
 			<input class="input" type="text" placeholder="发条评论支持一下吧~" />
 		</div>
-		<div class="comments" :class="{'comments-trans':isShowComments}">
-		<!-- <div class="comments-test"> -->
+		<div class="comments" :class="{'comments-trans':isShowComments}" v-if="isShowComments">
+		
 			<div class="comments-container">
 				<div class="container-header">
 					<div class="left comment-header">
@@ -93,8 +93,9 @@
 						<text class="rec title-item header-title" v-for="(title,tIndex) in sortTypeList" :class="{'active':title.sortType === sortType,'none-margin-right':tIndex === 2}" :key="tIndex" @tap="tapSortType(title.sortType)">{{title.sortTypeName}}</text>
 					</div>
 				</div>
-				<scroll-view class="comments-box" scroll-y="true" v-if="comments.length">
-					<div class="comments-item" v-for="(item,cIndex) in comments" :key="cIndex">
+				
+				<list class="comments-box" scroll-y="true" @loadmore="scrollToLower" loadmoreoffset="20">
+					<cell class="comments-item" v-for="(item,cIndex) in comments" :key="item.commentId">
 						<div class="user">
 							<img :src="item.user.avatarUrl" class="avatar user-avatar" />
 						</div>
@@ -119,8 +120,8 @@
 								</div>
 							</div>
 						</div>
-					</div>
-				</scroll-view>
+					</cell>
+				</list>
 			</div>
 		</div>
 	</div>
@@ -135,7 +136,7 @@
 		vUrl,
 		vDetail,
 		relatedMV,
-		comments
+		comments, moreCommentsByTime , commentsReply , moreCommentsByOtherType
 	} from '../../common/api.js'
 	export default {
 
@@ -156,7 +157,7 @@
 				//排序方式
 				sortType: 1,
 				//是否还有更多
-				hasMore: undefined,
+				hasMore: false,
 				//评论总数
 				totalCount: 0,
 				//评论
@@ -333,12 +334,21 @@
 				})
 			},
 			getParams(res) {
+				
 				if (res.code === 200) {
 					this.hasMore = res.data.hasMore
 					this.totalCount = res.data.totalCount
 					this.lastCursor = Number(res.data.cursor)
 					res.data.sortType === 99 ? this.sortType = 1 : this.sortType = res.data.sortType
 					this.comments.push(...res.data.comments)
+					if(res.data.comments.length === 0){
+						uni.showModal({
+							title:'YC音乐君提醒您：',
+							content:'暂未拉取到评论数据'
+						})
+					}
+					uni.hideLoading()
+					
 					this.sortTypeList = res.data.sortTypeList
 					
 					//关闭加载状态
@@ -355,7 +365,7 @@
 						}
 			
 					})
-					this.isShowComments = true
+					// this.isShowComments = true
 				}
 			},
 			//点击查看更多回复
@@ -365,6 +375,70 @@
 				this.reply = {}
 				//this.getCommentsReply(this.vId, cId, this.dataType)
 			
+			},
+			change(e) {
+				let index = e.detail.current
+				this.vId = this.MVData[index].detail.id
+				this.MVData.map((item, i) => {
+					if (index === i) {
+						item.autoplay = true
+			
+						uni.createVideoContext('myVideo' + i, this).play()
+					} else {
+						item.autoplay = false
+			
+						uni.createVideoContext('myVideo' + i, this).pause()
+					}
+				})
+				//先清空上一条视频的评论数据
+				this.comments = []
+				this.getComments(this.vId, this.sortType, this.dataType)
+			},
+			play(index) {
+				this.MVData[index].playing = true
+			},
+			pause(index) {
+				this.MVData[index].playing = false
+			},
+			//上拉加载更多
+			scrollToLower(){
+				uni.showLoading({
+					title:'YC音乐君努力为您展示更多评论中...'
+				})
+				if(this.hasMore){
+					this.loading = true
+					this.pageNo +=1
+					if(this.sortType === 3){
+						this.getMoreCommentsByTime(this.vId,this.sortType,this.lastCursor,20,this.pageNo,this.dataType)
+					}
+					else{
+						this.getMoreCommentsByOtherType(this.vId,this.sortType,20,this.pageNo,this.dataType)
+						
+					}
+				}
+				else{
+					uni.showModal({
+						title:'提示：',
+						content:'已经到底了哦！'
+					})
+				}
+				
+			},
+			getMoreCommentsByTime(id, sortType, cursor, pageSize, pageNo, dataType) {
+				moreCommentsByTime(id, sortType, cursor, pageSize, pageNo, dataType).then(res => {
+					
+					this.getParams(res)
+					
+					
+				})
+			},
+			getMoreCommentsByOtherType(id, sortType, pageSize, pageNo, dataType) {
+				moreCommentsByOtherType(id, sortType, pageSize, pageNo, dataType).then(res => {
+					
+					this.getParams(res)
+					
+					
+				})
 			},
 		},
 		onLoad(options) {
@@ -690,20 +764,11 @@
 		bottom: 0;
 		left: 0;
 		width: 750rpx;
-		transition: height .5s ease-in-out;
-		background-color: #fff;
-		height: 600px;
-		transition: height .5s ease-in-out;
-	}
-	.comments-test{
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 750rpx;
 		height: 600px;
 		transition: height .5s ease-in-out;
 		background-color: #fff;
 	}
+	
 	.comments-container{
 		padding: 10px;
 		flex: 1;
@@ -756,8 +821,8 @@
 		margin-left: 40px;
 		flex: 1;
 		padding: 10px;
-		border-bottom: 1px solid #cecece;
-		background-color: red;
+		border-bottom: 1px solid #e4e4e4;
+		
 	}
 	.content-top{
 		display: flex;
