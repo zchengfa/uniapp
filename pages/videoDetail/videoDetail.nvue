@@ -147,7 +147,7 @@
 									<text v-if="!item.isShowReply" class="reply"  @tap="replyDetail(item.commentId,cIndex)">{{item.replyCount}}条回复 > </text>
 									<div class="open-more-reply" v-else>
 										<div class="open-more-box">
-											<text class="open-more" @tap="moreReply" v-if="item.reply.hasMore">---展开更多回复---</text>
+											<text class="open-more" @tap="moreReply(item.reply.time,item.reply.ownerComment.commentId,cIndex)" v-if="item.reply.hasMore">---展开更多回复---</text>
 										</div>
 										<text class="close-more" :class="{'close-more-active':!item.isShowReply}" @tap="closeMoreReply(cIndex)">收起</text>
 									</div>
@@ -170,7 +170,7 @@
 		vUrl,
 		vDetail,
 		relatedMV,
-		comments, moreCommentsByTime , commentsReply , moreCommentsByOtherType
+		comments, moreCommentsByTime , commentsReply , moreCommentsByOtherType,moreCommentsReply
 	} from '../../common/api.js'
 	export default {
 
@@ -508,10 +508,24 @@
 				this.$forceUpdate()
 			},
 			//展开更多回复
-			moreReply(){
-				uni.showModal({
-					title:'提醒：',
-					content:'展开更多回复功能还未开发，敬请期待。'
+			moreReply(time,commentId,index){
+				this.getMoreCommentsReply(this.vId, commentId, this.dataType,time,index)
+			},
+			getMoreCommentsReply(sId, cId, dataType,time,index){
+				moreCommentsReply(sId, cId, dataType,time).then(res=>{
+					//console.log(res)
+					if(res.code === 200){
+						
+						this.comments.map((item,i)=>{
+							if(i===index){
+								item.reply.comments.push(...res.data.comments)
+								item.reply.hasMore = res.data.hasMore
+								item.reply.time = res.data.time
+							}
+						})
+						//强制刷新
+						this.$forceUpdate()
+					}
 				})
 			}
 		},
