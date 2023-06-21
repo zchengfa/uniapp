@@ -15,7 +15,7 @@
 			</view>
 			<!-- #endif -->
 			
-			<scroll-view scroll-y="true" class="scroll-reply">
+			<scroll-view scroll-y="true" class="scroll-reply" @scrolltolower="loadMoreReply" lower-threshold="50">
 				<view class="owner-comments comments-item">
 					<view class="user">
 						<image :src="user.avatarUrl" class="avatar"></image>
@@ -66,6 +66,7 @@
 						</view>
 					</view>	
 				</view>
+				<u-loadmore :status="reply.hasMore ? 'loading' : 'nomore' " iconType="flower"></u-loadmore>
 			</scroll-view>
 		</view>
 		
@@ -132,7 +133,15 @@
 			back(){
 				this.$emit('closeReply')
 				uni.$emit('closeReply')
+			},
+			loadMoreReply(){
+				this.$emit('loadMoreReply',{commentId:this.$props.ownerComment.commentId,time:this.$props.reply.time})
+				uni.$emit('loadMoreReply',{commentId:this.$props.ownerComment.commentId,time:this.$props.reply.time})
 			}
+		},
+		beforeDestroy() {
+			uni.$off('closeReply')
+			uni.$off('loadMoreReply')
 		}
 	}
 </script>

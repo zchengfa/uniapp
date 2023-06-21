@@ -166,8 +166,12 @@ export function moreCommentsByOtherType(id,sortType,pageSize,pageNo,type = 0) {
 	return Get(`/comment/new?type=${type}&id=${id}&sortType=${sortType}&pageSize=${pageSize}&pageNo=${pageNo}`)
 }
 //获取评论回复数据
-export function commentsReply(songId,commentId,type = 0){
-	return Get(`/comment/floor?parentCommentId=${commentId}&id=${songId}&type=${type}`)
+export function commentsReply(songId,commentId,type = 0,limit = 10){
+	return Get(`/comment/floor?parentCommentId=${commentId}&id=${songId}&type=${type}&limit=${limit}`)
+}
+//获取更多评论回复数据
+export function moreCommentsReply(songId,commentId,type = 0,time,limit = 10){
+	return Get(`/comment/floor?parentCommentId=${commentId}&id=${songId}&type=${type}&limit=${limit}&time=${time}`)
 }
 
 //全部.https://www.codeman.ink/api/mv/all?offset=1&limit=50
