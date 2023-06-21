@@ -115,8 +115,42 @@
 							</div>
 							<div class="content-bottom">
 								<text class="comments-content">{{item.content}}</text>
+								<!-- 评论回复 -->
+								
+								<div class="reply-detail-box" v-if="item.isShowReply">
+									<div class="comments-item" v-for="(itemReply,replyIndex) in item.reply.comments" :key="replyIndex">
+										<div class="user">
+											<img :src="itemReply.user.avatarUrl" class="reply-avatar" />
+										</div>
+										<div class="content-box reply-content">
+											<div class="top reply-top">
+												<div class="name-time">
+													<div class="name-vip">
+														<text class="nick-name reply-nick-name">{{itemReply.user.nickname}}</text>
+														<text v-if="itemReply.user.vipRights" class="vip">VIP.{{level(itemReply.user.vipRights.redVipLevel)}}</text>
+													</div>
+													<text class="time">{{itemReply.timeStr}}</text>
+												</div>
+												<div class="liked">
+													<text v-if="itemReply.likedCount" class="like-count">{{itemReply.likedCount}}</text>
+													<img class="good" src="../../static/images/good.png" alt="like_img">
+												</div>
+											</div>
+											<view class="bottom">
+												<text class="comments-content reply-comments">{{itemReply.content}}</text>
+											</view>
+										</div>	
+									</div>
+								</div>
+								<!-- 评论回复 -->
 								<div class="reply-box" v-if="item.replyCount">
-									<text class="reply"  @tap="replyDetail(item.commentId)">{{item.replyCount}}条回复 > </text>
+									<text v-if="!item.isShowReply" class="reply"  @tap="replyDetail(item.commentId,cIndex)">{{item.replyCount}}条回复 > </text>
+									<div class="open-more-reply" v-else>
+										<div class="open-more-box">
+											<text class="open-more" @tap="moreReply" v-if="item.reply.hasMore">---展开更多回复---</text>
+										</div>
+										<text class="close-more" :class="{'close-more-active':!item.isShowReply}" @tap="closeMoreReply(cIndex)">收起</text>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -149,7 +183,7 @@
 					isShowDesc: false,
 					nickname: '',
 					autoplay: true,
-					playing: true
+					playing: true,
 				}],
 				loading: false,
 				isShowComments: false,
@@ -166,7 +200,7 @@
 				lastCursor: undefined,
 
 				pageNo: 1,
-				isShowReply: false,
+				// isShowReply: false,
 				reply: {},
 				vId: undefined,
 				sortTypeList: [{sortTypeName:'推荐'},{sortTypeName:'最热'},{sortTypeName:'最新'}],
@@ -310,7 +344,8 @@
 							isShowDesc: false,
 							nickname: '',
 							autoplay: false,
-							playing: false
+							playing: false,
+							isShowReply:false
 						})
 						Number(vId) ? this.init(item.id, index + 1) : this.init(item.vid, index + 1)
 			
@@ -347,7 +382,11 @@
 							content:'暂未拉取到评论数据'
 						})
 					}
-					uni.hideLoading()
+					
+					this.comments.map((item,i)=>{
+						item.reply = {}
+						item.isShowReply = false
+					})
 					
 					this.sortTypeList = res.data.sortTypeList
 					
@@ -365,17 +404,11 @@
 						}
 			
 					})
+					uni.hideLoading()
 					// this.isShowComments = true
 				}
 			},
-			//点击查看更多回复
-			replyDetail(cId) {
 			
-				this.isShowReply = true
-				this.reply = {}
-				//this.getCommentsReply(this.vId, cId, this.dataType)
-			
-			},
 			change(e) {
 				let index = e.detail.current
 				this.vId = this.MVData[index].detail.id
@@ -440,6 +473,47 @@
 					
 				})
 			},
+			getCommentsReply(sId, cId, dataType,index) {
+				commentsReply(sId, cId, dataType).then(res => {
+			
+					if (res.code === 200) {
+						this.comments.map((item,i)=>{
+							if(index === i){
+								item.reply = res.data
+								item.isShowReply = true
+								uni.setStorageSync('com',item.isShowReply)
+							}
+						})
+						
+						//强制刷新
+						this.$forceUpdate()
+						
+					}
+				})
+			},
+			//点击查看更多回复
+			replyDetail(cId,index) {
+				
+			
+				this.getCommentsReply(this.vId, cId, this.dataType,index)
+				
+			},
+			//收起回复
+			closeMoreReply(index){
+				this.comments.map((item,i)=>{
+					index === i ? item.isShowReply = false : null
+				})
+				
+				//强制刷新
+				this.$forceUpdate()
+			},
+			//展开更多回复
+			moreReply(){
+				uni.showModal({
+					title:'提醒：',
+					content:'展开更多回复功能还未开发，敬请期待。'
+				})
+			}
 		},
 		onLoad(options) {
 			this.vId = options.vId
@@ -479,8 +553,8 @@
 	}
 	.back-img{
 		display: flex;
-		width: 40px;
-		height:40px;
+		width: 35px;
+		height:35px;
 		
 	}
 	
@@ -833,7 +907,9 @@
 	}
 	
 	.comments-content{
+		padding: 10px 0;
 		font-size: 14px;
+		
 	}
 	.nick-name{
 		font-size: 14px;
@@ -876,5 +952,56 @@
 		color: #007AFF;
 		font-size: 12px;
 	}
-	
+	/* 评论回复 */
+	.reply-detail-box{
+		
+		/* background-color: #dbdbdb; */
+	}
+	.reply-content{
+		margin-left: 30px;
+		border-bottom: none;
+	}
+	.reply-avatar{
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+	}
+	.reply-nick-name{
+		font-weight: normal;
+		color: #999999;
+	}
+	.reply-top{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.open-more-reply{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		
+	}
+	.open-more-box{
+		flex: 1;
+	}
+	.open-more,.close-more{
+		color: #919191;
+		font-size: 13px;
+	}
+	.open-more{
+		margin-left: 30px;
+	}
+	.close-more{
+		margin-right: 15px;
+	}
+	.reply-comments{
+		padding-bottom: 0;
+	}
+	.close-more-active{
+		height: 0;
+		transition: height 1s ease-in-out;
+		
+	}
 </style>
