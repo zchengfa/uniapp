@@ -2,7 +2,8 @@ export default {
 	state:{
 		token:uni.getStorageSync('token'),
 		userInfo:uni.getStorageSync('user'),
-		likeIds:uni.getStorageSync('likeIds')
+		likeIds:uni.getStorageSync('likeIds'),
+		unikey:undefined
 	},
 	getters:{
 		token(state){
@@ -44,6 +45,9 @@ export default {
 				uni.setStorageSync('likeIds',state.likeIds)
 			}
 			console.log(data,state.likeIds)
+		},
+		unikey(state,key){
+			state.unikey = key
 		}
 	},
 	actions:{
@@ -61,6 +65,9 @@ export default {
 		},
 		changeLikeList(context,payload){
 			context.commit('changeLikeList',payload)
+		},
+		unikey(context,payload){
+			context.commit('unikey',payload)
 		}
 	}
 	

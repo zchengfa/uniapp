@@ -1,7 +1,12 @@
 <template>
 	<view class="login-container register-con">
-		<view class="nav">
+		<view class="nav-login">
+			<!-- #ifdef APP -->
+			<image class="nav-bar" :src="loginJson[0]['back']"  @tap="back"></image>
+			<!-- #endif -->
+			<!-- #ifdef H5 || MP-WEIXIN -->
 			<text class="nav-bar iconfont musicleftArrow" @tap="back"></text>
+			<!-- #endif -->
 		</view>
 		<view class="form-box">
 			<uni-forms ref="form" :rules="rules" :modelValue="formData">
@@ -35,6 +40,7 @@
 </template>
 
 <script>
+	import loginJson from '@/static/base64/third_party_login.json'
 	import '@/common/iconfont.css'
 	import { sendValidate , verifyCode, register,checkPhone} from '@/common/api.js'
 	import ThirdLogin from '@/components/ThirdLogin/ThirdLogin.vue'
@@ -52,6 +58,7 @@
 				},
 				// loginJson:undefined,
 				time:0,
+				loginJson:undefined,
 				rules: {
 					nickname: {
 						// name 字段的校验规则
@@ -210,7 +217,7 @@
 		},
 		onLoad() {
 			this.formData.id = 'testId'
-			// this.loginJson = loginJson
+			this.loginJson = loginJson
 		}
 	}
 </script>
@@ -230,9 +237,10 @@
 	width: 100%;
 	height: 100vh;
 }
-.nav{
+.nav-login{
 	position: absolute;
 	top:0;
+	left: 0;
 	width: 100%;
 	
 }
@@ -331,6 +339,20 @@
 }
 .validate-code,.timer{
 	top:-15px;
+}
+/* #endif */
+
+/* #ifdef APP */
+.nav-login{
+	height: 80px;
+	line-height: 80px;
+}
+.nav-bar{
+	position: relative;
+	top:30px;
+	left: 10px;
+	width: 32px;
+	height: 32px;
 }
 /* #endif */
 </style>

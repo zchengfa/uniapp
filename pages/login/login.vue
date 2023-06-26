@@ -1,32 +1,55 @@
 <template>
 	<view class="login-container">
-		<view class="nav">
+		<view class="nav-login">
+			<!-- #ifdef APP -->
+			<image class="nav-bar" :src="loginJson[0]['back']"  @tap="back"></image>
+			<!-- #endif -->
+			<!-- #ifdef H5 || MP-WEIXIN -->
 			<text class="nav-bar iconfont musicleftArrow" @tap="back"></text>
+			<!-- #endif -->
 		</view>
+		
 		<view class="form-box">
-			<uni-forms ref="form" :rules="rules" :modelValue="formData">
-				<uni-forms-item ref="input" label="手机号" name="phone" class="form-item">
-					<input v-model="formData.phone" placeholder="请输入手机号" @blur="blur($event,$refs.input)" class="form-input" />
-				</uni-forms-item>
-				<!-- <uni-forms-item label="密码" name="pwd">
-					<input type="password" v-model="formData.pwd" placeholder="请输入密码" class="form-input"/>
-				</uni-forms-item> -->
-				<uni-forms-item ref="inputs" label="验证码" name="vali">
-					<input v-model="formData.vali" placeholder="请输入验证码" @blur="blur($event,$refs.inputs)" class="form-input"/>
-					<text v-if="!time" class="validate-code" @tap="getCode">获取验证码</text>
-					<text v-else class="timer">{{time}}s后可发送</text>
-				</uni-forms-item> 
-				<view class="operation clearfix">
-					<text @tap="forgetPwd" class="forget-pwd">忘记密码?</text>
-					<button type="submit" @click="submit" class="submit">登录</button>
+			<view class="login-phone" v-show="isShow">
+				<uni-forms ref="form" :rules="rules" :modelValue="formData">
+					<uni-forms-item ref="input" label="手机号" name="phone" class="form-item">
+						<input v-model="formData.phone" placeholder="请输入手机号" @blur="blur($event,$refs.input)" class="form-input" />
+					</uni-forms-item>
+					<!-- <uni-forms-item label="密码" name="pwd">
+						<input type="password" v-model="formData.pwd" placeholder="请输入密码" class="form-input"/>
+					</uni-forms-item> -->
+					<uni-forms-item ref="inputs" label="验证码" name="vali">
+						<input v-model="formData.vali" placeholder="请输入验证码" @blur="blur($event,$refs.inputs)" class="form-input"/>
+						<text v-if="!time" class="validate-code" @tap="getCode">获取验证码</text>
+						<text v-else class="timer">{{time}}s后可发送</text>
+					</uni-forms-item> 
+					<view class="operation clearfix">
+						<text @tap="forgetPwd" class="forget-pwd">忘记密码?</text>
+						<button type="submit" @click="submit" class="submit">登录</button>
+					</view>
+				</uni-forms>
+			</view>
+			<div>
+				<text class="qr-img-label" v-if="!isShow && !status">扫一扫登录</text>
+				<text class="status qr-img-label" v-if="!isShow && status">{{status}}</text>
+			</div>
+			<view class="login-qr" v-show="!isShow">
+				<img :src="qrimg" alt="qr_image" title="二维码">
+				<view class="qr-cover" v-if="code===800">
+					<text>{{status}}</text>
 				</view>
-			</uni-forms>
-			<view class="bottom" v-show="isShowOtherLogin">
-				<third-login></third-login>
-				<view class="to-register">
-					<text>还没有账号？</text>
-					<text class="a-link" @tap="toRegister">点击注册</text>
-				</view>
+			</view>
+			<view class="qr-label" @tap="loginQRCode">
+				<img v-show="isShow" class="qr-img" :src="loginJson[0]['qr_code']" title="二维码登录" />
+				<img v-show="!isShow"class="qr-img" :src="loginJson[0]['phone']" title="手机登录" />
+			</view>
+			
+		</view>
+		<view class="bottom" v-show="isShowOtherLogin">
+			<third-login></third-login>
+			<view class="to-register">
+				<text>还没有账号？</text>
+				<text class="a-link" @tap="toRegister">点击注册</text>
 			</view>
 		</view>
 	</view>
@@ -34,14 +57,20 @@
 
 <script>
 	import '@/common/iconfont.css'
-	import { sendValidate , verifyCode, loginWithPhone ,userLikeMusicList} from '@/common/api.js'
+	import { sendValidate , verifyCode, loginWithPhone ,userLikeMusicList, loginQR, checkQR} from '@/common/api.js'
 	import ThirdLogin from '@/components/ThirdLogin/ThirdLogin.vue'
 	import { keyboardMixins } from '@/common/mixins/mixins.js'
+	import loginJson from '@/static/base64/third_party_login.json'
 	
 	export default {
 		mixins:[keyboardMixins],
 		data() {
 			return {
+				isShow:true,
+				qrimg:undefined,
+				checkTime:undefined,
+				status:undefined,
+				code:undefined,
 				formData:{
 					phone:'',
 					pwd:'',
@@ -84,7 +113,8 @@
 						// 当前表单域的字段中文名，可不填写
 						label:'请输入验证码',
 						validateTrigger:'submit'
-					}
+					},
+					loginJson:undefined
 				}
 			}
 		},
@@ -167,7 +197,7 @@
 									content:res.message
 								})
 							}
-							console.log(res)
+							//console.log(res)
 						})
 					}
 				
@@ -180,15 +210,60 @@
 				uni.navigateTo({
 					url:'../register/register'
 				})
+			},
+			loginQRCode(){
+				this.isShow = !this.isShow
+				if(!this.isShow){
+					this.loginWithQR()
+				}
+			},
+			loginWithQR(){
+				loginQR().then(res=>{
+					if(res.code === 200){
+						this.qrimg = res.data.qrimg
+						this.checkTime = setTimeout(()=>{
+							this.checkStatus()
+							clearTimeout(this.checkTime)
+						},3000)
+						
+					}
+				})
+			},
+			checkStatus(){
+				checkQR().then((checkRes)=>{
+					//console.log(checkRes)
+					if(checkRes.code === 803){
+						//登陆成功
+					   
+						uni.setStorageSync('cookie',JSON.stringify(checkRes.cookie))
+						uni.navigateBack()
+					}
+					else if(checkRes.code === 800){
+						uni.showModal({
+							title:"提醒：",
+							content:this.status
+						})
+					}
+					else{
+						let time = setTimeout(()=>{
+							this.checkStatus()
+							clearTimeout(time)
+						},3000)
+					}
+					this.code = checkRes.code
+					this.status = checkRes.message
+					
+				})
 			}
 		},
 		onLoad() {
 			this.formData.id = 'testId'
+			this.loginJson = loginJson
 		}
 	}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .clearfix::after{
 		display: block;
 		content: '';
@@ -197,15 +272,15 @@
 		visibility: hidden;
 }
 .login-container{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
+	position: relative;
+	
+	width: 100vw;
 	height: 100vh;
 }
-.nav{
+.nav-login{
 	position: absolute;
 	top:0;
+	left: 0;
 	width: 100%;
 	
 }
@@ -224,10 +299,31 @@
 	
 }
 /* #endif */
+
+/* #ifdef APP */
+.nav-login{
+	height: 80px;
+	line-height: 80px;
+}
+.nav-bar{
+	position: relative;
+	top:30px;
+	left: 10px;
+	width: 32px;
+	height: 32px;
+}
+/* #endif */
+
 .form-box{
-	
-	margin-top: -30px;
+	position: relative;
+	top: 50%;
+	margin-left: 50%;
+	padding: 60px 20px 40px;
 	width: 80%;
+	background-color: #fff;
+	box-shadow: 0 4px 4px 4px #ededed;
+	border-radius: 6px;
+	transform: translateX(-50%) translateY(-60%);
 }
 .uni-forms-item{
 	display: flex;
@@ -236,7 +332,7 @@
 	padding-left: 10px;
 	height: 46px;
 	border-radius: 23px;
-	box-shadow: 0 0 20px 2px #dedede
+	box-shadow: 0 0 10px 2px #dedede
 }
 
 
@@ -276,12 +372,67 @@
 	color: #fff;
 	
 }
+.qr-label{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 50px;
+	height: 50px;
+	
+	.qr-img{
+		position: relative;
+		margin-top: 7px;
+		margin-left: 7px;
+		width: 36px;
+		height: 36px;
+		cursor: pointer;
+	}
+	
+}
+.qr-label::after{
+		position: absolute;
+		display: block;
+		content: '';
+		top: 36px;
+		left: 23px;
+		border: 22px solid transparent;
+		border-bottom-color: #fff;
+		-webkit-transform-origin: 0;
+		transform-origin: 0;
+		-webkit-transform: rotate(90deg);
+		transform: rotate(225deg);
+	}
+	.login-qr{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 200px;
+	}
+	.qr-img-label{
+		display: block;
+		width: 100%;
+		text-align: center;
+	}
+	.qr-cover{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: absolute;
+		width: 200px;
+		height: 200px;
+		background-color: #111111;
+		opacity: .1;
+		
+	}
+	
 .bottom{
 	position: absolute;
 	bottom: 0;
+	left: 50%;
 	width: 80%;
 	padding: 20px 0;
 	font-size: 14px;
+	transform: translateX(-50%);
 }
 .third-party-login{
 	font-size: 13px;

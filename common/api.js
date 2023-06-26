@@ -1,3 +1,4 @@
+import store from '../store/index.js'
 const baseUrl = "https://www.codeman.ink/api"
 
 function Get(URL){
@@ -334,4 +335,25 @@ export function album(id){
 //数字专辑详情/album/detail?id=xxx
 export function digitalAlbum(id){
 	return Get('/album/detail?id=' + id)
+}
+
+
+// 二维码登录
+export function loginQR(){
+	//1.获取key
+	return Get('/login/qr/key').then(res=>{
+		if(res.code === 200){
+			let unikey = res.data.unikey
+			//保存得到的unikey
+			store.dispatch('unikey',unikey)
+			return	Get(`/login/qr/create?key=${unikey}&qrimg=1`)
+		}
+	})
+}
+
+//二维码检测扫码状态
+
+export function checkQR(){
+	let unikey = store.state.user.unikey
+	return Get(`/login/qr/check?key=${unikey}&timestamp=${new Date().getTime()}`)
 }
