@@ -57,7 +57,7 @@
 
 <script>
 	import '@/common/iconfont.css'
-	import { sendValidate , verifyCode, loginWithPhone ,userLikeMusicList, loginQR, checkQR} from '@/common/api.js'
+	import { sendValidate , verifyCode, loginWithPhone ,userLikeMusicList, loginQR, checkQR,loginStatus} from '@/common/api.js'
 	import ThirdLogin from '@/components/ThirdLogin/ThirdLogin.vue'
 	import { keyboardMixins } from '@/common/mixins/mixins.js'
 	import loginJson from '@/static/base64/third_party_login.json'
@@ -151,6 +151,16 @@
 													
 													// }
 													uni.setStorageSync('cookie',data.cookie)
+													
+													//查看登录状态
+													loginStatus(uni.getStorageSync('cookie')).then(res=>{
+														if(res.data.profile){
+															this.$store.dispatch('saveUserInfo',JSON.stringify({
+																	
+																'userInfo':res.data.profile
+															}))
+														}
+													})
 													uni.navigateBack()
 												})	
 									}
@@ -231,17 +241,16 @@
 			},
 			checkStatus(){
 				checkQR().then((checkRes)=>{
-					//console.log(checkRes)
+					console.log(checkRes)
 					if(checkRes.code === 803){
 						//登陆成功
-					   
-						uni.setStorageSync('cookie',JSON.stringify(checkRes.cookie))
-						uni.navigateBack()
+						this.$store.dispatch('cookie',checkRes.cookie)
+						uni.navigateBack()	
 					}
 					else if(checkRes.code === 800){
 						uni.showModal({
 							title:"提醒：",
-							content:this.status
+							content:checkRes.message
 						})
 					}
 					else{
@@ -273,7 +282,7 @@
 }
 .login-container{
 	position: relative;
-	
+	max-width: 500px;
 	width: 100vw;
 	height: 100vh;
 }

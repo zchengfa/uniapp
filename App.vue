@@ -56,13 +56,19 @@
 			}
 			
 			//查看用户是否登录，未登录状态时就把之前登录过的信息清除
-			loginStatus().then(res=>{
-				
+			loginStatus(uni.getStorageSync('cookie')).then(res=>{
+				//console.log(res.data)
 				if(!res.data.profile){
 					uni.removeStorageSync('cookie')
 					uni.removeStorageSync('token')
 					uni.removeStorageSync('user')
 					uni.removeStorageSync('likeIds')
+				}
+				else if(res.data.profile && !this.$store.state.user.userInfo){
+					this.$store.dispatch('saveUserInfo',JSON.stringify({
+							
+						'userInfo':res.data.profile
+					}))
 				}
 			})
 		},

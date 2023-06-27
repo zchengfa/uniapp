@@ -14,6 +14,20 @@ function Get(URL){
 	})
 }
 
+function Post(URL,datas){
+	return new Promise((resolve)=>{
+		uni.request({
+			url:baseUrl+URL,
+			method:'POST',
+			data:datas,
+			withCredentials:true,
+			success:(res)=>{
+				resolve(res.data)
+			}
+		})
+	})
+}
+
 //排行榜
 export function topList  (){
 	return new Promise(resolve=>{
@@ -258,8 +272,10 @@ export function loginWithPhone(phone,code){
 }
 
 //查看登录状态
-export function loginStatus(){
-	return Get('/login/status')
+export function loginStatus(cookie){
+	return Post('/login/status',{
+		cookie
+	})
 }
 
 //注册
@@ -282,8 +298,8 @@ export function event(){
 
 //登录成功后调用api可以获取用户喜欢的音乐id列表
 //likelist?uid=2342343244
-export function userLikeMusicList (uid) {
-	return 	Get(`/likelist?uid=${uid}`)
+export function userLikeMusicList (data) {
+	return 	Post(`/likelist`,data)
 }
 
 //获取用户的歌单（包含喜欢的音乐歌单）/user/playlist?uid=42432423423

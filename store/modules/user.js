@@ -3,7 +3,8 @@ export default {
 		token:uni.getStorageSync('token'),
 		userInfo:uni.getStorageSync('user'),
 		likeIds:uni.getStorageSync('likeIds'),
-		unikey:undefined
+		unikey:undefined,
+		cookie:uni.getStorageSync('cookie')
 	},
 	getters:{
 		token(state){
@@ -14,12 +15,15 @@ export default {
 		},
 		likeIds(state){
 			return state.likeIds
+		},
+		cookie(state){
+			return state.cookie
 		}
 	},
 	mutations:{
 		saveUserInfo(state,payload){
 			let data = JSON.parse(payload)
-			console.log(data)
+			// console.log(data)
 			state.token = data.token
 			state.userInfo = data.userInfo
 			uni.setStorageSync('token',data.token)
@@ -48,6 +52,10 @@ export default {
 		},
 		unikey(state,key){
 			state.unikey = key
+		},
+		cookie(state,cookie){
+			state.cookie = cookie
+			uni.setStorageSync('cookie',cookie)
 		}
 	},
 	actions:{
@@ -68,6 +76,9 @@ export default {
 		},
 		unikey(context,payload){
 			context.commit('unikey',payload)
+		},
+		cookie(context,payload){
+			context.commit('cookie',payload)
 		}
 	}
 	

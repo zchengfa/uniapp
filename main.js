@@ -259,9 +259,9 @@ Vue.prototype.$audio = audioContext
 
 //判断vuex中是否有token，有则表示用户已登录
 function checkLogin(){
-	let token = store.state.user.token
+	let token = store.state.user.token,cookie = store.state.user.cookie
 	
-	return !!token
+	return !!(token || cookie)
 }
 Vue.prototype.$checkLogin = checkLogin
 

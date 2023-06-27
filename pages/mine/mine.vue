@@ -158,7 +158,7 @@
 			//#endif	
 		},
 		computed:{
-			...mapGetters(['userInfo','likeIds'])
+			...mapGetters(['userInfo','likeIds','cookie'])
 		},
 		methods: {
 			// #ifdef MP-WEIXIN || APP 
@@ -234,8 +234,11 @@
 			},
 			getUserProfile(){
 				if(this.$checkLogin()){
-					userLikeMusicList(this.userInfo.userId).then(res=>{
-						
+					userLikeMusicList({
+						uid:this.userInfo.userId,
+						cookie:this.cookie
+					}).then(res=>{
+						//console.log(res)
 						if(res.code === 200){
 						    this.$store.dispatch('userLikeMusicIds',res.ids).then(res=>{
 								songDetail(this.likeIds[0]).then(song=>{
