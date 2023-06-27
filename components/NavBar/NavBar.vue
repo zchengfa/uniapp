@@ -148,7 +148,8 @@
 .center{
 	position: absolute;
 	top:42px;
-	
+	left: 50%;
+	transform: translateX(-50%);
 }
 /* #endif */
 /* #ifdef MP-WEIXIN */
