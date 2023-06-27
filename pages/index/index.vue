@@ -343,7 +343,7 @@
 		
 		font-size: 14px;
 		color: #bfbfbf;
-		z-index: 1000;
+		z-index: 999;
 	}
 	
 	/* #ifdef H5 */

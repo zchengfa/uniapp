@@ -163,6 +163,7 @@
 </script>
 
 <style scoped lang="scss">
+	
 .personal-modal{
 	/* #ifdef H5*/
 	position: absolute;
