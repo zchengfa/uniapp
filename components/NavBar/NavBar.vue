@@ -85,13 +85,14 @@
 		}
 	}
 .content{
+	position: relative;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
 	width: 100%;
 	height: 50px;
 	text-align: center;
-	color: #fff;
+	
 }
 .left,.right{
 	display: flex;
@@ -108,12 +109,10 @@
 }
 .nav-text{
 	display: inline-block;
-	mix-blend-mode: lighten;
 	font-weight: bold;
 	min-width: 44px;
 	max-height: 80px;
 	height: 100%;
-	
 }
 /* #ifdef H5 */
 .nav-text{

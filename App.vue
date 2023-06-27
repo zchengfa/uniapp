@@ -120,7 +120,7 @@
 		align-items: center;
 		width: 100%;
 		height: 50px;
-		mix-blend-mode: lighten;
+		color: #fff;
 		z-index: 999;
 		.left{
 			display: flex;

@@ -2,7 +2,7 @@
 	<view class="FM">
 		<view class="filter" :style="{'background-image':`url(${songs.picUrl})`}"></view>
 		<view class="filter cover" ></view>
-		<nav-bar title="私人FM"></nav-bar>
+		<nav-bar title="私人FM" color="#fff"></nav-bar>
 		<view class="fm-content"  @touchstart="touchS($event)" @touchend="touchE($event)">
 			<view class="song-info"  v-if="!isShowLyric" @tap="showLyric">
 				<image :src="songs.picUrl" mode="aspectFit" class="FM-image"></image>
