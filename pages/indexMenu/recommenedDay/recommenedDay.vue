@@ -1,6 +1,6 @@
 <template>
 	<view class="rec-every-day">
-		<nav-bar class="nav"></nav-bar>
+		<nav-bar class="nav" color="#fff"></nav-bar>
 		<view class="rec-content">
 			<view class="top" :style="topCover">
 				<view class="today-fortune">
@@ -70,7 +70,7 @@
 			}
 		},
 		created() {
-			recSongs().then(res=>{
+			recSongs(this.cookie).then(res=>{
 				
 				if(res.code === 200){
 					this.songsData = res.data.dailySongs
@@ -92,7 +92,7 @@
 			})
 		},
 		computed:{
-			...mapGetters(['songId']),
+			...mapGetters(['songId','cookie']),
 			month(){
 				let month = new Date().getMonth()
 				if(month === 0){

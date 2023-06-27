@@ -297,14 +297,14 @@ export function event(data){
 
 
 //登录成功后调用api可以获取用户喜欢的音乐id列表
-//likelist?uid=2342343244
+//likelist?uid=2342343244(需要带上cookie)
 export function userLikeMusicList (data) {
 	return 	Post(`/likelist`,data)
 }
 
-//获取用户的歌单（包含喜欢的音乐歌单）/user/playlist?uid=42432423423
-export function userPlayList(uid){
-	return Get(`/user/playlist?uid=${uid}`)
+//获取用户的歌单（包含喜欢的音乐歌单）/user/playlist?uid=42432423423(需要带上cookie)
+export function userPlayList(data){
+	return Post(`/user/playlist`,data)
 }
 
 //心动模式/智能播放https://www.codeman.ink/api/playmode/intelligence/list?id=&pid=xxx(需要带上cookie)
@@ -312,14 +312,14 @@ export function loveMode(data){
 	return Post(`/playmode/intelligence/list`,data)
 }
 
-//获取用户等级信息https://www.codeman.ink/api/user/level
-export function userLevel(){
-	return Get(`/user/level`)
+//获取用户等级信息https://www.codeman.ink/api/user/level(需要带上cookie)
+export function userLevel(data){
+	return Post(`/user/level`,data)
 }
 
-//获取首页中每日推荐歌曲数据/recommend/songs
-export function recSongs(){
-	return Get(`/recommend/songs`)
+//获取首页中每日推荐歌曲数据/recommend/songs(需要带上cookie)
+export function recSongs(cookie){
+	return Get(`/recommend/songs?cookie=${cookie}`)
 }
 
 

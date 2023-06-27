@@ -31,7 +31,7 @@
 								<view class="list-item" v-for="(item,index) in list[mItem.name]" :key="index"  @tap="toPlayListDetail(item.id)">
 									<image :src="item.coverImgUrl" mode="aspectFit" class="list-img"></image>
 									<text class="list-name main-title">{{item.name}}</text>
-									<view class="count-box" :style="{'background-color':['#633000','#415b63','#271200'][Math.floor(Math.random()*3)]}">
+									<view class="count-box" :style="{'background-color':item.bgColor}">
 										<text class="iconfont musicplayCircleOne"></text>
 										<text class="play-count">{{$dealCount(item.playCount)}}</text>
 									</view>
@@ -100,19 +100,25 @@
 								'name':item.name,
 								'into':'t'+(index+1)
 							})
+							
 						})
-						
+						uni.setStorageSync('playlist_square',JSON.stringify(this.menu))
 						this.menu.map(item=>{
 							this.getCateDetail(item.name)
+							
 						})
+					}
+					else{
+						uni.getStorageSync('playlist_square') ? this.menu = uni.getStorageSync('playlist_square') : null
 					}
 					
 				})
 			},
 			getCateDetail(tag){
 				topPlaylist(tag).then(res=>{
+					
 					if(res.code === 200){
-						this.$set(this.list,tag,res.playlists)
+						this.$set(this.list,tag,this.$color(res.playlists,'bgColor'))
 						
 						this.more[tag] = res.more
 						this.offset[tag] = 0
@@ -124,6 +130,7 @@
 				this.currentIndex = e.detail.current
 				this.tag = this.menu[e.detail.current].name
 			},
+			
 			loadMore(){
 				uni.showLoading({
 					title:'加载更多歌单...'
@@ -131,7 +138,7 @@
 				this.offset[this.tag] +=21
 				topPlaylist(this.tag,this.offset[this.tag]).then(res=>{
 					if(res.code === 200){
-						this.list[this.tag].push(...res.playlists)
+						this.list[this.tag].push(...this.$color(res.playlists,'bgColor'))
 						this.more[this.tag] = res.more
 						uni.hideLoading()
 					}
@@ -163,6 +170,8 @@
 }
 .menu-container{
 	position: relative;
+	width: 100%;
+	height: 40px;
 }
 .scroll-x{
 		

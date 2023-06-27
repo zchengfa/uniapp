@@ -251,12 +251,15 @@
 						
 					})
 					//获取用户收藏的歌单
-					userPlayList(this.userInfo.userId).then(result=>{
+					userPlayList({
+						uid:this.userInfo.userId,
+						cookie:this.cookie
+					}).then(result=>{
 						result.code === 200 ? this.userPlayList = result.playlist:null
 						//console.log(result.playlist)
 					})
 					//获取用户等级信息
-					userLevel().then(level=>{
+					userLevel({cookie:this.cookie}).then(level=>{
 						level.code === 200? this.levelInfo = level.data:null
 					})
 				}

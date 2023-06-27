@@ -135,3 +135,16 @@ export function transTime(target){
 	
 	return t
 }
+
+
+export function getColor(arr,property,colors = []){
+	if(!colors.length){
+		colors = ['#633000','#415b63','#271200','#632953','#32f363','#ffaaff']
+	}
+	
+	arr.map((item)=>{
+		
+		item[property] = colors[Math.floor(Math.random()*colors.length)]
+	})
+	return arr
+}
