@@ -264,11 +264,18 @@
 			//开启心动模式
 			beginLoveMode(listId){
 				if(this.$checkLogin()){
+					
 					if(!!this.likeIds.length){
+						
 						//1.在喜欢歌曲列表中随机获取一首歌进行播放
 						let randomSongId = this.likeIds[Math.round(Math.random()*this.likeIds.length)]
 						
-						loveMode(randomSongId,listId).then(res=>{
+						loveMode({
+							id:randomSongId,
+							pid:listId,
+							cookie:this.cookie
+						}).then(res=>{
+							//console.log(res)
 							if(res.code === 200){
 								let musicList = []
 								//获取随机选择好的歌曲数据						

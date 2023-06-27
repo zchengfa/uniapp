@@ -18,9 +18,12 @@
 							<view class="name-vip">
 								<text class="nick-name">{{item.user.nickname}}</text>
 								<text v-if="item.user.vipRights" class="vip">VIP.{{$level(item.user.vipRights.redVipLevel)}}</text>
-								<text>{{shareTitle(item.info.commentThread.resourceTitle)}}</text>
+								<text v-if="item.info.commentThread.resourceTitle">{{shareTitle(item.info.commentThread.resourceTitle)}}</text>
 							</view>
-							<text class="time">{{$timeFormate('YYYY年MM月DD日',item.eventTime)}}</text>
+							<view class="time-privacy">
+								<text class="time t-privacy">{{$timeFormate('YYYY年MM月DD日',item.eventTime)}}</text>
+								<text class="privacy  t-privacy" v-if="item.privacySettingInfo">{{item.privacySettingInfo.desc}}</text>
+							</view>
 						</view>
 					</view>
 					<view class="center" v-html="content(JSON.parse(item.json))">
@@ -29,15 +32,19 @@
 					<view class="bottom">
 						<view class="count-box share">
 							<text class="iconfont musicshare"></text>
-							<text v-if="item.info.likedCount" class="count">{{item.info.shareCount}}</text>
+							<text v-if="item.info.shareCount" class="count">{{item.info.shareCount}}</text>
+							<text v-else class="count-text">分享</text>
 						</view>
 						<view class="count-box comment">
 							<text class="iconfont controller-comments"></text>
-							<text v-if="item.info.likedCount" class="count">{{item.info.commentCount}}</text>
+							<text v-if="item.info.commentCount" class="count">{{item.info.commentCount}}</text>
+							<text v-else class="count-text">评论</text>
 						</view>
 						<view class="count-box liked">
-							<text class="iconfont controller-good"></text>
+							<text class="iconfont controller-good" v-if="!item.info.liked"></text>
+							<image src="../../static/images/liked_fist.png" mode="aspectFit" class="liked-fist"></image>
 							<text v-if="item.info.likedCount" class="count">{{item.info.likedCount}}</text>
+							<text v-else class="count-text">赞</text>
 						</view>
 					</view>
 				</view>
@@ -62,6 +69,7 @@
 	import care  from '@/static/json/care.json'
 	import '@/common/iconfont.css'
 	import '@/common/controller.css'
+	import { mapGetters } from 'vuex'
 	
 	// #ifdef MP-WEIXIN || APP
 	import PersonalModal from '@/components/PersonalModal/PersonalModal.vue'
@@ -85,6 +93,9 @@
 			PersonalModal
 			//#endif	
 		},
+		computed:{
+			...mapGetters(['cookie'])
+		},
 		methods: {
 			// #ifdef MP-WEIXIN || APP 
 			changeModal(){
@@ -93,25 +104,34 @@
 			//#endif
 			content(content){
 				//使用html原生标签，uniapp和小程序会将其编译成rich-text富文本，对下面带有标签的字符串进行转换
-				return `
-				<span class="msg">${content.msg}</span>
-				<div class="song" style="position:relative; display:flex; justify-content:flex-start; align-items:center; margin:10px auto; padding:4px; background-color:#eaeaea;border-radius:6px;">
-					<img class="song-image" style="margin-right:4px; width:40px; height:40px; border-radius:6px;" src="${content.song.album.picUrl}">
-					<div class="info">
-						<span class="song-name" style="display:block;">${content.song.name}</span>
-						<span class="song-art" style="display:block; color:#bababa; font-size:12px;">${this.$dealAuthor(content.song.artists,'name')}</span>
+				if(content.song){
+					return `
+					<span class="msg">${content.msg}</span>
+					<div class="song" style="position:relative; display:flex; justify-content:flex-start; align-items:center; margin:10px auto; padding:4px; background-color:#eaeaea;border-radius:6px;">
+						<img class="song-image" style="margin-right:4px; width:40px; height:40px; border-radius:6px;" src="${content.song.album.picUrl}">
+						<div class="info">
+							<span class="song-name" style="display:block;">${content.song.name}</span>
+							<span class="song-art" style="display:block; color:#bababa; font-size:12px;">${this.$dealAuthor(content.song.artists,'name')}</span>
+						</div>
+						<div class="mask" style="display:flex; justify-content:center; align-items:center; position: absolute;width: 40px;height: 40px;left: 4px;top:4px; z-index:999;background-color:rgba(0,0,0,.1);">
+							<span class="iconfont musicplayCircleOne" style=" width:16px; height:16px; color:#fff;"></span>
+						</div>
 					</div>
-					<div class="mask" style="display:flex; justify-content:center; align-items:center; position: absolute;width: 40px;height: 40px;left: 4px;top:4px; z-index:999;background-color:rgba(0,0,0,.1);">
-						<span class="iconfont musicplayCircleOne" style=" width:16px; height:16px; color:#fff;"></span>
-					</div>
-				</div>
-				`
+					`
+				}
+				else{
+					return  `<span class="msg">${content.msg}</span>`
+				}
 			},
 			shareTitle(title){
 				return title.substr(0,title.indexOf('：')+1)
 			},
 			getEvent(){
-				event().then(res=>{
+				event({
+					pagesize:20,
+					cookie:this.cookie
+				}).then(res=>{
+					//console.log(res)
 					//保存动态消息数据
 					if(res.event.length){
 						uni.setStorageSync('careMessages',res)
@@ -167,12 +187,17 @@
 		margin: 10px auto;
 		width: 88%;
 	}
+	.liked-fist{
+		width: 16px;
+		height: 16px;
+	}
 	.top{
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 	}
 	.center{
+		padding: 10px 0;
 		font-size: 14px;
 	}
 	.bottom{
@@ -183,9 +208,16 @@
 		padding-bottom: 10px;
 		font-size: 12px;
 		border-bottom: 1px solid #eae9ef;
+		.iconfont,.liked-fist{
+			margin-right: 3px;
+		}
+		
 	}
 	.count-box{
 		margin-right: 60px;
+	}
+	.count-text{
+		color: #bfbfc3;
 	}
 	.name-vip{
 		display: flex;
@@ -200,15 +232,19 @@
 		border-radius: 4px;
 		background: linear-gradient(to right, #ff3e4b , #786eff ,#61ddff,#ff6fff);
 	}
-	.nick-name,.time{
+	.nick-name,.t-privacy{
 		padding: 2px 0;
-		display: block;
+		
 		text-align: left;
 	}
 	.nick-name{
+		display: block;
 		font-size: 14px;
 	}
-	.time,.count{
+	.privacy{
+		margin-left: 8px;
+	}
+	.t-privacy,.count{
 		font-size: 12px;
 		color: #C8C7CC;
 	}

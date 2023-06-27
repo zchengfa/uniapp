@@ -291,8 +291,8 @@ export function checkPhone(phone){
 
 
 //获取关注页面动态消息https://www.codeman.ink/api/event?pagesize=50说明 : 调用此接口 , 可获取各种动态 , 对应网页版网易云，朋友界面里的各种动态消息 ，如分享的视频，音乐，照片等！
-export function event(){
-	return Get(`/event?pagesize=20`)
+export function event(data){
+	return Post(`/event`,data)
 }
 
 
@@ -307,9 +307,9 @@ export function userPlayList(uid){
 	return Get(`/user/playlist?uid=${uid}`)
 }
 
-//心动模式/智能播放https://www.codeman.ink/api/playmode/intelligence/list?id=&pid=xxx
-export function loveMode(id,listId){
-	return Get(`/playmode/intelligence/list?id=${id}&pid=${listId}`)
+//心动模式/智能播放https://www.codeman.ink/api/playmode/intelligence/list?id=&pid=xxx(需要带上cookie)
+export function loveMode(data){
+	return Post(`/playmode/intelligence/list`,data)
 }
 
 //获取用户等级信息https://www.codeman.ink/api/user/level
