@@ -19,7 +19,7 @@
 					<text class="header-msg">></text>
 					<!-- #endif -->
 				</view>
-				<view class="qrcode">
+				<view class="qrcode" @tap="scanQRCode">
 					<image src="~@/static/images/qrcode.png" class="qr-image"></image>
 				</view>
 			</view>
@@ -156,6 +156,44 @@
 			//深色模式开关
 			switchChange(e){
 				e.detail.value?console.log('深色模式按钮已在开启状态'):console.log('深色模式按钮已在关闭状态')
+			},
+			scanQRCode(){
+				// #ifdef H5
+				uni.showModal({
+					title:'提醒：',
+					content:'请在APP端或小程序端使用该功能'
+				})
+				// #endif
+				
+				// #ifdef APP
+				if(plus.runtime.isAgreePrivacy()){
+					uni.scanCode({
+						success: (res) => {
+							uni.showModal({
+								title:'结果提示：',
+								content:'扫描二维码得到的内容是：' + res.result
+							})
+						}
+					})
+				}
+				else{
+					uni.showModal({
+						title:'提醒：',
+						content:'您未同意隐私政策，无法使用该功能。'
+					})
+				}
+				// #endif
+				
+				// #ifdef MP-WEIXIN
+				wx.scanCode({
+					success: (res) => {
+						wx.showModal({
+							title:'结果提示：',
+							content:'扫描二维码得到的内容是：' + res.result
+						})
+					}
+				})
+				// #endif
 			}
 		},
 
