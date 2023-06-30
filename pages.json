@@ -159,16 +159,16 @@
                  "navigationStyle":"custom"
             }
             
-        }
-        ,{
-            "path" : "pages/audio/audio",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
+        },
+		{
+		    "path" : "pages/indexMenu/audio/audio",
+		    "style" :                                                                                    
+		    {
+		        "navigationStyle":"custom"
+		    }
+		    
+		}
+        
         
     ],
 	"globalStyle": {

@@ -123,9 +123,9 @@
 		},
 		methods: {
 			audioTap(){
-				// uni.navigateTo({
-				// 	url:'../audio/audio'
-				// })
+				uni.navigateTo({
+					url:'/pages/indexMenu/audio/audio'
+				})
 				
 			},
 			// #ifdef MP-WEIXIN  || APP

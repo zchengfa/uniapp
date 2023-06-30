@@ -247,13 +247,16 @@ function nextSong(){
 		index = index
 	}
 	
-	songExceptLyric(Number(list[index].id)).then(res=>{
-		save(res)
-		store.dispatch('index',index)
-		if(!save(res)){
-			nextSong()
-		}
-	})
+	if(list[index].id){
+		songExceptLyric(Number(list[index].id)).then(res=>{
+			save(res)
+			store.dispatch('index',index)
+			if(!save(res)){
+				nextSong()
+			}
+		})
+	}
+	
 }
 
 Vue.prototype.$audio = audioContext
