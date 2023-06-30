@@ -152,15 +152,7 @@
 													// }
 													uni.setStorageSync('cookie',data.cookie)
 													
-													//查看登录状态
-													loginStatus(uni.getStorageSync('cookie')).then(res=>{
-														if(res.data.profile){
-															this.$store.dispatch('saveUserInfo',JSON.stringify({
-																	
-																'userInfo':res.data.profile
-															}))
-														}
-													})
+													this.checkLoginResult()
 													uni.navigateBack()
 												})	
 									}
@@ -239,12 +231,24 @@
 					}
 				})
 			},
+			checkLoginResult(){
+				//查看登录状态
+				loginStatus(uni.getStorageSync('cookie')).then(res=>{
+					if(res.data.profile){
+						this.$store.dispatch('saveUserInfo',JSON.stringify({
+								
+							'userInfo':res.data.profile
+						}))
+					}
+				})	
+			},
 			checkStatus(){
 				checkQR().then((checkRes)=>{
-					console.log(checkRes)
+					//console.log(checkRes)
 					if(checkRes.code === 803){
 						//登陆成功
 						this.$store.dispatch('cookie',checkRes.cookie)
+						this.checkLoginResult()
 						uni.navigateBack()	
 					}
 					else if(checkRes.code === 800){
