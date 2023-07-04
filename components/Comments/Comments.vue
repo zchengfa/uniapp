@@ -41,9 +41,15 @@
 			<u-loadmore :status="loading ? 'loading' : 'nomore' " iconType="flower"></u-loadmore>
 		</scroll-view>
 		<view class="bottom-comment">
-			<input class="input" type="text" placeholder="千头万绪,落笔汇成评论一句" />
+			<!-- #ifdef H5 || APP -->
+			<input class="input" type="text" :value="commentContent" v-model="commentContent" placeholder="千头万绪,落笔汇成评论一句" />
+			<!-- #endif -->
+			
+			<!-- #ifdef MP-WEIXIN -->
+			<input class="input" type="text" v-model="commentContent" placeholder="千头万绪,落笔汇成评论一句" />
+			<!-- #endif -->
 			<text class="emoji iconfont controller-face"></text>
-			<text class="send">发送</text>
+			<text class="send" @tap="commentOrReply">发送</text>
 		</view>
 		
 		<!-- #ifdef APP || H5 -->
@@ -144,7 +150,7 @@
 		},
 		data() {
 			return {
-				
+				commentContent:undefined
 			};
 		},
 			
@@ -160,6 +166,17 @@
 			},
 			scrollToLower(){
 				this.$emit('scrollToLower')
+			},
+			commentOrReply(){
+				if(this.commentContent !== undefined){
+					this.$emit('commentOrReply',this.commentContent)
+					this.commentContent = ''
+				}
+				else{
+					uni.showModal({
+						content:'您未输入任何内容'
+					})
+				}
 			}
 		},
 		
@@ -374,6 +391,7 @@
 		text-indent: 20px;
 		font-size: 12px;
 		text-align: left;
+		color: #000;
 	}
 	.send{
 		margin-right: 10px;

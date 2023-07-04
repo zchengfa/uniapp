@@ -163,6 +163,9 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
 
 var recorderManager = uni.getRecorderManager();
 var _default = {
@@ -233,8 +236,10 @@ var _default = {
       });
     },
     recordTap: function recordTap() {
-      this.recordStart = !this.recordStart;
-      this.recordStart ? this.startRecord() : this.endRecord();
+      if (this.checkPermission()) {
+        this.recordStart = !this.recordStart;
+        this.recordStart ? this.startRecord() : this.endRecord();
+      }
     },
     changeTip: function changeTip() {
       var _this3 = this;

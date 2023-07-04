@@ -202,12 +202,12 @@ audioContext.onPlay(()=>{
 
 audioContext.onError(()=>{
 	
-	uni.showToast({
-		title:'YC音乐君提醒您：播放的音乐出错了！',
-		icon:'error',
-		duration:2000,
-		position:'center'
-	})
+	// uni.showToast({
+	// 	title:'YC音乐君提醒您：播放的音乐出错了！',
+	// 	icon:'error',
+	// 	duration:2000,
+	// 	position:'center'
+	// })
 	
 	nextSong()
 	
@@ -252,7 +252,7 @@ function nextSong(){
 			save(res)
 			store.dispatch('index',index)
 			if(!save(res)){
-				nextSong()
+				//nextSong()
 			}
 		})
 	}

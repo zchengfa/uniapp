@@ -1,5 +1,6 @@
 import store from '../store/index.js'
-const baseUrl = "https://www.codeman.ink/api"
+
+const baseUrl = "http://localhost:3000"
 
 function Get(URL){
 	return new Promise((resolve)=>{
@@ -188,6 +189,29 @@ export function commentsReply(songId,commentId,type = 0,limit = 10){
 export function moreCommentsReply(songId,commentId,type = 0,time,limit = 10){
 	return Get(`/comment/floor?parentCommentId=${commentId}&id=${songId}&type=${type}&limit=${limit}&time=${time}`)
 }
+
+/**
+ * 评论
+ * @param { Object } options 请求参数
+ * @param { 1|2 } options.t 1为评论、2为回复
+ * @param { 0|1|2|3|4|5|6 } options.type 0歌曲、1mv、2歌单、3专辑、4电台、5视频、6动态
+ * @param { Number | string } options.id 资源id
+ * @param { string } options.content 评论的内容
+ * @param { string } options.cookie 登录后得到的cookie
+ * @return { Function } 返回一个Promise函数
+ * @example
+	sendComment({
+		t:1,
+		type:this.dataType,
+		id:this.vId,
+		content,
+		cookie:this.cookie
+	})
+ */
+export function sendCommentOrReply(options){
+	return Post('/comment',options)
+}
+
 
 //全部.https://www.codeman.ink/api/mv/all?offset=1&limit=50
 export function allMv(offset,limit = 20){

@@ -83,11 +83,11 @@
 		</swiper>
 
 		<view class="info-bottom">
-			<input class="input" type="text" placeholder="发条评论支持一下吧~" />
+			<input class="input-mv" type="text" placeholder="发条评论支持一下吧~" />
 		</view>
 		<Comments :isShowComments="isShowComments" class="comments" :class="{'comments-trans':isShowComments}" :comments="comments" :reply="reply" :sortTypeList="sortTypeList" :equal="true" height="height:calc(100vh - 264px);"
 			:isShowReply="isShowReply" :user="user" :ownerComment="ownerComment" :sortType="sortType" :count="totalCount" :isShowCount="true" :loading="loading"
-			@tapSortType="tapSortType" @replyDetail="replyDetail" @scrollToLower="scrollToLower"
+			@tapSortType="tapSortType" @replyDetail="replyDetail" @scrollToLower="scrollToLower" @commentOrReply="commentOrReply"
 			></Comments>
 	</view>
 </template>
@@ -107,7 +107,7 @@
 		vDetail,
 		relatedMV
 	} from '@/common/api.js'
-
+	import { mapGetters } from 'vuex'
 
 	export default {
 		mixins:[commentsMixins],
@@ -486,7 +486,7 @@
 		height: 50px;
 	}
 
-	.input {
+	.input-mv {
 		width: 80%;
 		text-align: left;
 		font-size: 13px;

@@ -39,14 +39,14 @@
 			<!-- #ifdef MP-WEIXIN -->
 			<Comments :isShowComments="true" class="comments" :class="{'comments-trans':isShowComments}" :comments="comments" :reply="reply" :sortTypeList="sortTypeList" :equal="true" height="height:calc(100vh - 148px);"
 				:isShowReply="isShowReply" :user="user" :ownerComment="ownerComment" :sortType="sortType" :count="totalCount" :isShowCount="true" :loading="loading"
-				@tapSortType="tapSortType" @replyDetail="replyDetail" @scrollToLower="scrollToLower"
+				@tapSortType="tapSortType" @replyDetail="replyDetail" @scrollToLower="scrollToLower" @commentOrReply="commentOrReply"
 				></Comments>
 			<!-- #endif -->
 			
 			<!-- #ifdef H5 || APP -->
 			<Comments :isShowComments="true" class="comments" :class="{'comments-trans':isShowComments}" :comments="comments" :reply="reply" :sortTypeList="sortTypeList" :equal="true" height="height:calc(100% - 68px);"
 				:isShowReply="isShowReply" :user="user" :ownerComment="ownerComment" :sortType="sortType" :count="totalCount" :isShowCount="true" :loading="loading"
-				@tapSortType="tapSortType" @replyDetail="replyDetail" @scrollToLower="scrollToLower"
+				@tapSortType="tapSortType" @replyDetail="replyDetail" @scrollToLower="scrollToLower" @commentOrReply="commentOrReply"
 				></Comments>
 			<!-- #endif -->
 		</scroll-view>
@@ -59,6 +59,7 @@
 	import Comments from '@/components/Comments/Comments.vue'
 	import { commentsMixins } from '@/common/mixins/mixins.js'
 	import '@/common/iconfont.css'
+	import { mapGetters } from 'vuex'
 	
 	export default {
 		mixins:[commentsMixins],
@@ -71,6 +72,7 @@
 		components:{
 			Comments
 		},	
+		
 		methods: {
 
 			back(){

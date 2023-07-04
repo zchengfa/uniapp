@@ -343,8 +343,11 @@ import {
 	moreCommentsByTime,
 	commentsReply,
 	moreCommentsByOtherType,
-	moreCommentsReply
+	moreCommentsReply,
+	sendCommentOrReply
 } from '@/common/api.js'
+
+
 const commentsMixins = {
 	data() {
 		return {
@@ -371,7 +374,9 @@ const commentsMixins = {
 			ownerComment: {}
 		}
 	},
-
+	computed:{
+		...mapGetters(['cookie'])
+	},
 	methods: {
 		//上拉加载更多
 		scrollToLower() {
@@ -409,7 +414,7 @@ const commentsMixins = {
 			if (this.sortType !== type) {
 				this.sortType = type
 				this.comments = []
-				this.pageNo = 0
+				this.pageNo = 1
 				this.getComments(this.vId, this.sortType, this.dataType)
 			}
 		},
@@ -446,6 +451,7 @@ const commentsMixins = {
 				this.totalCount = res.data.totalCount
 				this.lastCursor = Number(res.data.cursor)
 				res.data.sortType === 99 ? this.sortType = 1 : this.sortType = res.data.sortType
+				
 				this.comments.push(...res.data.comments)
 				this.sortTypeList = res.data.sortTypeList
 
@@ -481,6 +487,47 @@ const commentsMixins = {
 					this.reply.time = res.data.time
 				}
 			})
+		},
+		commentOrReply(content){
+			
+			if(this.$checkLogin()){
+				
+				sendCommentOrReply({
+					t:1,
+					type:this.dataType,
+					id:this.vId,
+					content,
+					cookie:this.cookie
+				}).then(res=>{
+					
+					if(res.code === 200){
+						let comment = res.comment
+						comment.timeStr = '刚刚'
+						this.totalCount +=1
+						this.$set(this.comments,0,comment)
+					}
+					if(res.code === 400){
+						uni.showModal({
+							title:'失败：',
+							content:res.msg
+						})
+					}
+				})
+			}
+			else{
+				uni.showModal({
+					content:'您未登录，无法使用评论功能，是否现在去登录？',
+					confirmText:'去登录',
+					cancelText:'暂不',
+					success(res) {
+						if(res.confirm){
+							uni.navigateTo({
+								url:'/pages/login/login'
+							})
+						}
+					}
+				})
+			}
 		}
 	},
 	onLoad() {

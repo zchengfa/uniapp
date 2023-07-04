@@ -24,7 +24,55 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.record-bg.data-v-dd01a314 {
+  position: absolute;
+  top: 40px;
+  width: 100vw;
+  height: 100vw;
+  border-radius: 50%;
+  -webkit-transform: translateY(25%);
+          transform: translateY(25%);
+}
+.recording-delay.data-v-dd01a314 {
+  background-color: #bb0000;
+  -webkit-animation: recording-data-v-dd01a314 2s ease-in-out infinite;
+          animation: recording-data-v-dd01a314 2s ease-in-out infinite;
+}
+.recording.data-v-dd01a314 {
+  background-color: #bd0000;
+  -webkit-animation: recording-data-v-dd01a314 1.5s ease-in-out infinite;
+          animation: recording-data-v-dd01a314 1.5s ease-in-out infinite;
+}
+@-webkit-keyframes recording-data-v-dd01a314 {
+0% {
+    top: 40px;
+    width: 100vw;
+    height: 100vw;
+    opacity: 1;
+}
+100% {
+    top: 26.8%;
+    width: 120px;
+    height: 120px;
+    opacity: 0;
+}
+}
+@keyframes recording-data-v-dd01a314 {
+0% {
+    top: 40px;
+    width: 100vw;
+    height: 100vw;
+    opacity: 1;
+}
+100% {
+    top: 26.8%;
+    width: 120px;
+    height: 120px;
+    opacity: 0;
+}
+}
 .audio.data-v-dd01a314 {
+  max-width: 500px;
   width: 100vw;
   height: 100vh;
   background-color: #000;
@@ -37,6 +85,7 @@
   height: calc(100vh - 50px);
 }
 .audio .audio-content .audio-img.data-v-dd01a314 {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,6 +93,7 @@
   height: 120px;
   background-color: #ce0000;
   border-radius: 50%;
+  z-index: 999;
 }
 .audio .audio-content .audio-image.data-v-dd01a314 {
   width: 70%;
