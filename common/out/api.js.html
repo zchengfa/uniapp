@@ -1,4 +1,32 @@
-import store from '../store/index.js'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: api.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: api.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import store from '../store/index.js'
 
 const baseUrl = "https://www.codeman.ink/api"
 
@@ -78,7 +106,7 @@ export function songData (songId){
  * @author zcf
  */
 export function downloadSong (songId,br = 999){
-	return Get('/song/download/url?id='+songId+'&br='+br)
+	return Get('/song/download/url?id='+songId+'&amp;br='+br)
 }
  
 /**
@@ -116,7 +144,7 @@ export async function songExceptLyric(songId){
  * @author zcf
  */
 export function likeSong(id,like = true){
-	return Get(`/like?id=${id}&like=${like}`)
+	return Get(`/like?id=${id}&amp;like=${like}`)
 }
 
 /**
@@ -151,7 +179,7 @@ export function playlistHotCate(){
  * @author zcf
  */
 export function topPlaylist(cate,offset=0,limit=21){
-	return Get(`/top/playlist?cat=${cate}&offset=${offset}&limit=${limit}`)
+	return Get(`/top/playlist?cat=${cate}&amp;offset=${offset}&amp;limit=${limit}`)
 }
 
 /**
@@ -171,7 +199,7 @@ export function playListDeatil(id){
  * @author zcf
  */
 export function topSong(id,limit = 3,offset = 0){
-	return Get(`/playlist/track/all?id=${id}&limit=${limit}&offset=${offset}`)
+	return Get(`/playlist/track/all?id=${id}&amp;limit=${limit}&amp;offset=${offset}`)
 }
 
 
@@ -217,7 +245,7 @@ export function keywordDefault() {
  * @author zcf
  */
 export function searchSuggest(keyword) {
-	return Get(`/search/suggest?keywords=${keyword}&type=mobile`)
+	return Get(`/search/suggest?keywords=${keyword}&amp;type=mobile`)
 }
 
 /**
@@ -237,7 +265,7 @@ export function hotSearch() {
  * @author zcf
  */
 export function summarySearch(word,type=1018,offset=0,limit=20) {
-	return Get(`/search?keywords=${word}&type=${type}&offset=${offset}&limit=${limit}`)
+	return Get(`/search?keywords=${word}&amp;type=${type}&amp;offset=${offset}&amp;limit=${limit}`)
 	
 }
 
@@ -250,7 +278,7 @@ export function summarySearch(word,type=1018,offset=0,limit=20) {
  * @author zcf
  */
 export function comments(id,sortType = 3,type = 0) {
-	return Get(`/comment/new?type=${type}&id=${id}&sortType=${sortType}`)
+	return Get(`/comment/new?type=${type}&amp;id=${id}&amp;sortType=${sortType}`)
 	
 }
 
@@ -263,7 +291,7 @@ export function comments(id,sortType = 3,type = 0) {
  * @author zcf
  */
 export function commentsTotalNum (id){
-	return Get(`/comment/music?id=${id}&limit=1&offset=1`)
+	return Get(`/comment/music?id=${id}&amp;limit=1&amp;offset=1`)
 }
 
 
@@ -278,7 +306,7 @@ export function commentsTotalNum (id){
  * @author zcf
  */
 export function moreCommentsByTime(id,sortType,cursor,pageSize,pageNo,type = 0) {
-	return Get(`/comment/new?type=${type}&id=${id}&sortType=${sortType}&cursor=${cursor}&pageSize=${pageSize}&pageNo=${pageNo}`)
+	return Get(`/comment/new?type=${type}&amp;id=${id}&amp;sortType=${sortType}&amp;cursor=${cursor}&amp;pageSize=${pageSize}&amp;pageNo=${pageNo}`)
 }
 
 
@@ -292,7 +320,7 @@ export function moreCommentsByTime(id,sortType,cursor,pageSize,pageNo,type = 0) 
  * @author zcf
  */
 export function moreCommentsByOtherType(id,sortType,pageSize,pageNo,type = 0) {
-	return Get(`/comment/new?type=${type}&id=${id}&sortType=${sortType}&pageSize=${pageSize}&pageNo=${pageNo}`)
+	return Get(`/comment/new?type=${type}&amp;id=${id}&amp;sortType=${sortType}&amp;pageSize=${pageSize}&amp;pageNo=${pageNo}`)
 }
 
 
@@ -305,7 +333,7 @@ export function moreCommentsByOtherType(id,sortType,pageSize,pageNo,type = 0) {
  * @author zcf
  */
 export function commentsReply(id,commentId,type = 0,limit = 10){
-	return Get(`/comment/floor?parentCommentId=${commentId}&id=${id}&type=${type}&limit=${limit}`)
+	return Get(`/comment/floor?parentCommentId=${commentId}&amp;id=${id}&amp;type=${type}&amp;limit=${limit}`)
 }
 
 /**
@@ -318,7 +346,7 @@ export function commentsReply(id,commentId,type = 0,limit = 10){
  * @author zcf
  */
 export function moreCommentsReply(id,commentId,type = 0,time,limit = 10){
-	return Get(`/comment/floor?parentCommentId=${commentId}&id=${id}&type=${type}&limit=${limit}&time=${time}`)
+	return Get(`/comment/floor?parentCommentId=${commentId}&amp;id=${id}&amp;type=${type}&amp;limit=${limit}&amp;time=${time}`)
 }
 
 /**
@@ -351,7 +379,7 @@ export function sendCommentOrReply(options){
  * @author zcf
  */
 export function allMv(offset,limit = 20){
-	return Get (`/mv/all?offset=${offset}&limit=${limit}`)
+	return Get (`/mv/all?offset=${offset}&amp;limit=${limit}`)
 }
 
 
@@ -440,7 +468,7 @@ export function sendValidate(phone){
  * @author zcf
  */
 export function verifyCode(phone,code){
-	return Get(`/captcha/verify?phone=${phone}&captcha=${code}`)
+	return Get(`/captcha/verify?phone=${phone}&amp;captcha=${code}`)
 }
 
 /**
@@ -450,7 +478,7 @@ export function verifyCode(phone,code){
  * @author zcf
  */
 export function loginWithPhone(phone,code){
-	return Get(`/login/cellphone?phone=${encodeURIComponent(phone)}&captcha=${code}`)
+	return Get(`/login/cellphone?phone=${encodeURIComponent(phone)}&amp;captcha=${code}`)
 }
 
 /**
@@ -474,7 +502,7 @@ export function loginStatus(cookie){
  * @author zcf
  */
 export function register(nickname,phone,pwd,code){
-	return Get(`/register/cellphone?phone=${phone}&password=${pwd}&captcha=${code}&nickname=${nickname}`)
+	return Get(`/register/cellphone?phone=${phone}&amp;password=${pwd}&amp;captcha=${code}&amp;nickname=${nickname}`)
 }
 
 
@@ -624,7 +652,7 @@ export function loginQR(){
 			let unikey = res.data.unikey
 			//保存得到的unikey
 			store.dispatch('unikey',unikey)
-			return	Get(`/login/qr/create?key=${unikey}&qrimg=1`)
+			return	Get(`/login/qr/create?key=${unikey}&amp;qrimg=1`)
 		}
 	})
 }
@@ -636,5 +664,27 @@ export function loginQR(){
  */
 export function checkQR(){
 	let unikey = store.state.user.unikey
-	return Get(`/login/qr/check?key=${unikey}&timestamp=${new Date().getTime()}`)
-}
+	return Get(`/login/qr/check?key=${unikey}&amp;timestamp=${new Date().getTime()}`)
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#album">album</a></li><li><a href="global.html#albumInfo">albumInfo</a></li><li><a href="global.html#allMv">allMv</a></li><li><a href="global.html#banner">banner</a></li><li><a href="global.html#checkPhone">checkPhone</a></li><li><a href="global.html#checkQR">checkQR</a></li><li><a href="global.html#comments">comments</a></li><li><a href="global.html#commentsReply">commentsReply</a></li><li><a href="global.html#commentsTotalNum">commentsTotalNum</a></li><li><a href="global.html#digitalAlbum">digitalAlbum</a></li><li><a href="global.html#downloadSong">downloadSong</a></li><li><a href="global.html#event">event</a></li><li><a href="global.html#homePageData">homePageData</a></li><li><a href="global.html#hotSearch">hotSearch</a></li><li><a href="global.html#indexScrollMenu">indexScrollMenu</a></li><li><a href="global.html#indexSongSheet">indexSongSheet</a></li><li><a href="global.html#keywordDefault">keywordDefault</a></li><li><a href="global.html#likeSong">likeSong</a></li><li><a href="global.html#listDetail">listDetail</a></li><li><a href="global.html#loginQR">loginQR</a></li><li><a href="global.html#loginStatus">loginStatus</a></li><li><a href="global.html#loginWithPhone">loginWithPhone</a></li><li><a href="global.html#loveMode">loveMode</a></li><li><a href="global.html#lyric">lyric</a></li><li><a href="global.html#moreCommentsByOtherType">moreCommentsByOtherType</a></li><li><a href="global.html#moreCommentsByTime">moreCommentsByTime</a></li><li><a href="global.html#moreCommentsReply">moreCommentsReply</a></li><li><a href="global.html#personalFm">personalFm</a></li><li><a href="global.html#playListDeatil">playListDeatil</a></li><li><a href="global.html#playlistHotCate">playlistHotCate</a></li><li><a href="global.html#recSongs">recSongs</a></li><li><a href="global.html#recentlyPlayed">recentlyPlayed</a></li><li><a href="global.html#recommendSongSheet">recommendSongSheet</a></li><li><a href="global.html#register">register</a></li><li><a href="global.html#relatedMV">relatedMV</a></li><li><a href="global.html#searchSuggest">searchSuggest</a></li><li><a href="global.html#sendCommentOrReply">sendCommentOrReply</a></li><li><a href="global.html#sendValidate">sendValidate</a></li><li><a href="global.html#songData">songData</a></li><li><a href="global.html#songDetail">songDetail</a></li><li><a href="global.html#songExceptLyric">songExceptLyric</a></li><li><a href="global.html#summarySearch">summarySearch</a></li><li><a href="global.html#topList">topList</a></li><li><a href="global.html#topPlaylist">topPlaylist</a></li><li><a href="global.html#topSong">topSong</a></li><li><a href="global.html#topicDetail">topicDetail</a></li><li><a href="global.html#userLevel">userLevel</a></li><li><a href="global.html#userLikeMusicList">userLikeMusicList</a></li><li><a href="global.html#userPlayList">userPlayList</a></li><li><a href="global.html#vDetail">vDetail</a></li><li><a href="global.html#vInfo">vInfo</a></li><li><a href="global.html#vUrl">vUrl</a></li><li><a href="global.html#verifyCode">verifyCode</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Jul 05 2023 13:41:30 GMT+0800 (中国标准时间)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
