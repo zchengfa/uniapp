@@ -148,7 +148,7 @@
             {
                 "navigationBarTitleText": "最近播放",
                 "enablePullDownRefresh": false,
-				"navigationBarBackgroundColor": "#f7f7f7"
+				"navigationBarBackgroundColor": "#fff"
             }
             
         }
@@ -168,7 +168,6 @@
 		    }
 		    
 		}
-        
         
     ],
 	"globalStyle": {

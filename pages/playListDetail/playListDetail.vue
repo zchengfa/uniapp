@@ -36,9 +36,10 @@
 							</view>
 						</view>
 					</view>
-					<view class="desc-box" v-if="desc" @tap="showDetail">
-						<text class="desc">{{desc}}</text>
-						<text class="iconfont musicleftArrow rotate"></text>
+					<view class="desc-box" @tap="showDetail">
+						<text class="desc" v-if="desc">{{desc}}</text>
+						<text class="desc" v-else>暂无简介</text>
+						<text class="iconfont musicleftArrow rotate-angle"></text>
 					</view>
 				</view>
 				<view class="bottom other-info">
@@ -104,6 +105,7 @@
 		</scroll-view>
 		<!-- 歌单详细描述 -->
 		<view class="desc-detail" v-show="showDescDetail">
+			<view class="bg" :style="bgImage"></view>
 			<text class="iconfont musicclose close" @tap="showDetail"></text>
 			<scroll-view scroll-y="true" class="detail-scroll">
 				<view class="main-desc">
@@ -112,15 +114,19 @@
 						<text class="desc-name">{{playList.name}}</text>
 					</view>
 					<view class="tag-desc">
-						<view class="tag-box" v-if="!!tagsLength">
+						<view class="tag-box">
 							<text class="tag-label">标签:</text>
-							<text class="tag-item" v-for="(item,index) in playList.tags" :key="index">{{item}}</text>
+							<view class="tag-item-box"  v-if="!!tagsLength">
+								<text class="tag-item" v-for="(item,index) in playList.tags" :key="index">{{item}}</text>
+							</view>
+							<text class="tag-item" v-else>无</text>
 						</view>
 						<view class="com-type" v-if="playList.companyType">
 							<text class="tag-label">发行公司：{{playList.companyType.com}}</text>
 							<text class="tag-label">专辑类型：{{playList.companyType.type}}</text>
 						</view>
-						<text class="desc-text">{{playList.description}}</text>
+						<text class="desc-text" v-if="playList.description">{{playList.description}}</text>
+						<text class="desc-text">暂无描述</text>
 					</view>
 				</view>
 			</scroll-view>
@@ -288,9 +294,12 @@
 	position: absolute;
 	width: 100%;
 	height: 100vh;
-	filter: blur(10vw);
+	filter: blur(50vw);
 }
-
+.playlist-detail{
+	
+	background-color: #b8b8b8;
+}
 .scroll-v{
 	height: calc(100vh - 50px);
 	.playlist-info{
@@ -343,7 +352,7 @@
 		}
 	}
 }
-.rotate,.sub-rotate{
+.rotate-angle,.sub-rotate{
 	margin-left: 4px;
 	font-size: 12px;
 	transform: rotate(180deg);
@@ -383,7 +392,7 @@
 		width: 26%;
 		height: 36px;
 		border-radius: 18px;
-		background-color: rgba(143, 143, 143, 0.3);
+		background-color: #cfc8c8;
 		.count{
 			margin-left: 10px;
 		}
@@ -436,7 +445,7 @@
 	height: 100vh;
 	color: #fff;
 	font-size: 12px;
-	background-color: #643e3e;
+	background-color: #9a9a9a;
 	z-index: 999;
 	.close{
 		position: relative;
@@ -444,6 +453,11 @@
 		left: 90%;
 		z-index: 999;
 	}
+	/* #ifdef APP */
+	.close{
+		top:50px;
+	}
+	/* #endif */
 	.detail-scroll{
 		width: 100%;
 		height: 86vh;
@@ -495,11 +509,11 @@
 	}
 	.save{
 		position: absolute;
-		bottom: 10%;
+		bottom: 5%;
 		left: 50%;
 		padding: 4px 10px;
 		border-radius: 16px;
-		border: 1px solid #c8c8c8;
+		border: 1px solid #fff;
 		transform: translateX(-50%);
 	}
 	

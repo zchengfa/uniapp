@@ -39,7 +39,7 @@
 			<!-- 最近视频 -->
 			<swiper-item>
 				<scroll-view scroll-y="true" class="scroll-v swiper-item-scroll list-scroll" :style="scrollHeightSwiper" @scrolltolower="loadMore(menu[1].type)">
-					<view class="sheets-item" v-for="(item,index) in menu[1].showData" :key="index" @tap="toVideoDetail(item.data.id)">
+					<view class="sheets-item" v-for="(item,index) in menu[1].showData" :key="index" @tap="toNextDetail(item.data.id,'video')">
 						<view class="image-box">
 							<image :src="item.data.coverUrl" mode="aspectFill" class="sheet-image"></image>
 						</view>
@@ -82,7 +82,7 @@
 			<!-- 最近歌单 -->
 			<swiper-item>
 				<scroll-view scroll-y="true" class="scroll-v swiper-item-scroll list-scroll" :style="scrollHeightSwiper" @scrolltolower="loadMore(menu[3].type)">
-					<view class="sheets-item" v-for="(item,index) in menu[3].showData" :key="index" @tap="toVideoDetail(item.data.id)">
+					<view class="sheets-item" v-for="(item,index) in menu[3].showData" :key="index" @tap="toNextDetail(item.data.id,'Playlist')">
 						<view class="voice-image-box image-box">
 							<image :src="item.data.coverImgUrl" mode="aspectFill" class="voice-image"></image>
 						</view>
@@ -103,7 +103,7 @@
 			<!-- 最近专辑 -->
 			<swiper-item>
 				<scroll-view scroll-y="true" class="scroll-v swiper-item-scroll list-scroll" :style="scrollHeightSwiper" @scrolltolower="loadMore(menu[4].type)">
-					<view class="sheets-item" v-for="(item,index) in menu[4].showData" :key="index" @tap="toVideoDetail(item.data.id)">
+					<view class="sheets-item" v-for="(item,index) in menu[4].showData" :key="index" @tap="toNextDetail(item.data.id,'album')">
 						<view class="voice-image-box image-box">
 							<image :src="item.data.picUrl" mode="aspectFill" class="voice-image"></image>
 						</view>
@@ -124,7 +124,7 @@
 			<!-- 最近播客 -->
 			<swiper-item>
 				<scroll-view scroll-y="true" class="scroll-v swiper-item-scroll list-scroll" :style="scrollHeightSwiper" @scrolltolower="loadMore(menu[5].type)">
-					<view class="sheets-item" v-for="(item,index) in menu[5].showData" :key="index" @tap="toVideoDetail(item.data.id)">
+					<view class="sheets-item" v-for="(item,index) in menu[5].showData" :key="index" @tap="toNextDetail(item.data.id,'dj')">
 						<view class="voice-image-box image-box">
 							<image :src="item.data.picUrl" mode="aspectFill" class="voice-image"></image>
 						</view>
@@ -214,9 +214,27 @@
 			}
 		},
 		computed:{
-			...mapGetters(['songId'])
+			...mapGetters(['songId','cookie'])
 		},
 		methods: {
+			toNextDetail(id,type){
+				if(type === 'video'){
+					uni.navigateTo({
+						url:'/pages/videoDetail/videoDetail?vId=' + id
+					})
+				}
+				else if(type === 'Playlist'){
+					uni.navigateTo({
+						url:'/pages/playListDetail/playListDetail?playListId=' + id
+					})
+				}
+				else{
+					uni.showModal({
+						content:'该详情页暂未完善'
+					})
+				}
+				this.$audio.pause()
+			},
 			changeRecently(e){
 				this.into = 't' + e.detail.current
 				this.currentIndex = e.detail.current
@@ -231,7 +249,7 @@
 				})
 				this.menu.map(item =>{
 					
-					recentlyPlayed(item.type).then(res=>{
+					recentlyPlayed(item.type,this.cookie).then(res=>{
 						//console.log(res)
 						if(res.code === 200) {
 							item.totalData.push(...res.data.list)

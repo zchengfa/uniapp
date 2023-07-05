@@ -581,8 +581,8 @@ export function personalFm(){
  * @param { Number } limit 返回数量（默认100）  
  * @author zcf
  */
-export function recentlyPlayed(type,limit = 300){
-	return Get('/record/recent/'+type + '?limit=' + limit)
+export function recentlyPlayed(type,cookie,limit = 300){
+	return Get('/record/recent/'+type + '?limit=' + limit + '&cookie=' + cookie )
 }
 
 /**

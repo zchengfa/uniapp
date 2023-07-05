@@ -21,8 +21,8 @@
 							<text class="vip-tip" v-if="userInfo.vipType===0">VIP开通 ></text>
 						</view>
 						<view class="bottom">
-							<text class="follow info-bottom-item" >{{userInfo.follows}}关注</text>
-							<text class="fans info-bottom-item">{{userInfo.followeds}}粉丝</text>
+							<text class="follow info-bottom-item" >{{userInfo.follows || 0}}关注</text>
+							<text class="fans info-bottom-item">{{userInfo.followeds || 0}}粉丝</text>
 							<text class="level info-bottom-item">Lv.{{levelInfo.level || '暂无'}}</text>
 						</view>
 					</view>
@@ -106,7 +106,7 @@
 				<view class="rec-sheet">
 					<view class="rec-sheet-item" v-for="(item,index) in recSheet" :key="index" @tap="toPlayListDetail(item.id)">
 						<image class="sheet-image" :src="item.picUrl" mode="aspectFill"></image>
-						<view class="mask">
+						<view class="count-box" :style="{'background-color':item.bgColor}">
 							<text>{{$dealCount(item.playCount)}}</text>
 							<text class="iconfont musicplayCircle"></text>
 						</view>
@@ -193,7 +193,10 @@
 			getRec(){
 				recommendSongSheet().then(res=>{
 					if(res.code === 200){
-						this.recSheet = res.result
+						
+						
+						this.recSheet = this.$color(res.result,'bgColor')
+						
 					}
 				})
 			},
@@ -596,16 +599,18 @@
 	height: 100px;
 	border-radius: 6px;
 }
-.mask{
+.count-box{
+	position: absolute;
 	display: flex;
-	flex-direction: row;
-	justify-content: flex-end;
+	justify-content: space-around;
 	align-items: center;
-	top:4px;
-	width: 100%;
-	height: auto;
-	background-color: transparent;
-	border-radius: 6px;
+	position: absolute;
+	right: 2px;
+	top:6px;
+	padding:2px 6px;
+	font-size: 12px;
+	border-radius: 20px;
+	color: #fff;
 	transform: scale(.9);
 }
 .musicplayCircle{
