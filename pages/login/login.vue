@@ -239,6 +239,7 @@
 								
 							'userInfo':res.data.profile
 						}))
+						uni.navigateBack()
 					}
 				})	
 			},
@@ -249,7 +250,7 @@
 						//登陆成功
 						this.$store.dispatch('cookie',checkRes.cookie)
 						this.checkLoginResult()
-						uni.navigateBack()	
+							
 					}
 					else if(checkRes.code === 800){
 						uni.showModal({
