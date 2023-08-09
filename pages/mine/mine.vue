@@ -617,6 +617,6 @@
 	font-size: 16px;
 }
 .rec-name{
-	padding: 2px 0;
+	padding: 2px 10px;
 }
 </style>
