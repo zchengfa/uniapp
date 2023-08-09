@@ -1,6 +1,7 @@
 import store from '../store/index.js'
 
-const baseUrl = "https://www.codeman.ink/api"
+ //const baseUrl = "https://www.codeman.ink/api"
+const baseUrl = "http://localhost:3000"
 
 function Get(URL){
 	return new Promise((resolve)=>{
@@ -185,7 +186,7 @@ export function banner(type = 1){
 }
 
 /**
- * 首页其她数据
+ * 首页其它数据
  * @author zcf
  */
 export function homePageData(){

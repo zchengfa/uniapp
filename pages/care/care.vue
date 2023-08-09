@@ -42,7 +42,7 @@
 						</view>
 						<view class="count-box liked">
 							<text class="iconfont controller-good" v-if="!item.info.liked"></text>
-							<image src="../../static/images/liked_fist.png" mode="aspectFit" class="liked-fist"></image>
+							<image src="../../static/images/liked_fist.png" mode="aspectFit" v-else class="liked-fist"></image>
 							<text v-if="item.info.likedCount" class="count">{{item.info.likedCount}}</text>
 							<text v-else class="count-text">赞</text>
 						</view>

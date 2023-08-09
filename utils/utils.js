@@ -1,6 +1,6 @@
 /**
  * @param { Number } count 数量
- * @return { Number } 返回处理过的数量
+ * @return {string} 返回处理过的数量
  * @example
 	dealCount(100000)
  */
@@ -65,34 +65,24 @@ export function level(num){
 	switch(num){
 		case 1:
 			return '壹';
-			break;
 		case 2:
 			return '贰';
-			break;
 		case 3:
 			return '叁';
-			break;
 		case 4:
 			return '肆';
-			break;
 		case 5:
 			return '伍';
-			break;
 		case 6:
 			return '陆';
-			break;
 		case 7:
 			return '柒';
-			break;
 		case 8:
 			return '捌';
-			break;
 		case 9:
 			return '玖';
-			break;
 		case 10:
 			return '拾';
-			break;
 		default:
 			return '零'
 	}

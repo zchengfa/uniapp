@@ -64,6 +64,7 @@
 	import HotTopic from '@/components/HotTopic/HotTopic.vue'
 	import StyleSongAlbum from '@/components/StyleSongAlbum/StyleSongAlbum.vue'
 	import { bottomControlMixin,playSongMixin} from '@/common/mixins/mixins.js'
+	import { mapGetters } from 'vuex'
 	 // import Skeleton from '@/skeleton/Skeleton.vue'
 	import puppeteer from '@/puppeteer.vue'
 	
@@ -120,6 +121,9 @@
 			//#endif
 			 //Skeleton,
 			puppeteer
+		},
+		computed:{
+			...mapGetters(['cookie'])
 		},
 		methods: {
 			audioTap(){
@@ -290,6 +294,9 @@
 				this.getScrollMenu()
 				this.getHomePageData()
 				this.getKeyword()
+				setTimeout(()=>{
+					this.show = false
+				},3000)
 				
 				let timer = setTimeout(()=>{
 					uni.stopPullDownRefresh()
@@ -318,9 +325,7 @@
 		},
 		
 		mounted() {
-			setTimeout(()=>{
-				this.show = false
-			},3000)
+			
 		}
 	}
 </script>
