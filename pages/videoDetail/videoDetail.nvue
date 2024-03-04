@@ -1,0 +1,1021 @@
+<template>
+	<div class="video-detail">
+		<div class="nav">
+			<div class="back-box" @tap="back">
+				<img src="../../static/images/back.png" class="back-img" alt="back">
+			</div>
+		</div>
+		<swiper vertical="true" class="scroll-video" @change="change">
+			<swiper-item v-for="(item,index) in MVData" :key="index">
+				<div class="scroll-content swiper-item">
+					<div class="scroll-item">
+						<div class="video" :class="{'video-trans':isShowComments}">
+		
+							<video style="width: 750rpx;" :id="'myVideo' + index" :src="item.url"  @tap.stop="closeComments"
+								:autoplay="item.autoplay" :poster="item.detail.cover ||item.detail.coverUrl" loop="true"
+								objectFit="contain" @play="play(index)" @pause="pause(index)"
+								@ended="videoEnded"></video>
+		
+						</div>
+						<div class="video-info">
+							<div class="info-top">
+								<div class="operation">
+									<div class="operation-item">
+										<img src="../../static/images/like.png" alt="img" class="info-img" />
+										<text class="item-text">{{dealCount(item.vInfo.likedCount)}}</text>
+									</div>
+									<div class="operation-item" @tap="showComments">
+										<img src="../../static/images/comments.png" class="info-img" alt="img" />
+										<text class="item-text">{{dealCount(item.vInfo.commentCount)}}</text>
+									</div>
+									<div class="operation-item">
+		
+										<img src="../../static/images/share.png" class="info-img" alt="img" />
+										<text class="item-text">{{dealCount(item.vInfo.shareCount)}}</text>
+									</div>
+									<div class="operation-item">
+										<img src="../../static/images/favorite.png" class="info-img" alt="img" />
+										<text class="item-text">收藏</text>
+									</div>
+									<div class="operation-item song">
+										<div class="pic-box" :class="item.playing ? 'rotate' : 'rotate paused'">
+											<img :src="item.detail.cover ||item.detail.coverUrl" class="cover" />
+										</div>
+									</div>
+								</div>
+								<div class="info">
+									<div class="artist-box info-item">
+										<div class="artist-avatar avatars" v-if="Number(vId)">
+											<img class="artist-ava" :class="{'artist-ava-multi':artIndex !== 0}" v-for="(art,artIndex) in item.detail.artists"
+												:src="art.img1v1Url" :key="artIndex" />
+										</div>
+										<div class="artist-avatar" v-else>
+											<img class="artist-ava" :src="item.detail.avatarUrl" />
+										</div>
+										<text class="artist-name"
+											v-if="Number(vId)">{{dealAuthor(item.detail.artists,'name')}}</text>
+										<text class="artist-name" v-else>{{item.nickname}}</text>
+									</div>
+									<div class="mv-name-desc  info-item" @tap="showDesc(index)">
+										<text class="tag" v-if="Number(vId)">MV</text>
+										<text class="tag" v-else>视频</text>
+										<text class="mv-name">{{item.detail.name || item.detail.title}}</text>
+										<img src="../../static/images/angle.png" alt="angle" class="top-angle angle"
+											v-if="!item.isShowDesc && (item.detail.desc || item.detail.description)" />
+									</div>	
+
+									<scroll-view scroll-y="true" class="desc-scroll" v-if="item.isShowDesc">
+										<div class="desc-box">
+											<text class="desc" @tap="showDesc(index)">{{item.detail.desc || item.detail.description}}</text>
+											<img src="../../static/images/angle.png" alt="angle" class="bottom-angle angle" 
+											 v-if="item.isShowDesc && (item.detail.desc || item.detail.description)" />
+										</div>
+									</scroll-view>
+									<text class="publish-time">{{item.detail.publishTime}}</text>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</swiper-item>
+		</swiper>
+		<div class="info-bottom">
+			<input class="input" type="text" placeholder="发条评论支持一下吧~" />
+		</div>
+		<div class="comments" :class="{'comments-trans':isShowComments}" v-if="isShowComments">
+		
+			<div class="comments-container">
+				<div class="container-header">
+					<div class="left comment-header">
+						<text class="header-title">评论({{totalCount}})</text>
+					</div>
+					<div class="right sort-box">
+						<text class="rec title-item header-title" v-for="(title,tIndex) in sortTypeList" :class="{'active':title.sortType === sortType,'none-margin-right':tIndex === 2}" :key="tIndex" @tap="tapSortType(title.sortType)">{{title.sortTypeName}}</text>
+					</div>
+				</div>
+				
+				<list class="comments-box" scroll-y="true" @loadmore="scrollToLower" loadmoreoffset="20">
+					<cell class="comments-item" v-for="(item,cIndex) in comments" :key="item.commentId">
+						<div class="user">
+							<img :src="item.user.avatarUrl" class="avatar user-avatar" />
+						</div>
+						<div class="content-box">
+							<div class="content-top">
+								<div class="name-time">
+									<div class="name-vip">
+										<text class="nick-name">{{item.user.nickname}}</text>
+										<text v-if="item.user.vipRights" class="vip">VIP.{{level(item.user.vipRights.redVipLevel)}}</text>
+									</div>
+									<text class="time">{{item.timeStr}}</text>
+								</div>
+								<div class="liked">
+									<text v-if="item.likedCount" class="like-count">{{item.likedCount}}</text>
+									<img class="good" src="../../static/images/good.png" alt="like_img">
+								</div>
+							</div>
+							<div class="content-bottom">
+								<text class="comments-content">{{item.content}}</text>
+								<!-- 评论回复 -->
+								
+								<div class="reply-detail-box" v-if="item.isShowReply">
+									<div class="comments-item" v-for="(itemReply,replyIndex) in item.reply.comments" :key="replyIndex">
+										<div class="user">
+											<img :src="itemReply.user.avatarUrl" class="reply-avatar" />
+										</div>
+										<div class="content-box reply-content">
+											<div class="top reply-top">
+												<div class="name-time">
+													<div class="name-vip">
+														<text class="nick-name reply-nick-name">{{itemReply.user.nickname}}</text>
+														<text v-if="itemReply.user.vipRights" class="vip">VIP.{{level(itemReply.user.vipRights.redVipLevel)}}</text>
+													</div>
+													<text class="time">{{itemReply.timeStr}}</text>
+												</div>
+												<div class="liked">
+													<text v-if="itemReply.likedCount" class="like-count">{{itemReply.likedCount}}</text>
+													<img class="good" src="../../static/images/good.png" alt="like_img">
+												</div>
+											</div>
+											<view class="bottom">
+												<text class="comments-content reply-comments">{{itemReply.content}}</text>
+											</view>
+										</div>	
+									</div>
+								</div>
+								<!-- 评论回复 -->
+								<div class="reply-box" v-if="item.replyCount">
+									<text v-if="!item.isShowReply" class="reply"  @tap="replyDetail(item.commentId,cIndex)">{{item.replyCount}}条回复 > </text>
+									<div class="open-more-reply" v-else>
+										<div class="open-more-box">
+											<text class="open-more" @tap="moreReply(item.reply.time,item.reply.ownerComment.commentId,cIndex)" v-if="item.reply.hasMore">---展开更多回复---</text>
+										</div>
+										<text class="close-more" :class="{'close-more-active':!item.isShowReply}" @tap="closeMoreReply(cIndex)">收起</text>
+									</div>
+								</div>
+							</div>
+						</div>
+					</cell>
+				</list>
+			</div>
+		</div>
+	</div>
+</template>
+
+<script>
+	import {
+		timeFormatting,dealAuthor,dealCount
+	} from '../../utils/utils.js'
+	import {
+		vInfo,
+		vUrl,
+		vDetail,
+		relatedMV,
+		comments, moreCommentsByTime , commentsReply , moreCommentsByOtherType,moreCommentsReply
+	} from '../../common/api.js'
+	export default {
+
+		data() {
+			return {
+				MVData: [{
+					url: '',
+					detail: {},
+					vInfo: {},
+					isShowDesc: false,
+					nickname: '',
+					autoplay: true,
+					playing: true,
+				}],
+				loading: false,
+				isShowComments: false,
+				dataType: 1,
+				//排序方式
+				sortType: 1,
+				//是否还有更多
+				hasMore: false,
+				//评论总数
+				totalCount: 0,
+				//评论
+				comments: [],
+				//上一页最后一条评论的时间（根据时间排序时获取更多评论需要用到）
+				lastCursor: undefined,
+
+				pageNo: 1,
+				// isShowReply: false,
+				reply: {},
+				vId: undefined,
+				sortTypeList: [{sortTypeName:'推荐'},{sortTypeName:'最热'},{sortTypeName:'最新'}],
+				user: {},
+				ownerComment: {}
+			}
+		},
+		methods: {
+			//处理播放量
+			dealCount ( count ) {
+				if(count >=10000 && count < 100000000){
+					return (count/10000).toFixed(2) + '万'
+				}
+				else if(count >= 100000000){
+					return (count/100000000).toFixed(2) + '亿'
+				}
+				else{
+					return count
+				}
+			},
+			
+			//根据VIP等级返回大写的等级
+		    level(num){
+				
+				switch(num){
+					case 1:
+						return '壹';
+						break;
+					case 2:
+						return '贰';
+						break;
+					case 3:
+						return '叁';
+						break;
+					case 4:
+						return '肆';
+						break;
+					case 5:
+						return '伍';
+						break;
+					case 6:
+						return '陆';
+						break;
+					case 7:
+						return '柒';
+						break;
+					case 8:
+						return '捌';
+						break;
+					case 9:
+						return '玖';
+						break;
+					case 10:
+						return '拾';
+						break;
+					default:
+						return '零'
+				}
+			},
+			//处理歌曲作者
+			dealAuthor ( authorArr = [] , arrProperty) {
+				let author = ''
+				let num = 0
+				authorArr.map(item=>{
+					author += item[arrProperty]+'/'
+				})
+				return author.substr(0,author.length-1)
+			},
+			init(id,index){
+				this.getVDetail(id,index)
+				this.getVUrl(id,index)
+				this.getVInfo(id,index)
+			},
+			getVUrl(id,index){
+				//获取mv地址
+				vUrl(id).then(res=>{
+					
+					if (res.code === 200) {
+						if (Number(id)) {
+							this.MVData[index].url = res.data.url
+						} else {
+							this.MVData[index].url = res.urls[0].url
+						}
+					}
+				})
+			},
+			getVDetail(id,index){
+				
+				//获取mv的点赞等信息
+				vDetail(id).then(res=>{
+					if (res.code === 200) {
+						this.MVData[index].detail = res.data
+					
+						//处理时间
+						this.MVData[index].detail && Number(this.MVData[index].detail.publishTime) ? this.MVData[
+							index].detail.publishTime = timeFormatting('YYYY-MM-DD', this.MVData[index].detail
+							.publishTime) : null
+					
+						if (!Number(id)) {
+					
+							this.MVData[index].nickname = res.data.creator.nickname
+						}
+						
+					}
+					
+				})
+			},
+			getVInfo(id,index){
+				//获取mv数据
+				vInfo(id).then(res=>{
+					if(res.code === 200){
+						this.MVData[index].vInfo = res
+						
+					}
+					
+				})
+			},
+			back() {
+				uni.navigateBack()
+			},
+			showComments(){
+				this.isShowComments = true
+				
+			},
+			closeComments(){
+				this.isShowComments = false
+			},
+			showDesc(index) {
+				this.MVData[index].isShowDesc = !this.MVData[index].isShowDesc
+			},
+			getRelMV(vId) {
+				relatedMV(vId).then(res => {
+					let data = Number(vId) ? data = res.mvs : data = res.data
+					//console.log((data))
+			
+					data.map((item, index) => {
+						this.MVData.push({
+							url: '',
+							detail: {},
+							vInfo: {},
+							isShowDesc: false,
+							nickname: '',
+							autoplay: false,
+							playing: false,
+							isShowReply:false
+						})
+						Number(vId) ? this.init(item.id, index + 1) : this.init(item.vid, index + 1)
+			
+					})
+			
+				})
+			},
+			tapSortType(type) {
+				
+				if (this.sortType !== type) {
+					this.sortType = type
+					this.comments = []
+					this.pageNo = 0
+					this.getComments(this.vId, this.sortType, this.dataType)
+				}
+			},
+			getComments(id, sortType, dataType) {
+				comments(id, sortType, dataType).then(res => {
+					this.getParams(res)
+					
+				})
+			},
+			getParams(res) {
+				
+				if (res.code === 200) {
+					this.hasMore = res.data.hasMore
+					this.totalCount = res.data.totalCount
+					this.lastCursor = Number(res.data.cursor)
+					res.data.sortType === 99 ? this.sortType = 1 : this.sortType = res.data.sortType
+					this.comments.push(...res.data.comments)
+					if(res.data.comments.length === 0){
+						uni.showModal({
+							title:'YC音乐君提醒您：',
+							content:'暂未拉取到评论数据'
+						})
+					}
+					
+					this.comments.map((item,i)=>{
+						item.reply = {}
+						item.isShowReply = false
+					})
+					
+					this.sortTypeList = res.data.sortTypeList
+					
+					//关闭加载状态
+					this.loading = false
+			
+					this.sortTypeList.map(item => {
+						if (item.sortType === 1 || item.sortType === 99) {
+							item.sortTypeName = '推荐'
+							item.sortType = 1
+						} else if (item.sortType === 2) {
+							item.sortTypeName = '最热'
+						} else if (item.sortType === 3) {
+							item.sortTypeName = '最新'
+						}
+			
+					})
+					uni.hideLoading()
+					// this.isShowComments = true
+				}
+			},
+			
+			change(e) {
+				let index = e.detail.current
+				this.vId = this.MVData[index].detail.id
+				this.MVData.map((item, i) => {
+					if (index === i) {
+						item.autoplay = true
+			
+						uni.createVideoContext('myVideo' + i, this).play()
+					} else {
+						item.autoplay = false
+			
+						uni.createVideoContext('myVideo' + i, this).pause()
+					}
+				})
+				//先清空上一条视频的评论数据
+				this.comments = []
+				this.getComments(this.vId, this.sortType, this.dataType)
+			},
+			play(index) {
+				this.MVData[index].playing = true
+			},
+			pause(index) {
+				this.MVData[index].playing = false
+			},
+			//上拉加载更多
+			scrollToLower(){
+				uni.showLoading({
+					title:'YC音乐君努力为您展示更多评论中...'
+				})
+				if(this.hasMore){
+					this.loading = true
+					this.pageNo +=1
+					if(this.sortType === 3){
+						this.getMoreCommentsByTime(this.vId,this.sortType,this.lastCursor,20,this.pageNo,this.dataType)
+					}
+					else{
+						this.getMoreCommentsByOtherType(this.vId,this.sortType,20,this.pageNo,this.dataType)
+						
+					}
+				}
+				else{
+					uni.showModal({
+						title:'提示：',
+						content:'已经到底了哦！'
+					})
+				}
+				
+			},
+			getMoreCommentsByTime(id, sortType, cursor, pageSize, pageNo, dataType) {
+				moreCommentsByTime(id, sortType, cursor, pageSize, pageNo, dataType).then(res => {
+					
+					this.getParams(res)
+					
+					
+				})
+			},
+			getMoreCommentsByOtherType(id, sortType, pageSize, pageNo, dataType) {
+				moreCommentsByOtherType(id, sortType, pageSize, pageNo, dataType).then(res => {
+					
+					this.getParams(res)
+					
+					
+				})
+			},
+			getCommentsReply(sId, cId, dataType,index) {
+				commentsReply(sId, cId, dataType).then(res => {
+			
+					if (res.code === 200) {
+						this.comments.map((item,i)=>{
+							if(index === i){
+								item.reply = res.data
+								item.isShowReply = true
+								uni.setStorageSync('com',item.isShowReply)
+							}
+						})
+						
+						//强制刷新
+						this.$forceUpdate()
+						
+					}
+				})
+			},
+			//点击查看更多回复
+			replyDetail(cId,index) {
+				
+			
+				this.getCommentsReply(this.vId, cId, this.dataType,index)
+				
+			},
+			//收起回复
+			closeMoreReply(index){
+				this.comments.map((item,i)=>{
+					index === i ? item.isShowReply = false : null
+				})
+				
+				//强制刷新
+				this.$forceUpdate()
+			},
+			//展开更多回复
+			moreReply(time,commentId,index){
+				this.getMoreCommentsReply(this.vId, commentId, this.dataType,time,index)
+			},
+			getMoreCommentsReply(sId, cId, dataType,time,index){
+				moreCommentsReply(sId, cId, dataType,time).then(res=>{
+					//console.log(res)
+					if(res.code === 200){
+						
+						this.comments.map((item,i)=>{
+							if(i===index){
+								item.reply.comments.push(...res.data.comments)
+								item.reply.hasMore = res.data.hasMore
+								item.reply.time = res.data.time
+							}
+						})
+						//强制刷新
+						this.$forceUpdate()
+					}
+				})
+			}
+		},
+		onLoad(options) {
+			this.vId = options.vId
+			Number(options.vId) ? this.dataType = 1 : this.dataType = 5;
+
+			
+			this.init(this.vId,0)
+			this.getRelMV(options.vId)
+			this.getComments(this.vId, this.sortType, this.dataType)
+		}
+	}
+</script>
+
+<style scoped>
+	.active{
+		color: #000000 !important;
+		font-weight: bold;
+	}
+	.video-detail {
+		display: flex;
+		position: relative;
+		width: 750rpx;
+		flex: 1;
+		background-color: #000;
+	}
+	.nav{
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		align-items: center;
+		width: 750rpx;
+		height: 80px;
+	}
+	.back-box{
+		width: 40px;
+		height: 40px;
+	}
+	.back-img{
+		display: flex;
+		width: 35px;
+		height:35px;
+		
+	}
+	
+
+	.scroll-video,
+	.scroll-item {
+		flex: 1;
+		
+	}
+	.scroll-item{
+		display: flex;
+	}
+
+	.video {
+		margin-top: 150px;
+		flex: 1;
+		width: 750rpx;
+		
+		transition: margin-top .5s ease-in-out;
+	}
+
+	.video-trans {
+		margin-top: 0;
+		transition: margin-top .5s ease-in-out;
+	}
+
+	.info-bottom {
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		width: 750rpx;
+		height: 44px;
+		background-color: #fff;
+
+	}
+
+	.input {
+		height: 44px;
+		color: #cecece;
+		text-indent: 10px;
+	}
+
+	.url {
+		color: red;
+	}
+
+	.text {
+		margin-top: 4px;
+		font-size: 14px;
+		color: #fff;
+	}
+
+	.song {
+		margin-top: 10px;
+	}
+
+	.pic-box {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		background: url('../../static/images/song/disc.png');
+		border: 1px solid #f00;
+	}
+
+	.cover {
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+	}
+
+	.avatar {
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+	}
+	.avatars{
+		display: flex;
+		flex-direction: row;
+	}
+	.video-info {
+		width: 750rpx;
+		flex: 1;
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: space-between;
+		align-items: center;
+		
+	}
+
+	.info-box {
+
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		width: 70px;
+		/* height: 340px; */
+
+	}
+
+	.info-item {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+
+		font-size: 14px;
+	}
+
+	.info {
+		
+		display: flex;
+		justify-content: flex-end;
+		align-items: flex-start;
+		padding: 10px;
+		flex: 1;
+		width:600rpx;
+		height: 374px;
+
+	}
+
+	.ava-container {
+		flex: 1;
+		display: flex;
+		align-items: flex-start;
+		justify-content: flex-end;
+	}
+
+	.info-item {
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding-top: 10px;
+		padding-bottom: 5px;
+		font-size: 14px;
+	}
+
+	.artist-box {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		align-items: center;
+	}
+
+	.artist-name {
+		margin-left: 8px;
+		color: #fff;
+		font-size: 15px;
+	}
+
+	.video-info-img {
+		display: flex;
+		width: 32px;
+		height: 32px;
+		background-color: #000;
+	}
+
+	.mv-name-desc {
+		margin-top: 10px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+	}
+
+	.mv-name {
+
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		text-align: left;
+		overflow: hidden;
+		color: #fff;
+		font-size: 14px;
+	}
+
+	.tag {
+		margin-right: 4px;
+		padding: 0 2px;
+
+		font-size: 12px;
+		background-color: #999999;
+		border-radius: 2px;
+		color: #ff0000;
+	}
+
+	.angle {
+		
+		width: 16px;
+		height: 16px;
+		
+	}
+	.top-angle{
+		margin-left: 6px;
+	}
+	.bottom-angle {
+		
+		transform: rotate(180deg);
+	}
+
+	.desc-box {
+
+		text-align: left;
+	}
+
+	.desc {
+		width: 280px;
+		margin: 4px 0;
+		color: #fff;
+
+		font-size: 14px;
+		text-align: left;
+	}
+
+
+	.publish-time {
+		margin-top: 10px;
+		color: #999999;
+		font-size: 13px;
+
+	}
+
+	.input {
+		margin-left: 20px;
+		margin-right: 20px;
+		font-size: 14px;
+	}
+	
+	.info-top{
+		display: flex;
+		flex-direction: row-reverse;
+		align-items: center;
+		justify-content: center;
+	}
+	.operation-item{
+		margin-left: 10px;
+		margin-right: 10px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.item-text{
+		margin-top: 10px;
+		color: #fff;
+		font-size: 14px;
+	}
+	
+	.info-img{
+		margin-top: 10px;
+		display: flex;
+		width: 32px;
+		height: 32px;
+		
+	}
+	.artist-ava{
+		display: flex;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		
+	}
+	/* 多个头像有距离的层叠 */
+	.artist-ava-multi{
+		position: relative;
+		margin-left: -25px;
+	}
+	/* 评论 */
+	.comments {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 750rpx;
+		height: 0;
+		transition: height .5s ease-in-out;
+		background-color: #fff;
+	}
+	
+	.comments-trans {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 750rpx;
+		height: 600px;
+		transition: height .5s ease-in-out;
+		background-color: #fff;
+	}
+	
+	.comments-container{
+		padding: 10px;
+		flex: 1;
+	}
+	.container-header{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		padding: 10px 0;
+	}
+	.header-title{
+		
+		font-size: 14px;
+	}
+	.rec{
+		color: #C8C7CC;
+	}
+	.sort-box{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+		align-items: center;
+		
+	}
+	.title-item{
+		margin: 0 8px;
+	}
+	.none-margin-right{
+		margin-right: 0;
+	}
+	.comments-box{
+		flex: 1;
+		
+	}
+	.comments-item{
+		position: relative;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.user{
+		position: absolute;
+		top: 10px;
+		left: 0;
+	}
+	
+	.content-box{
+		margin-left: 40px;
+		flex: 1;
+		padding: 10px;
+		border-bottom: 1px solid #e4e4e4;
+		
+	}
+	.content-top{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		
+	}
+	
+	.comments-content{
+		padding: 10px 0;
+		font-size: 14px;
+		
+	}
+	.nick-name{
+		font-size: 14px;
+		font-weight: bold;
+	}
+	.vip{
+		padding: 0 6px;
+		font-size: 12px;
+		color: #fff;
+		border-radius: 4px;
+		background-color: #4a0000;
+	}
+	.name-vip{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+	.liked{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+	}
+	.like-count,.time{
+		font-size: 13px;
+		color: #C8C7CC;
+	}
+	.time{
+		margin: 4px 0;
+	}
+	.good{
+		margin-left: 4px;
+		width: 20px;
+		height: 20px;
+	}
+	.reply-box{
+		 margin-top: 10px;
+	 }
+	.reply{
+		color: #007AFF;
+		font-size: 12px;
+	}
+	/* 评论回复 */
+	.reply-detail-box{
+		
+		/* background-color: #dbdbdb; */
+	}
+	.reply-content{
+		margin-left: 30px;
+		border-bottom: none;
+	}
+	.reply-avatar{
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+	}
+	.reply-nick-name{
+		font-weight: normal;
+		color: #999999;
+	}
+	.reply-top{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.open-more-reply{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		
+	}
+	.open-more-box{
+		flex: 1;
+	}
+	.open-more,.close-more{
+		color: #919191;
+		font-size: 13px;
+	}
+	.open-more{
+		margin-left: 30px;
+	}
+	.close-more{
+		margin-right: 15px;
+	}
+	.reply-comments{
+		padding-bottom: 0;
+	}
+	.close-more-active{
+		height: 0;
+		transition: height 1s ease-in-out;
+		
+	}
+</style>

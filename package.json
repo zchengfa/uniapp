@@ -1,0 +1,16 @@
+{
+  "name": "ycmusic",
+  "version": "1.0.0",
+  "description": "云音乐项目仿写",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^19.10.0",
+    "uview-ui": "^1.8.4"
+  }
+}

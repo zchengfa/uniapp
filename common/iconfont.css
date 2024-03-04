@@ -1,0 +1,66 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 3579149 */
+  src: url('https://at.alicdn.com/t/c/font_3579149_5h44pbvpud2.woff2?t=1660126617151') format('woff2'),
+         url('https://at.alicdn.com/t/c/font_3579149_5h44pbvpud2.woff?t=1660126617151') format('woff'),
+         url('https://at.alicdn.com/t/c/font_3579149_5h44pbvpud2.ttf?t=1660126617151') format('truetype');
+ /* src: url('https://at.alicdn.com/t/c/font_3579149_5h44pbvpud2.css') format('woff2'),
+       url('https://at.alicdn.com/t/c/font_3579149_5h44pbvpud2.css') format('woff'),
+       url('https://at.alicdn.com/t/c/font_3579149_5h44pbvpud2.css') format('truetype'); */
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.musicplayCircleOne:before {
+  content: "\ea82";
+}
+
+.musicplayCircle:before {
+  content: "\ea6e";
+}
+
+.musiclike:before {
+  content: "\e600";
+}
+
+.musicshare:before {
+  content: "\e650";
+}
+
+.musicclose:before {
+  content: "\e661";
+}
+
+.musicleftArrow:before {
+  content: "\e62a";
+}
+
+.musicrightAngle:before {
+  content: "\e629";
+}
+
+.musicstop:before {
+  content: "\e62b";
+}
+
+.musichome:before {
+  content: "\e62e";
+}
+
+.musicsearch:before {
+  content: "\e848";
+}
+
+.musicplay:before {
+  content: "\e624";
+}
+
+.musicdelete:before {
+  content: "\e6a0";
+}
+
