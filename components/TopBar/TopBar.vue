@@ -77,7 +77,7 @@
 		height: 50px;
 		box-shadow: 0 0 1px 1px #e1e1e1;
 		/* background-color: #fff; */
-		z-index: 999;
+		
 	}
 	
 	.list,.audio{
