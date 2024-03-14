@@ -19,7 +19,10 @@
 				</view>
 			</view>
 		</scroll-view>
-		<text class="empty" v-else>暂未查询到任何有关数据...</text>
+		<view class="empty" v-else>
+			<image class="empty-img" src="../../../../static/images/empty.png" mode="aspectFit"></image>
+			<text class="empty-msg">暂无数据</text>
+		</view>
 	</view>
 </template>
 	

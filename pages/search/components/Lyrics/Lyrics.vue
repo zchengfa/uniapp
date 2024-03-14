@@ -1,7 +1,7 @@
 <template>
 	<view class="lyrics-container">
-		<scroll-view scroll-y="true" class="scroll-v swiper-item-scroll" :style="scrollHeightSwiper" @scrolltolower="loadMore" >
-			<view class="lyrics" v-show="count">
+		<scroll-view scroll-y="true" class="scroll-v swiper-item-scroll" :style="scrollHeightSwiper" @scrolltolower="loadMore">
+			<view class="lyrics" v-if="count">
 				<view class="lyric-item" v-for="(item,index) in data.songs" :key="index">
 					<view class="top">
 						<view class="left">
@@ -47,7 +47,10 @@
 					</view>
 				</view>
 			</view>
-			<text class="empty" v-show="!count">暂未查询到任何有关数据...</text>
+			<view class="empty" v-else>
+				<image class="empty-img" src="../../../../static/images/empty.png" mode="aspectFit"></image>
+				<text class="empty-msg">暂无数据</text>
+			</view>
 		</scroll-view>
 	</view>
 </template>

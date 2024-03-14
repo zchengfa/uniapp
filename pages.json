@@ -14,7 +14,8 @@
             "path" : "pages/video/video",
             "style" :                                                                                    
             {
-                "navigationStyle":"custom"
+                "navigationStyle":"custom",
+				"enablePullDownRefresh": true
             }
             
         }

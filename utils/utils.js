@@ -1,6 +1,6 @@
 /**
  * @param { Number } count 数量
- * @return {string} 返回处理过的数量
+ * @return {Number | string} 返回处理过的数量
  * @example
 	dealCount(100000)
  */
@@ -21,7 +21,7 @@ export function dealCount ( count ) {
  * @param { Array } authorArr 数组
  * @param { String } arrProperty 数组中要处理的属性
  * @param { String } splitChar 分割符 
- * @return { Array } 返回处理完成的数组
+ * @return {string} 返回处理完成的数组
  * @example 
 	dealAuthor(arr,'name','/')
  */
@@ -56,36 +56,16 @@ export function throttle (func,delay) {
 
 /**
  * @param { Number } num 数字（10以内）
- * @return { String } 返回大写的数字
+ * @return {void[]} 返回大写的数字
  * @example 
 	level(8)
  */
 export function level(num){
-	
-	switch(num){
-		case 1:
-			return '壹';
-		case 2:
-			return '贰';
-		case 3:
-			return '叁';
-		case 4:
-			return '肆';
-		case 5:
-			return '伍';
-		case 6:
-			return '陆';
-		case 7:
-			return '柒';
-		case 8:
-			return '捌';
-		case 9:
-			return '玖';
-		case 10:
-			return '拾';
-		default:
-			return '零'
-	}
+	let textArr = ['零','壹','贰','叁','肆','伍','陆','柒','捌','玖','拾'],str = undefined
+	textArr.forEach((item,index)=>{
+		index === num ? str = item : null
+	})
+	return str
 }
 
 /**
@@ -153,9 +133,7 @@ export function transTime(target){
 	function dealTime(t){
 		return t<10?'0'+t:t
 	}
-	let t = m + ':' + s
-	
-	return t
+	return m + ':' + s
 }
 
 /**

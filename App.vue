@@ -70,7 +70,7 @@
 						'userInfo':res.data.profile
 					}))
 				}
-			})
+			}).catch((e)=>{})
 		},
 		onHide: function() {
 			
@@ -88,6 +88,25 @@
 	body,.maxWidth{
 		margin: 0 auto;
 		max-width: 500px;
+	}
+	.empty{
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+		top:50%;
+		left: 50%;
+		transform: translate(-50%,-50%);
+		.empty-img{
+			width: 128px;
+			height: 128px;
+		}
+		.empty-msg{
+			color: #a8a8a8
+		}
 	}
 	// 底部弹出的操作菜单
 	.uni-actionsheet{
@@ -357,11 +376,7 @@
 	.song-author{
 		color: #B5B5B5;
 	}
-	.empty{
-		position: relative;
-		top:10%;
-		color: #b6b6b6;
-	}
+	
 	.tag{
 		display: inline-block;
 		transform-origin: 0;

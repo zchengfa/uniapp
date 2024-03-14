@@ -6,7 +6,7 @@
 				<view slot="right"></view>
 			</top-bar>
 		</view>
-		<scroll-view scroll-y="true" class="scroll-v" @scrolltolower="loadMore" lower-threshold="50">
+		<scroll-view v-if="!isError" scroll-y="true" class="scroll-v" @scrolltolower="loadMore" lower-threshold="50">
 			<view class="mv-box">
 				<view class="mv-item" v-for="(item,index) in mv" :key="index" @tap="toMvDetail(item.id)">
 					<view class="image-box">
@@ -35,6 +35,7 @@
 			<music-list></music-list>
 		</view>
 		<u-no-network tips="YC音乐君开小差了喔!"></u-no-network>
+		<Error v-if="isError"></Error>
 		<!-- 小程序端的个人板块组件 -->
 		<!-- #ifdef MP-WEIXIN || APP -->
 		<personal-modal @changeModal="changeModal" class="wechat-modal" :class="modalStatus?'modal-in':'modal-out'"></personal-modal>
@@ -48,6 +49,7 @@
 	import '@/common/iconfont.css'
 	
 	
+	import Error from '@/components/Error/Error.vue'
 	// #ifdef MP-WEIXIN || APP
 	import PersonalModal from '@/components/PersonalModal/PersonalModal.vue'
 	// #endif
@@ -59,6 +61,7 @@
 				offset:0,
 				mv:[],
 				hasMore:undefined,
+				isError:false,
 				// #ifdef MP-WEIXIN || APP
 				modalStatus:false
 				//#endif
@@ -66,8 +69,9 @@
 		},
 		components:{
 			//#ifdef MP-WEIXIN || APP
-			PersonalModal
-			//#endif	
+			PersonalModal,
+			//#endif
+			Error
 		},
 		methods: {
 			// #ifdef MP-WEIXIN || APP
@@ -80,9 +84,16 @@
 					if(res.code === 200){
 						this.mv = res.data
 						this.hasMore = res.hasMore
-						
 					}
+					let timer = setTimeout(()=>{
+						uni.stopPullDownRefresh()
+						clearTimeout(timer)
+					},2000)
 					
+				}).catch(err=>{
+					if(!this.isError){
+						this.isError = true
+					} 
 				})
 			},
 			loadMore(){
@@ -92,7 +103,10 @@
 						if(res.code === 200){
 							this.mv.push(...res.data)
 							this.hasMore = res.hasMore
-							
+						}
+					}).catch(()=>{
+						if(!this.isError){
+							this.isError = true
 						}
 					})
 				}
@@ -105,6 +119,9 @@
 			}
 		},
 		created() {
+			this.getAllMv()
+		},
+		onPullDownRefresh() {
 			this.getAllMv()
 		}
 	}

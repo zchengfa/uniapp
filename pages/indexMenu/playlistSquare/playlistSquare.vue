@@ -146,7 +146,7 @@
 						let timer = setTimeout(()=>{
 							uni.hideLoading()
 							clearTimeout(timer)
-						},5000)
+						},0)
 					}
 				})
 			},
@@ -156,7 +156,6 @@
 		},
 		created() {
 			this.init()
-			
 		}
 	}
 </script>

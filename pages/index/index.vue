@@ -7,11 +7,11 @@
 		<view class="u-skeleton">
 			
 			<!-- 页面主内容 -->
-			<scroll-view scroll-y="true" class="scroll-v index-srcoll-main" :style="scrollHeight" @scroll="scrollPage($event)">
+			<scroll-view v-if="!isError" scroll-y="true" class="scroll-v index-srcoll-main" :style="scrollHeight" @scroll="scrollPage($event)">
 				<swiper :indicator-dots="true" indicator-color="#fff" indicator-active-color="#ff215c" :autoplay="true" :interval="7000" :duration="1000" :circular="true">
 					<swiper-item v-for="(item,index) in banners" :key="index">
 						<view class="swiper-item" @tap="toDetail(item)">
-							<image :src="item.pic" class="banner-image skeleton-fillet" :class="{'skeleton-fillet':index===0}"></image>
+							<image mode="scaleToFill" :src="item.pic" class="banner-image skeleton-fillet" :class="{'skeleton-fillet':index===0}"></image>
 							<text class="type-title skeleton-rect" :class="{'skeleton-rect':index===0}">{{item.typeTitle}}</text>
 						</view>
 					</swiper-item>
@@ -36,12 +36,14 @@
 				<!-- 有声书 -->
 				<SongSheet :song-sheet="voice" class="voice" :title="voiceTitle" v-if="voice.length"></SongSheet>
 				<view class="empty-box"></view>
+				
 			</scroll-view>
 		</view>
 		<!-- 底部音乐控制 -->
 		<view class="bottom-control" v-show="isShowBottomControl" >
 			<music-controller FMPath="../indexMenu/FM/FM" songDetailPath="../songDetail/songDetail"></music-controller>
 		</view>
+		<Error v-if="isError"></Error>
 		<view v-if="isShowMusicList">
 			<music-list></music-list>
 		</view>
@@ -99,6 +101,7 @@
 				podcast:[],
 				voiceTitle:'',
 				voice:[],
+				isError:undefined,
 				// #ifdef MP-WEIXIN || APP
 				modalStatus:false,
 				//#endif
@@ -180,11 +183,15 @@
 			},
 			//获取首页滚动菜单数据
 			getScrollMenu(){
-				indexScrollMenu().then(res=>{
-				
-					if(res.data){
-						this.scrollMenu = res.data
-					}
+				return new Promise((resolve,reject)=>{
+					indexScrollMenu().then(res=>{
+					
+						if(res.data){
+							this.scrollMenu = res.data
+						}
+					}).catch(e=>{
+						reject(e)
+					})
 				})
 			},
 			dealData(arr){
@@ -195,104 +202,113 @@
 				})
 			},
 			getHomePageData(){
-				homePageData().then(res=>{
-					let blocks = res.data.blocks
-					
-					blocks.map(item=>{
-						//轮播图
-						if(item.blockCode === 'HOMEPAGE_BANNER'){
-							this.banners = item.extInfo.banners
-						}
-						//推荐歌单
-						else if(item.blockCode === 'HOMEPAGE_BLOCK_PLAYLIST_RCMD'){
-							this.recTitle = item.uiElement.subTitle.title
-							this.recSongSheet = item.creatives
-						}
-						//直播
-						else if(item.blockCode === 'HOMEPAGE_BLOCK_LISTEN_LIVE'){
-							this.lookLive = item.extInfo
-							this.lookLiveTitle = item.uiElement.subTitle.title
-						}
-						//雷达歌单
-						else if(item.blockCode === 'HOMEPAGE_BLOCK_MGC_PLAYLIST'){
-							this.MGCTitle = item.uiElement.subTitle.title
-							this.MGCSongSheet = item.creatives
-						}
-						//风格推荐
-						else if(item.blockCode === 'HOMEPAGE_BLOCK_STYLE_RCMD'){
-							this.styleSong = item.creatives
-							this.styleTitle = item.uiElement.subTitle.title
-							this.idList = item.resourceIdList
-						}
-						else if(item.blockCode = 'HOMEPAGE_BLOCK_HOT_TOPIC'){
-							let data = item.creatives
-							//console.log(data)
-							data.map(topic=>{
-								
-								//热门播客
-								if(topic.creativeType === 'VOICE_LIST_HOMEPAGE'){
-									this.podcastTitle.length?null:this.podcastTitle = topic.uiElement.mainTitle.title
-									this.podcast.push(topic)
+				return new Promise((resolve,reject)=>{
+					homePageData().then(res=>{
+						let blocks = res.data.blocks
+						
+						blocks.map(item=>{
+							//轮播图
+							if(item.blockCode === 'HOMEPAGE_BANNER'){
+								this.banners = item.extInfo.banners
+							}
+							//推荐歌单
+							else if(item.blockCode === 'HOMEPAGE_BLOCK_PLAYLIST_RCMD'){
+								this.recTitle = item.uiElement.subTitle.title
+								this.recSongSheet = item.creatives
+							}
+							//直播
+							else if(item.blockCode === 'HOMEPAGE_BLOCK_LISTEN_LIVE'){
+								this.lookLive = item.extInfo
+								this.lookLiveTitle = item.uiElement.subTitle.title
+							}
+							//雷达歌单
+							else if(item.blockCode === 'HOMEPAGE_BLOCK_MGC_PLAYLIST'){
+								this.MGCTitle = item.uiElement.subTitle.title
+								this.MGCSongSheet = item.creatives
+							}
+							//风格推荐
+							else if(item.blockCode === 'HOMEPAGE_BLOCK_STYLE_RCMD'){
+								this.styleSong = item.creatives
+								this.styleTitle = item.uiElement.subTitle.title
+								this.idList = item.resourceIdList
+							}
+							else if(item.blockCode = 'HOMEPAGE_BLOCK_HOT_TOPIC'){
+								let data = item.creatives
+								//console.log(data)
+								data.map(topic=>{
 									
-								}
-								//有声书
-								else if(topic.creativeType === 'PODCAST_LIST_HOMEPAGE'){
-									
-									this.voiceTitle.length?null:this.voiceTitle = topic.uiElement.mainTitle.title
-									topic.resources.map(v=>{
-										this.voice.push(v)
-									})
-									
-								}
-								//新歌新碟\数字专辑
-								else if (topic.creativeType === 'NEW_ALBUM_HOMEPAGE' || topic.creativeType === 'NEW_SONG_HOMEPAGE' || topic.creativeType === 'DIGITAL_ALBUM_HOMEPAGE' ){
-									
-									this.albumHomePage.push(topic)
-								}
-								
-								//热门话题(待定)
-								else if(topic.creativeType === 'TOPIC'){
-									topic.resources.map(res=>{
+									//热门播客
+									if(topic.creativeType === 'VOICE_LIST_HOMEPAGE'){
+										this.podcastTitle.length?null:this.podcastTitle = topic.uiElement.mainTitle.title
+										this.podcast.push(topic)
 										
-										//获取话题背景图跟分享图
-										topicDetail(res.resourceId).then(detail=>{
-											
-											if(detail.code === 200){
-												res.sharePicUrl = detail.act.sharePicUrl
-												res.coverMobilePic = `background-image:url(${detail.act.coverMobileUrl})`
-												this.hotTopic.push(res)
-											}	
+									}
+									//有声书
+									else if(topic.creativeType === 'PODCAST_LIST_HOMEPAGE'){
+										
+										this.voiceTitle.length?null:this.voiceTitle = topic.uiElement.mainTitle.title
+										topic.resources.map(v=>{
+											this.voice.push(v)
 										})
-									})
-									this.topicTitle = item.uiElement.subTitle.title
-								}
-								//排行榜
-								else if(topic.creativeType === 'toplist'){
+										
+									}
+									//新歌新碟\数字专辑
+									else if (topic.creativeType === 'NEW_ALBUM_HOMEPAGE' || topic.creativeType === 'NEW_SONG_HOMEPAGE' || topic.creativeType === 'DIGITAL_ALBUM_HOMEPAGE' ){
+										
+										this.albumHomePage.push(topic)
+									}
 									
-									this.toplist.push(topic)
-								}
-							})
-						}
+									//热门话题(待定)
+									else if(topic.creativeType === 'TOPIC'){
+										topic.resources.map(res=>{
+											
+											//获取话题背景图跟分享图
+											topicDetail(res.resourceId).then(detail=>{
+												
+												if(detail.code === 200){
+													res.sharePicUrl = detail.act.sharePicUrl
+													res.coverMobilePic = `background-image:url(${detail.act.coverMobileUrl})`
+													this.hotTopic.push(res)
+												}	
+											})
+										})
+										this.topicTitle = item.uiElement.subTitle.title
+									}
+									//排行榜
+									else if(topic.creativeType === 'toplist'){
+										
+										this.toplist.push(topic)
+									}
+								})
+							}
+						})
+						
+						this.dealData(this.MGCSongSheet)
+						this.dealData(this.recSongSheet)
+						
+						this.recSongSheet.map(item=>{
+							if(item.resources.length > 1){
+								this.recAutoSheet = item
+							}
+							else{
+								this.recDefSheet.push(item)
+							}
+						})
+						
+						this.defaultAutoText = this.recAutoSheet.resources[0].uiElement.mainTitle.title
+					}).catch((e)=>{
+						reject(e)
 					})
-					
-					this.dealData(this.MGCSongSheet)
-					this.dealData(this.recSongSheet)
-					
-					this.recSongSheet.map(item=>{
-						if(item.resources.length > 1){
-							this.recAutoSheet = item
-						}
-						else{
-							this.recDefSheet.push(item)
-						}
-					})
-					
-					this.defaultAutoText = this.recAutoSheet.resources[0].uiElement.mainTitle.title
 				})
 			},
 			init(){
-				this.getScrollMenu()
-				this.getHomePageData()
+				let p = Promise.race([this.getScrollMenu(),this.getHomePageData()])
+				p.then(res=>{
+					this.isError = false
+				}).catch(err=>{
+					this.isError = true
+				})
+				
 				this.getKeyword()
 				setTimeout(()=>{
 					this.show = false
@@ -302,12 +318,15 @@
 					uni.stopPullDownRefresh()
 					clearTimeout(timer)
 				},2000)
+				
 			},
 			getKeyword(){
 				keywordDefault().then(res=>{
 					if(res.code === 200){
 						this.keywordD = res.data.showKeyword
 					}
+				}).catch((e)=>{
+					
 				})
 			},
 			toSearch(){
@@ -344,11 +363,8 @@
 	.top-box{
 		position: relative;
 		width: 100%;
-		
-		
 		font-size: 14px;
 		color: #bfbfbf;
-		z-index: 999;
 	}
 	
 	/* #ifdef H5 */

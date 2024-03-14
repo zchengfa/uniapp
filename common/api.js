@@ -1,23 +1,35 @@
 import store from '../store/index.js'
 
  //const baseUrl = "https://www.codeman.ink/api"
-const baseUrl = "http://localhost:3000"
+const baseUrl = "http://192.168.1.104:3000"
 
 function Get(URL){
-	return new Promise((resolve)=>{
+	uni.showLoading({
+		title:'YC君正在努力加载中...'
+	})
+	return new Promise((resolve,reject)=>{
 		uni.request({
 			url:baseUrl+URL,
 			method:'GET',
 			withCredentials:true,
 			success:(res)=>{
 				resolve(res.data)
+			},
+			fail: (err) => {
+				reject(err)
+			},
+			complete: () => {
+				uni.hideLoading()
 			}
 		})
 	})
 }
 
 function Post(URL,datas){
-	return new Promise((resolve)=>{
+	uni.showLoading({
+		title:'YC君正在努力加载中...'
+	})
+	return new Promise((resolve,reject)=>{
 		uni.request({
 			url:baseUrl+URL,
 			method:'POST',
@@ -25,6 +37,12 @@ function Post(URL,datas){
 			withCredentials:true,
 			success:(res)=>{
 				resolve(res.data)
+			},
+			fail: (err) => {
+				reject(err)
+			},
+			complete: () => {
+				uni.hideLoading()
 			}
 		})
 	})

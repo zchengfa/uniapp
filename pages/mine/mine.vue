@@ -198,7 +198,7 @@
 						this.recSheet = this.$color(res.result,'bgColor')
 						
 					}
-				})
+				}).catch((e)=>{})
 			},
 			toLogin(){
 				uni.navigateTo({

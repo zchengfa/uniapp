@@ -165,6 +165,7 @@
 
 <style scoped lang="scss">
 	.tip{
+		padding: 1rem 0;
 		text-align: center;
 		font-size: 12px;
 		color: #b1b1b1;
