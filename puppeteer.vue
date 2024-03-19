@@ -8,7 +8,7 @@
 				width:vw,
 				maxWidth:'500px',
 				height:vh,
-				zIndex:9999,
+				zIndex:997,
 				backgroundColor:'#fff',
 				overflowY:'scroll',
 				overflowX:'hidden'

@@ -85,7 +85,7 @@
 	@import 'common/mine.css';
 	@import 'common/controller.css';
 	/*每个页面公共css */
-	body,.maxWidth{
+	body,.maxWidth,.uni-tabbar{
 		margin: 0 auto;
 		max-width: 500px;
 	}

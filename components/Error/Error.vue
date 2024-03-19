@@ -23,6 +23,7 @@
 		.err-msg{
 			margin-top: 1rem;
 			color: $uni-bg-color-mask;
+			font-size: 12px;
 		}
 		.err-img{
 			width: 128px;

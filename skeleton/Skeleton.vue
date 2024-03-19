@@ -6,7 +6,7 @@
 			left:left,
 			width:vw,
 			height:vh,
-			zIndex:9999,
+			zIndex:997,
 			backgroundColor:bgColor,
 			overflowY:'scroll',
 			overflowX:'hidden'
