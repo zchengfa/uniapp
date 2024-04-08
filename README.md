@@ -1,13 +1,19 @@
 # cloudMusic
 
 #### 介绍
-某音乐项目仿写，项目支持音乐播放、音量调节、扫码登录，搜索，视频MV播放，歌词等功能
+某音乐项目仿写，项目支持`音乐播放、音量调节、扫码登录，搜索，视频MV播放，歌词`等功能
 
 #### 安装教程
 
 1.  克隆项目
-2.  执行npm install命令
-3.  使用HBuilderX运行到想要运行的浏览器
+2.  执行`npm install`命令
+3.  使用`HBuilderX`运行到想要运行的浏览器
+
+#### API文档
+[API文档](./common/out/global.html)`将此文件运行在浏览器即可`
+
+#### 打包成安卓应用
+可查看我的笔记[uniapp打包成apk](https://note.youdao.com/s/GtiMenTQ)
 
 #### 技术栈
 
