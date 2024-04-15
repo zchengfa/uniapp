@@ -71,6 +71,7 @@
 				checkTime:undefined,
 				status:undefined,
 				code:undefined,
+				isWaiting:true,
 				formData:{
 					phone:'',
 					pwd:'',
@@ -244,35 +245,40 @@
 				})	
 			},
 			checkStatus(){
-				checkQR().then((checkRes)=>{
-					//console.log(checkRes)
-					if(checkRes.code === 803){
-						//登陆成功
-						this.$store.dispatch('cookie',checkRes.cookie)
-						this.checkLoginResult()
-							
-					}
-					else if(checkRes.code === 800){
-						uni.showModal({
-							title:"提醒：",
-							content:checkRes.message
-						})
-					}
-					else{
-						let time = setTimeout(()=>{
-							this.checkStatus()
-							clearTimeout(time)
-						},3000)
-					}
-					this.code = checkRes.code
-					this.status = checkRes.message
-					
-				})
+				if(this.isWaiting){
+					checkQR().then((checkRes)=>{
+						//console.log(checkRes)
+						if(checkRes.code === 803){
+							//登陆成功
+							this.$store.dispatch('cookie',checkRes.cookie)
+							this.checkLoginResult()
+								
+						}
+						else if(checkRes.code === 800){
+							uni.showModal({
+								title:"提醒：",
+								content:checkRes.message
+							})
+						}
+						else{
+							let time = setTimeout(()=>{
+								this.checkStatus()
+								clearTimeout(time)
+							},3000)
+						}
+						this.code = checkRes.code
+						this.status = checkRes.message
+						
+					})
+				}
 			}
 		},
 		onLoad() {
 			this.formData.id = 'testId'
 			this.loginJson = loginJson
+		},
+		beforeDestroy() {
+			this.isWaiting = false
 		}
 	}
 </script>
