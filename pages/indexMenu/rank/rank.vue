@@ -35,7 +35,9 @@
 				<text class="rank-title">其他榜单</text>
 				<view class="rank-box">
 					<view class="rank-item" v-for="(other,otherIndex) in rankOther" :key="other.id" @tap="toPlaylistDetail(other.id)">
-						<image :src="other.coverImgUrl" mode="aspectFit" class="other-img"></image>
+						<view class="other-img">
+							<image-loader  :src="other.coverImgUrl"></image-loader>
+						</view>
 						<text class="update-frequency">{{other.updateFrequency}}</text>
 						<text class="iconfont musicplayCircleOne"></text>
 					</view>
@@ -57,6 +59,7 @@
 	import {topList,topSong,playListDeatil} from '@/common/api.js'
 	import { bottomControlMixin,playSongMixin } from '@/common/mixins/mixins.js'
 	import Playing from '@/components/Playing/Playing.vue'
+	import ImageLoader from '@/components/common/ImageLoader.vue'
 	
 	export default {
 		mixins:[bottomControlMixin,playSongMixin],
@@ -69,7 +72,8 @@
 			}
 		},
 		components:{
-			Playing
+			Playing,
+			ImageLoader
 		},
 		methods: {
 			beginPlay(id){

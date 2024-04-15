@@ -12,7 +12,9 @@
 							</view>
 							<view @tap="isToplist ? playToplist(style,child.resourceId,childIndex)  : playThisSong(child , styleIndex * style.resources.length + childIndex)" class="item-children" v-for="(child,childIndex) in style.resources" :key="childIndex">
 								<view class="image-box">
-									<image class="style-image skeleton-fillet" :src="child.uiElement.image.imageUrl" mode="aspectFill"></image>
+									<view class="style-image skeleton-fillet">
+										<image-loader :src="child.uiElement.image.imageUrl" mode="aspectFill"></image-loader>
+									</view>
 								</view>
 								<view class="song" :class="{'toplist-song':isToplist}">
 									<view class="no-box ske" v-if="isToplist">
@@ -45,6 +47,7 @@
 	import { playSongMixin } from '@/common/mixins/mixins.js'
 	import { songDetail } from '@/common/api.js'
 	import { mapGetters } from 'vuex'
+	import ImageLoader from '@/components/common/ImageLoader.vue'
 	
 	export default {
 		name:"StyleSongAlbum",
@@ -68,6 +71,9 @@
 					return false
 				}
 			}
+		},
+		components:{
+			ImageLoader
 		},
 		data() {
 			return {

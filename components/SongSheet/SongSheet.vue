@@ -5,7 +5,9 @@
 			<scroll-view scroll-x="true" class="scroll">
 				<view class="sheet-box">
 					<view class="sheet-item"   @tap="toPlayListDetail(item.creativeId)" v-for="(item,index) in songSheet" :key="item.creativeId">
-						<image :src="item.uiElement.image.imageUrl" class="image"></image>
+						<view class="image">
+							<image-loader :src="item.uiElement.image.imageUrl"></image-loader>
+						</view>
 						<view class="mask skeleton-fillet">
 							<text v-if="item.hasOwnProperty('resources')" class="play-count skeleton-circle">{{$dealCount(item.resources[0].resourceExtInfo.playCount)}}</text>
 							<text class="play-icon iconfont musicplayCircle skeleton-rect"></text>
@@ -23,6 +25,7 @@
 
 <script>
 	import '@/common/iconfont.css'
+	import ImageLoader from '@/components/common/ImageLoader.vue'
 	export default {
 		name:"SongSheet",
 		props:{
@@ -38,6 +41,9 @@
 					return '标题'
 				}
 			}
+		},
+		components:{
+			ImageLoader
 		},
 		methods:{
 			toPlayListDetail(id){

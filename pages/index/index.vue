@@ -11,7 +11,7 @@
 				<swiper :indicator-dots="true" indicator-color="#fff" indicator-active-color="#ff215c" :autoplay="true" :interval="7000" :duration="1000" :circular="true">
 					<swiper-item v-for="(item,index) in banners" :key="index">
 						<view class="swiper-item" @tap="toDetail(item)">
-							<image mode="scaleToFill" :src="item.pic" class="banner-image skeleton-fillet" :class="{'skeleton-fillet':index===0}"></image>
+							<image-loader :src="item.pic" mode="scaleToFill" class="banner-image skeleton-fillet" :class="{'skeleton-fillet':index===0}"></image-loader>
 							<text class="type-title skeleton-rect" :class="{'skeleton-rect':index===0}">{{item.typeTitle}}</text>
 						</view>
 					</swiper-item>
@@ -67,6 +67,7 @@
 	import StyleSongAlbum from '@/components/StyleSongAlbum/StyleSongAlbum.vue'
 	import { bottomControlMixin,playSongMixin} from '@/common/mixins/mixins.js'
 	import { mapGetters } from 'vuex'
+	import ImageLoader from '@/components/common/ImageLoader.vue'
 	 // import Skeleton from '@/skeleton/Skeleton.vue'
 	import puppeteer from '@/puppeteer.vue'
 	
@@ -123,7 +124,8 @@
 			PersonalModal,
 			//#endif
 			 //Skeleton,
-			puppeteer
+			puppeteer,
+			ImageLoader
 		},
 		computed:{
 			...mapGetters(['cookie'])

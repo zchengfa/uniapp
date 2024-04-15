@@ -8,7 +8,9 @@
 						<swiper class="swiper" @change="change($event)" :indicator-dots="false" vertical :autoplay="true" :interval="4000" :duration="1000" :circular="true">
 							<swiper-item  v-for="(auto,autoIndex) in autoSongSheet.resources" @tap="toPlayListDetail(auto.resourceId)" :key="autoIndex">
 								<view class="swiper-item " :class="{'skeleton-fillet':autoIndex === 0}">
-									<image class="image" :src="auto.uiElement.image.imageUrl" ></image>
+									<view class="image">
+										<image-loader :src="auto.uiElement.image.imageUrl"></image-loader>
+									</view>
 								</view>
 							</swiper-item>
 							
@@ -18,7 +20,9 @@
 						<text v-else class="main-title skeleton-rect">{{defaultText}}</text>
 					</view>
 					<view class="sheet-item" @tap="toPlayListDetail(item.resources[0].resourceId)" v-for="(item,index) in songSheet" :key="index">
-						<image :src="item.uiElement.image.imageUrl" class="image"></image>
+						<view class="image">
+							<image-loader :src="item.uiElement.image.imageUrl"></image-loader>
+						</view>
 						<view class="mask skeleton-fillet">
 							<text class="play-count skeleton-rect">{{item.resources[0].resourceExtInfo.playCount}}</text>
 							<text class="play-icon iconfont musicplayCircle skeleton-rect"></text>
@@ -32,6 +36,7 @@
 </template>
 
 <script>
+	import ImageLoader from '@/components/common/ImageLoader.vue'
 	export default {
 		name:"SongSheetAutoScr",
 		props:{
@@ -59,6 +64,9 @@
 					return '默认文本'
 				}
 			}
+		},
+		components:{
+			ImageLoader
 		},
 		data() {
 			return {
